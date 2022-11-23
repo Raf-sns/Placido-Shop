@@ -1,0 +1,207 @@
+
+<script id="web_app" type="text/html">
+
+	<!-- container gen  -->
+  <div id="web_app" class="pad_product_form">
+
+
+		<p class="large mr0">
+			<i class="fas fa-cogs fa-fw"></i>&nbsp;
+			{{tr.manage_your_web_app}}
+		</p>
+
+		<p class="medium mr0 margin-bottom">
+			<i class="fas fa-flask fa-fw text-cyan"></i>&nbsp;
+			{{{tr.web_app_info_text}}}
+		</p>
+
+		<p class="medium mr0 margin-bottom">
+			<i class="fas fa-info-circle fa-fw text-cyan"></i>&nbsp;
+			{{{tr.web_app_info_text_admin}}}
+		</p>
+
+	  <h3 onclick="$.deploy_web_app_item('#public_web_app');"
+		id="public_web_app_title"
+    class="card dark-gray panel round pointer padding">
+      <i class="icon_pwa fa-fw fa-hand-point-right far text-cyan"></i>&nbsp;
+      <span class="fw400 large title_set">{{tr.public_web_app}}</span>&nbsp;:
+    </h3>
+
+    <!-- public api web-app -->
+    <div id="public_web_app" class="hide">
+		</div>
+    <!-- end public api web-app -->
+
+		<h3 onclick="$.deploy_web_app_item('#management_web_app');"
+		id="management_web_app_title"
+    class="card dark-gray panel round pointer padding">
+      <i class="icon_pwa fa-fw fa-hand-point-right far text-cyan"></i>&nbsp;
+      <span class="fw400 large title_set">{{tr.management_web_app}}</span>&nbsp;:
+    </h3>
+
+		<!-- management_web_app api web-app -->
+    <div id="management_web_app" class="hide">
+		</div>
+
+
+	</div>
+	<!-- end container gen -->
+</script>
+
+
+<!-- PARTIAL FORM WEB APP -->
+<script id="form_public_web_app" type="text/html">
+
+	<form id="form_public_web_app"
+	class="dark-gray padding round">
+
+		<p class="large">
+			<i class="fas fa-cogs"></i>&nbsp;
+			{{#web_app.formDatas.public}}
+				{{tr.settings_public_web_app}}
+			{{/web_app.formDatas.public}}
+			{{^web_app.formDatas.public}}
+				{{tr.settings_private_web_app}}
+			{{/web_app.formDatas.public}}
+		</p>
+
+		{{#web_app.formDatas.public}}
+		<p>
+			<small>{{{tr.install_public_app_infos}}}</small>
+		</p>
+		{{/web_app.formDatas.public}}
+
+		{{^web_app.formDatas.public}}
+			<p>
+				<button onclick="pwa_install_app();"
+				class="blue btn pointer round"
+				type="button"
+				role="button">
+					<i class="fa-hand-point-right far"></i>&nbsp;
+				{{tr.install_app}}</button>
+			</p>
+		{{/web_app.formDatas.public}}
+
+		<p>
+			<label for="short_name">
+				{{tr.web_app_short_name}}
+			</label>
+			<br>
+			<input name="short_name"
+			value="{{web_app.formDatas.short_name}}"
+			type="text"
+			maxlength="100"
+			class="border padding-small round">
+		</p>
+
+		<p>
+			<label for="name">
+				{{tr.web_app_name}}
+			</label>
+			<br>
+			<input name="name"
+			value="{{web_app.formDatas.name}}"
+			type="text"
+			maxlength="150"
+			class="border padding-small round">
+		</p>
+
+		<p>
+			<label for="descr">
+				{{tr.web_app_descr}}
+			</label>
+			<br>
+			<textarea name="descr"
+			rows="3"
+			maxlength="300"
+			class="border padding-small round">{{web_app.formDatas.description}}</textarea>
+		</p>
+
+		<p>
+			<label for="theme_color" class="pointer">
+				{{tr.web_app_theme_color}}
+				<br>
+				<span class="pwa_color_render border border-gray round pointer"
+style="background: {{#web_app.formDatas.theme_color}}{{web_app.formDatas.theme_color}};{{/web_app.formDatas.theme_color}}
+{{^web_app.formDatas.theme_color}}#ffffff;{{/web_app.formDatas.theme_color}}">
+	<span class="pwa_color_text large">{{web_app.formDatas.theme_color}}</span>
+</span>
+			</label>
+			<input id="theme_color" name="theme_color"
+			value="{{web_app.formDatas.theme_color}}"
+			type="color"
+			class="border padding-small round" style="visibility:hidden;">
+		</p>
+
+		<p>
+			<label for="bkg_color" class="pointer">
+				{{tr.web_app_bkg_color}}
+				<br>
+				<span	class="pwa_color_render border border-gray round pointer"
+style="background: {{#web_app.formDatas.background_color}}{{web_app.formDatas.background_color}};{{/web_app.formDatas.background_color}}
+{{^web_app.formDatas.background_color}}#ffffff;{{/web_app.formDatas.background_color}}">
+<span class="pwa_color_text large">{{web_app.formDatas.background_color}}</span>
+</span>
+
+			</label>
+			<input id="bkg_color" name="bkg_color"
+			value="{{web_app.formDatas.background_color}}"
+			type="color"
+			class="border padding-small round" style="visibility:hidden;">
+		</p>
+
+		<p>
+			<label for="display">
+				{{tr.web_app_display}}
+			</label>
+			<br>
+			<select name="display"
+			class="border padding-small round">
+
+				<option value="fullscreen">fullscreen</option>
+				<option value="standalone">standalone</option>
+				<option value="minimal-ui">minimal-ui</option>
+
+			</select>
+		</p>
+
+		<p>
+			<label for="start_url">
+				{{tr.web_app_start_url}}
+			</label>
+			<br>
+			<input name="start_url"
+			value="{{web_app.formDatas.start_url}}"
+			type="text"
+			class="border padding-small round">
+		</p>
+
+		<p>
+			<button onclick="$.add_img_prod();"
+			id="add_sn_img"
+			class="blue btn card round"
+			role="img"
+			type="button">
+	      <i class="far fa-image"></i>&nbsp; {{tr.add_web_app_img}}
+	    </button>
+			<input id="img" name="img" type="file" class="hide">
+		</p>
+
+		<div id="rows_img"
+		class="margin-bottom"
+		style="justify-content: left;">
+		</div>
+
+		<button onclick="$.record_web_app();"
+		id="record_web_app"
+		class="blue btn card margin-bottom margin-top round"
+		role="button"
+		type="button">
+			<i class="fas fa-sign-in-alt"></i>&nbsp;
+			{{tr.record}}
+		</button>
+
+	</form>
+
+</script>
+<!-- END PARTIAL FORM WEB APP -->

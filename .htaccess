@@ -1,0 +1,166 @@
+RewriteEngine on
+RewriteCond %{HTTPS} !=on
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+##############
+###	ROUTES ###
+##############
+
+RewriteCond	%{REQUEST_FILENAME}	!-f
+
+RewriteRule ^(.*)$ %{ENV:BASE}index.php [L,NC,QSA]
+
+##################
+###	END ROUTES ###
+##################
+
+
+#################
+###	 headers	###
+#################
+
+Header set Access-Control-Allow-Methods "POST,GET"
+
+Header set Access-Control-Allow-Credentials "true"
+
+Header set Access-Control-Allow-Private-Network "true"
+
+Header set Server "Placido-Shop"
+
+##  age : 31536000 seconds / 365 days
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+##  deni frames
+Header set Content-Security-Policy "frame-ancestors 'none'"
+Header set X-Frame-Options "DENY"
+
+##  no sniff
+Header set X-Content-Type-Options "nosniff"
+
+##  XSS
+Header set X-XSS-Protection "1; mode=block"
+
+####################
+###	end headers	 ###
+####################
+
+
+#################
+###		CACHE		###
+#################
+
+# SetOutputFilter DEFLATE
+## do not cache if these files are already cached
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip
+
+## manage very olds browsers
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+BrowserMatch ^Mozilla/4\.0[678] no-gzip
+BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+
+
+## PROXIES
+Header append Vary User-Agent env=!dont-vary
+
+## Expire headers
+## cache de 24h -> 86400 | 48 h -> 172800 | 8 jours -> 691200
+	<IfModule mod_expires.c>
+
+		ExpiresActive On
+		ExpiresDefault "access plus 691200 seconds"
+		ExpiresByType image/jpg "access plus 691200 seconds"
+		ExpiresByType image/jpeg "access plus 691200 seconds"
+		ExpiresByType image/png "access plus 691200 seconds"
+		ExpiresByType image/gif "access plus 691200 seconds"
+		ExpiresByType image/ico "access plus 691200 seconds"
+		ExpiresByType image/icon "access plus 691200 seconds"
+		ExpiresByType image/x-icon "access plus 691200 seconds"
+		ExpiresByType text/css "access plus 172800 seconds"
+		ExpiresByType text/javascript "access plus 172800 seconds"
+		ExpiresByType text/html "access plus 172800 seconds"
+
+	</IfModule>
+## END Expire headers
+
+
+## Cache-Control Headers
+## cache in seconds : 24h -> 86400 | 48 h -> 172800 | 8 days -> 691200
+	<IfModule mod_headers.c>
+
+		<FilesMatch "\.(ico|jpe?g|png|gif|swf|gz|ttf)$">
+			Header set Cache-Control "max-age=691200, public, must-revalidate"
+		</FilesMatch>
+
+		<FilesMatch "\.(css)$">
+			Header set Cache-Control "max-age=691200, public, must-revalidate"
+		</FilesMatch>
+
+		<FilesMatch "\.(js)$">
+			Header set Cache-Control "max-age=691200, public, must-revalidate"
+		</FilesMatch>
+
+		<filesMatch "\.(html|htm)$">
+			Header set Cache-Control "max-age=691200, public, must-revalidate"
+		</filesMatch>
+
+		## Disable caching for scripts and other dynamic files
+
+		<FilesMatch "\.(pl|php|cgi|spl|scgi|fcgi)$">
+			Header unset Cache-Control
+		</FilesMatch>
+
+
+		## DO NOT CACHE api_loader.js / cache too main.js if bug imgs loading in slider
+		<Files api_loader.js>
+			FileETag None
+			Header unset ETag
+			Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+			Header set Pragma "no-cache"
+			Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+		</Files>
+
+	</IfModule>
+## END Cache-Control Headers
+
+#################
+###	END CACHE	###
+#################
+
+
+## UNSET ETAGS
+Header unset ETag
+FileETag none
+
+
+############
+## ERRORS ##
+############
+
+## Determine if the request does not match an existing file or directory
+RewriteCond	%{REQUEST_FILENAME}	!-f
+
+## If so, send the request to the applicable file, relative to this directory
+RewriteRule ^ %{ENV:BASE}404.php [L]
+
+ErrorDocument 404 /404.php
+ErrorDocument 500 /404.php
+
+################
+## END ERRORS ##
+################
+
+
+## CHARSET
+AddDefaultCharset utf-8
+
+
+## PROTECT READ DIRECTORIES
+Options -Indexes
+
+
+## protect the htaccess file
+<files .htaccess>
+order allow,deny
+deny from all
+</files>

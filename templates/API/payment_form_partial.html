@@ -1,0 +1,300 @@
+
+
+  <form id="form_payment" method="post" autocomplete>
+
+    <h3>
+      <i class="color_theme title_icon fa-user-edit fas"></i>&nbsp;
+      {{tr.complete_your_information}}&nbsp;:
+    </h3>
+
+    <div class="row">
+
+      <div class="col m6 s12">
+
+        <label
+        class="label_input"
+        for="lastname">{{tr.lastname}}</label>
+        <br>
+        <input type="text"
+        id="lastname"
+        name="lastname"
+        value="{{cart.customer.lastname}}"
+        class="input"
+        required />
+
+        <label
+        class="label_input"
+        for="firstname">{{tr.firstname}}</label>
+        <br>
+        <input type="text"
+        id="firstname"
+        name="firstname"
+        value="{{cart.customer.firstname}}"
+        class="input"
+        required />
+
+        <label
+        class="label_input"
+        for="tel">{{tr.phone}}</label>
+        <br>
+        <input type="text"
+        id="tel"
+        name="tel"
+        value="{{cart.customer.tel}}"
+        class="input"
+        required />
+
+        <label
+        class="label_input"
+        for="mail">{{tr.contact_mail}}</label>
+        <br>
+        <input type="text"
+        id="mail"
+        name="mail"
+        value="{{cart.customer.mail}}"
+        class="input"
+        required />
+
+      </div>
+
+      <div class="col m6 s12">
+
+        <label
+        class="label_input"
+        for="address">{{tr.address}}</label>
+        <input type="text"
+        id="address"
+        name="address"
+        value="{{cart.customer.address}}"
+        class="input"
+        required />
+
+        <label
+        class="label_input"
+        for="post_code">{{tr.post_code}}</label>
+        <br>
+        <input type="text"
+        id="post_code"
+        name="post_code"
+        value="{{cart.customer.post_code}}"
+        class="input"
+        required />
+
+        <label
+        class="label_input"
+        for="city">{{tr.city}}</label>
+        <br>
+        <input type="text"
+        id="city"
+        name="city"
+        value="{{cart.customer.city}}"
+        class="input"
+        required />
+
+				<label
+        class="label_input"
+        for="country">{{tr.country}}</label>
+        <br>
+        <select
+				id="country"
+				name="country"
+				class="input pointer"
+				required></select>
+
+      </div>
+
+    </div>
+    <!-- end row -->
+
+
+    <!-- btn open address sup  -->
+    <button onclick="$.toggle_address_sup();"
+    aria-label="{{tr.add_delivery_address}}"
+    aria-expanded="false"
+    role="button"
+    type="button"
+    class="toggle_address_sup btn button margin-bottom margin-top">
+    <i class="fas fa-plus"></i>&nbsp;
+			{{tr.different_delivery_address}}</button>
+
+
+    <!-- HIDDEN ADDRESS SUP -->
+    <div id="address_sup" class="hide animate-zoom">
+
+      <h3>
+        <i class="color_theme title_icon fa-user-plus fas"></i>&nbsp;
+         {{tr.add_delivery_address}}&nbsp;:
+      </h3>
+
+      <div class="row">
+
+        <div class="col m6 s12">
+
+          <label
+          class="label_input"
+          for="lastname_sup">{{tr.lastname}}</label>
+          <br>
+          <input type="text"
+          id="lastname_sup"
+          name="lastname_sup"
+          value="{{cart.customer.lastname_sup}}"
+          class="input" />
+
+          <label
+          class="label_input"
+          for="firstname_sup">{{tr.firstname}}</label>
+          <br>
+          <input type="text"
+          id="firstname_sup"
+          name="firstname_sup"
+          value="{{cart.customer.firstname_sup}}"
+          class="input" />
+
+        </div>
+
+        <div class="col m6 s12">
+
+          <label class="label_input"
+          for="address_sup">{{tr.address}}</label>
+          <input type="text"
+          id="address_sup"
+          name="address_sup"
+          value="{{cart.customer.address_sup}}"
+          class="input" />
+
+          <label class="label_input"
+          for="post_code_sup">{{tr.post_code}}</label>
+          <br>
+          <input type="text"
+          id="post_code_sup"
+          name="post_code_sup"
+          value="{{cart.customer.post_code_sup}}"
+          class="input" />
+
+          <label class="label_input"
+          for="city_sup">{{tr.city}}</label>
+          <br>
+          <input type="text"
+          id="city_sup"
+          name="city_sup"
+          value="{{cart.customer.city_sup}}"
+          class="input" />
+
+					<label
+	        class="label_input"
+	        for="country_sup">{{tr.country}}</label>
+	        <br>
+	        <select
+	        id="country_sup"
+	        name="country_sup"
+	        class="input pointer"></select>
+
+        </div>
+
+      </div>
+      <!-- END ROW ADRESS SUP -->
+
+    </div>
+    <!-- HIDDEN ADDRESS SUP -->
+
+    <!-- CHOICE PAYMENT if CB_enabled == false check other payments -->
+    <div role="radiogroup"
+    aria-label="{{tr.choose_payment_method}}">
+      <h3>
+        <i class="color_theme title_icon fa-hand-point-down far xlarge"></i>&nbsp;
+         {{tr.choose_payment_method}}&nbsp;:
+      </h3>
+      {{#cart.CB_enabled}}
+         <label onclick="$.check_this('CARD');"
+         for="CARD"
+         class="pointer"
+         role="radio"
+         aria-checked="false"
+         aria-label="{{tr.bank_card}}">
+           <i class="color_theme checkbox
+           fa-{{#cart.CARD_checked}}check-{{/cart.CARD_checked}}square far pointer"></i>
+           &nbsp;&nbsp;{{tr.bank_card}}</label>
+
+          <input type="radio"
+          name="pay_with"
+          id="CARD"
+          value="CARD"
+          class="hide" />
+        <br>
+        <span class="text_info">
+					{{{tr.info_bank_card_not_registred}}}
+        </span>
+      {{/cart.CB_enabled}}
+      {{#cart.by_money}}
+        <br>
+        <label onclick="$.check_this('OTHER');"
+        for="OTHER"
+        class="inline-block pointer"
+        style="margin: 7px 0 0;"
+        role="radio"
+        aria-checked="false"
+        aria-label="{{tr.others_payment_methods}}">
+          <i class="color_theme checkbox
+          fa-{{#cart.OTHER_checked}}check-{{/cart.OTHER_checked}}square far pointer"></i>
+          &nbsp;&nbsp;{{tr.others_payment_methods}}</label>
+
+        <input type="radio"
+        name="pay_with"
+        id="OTHER"
+        value="OTHER"
+        class="hide" />
+      {{/cart.by_money}}
+    </div>
+
+    <!-- confirm sale conditions -->
+    <div class="margin-top">
+
+      <h3>
+        <i class="color_theme title_icon fa-check-double fas xlarge"></i>&nbsp;
+				{{tr.accept_terms_and_conditions}}&nbsp;:
+      </h3>
+
+      <label onclick="$.check_sale_conditions();"
+      for="sale_conditions"
+      class="pointer"
+      role="checkbox"
+      aria-checked="false"
+			aria-label="{{tr.accept_terms_and_conditions}}">
+        <i class="color_theme checkbox
+        fa-{{#cart.CONDS_checked}}check-{{/cart.CONDS_checked}}square far pointer"></i>
+      </label>
+
+      <input type="hidden"
+      id="sale_conditions"
+      name="sale_conditions"
+      value="{{#cart.CONDS_checked}}signed{{/cart.CONDS_checked}}{{^cart.CONDS_checked}}no{{/cart.CONDS_checked}}">
+      &nbsp;
+			{{tr.declare_take_knowledge_of}}&nbsp;<a
+      href="https://{{website.host}}/{{static_pages.terms-of-sale.url}}.html"
+      title="{{tr.consult_our_general_conditions_of_sale}}"
+      target="_blank"
+      class="underline pointer">{{tr.our_general_conditions_of_sale}}</a>.
+
+
+    </div>
+    <!-- end confirm sale conditions -->
+
+    <!-- submit button -->
+    <div class="margin-bottom" style="margin-top: 30px;">
+
+      <button onclick="$.valid_form_payment();"
+      id="btn_form_payment"
+      class="button btn"
+      aria-label="{{tr.confirm_your_order}}"
+      type="submit">
+      <i class="fa-hand-point-right far"></i>&nbsp;
+      {{tr.confirm_your_order}}
+        &nbsp;<i id="spinner_process"
+        class="fa-circle-notch fa-fw fa-spin fas"
+        style="display: none;"></i>&nbsp;
+      </button>
+
+    </div>
+
+  </form>
+  <!-- end form -->

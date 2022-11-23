@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+
+	<meta charset="utf-8">
+	<title>Placido-Shop Software - Installation</title>
+	<meta name="description" content="Placido-Shop Online Sale Software - Installation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<base href="/">
+
+	<!-- FAVICON -->
+	<link rel="apple-touch-icon" sizes="180x180"
+	href="FAV/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32"
+	href="FAV/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16"
+	href="FAV/favicon-16x16.png">
+	<link rel="mask-icon"
+	href="FAV/safari-pinned-tab.svg" color="#e2e2e2">
+	<link rel="shortcut icon" href="FAV/favicon.ico">
+	<meta name="msapplication-TileColor" content="#2d89ef">
+	<meta name="msapplication-config" content="FAV/browserconfig.xml">
+	<meta name="theme-color" content="#e2e2e2">
+
+	<!-- FONT  -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&amp;display=swap">
+
+	<!-- STYLES -->
+	<link rel="stylesheet" href="CSS/apps/toastr.min.css" as="style">
+	<link rel="stylesheet" href="CSS/custom.css" as="style">
+	<link rel="stylesheet" href="CSS/api.css" as="style">
+	<link rel="stylesheet" href="CSS/all.min.css" as="style">
+
+<style>
+	body {
+		padding: 0;
+		max-width: 900px;
+		/* "Open Sans" is downloaded otherwise use system font */
+		font-family: "Open Sans", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	}
+	#install_content {
+			font-size: 20px;
+			color: #1e1e1e;
+			font-weight: 400;
+	}
+	#install_content .container {
+			background: #e0d1c3;
+	}
+	#install_content h1 {
+			color: #fff;
+			font-weight: 400;
+			font-size: 28px!important;
+	}
+	#install_content quote, #install_content span {
+			font-size: 20px;
+	}
+	#install_content .large {
+			font-size: 25px!important;
+			font-weight: 400;
+	}
+	#install_content .medium {
+	    font-size: 23px!important;
+	    color: #1ea19e;
+			font-weight: 600;
+			margin-top: 20px;
+			margin-bottom: 10px;
+	}
+	#install_content p:not(.info_text), #install_content h3 {
+	    margin: 0px auto 16px;
+	    padding: 0.01em 16px;
+			font-weight: 400;
+	}
+	#install_content button {
+			font-size: 18px!important;
+	}
+	#install_content input,
+	#install_content textarea,
+	#install_content select {
+	    width: 90%;
+	    border: 1px solid;
+	    border-color: #000;
+	    display: inline-block;
+	    margin: 8px 0 0;
+	    color: #a21f80;
+	    font-weight: 600;
+	    font-size: 20px;
+	}
+	#install_content input[type="file"] {
+			border: none !important;
+	}
+	#install_content input.mailbox_api {
+	    max-width: 380px;
+	    margin-bottom: 10px;
+	}
+	#LOGO_img_viewer, #LOGO_SN_img_viewer {
+			display: inline-block;
+			margin-left: 16px;
+	}
+	.divis {
+			margin-bottom: 10px;
+	}
+	.install_success {
+			width: 70%;
+			margin: 48px auto 29px;
+			padding: 12px 22px 28px;
+	}
+	.info_text {
+	    background: #d6dfe3;
+	    padding: 10px 15px 10px;
+	    position: relative;
+	    width: 86%;
+			margin-top: 24px;
+			margin-left: 16px;
+			overflow-wrap: break-word;
+	}
+	.info_icon {
+	    position: absolute;
+	    top: -10px;
+	    left: -7px;
+	    font-size: 22px;
+	    text-shadow: 1px 0px 2px #d5dfe3;
+	    background: #00a19d;
+	}
+	.ranger {
+	    -webkit-appearance: none;
+	    width: 200px !important;
+	    min-width: inherit !important;
+	    height: 12px;
+	    border-radius: 6px;
+	    background: #bbbbbb;
+	    outline: none;
+	}
+	/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+	.ranger::-webkit-slider-thumb {
+			-webkit-appearance: none; /* Override default look */
+			appearance: none;
+			width: 22px; /* Set a specific slider handle width */
+			height: 22px; /* Slider handle height */
+			background: #3596f3; /* btn background */
+			cursor: pointer; /* Cursor on hover */
+			border-radius: 100px;
+	}
+	/* need this ! */
+	.ranger::-moz-range-thumb {
+			width: 22px; /* Set a specific slider handle width */
+			height: 22px; /* Slider handle height */
+			background: #3596f3; /* btn background */
+			cursor: pointer;
+			border-radius: 100px;
+	}
+	.mrg0 {
+	    margin: 0;
+	}
+	.small {
+	    font-size: 19px !important;
+	}
+	:root {
+		  --bkg-error: #bd4213;
+		  --bkg-info: #1c7ead;
+		  --bkg-success: #2e9688;
+		  --bkg-warning: #da7e1e;
+	}
+	/* Toastr alert lib override */
+	#toast-container>.toast {
+		  opacity: 1;
+		  width: 580px !important;
+		  background-image: none !important;
+		  /* HIDE ICON  */
+	}
+	#toast-container>div {
+		  box-shadow: 0 0 4px #3c3c3c;
+		  margin: 10px 0 0;
+		  padding: 20px 26px;
+		  text-align: center;
+		  font-size: 18px;
+	}
+	.toast-info {
+	  	background-color: var(--bkg-info);
+	}
+	.toast-success {
+	  	background-color: var(--bkg-success);
+	}
+	.toast-warning {
+	  	background-color: var(--bkg-warning);
+	}
+	.toast-error {
+	  	background-color: var(--bkg-error);
+	}
+	.toast-message {
+	    font-size: 21px;
+	}
+	.input_error {
+	    border-color: #ff5722 !important;
+	    border-width: 2px !important;
+	}
+	::placeholder {
+	  color: #9c9c9c;
+	}
+	::-webkit-input-placeholder {
+	  color: #9c9c9c;
+	}
+	:-ms-input-placeholder {
+	  color: #9c9c9c;
+	}
+	::-ms-input-placeholder {
+	  color: #9c9c9c;
+	}
+	::-moz-placeholder {
+	  color: #9c9c9c;
+	}
+	:-moz-placeholder {
+	  color: #9c9c9c;
+	}
+	/* end Toastr alert lib override */
+	/* media querys 767px */
+	@media all and (max-width: 767px) {
+
+			#install_content .container {
+			    padding: 0.01em 10px!important;
+			}
+			#install_content p:not(.info_text), #install_content h3 {
+			    margin: 0px auto 12px!important;
+			    padding: 0!important;
+			}
+			#install_content input,
+			#install_content textarea,
+			#install_content select {
+			    width: 100%;
+			}
+			.info_text {
+			    width: 100%;
+			    margin-top: 20px;
+			    margin-left: 0;
+			}
+			.data_base_inputs input {
+				width: 88%!important;
+			}
+
+	}
+	/* END media querys 767px */
+</style>
+
+</head>
+
+<body class="dark-gray">
+
+	<div class="container" id="install_content">
+
+	  <h1 class="mrg0 margin-top text-light-gray">
+			Placido Shop&nbsp;&nbsp;<span>v{{api_settings.VERSION}}</span>
+		</h1>
+
+		<quote class="text-light-gray">-&nbsp;Welcome&nbsp;to installation&nbsp;page&nbsp;!</quote>
+
+		<p class="padding-small small text-light-gray">
+			See the documentation: <a href="https://placido-shop.com/Documentation.html"
+			title="Open the Placido-Shop documentation on a new tab"
+			target="_blank"
+			class="underline">How to install Placido-Shop</a>.
+		</p>
+
+		<form id="install_form" method="post" action="/" autocomplete="off">
+
+			<!-- API BD FIELDS  -->
+			{{{api_database_form}}}
+
+			<!-- API SETTING FIELDS  -->
+			{{{api_settings_form}}}
+
+	  </form>
+
+	</div>
+	<!-- END CONTAINER GEN -->
+	<br>
+	<br>
+
+	<button id="to_top"
+	class="blue-gray btn card round text-light-gray xlarge"
+	role="button"
+	type="button"
+	aria-label="Go to the top of the page"><i class="fas fa-chevron-up"
+	aria-hidden="true"></i></button>
+
+</body>
+	<!-- JavaScript scripts -->
+	<script type="text/javascript" src="JS/apps/jquery.min.js"></script>
+	<script type="text/javascript" src="JS/apps/toastr.min.js"></script>
+	<script type="text/javascript" src="INSTALL/install.js"></script>
+	</html>
+<!--  END OF TEMPL -->

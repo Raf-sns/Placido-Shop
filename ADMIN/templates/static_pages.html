@@ -1,0 +1,170 @@
+<!-- id="static_pages" -->
+<script id="static_pages" type="text/html">
+
+  <!-- container gen  -->
+  <div id="static_pages" class="pad_product_form">
+
+		<!-- btn show infos -->
+		<p>
+			<button onclick="$('#info_text').toggle('hide');"
+			role="button"
+			class="btn card gree margin-top round small small_btn">
+				<i class="fas fa-info-circle"></i>&nbsp;
+				{{tr.infos_static_pages}}
+			</button>
+		</p>
+
+		<!-- infos static pages  -->
+		<p id="info_text"
+		class="hide large">
+			<span>{{{tr.title_static_page_info}}}</span>
+			<br>
+			<br>
+			<span>{{{tr.url_static_page_info}}}</span>
+		</p>
+
+
+		<!-- button add new page -->
+		<button onclick="$('#form_new_page').toggle('hide');
+		$('#open_form_new_page').toggleClass(['fa-hand-point-right', 'fa-hand-point-down']);"
+			class="blue btn card round margin-bottom"
+			type="button"
+			role="button">
+				<i id="open_form_new_page" class="fa-fw fa-hand-point-right far"></i>&nbsp;
+				{{tr.add_new_static_page}}
+		</button>
+
+
+		<!-- form new page  -->
+		<form id="form_new_page"
+		class="hide margin-top card dark-gray panel round"
+		autocomplete="off">
+
+
+			<label for="page_title" class="inline-block margin-top large">
+				{{tr.title_static_page}}&nbsp;:
+			</label>
+			<br>
+			<input id="page_title"
+			name="page_title"
+			value=""
+			type="text"
+			class="border padding-small round"
+			autocomplete="off">
+
+			<br>
+
+			<label for="page_url" class="large">
+				{{tr.page_static_url}}&nbsp;:
+			</label>
+			<br>
+			<input id="page_url"
+			name="page_url"
+			value=""
+			type="text"
+			class="border padding-small round"
+			style="min-width: 40%"
+			autocomplete="off"><span class="xlarge">&nbsp;.html</span>
+
+			<p>
+				<button onclick="$.record_static_page();"
+					id="record_static_page"
+					role="button"
+					type="button"
+					class="blue btn card round margin-right">
+					<i class="fas fa-sign-in-alt"></i>&nbsp;
+					{{tr.record}}
+					&nbsp; <i class="fas fa-spin fa-circle-notch spinner hide"></i>
+				</button>
+
+				<button onclick="$.empty_form_new_page();"
+					role="button"
+					type="button"
+					class="btn card gray round">
+					<i class="fa-ban fas"></i>&nbsp;
+					{{tr.empty}}
+				</button>
+			</p>
+
+		</form>
+		<!-- end form new page  -->
+
+
+		<p class="large">
+			{{{tr.your_static_pages}}}&nbsp;:
+		</p>
+
+
+		<!-- id="static_list" -->
+		<div id="static_list">
+			{{>static_list}}
+		</div>
+		<!-- end id="static_list" -->
+
+	</div>
+	<!-- end container gen  -->
+</script>
+
+
+<!-- partial static list -->
+<script id="static_list" type="text/html">
+
+	{{#static_pages}}
+		<div id="static_page-{{page_id}}"
+		class="card dark-gray margin-bottom padding round">
+			<label for="page_title-{{page_id}}">
+				{{tr.title_static_page}}&nbsp;:
+			</label>
+			<br>
+			<input name="page_title-{{page_id}}"
+			value="{{page_title}}"
+			type="text"
+			class="border padding-small round"
+			autocomplete="off">
+
+			<br>
+
+			<label for="page_url-{{page_id}}">
+				{{tr.page_static_url}}&nbsp;:
+			</label>
+			<br>
+			<input name="page_url-{{page_id}}"
+			value="{{page_url}}"
+			type="text"
+			class="border padding-small round"
+			style="min-width: 40%"
+			autocomplete="off"><span class="xlarge">&nbsp;.html</span>
+
+			<p>
+				{{tr.link_to_page}}&nbsp;:
+				<a href="https://{{host}}/{{page_url}}.html"
+				title="{{page_title}}"
+				target="_blank"
+				class="underline">https://{{host}}/{{page_url}}.html</a>
+			</p>
+
+			<p>
+				<!-- btn modify   -->
+				<button onclick="$.ask_to_modif_static_page( {{page_id}}, '{{page_title}}' );"
+					id="modify_static-{{page_id}}"
+					role="button"
+					class="btn card blue round margin-right">
+					<i class="fa-cogs fas"></i>&nbsp;
+					{{tr.modify}}
+				</button>
+
+				<!-- btn suppr -->
+				<button onclick="$.ask_to_suppr_static_page( {{page_id}}, '{{page_title}}' );"
+					id="suppr_static-{{page_id}}"
+					role="button"
+					class="btn card dark-gray round">
+					<i class="fa-trash-alt far"></i>&nbsp;
+					{{tr.suppr}}
+				</button>
+
+			</p>
+
+		</div>
+	{{/static_pages}}
+
+</script>

@@ -1,0 +1,499 @@
+<!--
+* Program name : Placido Shop - Online sales software.
+* Version 0.3.0
+*  Copyleft  Raphaël Castello 2020-2022
+* Organisation: SNS - Web et Informatique
+* Web site: https://sns.pm
+* @link <contact@sns.pm>
+* Script name: order.html
+* This template was found on the net - Thanks! To prime author ...
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{{title}}</title>
+<meta http-equiv="Content-Language" content="{{lang}}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style type="text/css">
+/* Some resets and issue fixes */
+#outlook a { padding:0; }
+body{ width:100% !important; -webkit-text; size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0; }
+body{-webkit-text-size-adjust:none;}
+.ReadMsgBody { width: 100%; }
+.ExternalClass {width:100%;}
+.backgroundTable {margin:0 auto; padding:0; width:100%;!important;}
+table td {border-collapse: collapse;}
+.ExternalClass * {line-height: 115%;}
+/* End reset */
+/* MAIL css modify this values */
+.bkg_section { background: #fff; }
+.bkg { background: #d4d4d4; }
+.logo{ max-width: 100px;width: 100px; }
+.shop_title {
+	font-size: 32px;
+	color: #545454;
+	font-weight: 400 !important;
+	display: inline-block;
+	font-family: Arial, sans-serif;
+	vertical-align: top;
+	margin: 30px 0 0 4%;
+}
+.subject_mail { font-size: 26px;color:#545454 !important; }
+.color_text { color: #3c3c3c; }
+.color_text_note { color: #932295;font-size: 14px !important; }
+.size_text { font-size: 18px !important; }
+.small_text{ font-size: 17px; }
+.table_order_titles { color: #638b9e !important; }
+.color_link { color: #638b9e !important; }
+#order_tables th, #order_tables td { border-bottom: 1px solid #545454; }
+#order_tables th { font-weight: bold; }
+/* end MAIL css */
+/* These are our tablet/medium screen media queries */
+@media screen and (max-width: 630px){
+
+   /* Ceci définit les éléments à une largeur de 100 % et résout les problèmes de hauteur aussi */
+   *[class="100p"] {width:100% !important; height:auto !important;}
+
+}
+</style>
+</head>
+<body>
+
+
+<!-- TABLE GEN -->
+<table id="print_bill" width="100%" height="100%" border="0" cellpadding="0" cellspacing="0"
+style="margin: 0; padding: 0;">
+<tr>
+<td align="center" valign="top">
+
+<!-- CONTAINER 600px -->
+<table width="600" border="0" bgcolor="#eeeeee" cellspacing="0" cellpadding="10"
+class="100p bkg" style="margin-bottom: 32px;">
+  <tr>
+    <td align="center" valign="top">
+
+
+
+<!-- LOGO + TITRE -->
+<table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+class="100p">
+  <tr>
+   <td align="center">
+       <!-- IMAGE LOGO -->
+       <table width="600" border="0" cellspacing="10" cellpadding="0" bgcolor="#ffffff"
+       class="bkg_section">
+        <tr>
+					<td align="left">
+
+						<img class="logo no_img_for_print"
+						src="https://{{host}}/img/Logos/{{logo}}"
+						alt="{{{shop_title}}}" border="0" />
+
+						<h1 class="shop_title">{{{shop_title}}}</h1>
+
+					</td>
+        </tr>
+       </table>
+       <!-- FIN IMAGE LOGO -->
+   </td>
+  </tr>
+</table>
+<!-- FIN IMG LOGO -->
+
+<!-- hauteur de 10px vide  -->
+<table width="600" border="0"
+cellspacing="0" cellpadding="0" class="100p bkg">
+   <tr>
+      <td height="10"></td>
+   </tr>
+</table>
+<!-- FIN hauteur de 10px vide -->
+
+<!-- TITLE BILL CONTENT -->
+<table width="600" border="0" cellspacing="0" cellpadding="10"
+bgcolor="#ffffff" class="100p">
+   <tr>
+     <td align="center" valign="top">
+       <span class="subject_mail"
+       style="font-family: Arial,sans-serif;">{{title}}</span>
+     </td>
+   </tr>
+</table>
+<!-- END TITLE BILL CONTENT -->
+
+
+<!-- empty separator  -->
+<table width="600" border="0" cellspacing="0" cellpadding="0"
+class="100p bkg">
+   <tr>
+     <td height="10"></td>
+   </tr>
+</table>
+<!-- empty separator  -->
+
+<!-- empty separator  -->
+<table width="600" border="0" cellspacing="0" cellpadding="0"
+class="100p bkg_section">
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+<!-- empty separator  -->
+
+<!--  VENDOR + DATE BILL  -->
+<table width="600" border="0" cellspacing="0" cellpadding="0"
+bgcolor="#ffffff" class="100p">
+  <tr>
+    <td align="center" valign="top">
+      <table width="600" border="0" cellspacing="0" cellpadding="10"
+			bgcolor="#ffffff" class="100p">
+        <tr>
+          <!-- VENDOR INFOS -->
+          <td align="left" valign="top">
+            <table width="280" border="0" cellspacing="0" cellpadding="0"
+						bgcolor="#ffffff" class="100p">
+              <tr>
+                <td align="left">
+                  <span style="font-family: Arial,sans-serif;letter-spacing: 1px;line-height: 26px;"
+									class="size_text color_text">{{{legal_addr}}}</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <!-- END VENDOR INFOS -->
+
+          <!-- DATE BILL + NUMBER -->
+          <td align="right" valign="top">
+            <table width="280" border="0" cellspacing="0" cellpadding="0"
+						bgcolor="#ffffff" class="100p">
+              <tr>
+                <td align="left">
+                  <span style="font-family: Arial,sans-serif;letter-spacing: 1px;line-height: 26px;"
+									class="size_text color_text">{{tr.bill_number}}&nbsp;{{bill_id}}
+                  <br />
+                  {{tr.invoice_issue_date}}&nbsp;: {{date_now}}
+                  <br />
+                  {{tr.state}}&nbsp;: {{state}}</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <!-- END DATE BILL + NUMBER -->
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!--  END VENDOR + DATE BILL  -->
+
+
+<!-- IDENTITY BUYER  -->
+<table width="600" border="0" cellspacing="0" cellpadding="10"
+bgcolor="#ffffff" class="100p bkg_section">
+  <tr>
+    <td align="left" valign="top" class="size_text color_text" style="line-height: 26px;">
+			<span style="text-decoration: underline;">{{tr.invoice_to}}</span>&nbsp;:
+      <br />
+      <br />
+			<span style="font-family: Arial,sans-serif;
+			letter-spacing: 1px;line-height: 26px;">{{{customer}}}</span>
+    </td>
+  </tr>
+</table>
+<!-- END IDENTITY BUYER -->
+
+
+<!-- empty separator  -->
+<table width="600" border="0" cellspacing="0" cellpadding="0"
+class="100p bkg_section">
+	<tr>
+		<td height="10"></td>
+	</tr>
+</table>
+<!-- empty separator -->
+
+
+<!-- BILL PRODUCTS PURCHASED -->
+<table width="600" border="0" cellspacing="10" cellpadding="0"
+class="100p bkg_section">
+   <tr>
+      <td align="center">
+        <table id="order_tables" width="580" cellspacing="0" cellpadding="0"
+				bgcolor="#ffffff" class="100p">
+           <tr>
+
+              <th class="size_text table_order_titles"
+							style="width: 40%;padding:10px 10px 10px 10px;"
+							align="center">
+								<span style="font-family: Arial,sans-serif;">
+									{{tr.products}} </span>
+							</th>
+
+              <th class="size_text table_order_titles"
+							style="width: 20%;padding:10px 10px 10px 10px;"
+							align="center">
+								<span style="font-family: Arial,sans-serif;">
+									{{tr.unit_price_bill}} </span>
+							</th>
+
+							<th class="size_text table_order_titles"
+							style="width: 10%;padding:10px 10px 10px 10px;"
+							align="center">
+							<span style="font-family: Arial,sans-serif;">
+								{{tr.quantity}} </span>
+							</th>
+
+              <th class="size_text table_order_titles"
+							style="width: 30%;padding:10px 10px 10px 10px;"
+							align="center">
+								<span style="font-family: Arial,sans-serif;">
+									{{tr.partial_total}} </span>
+							</th>
+
+            </tr>
+
+            {{#products_selected}}
+
+            <tr>
+
+              <td style="width: 40%;padding:10px 10px 10px 10px;"
+							align="center" class="size_text color_text">
+								<span style="font-family: Arial,sans-serif;">
+									{{title}}</span>
+							</td>
+
+              <td style="width: 20%;padding:10px 10px 10px 10px;"
+							align="center" class="size_text color_text">
+								<span style="font-family: Arial,sans-serif;">
+									{{PU_text}}</span>
+							</td>
+
+							<td style="width: 10%;padding:10px 10px 10px 10px;"
+							align="center" class="size_text color_text">
+							<span style="font-family: Arial,sans-serif;">
+								{{quant}}</span>
+							</td>
+
+              <td style="width: 30%;padding:10px 10px 10px 10px;"
+							align="center" class="size_text color_text">
+								<span style="font-family: Arial,sans-serif;">
+									{{PU_TT}}
+									{{#tax}}
+									<br />
+									<span style="font-size: 14px;" class="color_text_note">
+										{{{tr.total_tax_row}}}&nbsp;({{tax_text}}%)&nbsp;:
+										{{total_tax_row}}
+									</span>
+									{{/tax}}
+								</span>
+							</td>
+
+            </tr>
+
+            {{/products_selected}}
+
+            {{#refounded}}
+            <tr>
+
+              <td style="width: 40%;padding:10px 10px 10px 10px;"
+							align="center" class="size_text table_order_titles">
+								<span style="font-family: Arial,sans-serif;font-weight: bold;">
+									{{tr.discount_on_bill}}</span>
+							</td>
+
+              <td colspan="2" style="width: 20%;padding:10px 10px 10px 10px;"
+							align="center" class="size_text color_text">
+								<span style="font-family: Arial,sans-serif;">
+									{{tr.refounded_date}}&nbsp;:
+									<br />
+									{{refounded_date}}
+								</span>
+							</td>
+
+              <td style="width: 30%;padding:10px 10px 10px 10px;"
+							align="center" class="size_text color_text">
+								<span style="font-family: Arial,sans-serif;">
+									{{tr.amount}}&nbsp;:
+									<br />
+									<b style="font-weight: bold;">
+										-&nbsp;{{refounded_amount_text}}
+									</b>
+								</span>
+							</td>
+
+            </tr>
+            {{/refounded}}
+
+            <tr>
+
+              <td colspan="3"
+							style="padding: 10px 10px 10px 10px;text-align: right;"
+							class="size_text table_order_titles">
+								<span style="font-family: Arial,sans-serif;font-weight: bold;">
+									<b style="font-weight: bold;">{{tr.total_amount_sale}}</b>
+								</span>
+							</td>
+
+              <td style="width: 30%;padding:10px 10px 10px 10px;text-align: center;"
+							class="size_text color_text">
+								<span style="font-family: Arial,sans-serif;font-weight: bold;">
+									<b style="font-weight: bold;">
+										{{amount_text}}
+									</b>
+								</span>
+							</td>
+            </tr>
+						{{#rep_tva}}
+						<tr>
+
+              <td colspan="3"
+							style="padding: 10px 10px 10px 10px;text-align: right;"
+							class="small_text table_order_titles">
+								<span style="font-family: Arial,sans-serif;">
+									{{{tr.total_tax_sale}}}
+								</span>
+							</td>
+
+              <td style="width: 30%;padding:10px 10px 10px 10px;text-align: center;"
+							class="small_text color_text">
+								<span style="font-family: Arial,sans-serif;">
+										{{total_tax_sale}}
+								</span>
+							</td>
+						</tr>
+						{{/rep_tva}}
+        </table>
+      </td>
+    </tr>
+</table>
+<!-- BILL PRODUCTS PURCHASED -->
+
+
+<!-- empty separator  -->
+<table width="600" border="0" cellspacing="0" cellpadding="0"
+class="100p bkg_section">
+  <tr>
+    <td height="20"></td>
+  </tr>
+</table>
+<!-- empty separator  -->
+
+
+<!-- empty separator  -->
+<table width="600" border="0" cellspacing="0" cellpadding="0"
+class="100p bkg">
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+<!-- empty separator  -->
+
+
+<!-- BILL LEGAL MENTIONS -->
+<table width="600" border="0" cellspacing="0" cellpadding="10"
+class="100p bkg_section">
+  <tr>
+    <td align="left">
+      <span class="color_text small_text"
+      style="font-family: Arial,sans-serif;">{{{legal_mention}}}</span>
+    </td>
+  </tr>
+</table>
+<!-- END BILL LEGAL MENTIONS -->
+
+<!-- print bill was not show for prin view -->
+{{^print_bill}}
+<!-- empty separator  -->
+<table width="600" border="0" cellspacing="0" cellpadding="0"
+class="100p bkg">
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+<!-- empty separator  -->
+
+
+<!-- TEXT SLOGAN -->
+<table width="600" border="0" cellspacing="0" cellpadding="10"
+class="100p bkg_section">
+  <tr>
+    <td align="center">
+      <span class="size_text color_text"
+      style="font-family: Arial,sans-serif;">
+        {{{tr.vendor_message}}}
+      </span>
+    </td>
+  </tr>
+</table>
+<!-- FIN TEXT SLOGAN -->
+
+
+<!-- no-reply -->
+<table width="600" border="0" cellspacing="0" cellpadding="10"
+class="100p bkg_section">
+  <tr>
+    <td align="center">
+      <span class="small_text color_text"
+      style="font-family: Arial, sans-serif;">
+        {{{tr.no_reply_message}}}
+      </span>
+    </td>
+  </tr>
+</table>
+
+
+<!-- empty separator  -->
+<table width="600" border="0" cellspacing="0" cellpadding="0"
+class="100p bkg">
+  <tr>
+    <td height="2"></td>
+  </tr>
+</table>
+<!-- empty separator  -->
+
+
+<!-- empty separator  -->
+<table width="600" border="0" cellspacing="0" cellpadding="0"
+class="100p bkg_section">
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+<!-- empty separator  -->
+
+
+<!-- shop link -->
+<table width="600" border="0" cellspacing="0" cellpadding="10"
+class="100p bkg_section">
+  <tr>
+    <td align="center">
+      <span class="small_text color_text"
+      style="font-family: Arial, sans-serif;">
+        <a class="color_link"
+        href="https://{{host}}"
+        title="{{tr.see_our_website}}"
+        target="_blank">{{host}}</a>&nbsp;&copy;&nbsp;{{year}}
+      </span>
+    </td>
+  </tr>
+</table>
+
+<!-- empty separator  -->
+<table width="600" border="0" cellspacing="0" cellpadding="0"
+class="100p bkg_section">
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+<!-- empty separator  -->
+{{/print_bill}}
+
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
