@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="{{website.lang}}">
+<head>
+  <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{website.title}}</title>
+  <meta name="description" content="{{website.description}}">
+  <base href="/">
+
+	<!-- Content-Security-Policy -->
+	{{>CSP}}
+
+	<!-- FAV icons: Use https://realfavicongenerator.net/ for generate your favicons -->
+	<link rel="apple-touch-icon" sizes="180x180" href="FAV/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="FAV/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="FAV/favicon-16x16.png">
+	<link rel="mask-icon" href="FAV/safari-pinned-tab.svg" color="#e2e2e2">
+	<link rel="shortcut icon" href="FAV/favicon.ico">
+	<meta name="msapplication-TileColor" content="#2d89ef">
+	<meta name="msapplication-config" content="FAV/browserconfig.xml">
+	<meta name="theme-color" content="#e2e2e2">
+
+	<!-- Open Graph Protocol -->
+	<meta property="og:type" content="website">
+  <meta property="og:title" content="{{og.title}}">
+  <meta property="og:url" content="{{og.url}}">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="{{og.image}}">
+  <meta property="og:description" content="{{og.description}}">
+  <meta name="author" content="Placido-Shop Software - www.placido-shop.com">
+
+	<!-- Progressive Web Application -->
+	<link rel="manifest" href="manifest.webmanifest">
+
+	<!-- FONT AWSOME if use this kit,
+	not update/compress CSS/all.min.css in API/files_to_compress -->
+	<!-- dont forget to modify CSP -->
+	<!-- Public kit Placido-Shop for FONT AWSOME 6 -->
+	<!-- <script src="https://kit.fontawesome.com/c015b2ec2a.js" crossorigin="anonymous"></script> -->
+
+	<!-- embed FONT AWSOME 5.15.4 LTS -->
+	<link rel="stylesheet"
+	href="CSS/all.min.css" rel="preload" as="style">
+	<!-- end FONT AWSOME -->
+
+	<!-- CSS -->
+	{{^website.css_compressed}}
+    <link rel="stylesheet"
+      href="CSS/apps/swiper-bundle.min.css" rel="preload" as="style">
+    <link rel="stylesheet"
+      href="CSS/apps/toastr.min.css" rel="preload" as="style">
+		<link rel="stylesheet"
+			href="CSS/custom.css" rel="preload" as="style">
+    <link rel="stylesheet"
+			href="CSS/api.css" rel="preload" as="style">
+		<link rel="stylesheet"
+			href="CSS/single_product.css" rel="preload" as="style">
+    <link rel="stylesheet"
+			href="CSS/shop.css" rel="preload" as="style">
+  {{/website.css_compressed}}
+  {{#website.css_compressed}}
+		<!-- ALL API + LIBS css compressed -->
+    <link rel="stylesheet"
+					href="CSS/{{website.compress_prefix}}-api.min.css" rel="preload" as="style">
+  {{/website.css_compressed}}
+	<!-- end CSS -->
+</head>
+<body itemscope itemtype="https://schema.org/WebSite">
+	<!-- scheme.org tag - just after body tag -->
+	<link itemprop="url" href="https://{{website.host}}"/>
+
+	<!-- splash_screen -->
+	<div id="splash_screen">
+		<img src="{{view.logo}}"
+		alt="{{view.title}}"
+		class="animated fadeInDown"
+		style="animation-duration: 1s;">
+		<div class="animated fadeInUp title_splash xxlarge"
+		style="animation-duration: 1.4s;">{{view.title}}</div>
+	</div>
+
+	<!-- HEADER - include slide show -->
+  {{>header}}
+  <!-- END HEADER -->
+
+  <!-- MENU SITE SIDEBAR - nav + buttons -->
+	<!-- ! OUT OF THE DOCUMENT  -->
+  {{>menu}}
+  <!-- END MENU SITE -->
+
+  <!-- SORT BLOCK - sort price, nb products, pagination -->
+  {{>sort_block}}
+  <!-- SORT BLOCK -->
+
+
+  <!-- CAT RENDER if need -->
+  <div id="title_cat_block" class="card" style="{{view.cat_block_display}}">
+    <h2 id="cat_title" class="center" aria-labelledby="cat_title_text">
+      <i class="color_theme title_icon fa-hashtag fas fa-fw"></i>
+      <span id="cat_title_text">{{{view.cat_name}}}</span>
+    </h2>
+  </div>
+  <!-- CAT RENDER -->
+
+
+  <!-- MAIN CONTAINER -->
+  <main id="center_page">
+    {{^page}}
+      {{>../API/products_view}}
+    {{/page}}
+    {{#page}}
+      {{{page_templ}}}
+    {{/page}}
+  </main>
+  <!-- MAIN CONTAINER -->
+
+
+  <!-- PAGINATION BOTTOM -->
+  <div class="center margin-bottom margin-top">
+    {{>pagination_arrows}}
+  </div>
+
+
+	<!-- MENU CATEGORIES - ASIDE -->
+	{{>categories}}
+  <!-- end MENU CATEGORIES -->
+
+
+  <!-- HIDDEN THINGS -->
+  <!-- MODAL PAYMENT -->
+  <div id="modal_payment" class="modal animate-zoom">
+    <div class="modal-content"></div>
+  </div>
+
+  <!-- MODAL if you want a modal for something  -->
+  <!-- <div class="modal" id="modal_contact"
+        style="z-index: 28;
+        height: -webkit-fill-available;
+        display: none;">
+    <div class="modal-content round" style="background-color: transparent;">
+      <div id="render_modal_contact" class="round-large white">
+      </div>
+    </div>
+  </div> -->
+
+  <!-- TO TOP BUTTON -->
+  <button id="to_top"
+  class="btn button card-4"
+  role="button"
+  aria-label="{{tr.go_to_top}}"><i class="fas fa-chevron-up"></i></button>
+
+  <!-- footer -->
+  {{>footer}}
+
+{{^website.js_compressed}}
+  <!--  FRAMEWORKS -->
+  <script src="JS/apps/jquery.min.js" defer></script>
+	<script src="JS/apps/mustache.min.js" defer></script>
+  <script src="JS/apps/jquery.mustache.js" defer></script>
+  <script src="JS/apps/touchSwipe.min.js" defer></script>
+  <script src="JS/apps/swiper-bundle.min.js" defer></script>
+  <script src="JS/apps/toastr.min.js" defer></script>
+
+  <!-- AUTHOR'S SCRIPT be carefull at order -->
+	<!-- this order is important  -->
+	<script src="JS/cart.js" defer></script>
+	<script src="JS/main.js" defer></script>
+	<script src="JS/stats.js" defer></script>
+	<script src="JS/api_loader.js" defer></script>
+	<!-- / end this order is important  -->
+	<script src="JS/tools.js" defer></script>
+	<script src="JS/pagination.js" defer></script>
+  <script src="JS/pwa.js" defer></script>
+	<script src="JS/slideshow.js" defer></script>
+	<script src="JS/history.js" defer></script>
+
+{{/website.js_compressed}}
+{{#website.js_compressed}}
+  <script src="JS/{{website.compress_prefix}}-api.min.js" defer></script>
+{{/website.js_compressed}}
+</body>
+</html>

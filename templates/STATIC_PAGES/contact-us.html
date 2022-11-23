@@ -1,0 +1,62 @@
+
+<div class="card round" id="page">
+
+  <form class="" id="form_contact">
+
+    <h2>
+      <i class="far fa-envelope color_theme"></i>&nbsp; {{tr.contact_us}}
+    </h2>
+
+    <p class="color_theme mrg0">
+      <i class="far fa-hand-point-right text-gray"></i>&nbsp;
+      {{tr.info_contact}}
+    </p>
+
+    <div class="row">
+      <div class="col s12 m6">
+        <label for="name"
+				class="text-dark-gray bold">{{tr.contact_name}}</label>
+        <input class="border input round"
+				id="name"
+				name="name"
+				type="text"
+				required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12 m6">
+        <label for="mail"
+				class="text-dark-gray bold">{{tr.contact_mail}}</label>
+        <input class="border input round"
+				id="mail"
+				name="mail"
+				type="text"
+				required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="message"
+				class="text-dark-gray bold">{{tr.contact_message}}</label>
+        <textarea class="border input round"
+				id="message"
+				name="message"
+        rows="6"></textarea>
+      </div>
+    </div>
+
+    <p class="margin-bottom margin-top">
+			{{tr.text_contact}}
+    </p>
+
+    <p>
+      <button onclick="$.send_message();"
+      id="btn_send_mess"
+      class="button">
+      <i class="fas fa-sign-in-alt"></i>&nbsp; {{tr.send}}</button>
+    </p>
+  </form>
+
+</div>

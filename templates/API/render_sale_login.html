@@ -1,0 +1,70 @@
+<style>
+  .fields_login_container {
+      max-width: 300px;
+      margin: 30px auto 20px;
+  }
+</style>
+<div class="card round" id="page">
+
+  <h2>
+    <i class="color_theme fa-shopping-basket fas"></i>&nbsp;
+    {{tr.your_order}}&nbsp;:
+  </h2>
+
+  <p class="center">
+    <i class="color_theme far fa-hand-point-right"></i>&nbsp;
+    {{tr.enter_login_render_sale}}
+  </p>
+
+  <form id="form_render_sale"
+    class="text">
+
+      <div class="fields_login_container">
+
+        <label for="mail"
+        class="label_input">
+          {{tr.your_mail}}&nbsp;:
+        </label>
+        <br>
+        <input type="text"
+        name="mail"
+        id="mail"
+        value=""
+        autocomplete="email"
+        class="border input round" />
+
+        <br>
+
+        <label for="comm_number"
+        class="label_input">
+          {{tr.your_order_number}}&nbsp;:
+        </label>
+        <br>
+        <input type="text"
+        name="comm_number"
+        id="comm_number"
+        value=""
+        autocomplete="off"
+        class="border input round" />
+
+        <br>
+
+        <button onclick="$.get_sale_user(event);"
+        id="get_sale_user"
+        class="button margin-top"
+        role="button"
+        type="button">
+        <i class="fas fa-sign-in-alt"></i>&nbsp; {{tr.validate}}&nbsp;
+        </button>
+
+        &nbsp;
+        <span id="spinner_process" class="hide" aria-label="{{tr.please_wait}}">
+          <i class="fa-fw fas fa-circle-notch fa-spin"></i>
+        </span>
+
+      </div>
+
+  </form>
+
+</div>
+<!-- END DIV PAGE -->

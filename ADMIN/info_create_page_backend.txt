@@ -1,0 +1,67 @@
+
+Bac-end image : "Maldives-beach" - DORSA MASGHATI
+
+
+	BACK END - Create a page :
+
+
+	Add a link in navbar :
+ 	- in templates/backend_base.html
+ 	- find id="navbar"
+ 	- add an item ex. for "my_tab" :
+	<button onclick="$.open_vue('my_tab', event);"
+	data-target="my_tab"
+	class="menu_left bar-item border-gray border-top hover-dark-gray padding pointer">
+	<i class="fas fa-home"></i>
+	&nbsp; {{tr.my_tab_translate_title}}</button>
+
+
+	Create template :
+	- in templates/ add a file : my_tab.html
+	- ex. for templates/my_tab.html :
+	<!-- id="my_tab" -->
+	<script id="my_tab" type="text/html">
+	  <!-- container gen  -->
+	  <div id="my_tab" class="padding">
+			<p>
+				hello from my_tab.html !
+			</p>
+		</div>
+	</script>
+
+
+	Insert page in the template controller :
+	-> see : templates/backend_base.html
+	-> find : id="page_gen"
+	- insert :
+	ex. : {{#vue.my_tab}}
+					{{>my_tab}}
+				{{/vue.my_tab}}
+
+
+
+	Manage view template + history :
+	- in JS/main.js -> function $.open_vue();
+	add :
+	( in switch )
+		case 'my_tab':
+			$.o.vue.my_tab = true;
+			$.o.vue.title = $.o.tr.my_tab_translate_title;
+			$.o.vue.icon = 'fas fa-home';
+		break;
+
+
+	Load template and add it to Mustache manager :
+	- in JS/tools.js -> see : const Templates = [ ... ];
+	- add your template :
+	ex. : const Templates = [ ..., 'templates/my_tab.html' ];
+
+
+	Use a specific .js file :
+	- in JS/ add : my_tab.js ( now you have : JS/my_tab.js )
+	- for load script :
+	- in JS/tools.js see : const ARR_scripts = [ ... ]
+	- add your srcipt to the array :
+	ex. const ARR_scripts = [ ... ,
+														'JS/my_tab.js'
+													];

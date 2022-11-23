@@ -1,0 +1,17 @@
+
+Placido-Shop is an open-source software that
+required many hours of work on my own funds.
+
+You can tell me about the security problems you encounter without fear,
+you will be welcome.
+
+For the moment I do not have the means to reward with money the researchers
+who would find security flaws in the application, but that may come.
+
+Thanks for your help, best regards.
+
+Raf - Developer of Placido-Shop
+
+Contact: mailto:contact@sns.pm
+Expires: 2022-12-31T22:59:00.000Z
+Preferred-Languages: en, fr

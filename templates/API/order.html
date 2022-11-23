@@ -1,0 +1,551 @@
+<!--
+* Program name : Placido Shop - Online sales software.
+* Version 0.3.0
+*  Copyleft  Raphaël Castello 2020-2022
+* Organisation: SNS - Web et Informatique
+* Web site: https://sns.pm
+* @link <contact@sns.pm>
+* Script name: order.html
+* This template was found on the net - Thanks! To prime author ...
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{{title}}</title>
+<meta http-equiv="Content-Language" content="{{lang}}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style type="text/css">
+*{font-weight: normal !important;}
+/* Some resets and issue fixes */
+#outlook a { padding:0; }
+body{ width:100% !important; -webkit-text; size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0; }
+body{-webkit-text-size-adjust:none;}
+.ReadMsgBody { width: 100%; }
+.ExternalClass {width:100%;}
+.backgroundTable {margin:0 auto; padding:0; width:100%;!important;}
+table td {border-collapse: collapse;}
+.ExternalClass * {line-height: 115%;}
+/* End reset */
+/* table#order_tables td, table#order_tables th {border-bottom: 1px solid #a9a9a9;} */
+/* MAIL css modify this values */
+.border_bottom { border-bottom: 1px solid #a9a9a9; }
+.bkg_section_mail { background: #fff; }
+.logo{ max-width: 100px;width: 100px; }
+.shop_title { font-size: 36px;color: #545454; }
+.subject_mail { font-size: 26px;color:#545454 !important; }
+.color_text { color: #3c3c3c; }
+.color_text_note { color: #9b2aa8; font-size: 14px !important; }
+.size_text { font-size: 18px; }
+.small_text{ font-size: 17px; }
+.table_order_titles { color: #638b9e !important; }
+.color_link { color: #638b9e !important; }
+/* end MAIL css */
+/* These are our tablet/medium screen media queries */
+@media screen and (max-width: 630px){
+
+   /* Ceci définit les éléments à une largeur de 100 % et résout les problèmes de hauteur aussi */
+   *[class="100p"] {width:100% !important; height:auto !important;}
+
+}
+</style>
+</head>
+<body>
+<!-- TABLE GENERALE -->
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0"
+style="margin: 0; padding: 0;">
+<tr>
+<td align="center" valign="top">
+
+
+<!-- DéBUT DU DOC -->
+<table width="600" border="0" bgcolor="#d4d4d4" cellspacing="0" cellpadding="10" class="100p">
+  <tr>
+    <td align="center" valign="top">
+
+<!-- LOGO + TITRE -->
+<table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
+  <tr>
+   <td align="center">
+       <!-- IMAGE LOGO -->
+       <table width="600" border="0" cellspacing="10" cellpadding="0" bgcolor="#ffffff"
+       class="bkg_section_mail">
+         <tr>
+           <td align="left">
+             <img class="logo" src="https://{{host}}/img/Logos/{{logo}}"
+              alt="{{{shop_title}}}" border="0" />
+
+            <h1 class="shop_title"
+            style="display: inline-block;
+						     font-family: Arial, sans-serif;
+						     vertical-align: top;
+						     margin: 30px 0 0 4%;">{{{shop_title}}}</h1>
+           </td>
+         </tr>
+       </table>
+       <!-- FIN IMAGE LOGO -->
+   </td>
+  </tr>
+</table>
+<!-- FIN IMG LOGO -->
+
+<!-- hauteur de 10px vide  -->
+<table width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p">
+   <tr>
+      <td height="10"></td>
+   </tr>
+</table>
+<!-- FIN hauteur de 10px vide -->
+
+<!-- TITLE BILL CONTENT -->
+<table width="600" border="0" cellspacing="0" cellpadding="10" bgcolor="#ffffff" class="100p">
+   <tr>
+     <td align="center" valign="top">
+       <span class="subject_mail"
+       style="font-family: Arial,sans-serif;">{{title}}</span>
+     </td>
+   </tr>
+</table>
+<!-- END TITLE BILL CONTENT -->
+
+
+<!-- hauteur de 10px vide  -->
+<table width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p">
+   <tr>
+     <td height="10"></td>
+   </tr>
+</table>
+<!-- FIN hauteur de 10px vide -->
+
+<!--   BILL CONTENT PART 1   -->
+<table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
+  <tr>
+    <td align="center" valign="top">
+      <table width="600" border="0" cellspacing="0" cellpadding="10" bgcolor="#ffffff" class="100p">
+        <tr>
+          <!-- TIME FACTURE + NUMBER -->
+          <td align="left"
+          class="color_text size_text"
+          style="font-family: Arial,sans-serif;">
+            {{tr.order_number}}&nbsp;{{sale_id}}
+            <br />
+            {{tr.order_executed_date}}&nbsp;: {{date_now}}
+            {{^for_admin}}
+              <br />
+              {{tr.order_delivery_date}}&nbsp;: {{date_liv}}
+              <br />
+              {{tr.order_payment_limit_date}}&nbsp;: {{date_limit}}
+            {{/for_admin}}
+            <br />
+          </td>
+          <!-- TIME FACTURE + NUMBER -->
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- hauteur de 10px vide  -->
+<table width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p">
+ <tr>
+  <td height="10"></td>
+ </tr>
+</table>
+<!-- FIN hauteur de 10px vide -->
+
+
+
+<!-- IDENTITY BUYER  -->
+<table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
+  <tr>
+    {{#address_sup}}
+    <td align="center" valign="top">
+    {{/address_sup}}
+    {{^address_sup}}
+    <td align="left" valign="top">
+    {{/address_sup}}
+
+      <table width="280" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
+        <tr>
+          <td align="left"
+          class="color_text size_text">
+            <div style="padding:10px 10px 10px 10px;">
+            <span class="color_text size_text"
+            style="font-family: Arial,sans-serif;">
+            {{^for_admin}}
+              {{tr.your_customer_informations}}&nbsp;:
+            {{/for_admin}}
+            {{#for_admin}}
+              {{tr.customer_informations}}&nbsp;:
+            {{/for_admin}}
+            <br />
+            <br />
+            {{firstname}} {{lastname}}
+            <br />
+            {{address}}
+            <br />
+            {{post_code}} {{city}}
+						<br />
+            {{country}}</span>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+    <!-- END IDENTITY BUYER -->
+
+    {{#address_sup}}
+    <!-- ADDRESS SUP. if exist -->
+    <td align="center" valign="top">
+      <table width="280" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
+        <tr>
+          <td align="right"
+          class="color_text size_text">
+            <div style="padding:10px 10px 10px 10px;">
+            <span class="color_text size_text"
+            style="font-family: Arial,sans-serif;">
+              {{tr.delivery_address}}&nbsp;:
+            <br />
+            <br />
+            {{firstname_sup}} {{lastname_sup}}
+            <br />
+            {{address_sup}}
+            <br />
+            {{post_code_sup}} {{city_sup}}</span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <!-- ADDRESS SUP. -->
+    {{/address_sup}}
+  </tr>
+</table>
+
+<!-- empty separator  -->
+<table width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+ <tr>
+  <td height="10"></td>
+ </tr>
+</table>
+<!-- empty separator -->
+
+<table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
+  <tr>
+    <td align="left">
+      <div style="padding: 10px 10px 20px 10px">
+        <span class="color_text size_text"
+        style="font-family: Arial,sans-serif">
+          {{^for_admin}}
+            {{tr.your_order}}&nbsp;:
+          {{/for_admin}}
+          {{#for_admin}}
+            {{tr.order_details}}&nbsp;:
+          {{/for_admin}}
+        </span>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<!-- BILL TABS PART 3 -->
+<table width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+   <tr>
+      <td align="center">
+        <table width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
+
+          <!-- titles tables cells -->
+           <tr style="border-bottom: 1px solid #a9a9a9;">
+
+              <th align="center"
+              class="border_bottom table_order_titles color_text size_text"
+              style="width: 40%;padding:10px 10px 10px 10px;" >
+                <span class="table_order_titles size_text"
+                style="font-family: Arial,sans-serif;">
+                  {{tr.product}}
+                </span>
+              </th>
+
+              <th align="center"
+              class="border_bottom table_order_titles"
+              style="width: 20%;padding:10px 10px 10px 10px;">
+                <span class="table_order_titles size_text"
+                style="font-family: Arial,sans-serif;">
+                  {{tr.price_by_unit}}
+                </span>
+              </th>
+
+              <th align="center"
+              class="border_bottom table_order_titles"
+              style="width: 20%; padding:10px 10px 10px 10px;">
+                <span class="table_order_titles size_text"
+                style="font-family: Arial,sans-serif;">
+                  {{tr.quantity}}
+                </span>
+              </th>
+
+              <th align="center"
+              class="border_bottom table_order_titles"
+              style="width: 20%;padding:10px 10px 10px 10px;">
+                <span class="table_order_titles size_text"
+                style="font-family: Arial,sans-serif;">
+                  {{tr.total_amount_product}}
+                </span>
+              </th>
+
+            </tr>
+
+            {{#sold_products}}
+
+            <tr style="border-bottom: 1px solid #a9a9a9;">
+
+              <td  align="center"
+              class="border_bottom"
+              style="width: 40%;padding:10px 10px 10px 10px;">
+                <span class="color_text small_text"
+                style="font-family: Arial,sans-serif;">{{{title}}}</span>
+              </td>
+
+              <td align="center"
+              class="border_bottom"
+              style="padding:10px 10px 10px 10px;width: 20%;">
+                <span class="color_text small_text"
+                style="font-family: Arial,sans-serif;">{{PU_TT}}</span>
+              </td>
+
+              <td align="center"
+              class="border_bottom"
+              style="padding:10px 10px 10px 10px;width: 20%;">
+                <span class="color_text small_text"
+                style="font-family: Arial,sans-serif;">{{quant}}</span>
+              </td>
+
+              <td align="center"
+              class="border_bottom"
+              style="padding:10px 10px 10px 10px;width: 20%;">
+                <span class="color_text small_text"
+                style="font-family: Arial,sans-serif;">
+                  {{total_old_row_text}}
+                  {{#tax}}
+                  <br />
+                  <span class="color_text_note">
+                    {{{tr.total_tax_row}}}&nbsp;({{tax_text}}%)&nbsp;:
+                    <br />
+                    {{total_tax_row}}
+                  </span>
+                  {{/tax}}
+                </span>
+              </td>
+
+            </tr>
+
+            {{/sold_products}}
+
+            <!-- render totals sale -->
+            <tr style="border-bottom: none;">
+
+              <td align="center"
+              style="padding:10px 10px 10px 10px;width: 20%;"></td>
+
+              <td align="center"
+              style="padding:10px 10px 10px 10px;width: 20%;"></td>
+
+              <td align="center"
+              class="border_bottom table_order_titles"
+              style="padding:10px 10px 10px 10px;width: 40%;border-bottom: 1px solid #a9a9a9;">
+                <span class="table_order_titles color_text size_text"
+                style="font-family: Arial,sans-serif;">
+                  {{tr.total_amount_sale}}
+                </span>
+              </td>
+
+              <td align="center"
+              class="border_bottom"
+              style="padding:10px 10px 10px 10px;width: 20%;border-bottom: 1px solid #a9a9a9;">
+                <span class="color_text size_text"
+                style="font-family: Arial,sans-serif;">
+                  {{total_amount_sale_text}}
+                </span>
+              </td>
+            </tr>
+
+            {{#total_tax_sale}}
+            <tr style="border-bottom: none;">
+
+              <td align="center"
+              style="padding:10px 10px 10px 10px;width: 20%;"></td>
+
+              <td align="center"
+              style="padding:10px 10px 10px 10px;width: 20%;"></td>
+
+              <td align="center"
+              class="border_bottom table_order_titles"
+              style="padding:10px 10px 10px 10px;width: 40%;border-bottom: 1px solid #a9a9a9;">
+                <span class="table_order_titles color_text small_text"
+                style="font-family: Arial,sans-serif;">
+                  {{tr.total_tax_sale}}
+                </span>
+              </td>
+
+              <td align="center"
+              class="border_bottom"
+              style="padding:10px 10px 10px 10px;width: 20%;border-bottom: 1px solid #a9a9a9;">
+                <span class="color_text small_text"
+                style="font-family: Arial,sans-serif;">
+                  {{total_tax_sale}}
+                </span>
+              </td>
+            </tr>
+            {{/total_tax_sale}}
+        </table>
+      </td>
+    </tr>
+</table>
+<!-- BILL TABS -->
+
+<!--  END  BILL CONTENT    -->
+
+<table style="background: #ffffff;" width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+  <tr>
+    <td height="30"></td>
+  </tr>
+</table>
+
+{{^for_admin}}
+<!-- LINK RENDER SALE -->
+<!-- hauteur vide  -->
+<table style="background: #d4d4d4;" width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p">
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+
+<table style="background: #ffffff;" width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+  <tr>
+    <td height="20"></td>
+  </tr>
+</table>
+
+<table width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+  <tr>
+    <td align="center">
+      <span class="size_text color_text"
+      style="font-family: Arial,sans-serif;">
+          {{{tr.sale_render_url_title}}}&nbsp;:
+					<br />
+					{{{tr.sale_render_url_compl}}}
+      </span>
+
+      <br />
+      <br />
+
+      <span class="size_text color_text"
+      style="font-family: Arial, sans-serif;">
+        <a href="{{sale_render_url}}"
+        target="_blank"
+        title="{{sale_render_url_title}}"
+        class="color_link size_text">{{{sale_render_see}}}</a>
+      </span>
+    </td>
+  </tr>
+</table>
+<!-- end  LINK RENDER SALE -->
+{{/for_admin}}
+
+
+<!-- hauteur de 20px vide  -->
+<table style="background: #ffffff;" width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+  <tr>
+    <td height="20"></td>
+  </tr>
+</table>
+
+<!-- TEXT SLOGAN -->
+<table width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+  <tr>
+    <td align="center">
+        <span class="size_text color_text"
+        style="font-family: Arial,sans-serif;">
+          {{^for_admin}}
+            {{{tr.vendor_message}}}
+          {{/for_admin}}
+          {{#for_admin}}
+            {{{tr.infos_vendor_message}}}
+          {{/for_admin}}
+        </span>
+    </td>
+  </tr>
+</table>
+<!-- FIN TEXT SLOGAN -->
+
+
+<!-- hauteur  vide  -->
+<table style="background: #ffffff;" width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+  <tr>
+    <td height="20"></td>
+  </tr>
+</table>
+
+<table style="background: #d4d4d4;" width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p">
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+
+<!-- hauteur de 10px vide  -->
+<table width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+     <tr>
+        <td height="10"></td>
+     </tr>
+</table>
+
+<!-- no-reply -->
+<table width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+  <tr>
+    <td align="center">
+      <span class="small_text color_text"
+      style="font-family: Arial, sans-serif;">
+        {{tr.no_reply_message}}
+      </span>
+    </td>
+  </tr>
+</table>
+
+<!-- hauteur de 10px vide  -->
+<table width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+     <tr>
+        <td height="10"></td>
+     </tr>
+</table>
+
+<!-- shop link -->
+<table width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+  <tr>
+    <td align="center">
+      <span class="small_text color_text"
+      style="font-family: Arial, sans-serif;">
+        <a class="color_link"
+        href="https://{{host}}"
+        title="{{tr.see_our_website}}"
+        target="_blank">{{host}}</a>&nbsp;&copy;&nbsp;{{year}}
+      </span>
+    </td>
+  </tr>
+</table>
+
+<!-- hauteur de 10px vide  -->
+<table width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
+     <tr>
+        <td height="10"></td>
+     </tr>
+</table>
+
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
