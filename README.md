@@ -76,5 +76,8 @@ the free online application of [VoteMobile](https://votemobile.xyz) -> Group: "P
 
 **[Placido-Shop](https://placido-shop.com/)** is lovingly developed by Raphaël Castello @Raf-sns
 
+In order to support our work,
+you have the possibility of [becoming official sponsor of Placido-Shop](https://placido-shop.com/Become-a-sponsor.html).
+
 **Contact/Security report :** contact@sns.pm
 
