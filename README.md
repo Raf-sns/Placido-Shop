@@ -1,5 +1,9 @@
-## Placido-Shop
+
+# <sub>![Logo Placido-Shop](https://placido-shop.com/img/LOGO_GIT.png)</sub> <sup>Placido-Shop</sup>
+
 ### E-commerce software
+
+###
 
 #### What is Placido-Shop ?
 
@@ -20,7 +24,7 @@ Placido-Shop is a basic online sales program,
 it can be used as is but you can simply modify it to match your 
 brand image or your technical needs.
 
-**Placido-Shop is an Open-Source online sale software** under license GNU AGPL (see: /LICENCE.txt)
+**Placido-Shop is an Open-Source online sale software** under license GNU AGPL (see: /LICENCE.txt).
 
 ###
 
