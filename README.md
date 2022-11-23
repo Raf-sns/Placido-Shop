@@ -4,7 +4,7 @@
 
 ###
 
-#### What is Placido-Shop ? - Test !
+#### What is Placido-Shop ?
 
 Placido-Shop is an online sale program designed to be fast and efficient.
 
