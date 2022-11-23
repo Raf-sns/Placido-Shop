@@ -1,5 +1,5 @@
 
-	Framework PLACIDO-SHOP
+	# PLACIDO-SHOP
 	Copyright © Raphaël Castello - 2018-2022
 	Licence : "GNU AGPL" see: /LICENCE.txt
 	Security : See /security.txt
