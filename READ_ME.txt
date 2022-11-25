@@ -1,4 +1,7 @@
-Placido-Shop - E-commerce software
+
+Placido-Shop - www.placido-shop.com
+
+- E-commerce software
 
 What is Placido-Shop ?
 
