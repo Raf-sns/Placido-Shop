@@ -23,6 +23,8 @@ Placido-Shop is a basic online sales program,
 it can be used as is but you can simply modify it to match your 
 brand image or your technical needs.
 
+###
+
 **Placido-Shop is an Open-Source online sale software** under license [GNU AGPL](https://www.gnu.org/licenses/why-affero-gpl.fr.html) (see: /LICENSE.txt).
 
 ###
