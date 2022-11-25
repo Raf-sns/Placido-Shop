@@ -1,0 +1,26 @@
+
+<!-- PAGINATION class .pagina removed-->
+<div class="pagination_arrows display_top_sort"
+      style="{{view.display_top_sort}}">
+
+  <button onclick="$.pagina('prev');"
+  class="prev_btn open_modal button pointer bold"
+  role="button"
+  aria-label="{{tr.pagina_prev}}">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+
+  <span style="vertical-align: middle;"
+  class="bold"
+  aria-label="{{tr.page}}"> {{tr.page}}
+    <span class="page_number">1</span>/<span class="pages_need">{{view.pages_need}}</span>&nbsp;
+  </span>
+
+  <button onclick="$.pagina('next');"
+  class="next_btn open_modal button pointer bold"
+  role="button"
+  aria-label="{{tr.pagina_next}}">
+    <i class="fas fa-chevron-right"></i>
+  </button>
+</div>
+<!-- PAGINATION -->

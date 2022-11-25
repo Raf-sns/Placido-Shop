@@ -1,0 +1,390 @@
+<!--
+ * Templates :
+ *
+ * id="admin_page" >  #main_center
+ * id="main_center"  >  template controller
+ * id="home"  >  #new_sales cf. templates/new_sales.html
+ * id="send_mail_to_customer"
+ *
+-->
+
+<!-- BASE ADMIN PAGE -->
+<script id="admin_page" type="text/html">
+
+    <!--  NAV -->
+    <nav id="navbar"
+          class="border-gray border-right">
+
+      <div class="container padding-16" id="admin_prez">
+
+        <!-- HEADER NABAR -->
+        <div class="">
+          {{^shop.img}}
+          <img id="logo_admin"
+          src="https://{{host}}/img/PS_LOGO.png">
+          {{/shop.img}}
+          {{#shop.img}}
+          <img id="logo_admin"
+          src="https://{{host}}/img/Logos/{{shop.img}}">
+          {{/shop.img}}
+
+        </div>
+
+        <div class="">
+          <div class="bold large margin-left text-white"
+          style="overflow-wrap: break-word;">
+            {{tr.welcome}}
+            <br>
+            <span id="admin_name">{{user.name}}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- token_timer -->
+      <div class="left-align margin-left"
+      style="margin: -8px auto 8px;">
+        <i class="fa-user-shield fas fa-fw"></i>&nbsp;
+        <span id="token_timer"
+        class="text-light-green small">{{tr.validity_token}}</span>
+      </div>
+
+      <hr>
+
+      <div>
+        <h5 class="margin-left">
+          <i class="fa-database fas fa-fw"></i>&nbsp;
+          {{tr.your_management}}
+        </h5>
+      </div>
+
+      <div class="bar-block">
+
+				<span onclick="$.log_out();"
+        class="menu_left bar-item border-gray border-top hover-dark-gray padding pointer">
+          <i class="fa-fw fa-power-off fas"></i>
+          &nbsp; {{tr.log_out}}</span>
+
+        <span onclick="$.open_vue('home', '');"
+        data-target="home"
+                class="dark-gray menu_left bar-item border-gray border-top hover-dark-gray padding pointer">
+          <i class="fas fa-home"></i>
+          &nbsp; {{tr.home}}</span>
+
+        <span onclick="$.open_vue('products', '');"
+        data-target="products"
+              class="menu_left bar-item border-bottom border-gray border-top hover-dark-gray padding pointer">
+          <i class="fas fa-th"></i>
+          &nbsp; {{tr.your_products}}</span>
+
+				<span onclick="$.open_vue('featured_prods', '');"
+        data-target="featured_prods"
+              class="menu_left bar-item border-bottom border-gray border-top hover-dark-gray padding pointer">
+          <i class="fa-image far"></i>
+          &nbsp; {{tr.featured_prods}}</span>
+
+        <span onclick="$.open_vue('add_prod', '');"
+        data-target="add_prod"
+              class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+          <i class="fas fa-plus"></i>
+          &nbsp; {{tr.add_prod}}</span>
+
+        <span onclick="$.open_vue('categories', '');"
+        data-target="categories"
+              class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+          <i class="fas fa-stream"></i>
+          &nbsp; {{tr.website_categories}}</span>
+
+        <span onclick="$.open_vue('static_pages', '');"
+        data-target="static_pages"
+            class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+          <i class="fa-file-alt far"></i>
+          &nbsp; {{tr.static_pages}}</span>
+
+				<span onclick="$.open_vue('shop', '');"
+        data-target="shop"
+            class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+          <i class="fas fa-store-alt"></i>
+          &nbsp; {{tr.shop_user}}</span>
+
+        <span onclick="$.open_vue('messages', '');"
+        data-target="messages"
+              class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+          <i class="fa-envelope far"></i>
+          &nbsp; {{tr.messages}}
+
+					<div style="flex-grow: 1;">
+					  <span class="nb_new_mess_container purp right round small tag text-white"
+						style="display:{{#template.count_not_read}}inline-block;{{/template.count_not_read}}{{^template.count_not_read}}none;{{/template.count_not_read}}">
+							+&nbsp;<span class="nb_new_mess">{{template.count_not_read}}</span>
+	          </span>
+					</div>
+
+        </span>
+
+        <span onclick="$.open_vue('stats', '');"
+        data-target="stats"
+        class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+        <i class="fas fa-chart-bar"></i>
+        &nbsp; {{tr.website_stats}}</span>
+
+        <span onclick="$.open_vue('archives', '');"
+        data-target="archives"
+        class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+        <i class="far fa-folder-open"></i>
+        &nbsp; {{tr.archived_sales}}</span>
+
+        <span onclick="$.open_vue('settings', '');"
+        data-target="settings"
+              class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+          <i class="fas fa-cogs"></i>
+          &nbsp; {{tr.settings}}</span>
+
+				<span onclick="$.open_vue('web_app', '');"
+				data-target="web_app"
+				class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+				<i class="fas fa-mobile-alt"></i>
+				&nbsp; {{tr.web_app}}</span>
+
+				<span onclick="$.open_vue('ip_rejected', '');"
+        data-target="ip_rejected"
+              class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+          <i class="fa-exclamation-triangle fas"></i>
+          &nbsp; {{tr.ip_rejected}}
+
+					<div style="flex-grow: 1;">
+						<span class="nb_rejected_container purp right round small tag text-white"
+						style="display:{{#ip_rejected.nb_rejected}}inline-block;{{/ip_rejected.nb_rejected}}{{^ip_rejected.nb_rejected}}none;{{/ip_rejected.nb_rejected}}">
+						+&nbsp;<span class="nb_rejected">{{ip_rejected.nb_rejected}}</span>
+						</span>
+					</div>
+
+				</span>
+
+				<span onclick="$.open_vue('module', 'Auto-Update');"
+        data-target="Auto-update"
+              class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+          <i class="fas fa-flask"></i>
+          &nbsp; {{tr.update}}</span>
+
+        <span onclick="window.open('https://{{host}}');"
+              class="menu_left bar-item hover-dark-gray padding border-bottom border-gray pointer">
+          <i class="fa-desktop fas"></i>
+          &nbsp; {{tr.see_website}}</span>
+
+      </div>
+      <!-- END BAR BLOCK  -->
+
+    </nav>
+    <!-- END NAV -->
+
+  <!-- MAIN DIV -->
+  <div id="main" class="container">
+    {{>main_center}}
+  </div>
+  <!--  END MAIN DIV -->
+
+</script>
+<!-- END BASE ADMIN PAGE -->
+
+
+
+<!-- MAIN CENTER -->
+<script id="main_center" type="text/html">
+
+  <!-- BLOCK TITLE -->
+  <div>
+
+    <!-- BTN MENU MOBILE -->
+    <div onclick="$.open_menu();"
+          id="btn_menu"
+          class="unbind_click btn round">
+      <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- TITLE -->
+    <h5 class="border-bottom">
+      <i class="{{vue.icon}}"></i>&nbsp; {{{vue.title}}}
+    </h5>
+
+  </div>
+  <!-- END BLOCK TITLE -->
+
+  <!-- CENTER PAGE GEN -->
+  <div id="page_gen">
+
+    <!-- CENTRAL PAGE CONTEXT -->
+    {{#vue.home}}
+      {{>home}}
+    {{/vue.home}}
+
+    {{#vue.products}}
+      {{>products}}
+    {{/vue.products}}
+
+    {{#vue.add_prod}}
+      {{>form_modif_products}}
+    {{/vue.add_prod}}
+
+		{{#vue.featured_prods}}
+			{{>featured_prods}}
+		{{/vue.featured_prods}}
+
+    {{#vue.categories}}
+      {{>categories}}
+    {{/vue.categories}}
+
+    {{#vue.shop}}
+      {{>shop}}
+    {{/vue.shop}}
+
+    {{#vue.messages}}
+      {{>messages}}
+    {{/vue.messages}}
+
+    {{#vue.stats}}
+      {{>stats}}
+    {{/vue.stats}}
+
+    {{#vue.archives}}
+      {{>archives}}
+    {{/vue.archives}}
+
+    {{#vue.settings}}
+      {{>settings}}
+    {{/vue.settings}}
+
+		{{#vue.web_app}}
+			{{>web_app}}
+		{{/vue.web_app}}
+
+		{{#vue.ip_rejected}}
+      {{>ip_rejected}}
+    {{/vue.ip_rejected}}
+
+		{{#vue.static_pages}}
+      {{>static_pages}}
+    {{/vue.static_pages}}
+
+  </div>
+  <!-- END CENTER PAGE GEN -->
+
+</script>
+<!--END  MAIN CENTER -->
+
+
+
+<!-- HOME PAGE -->
+<script id="home" type="text/html">
+
+  <!-- HOME TAGS -->
+  <div class="row-padding" id="home_tags">
+
+    <div class="col m6 l3">
+      <div onclick="$.get_new_sales();"
+      class="tag_item yell pointer card container padding-16 text-blue-gray">
+            <h3 class="right" id="count_new_sales">{{template.nb_new_sales}}</h3>
+            <i class="fas fa-dolly xxlarge"></i>
+            <br>
+            <span class="hide-small">{{tr.new_sales}} &nbsp;<i class="fas fa-sync"></i></span>
+      </div>
+    </div>
+
+    <div class="col m6 l3">
+      <div
+      class="tag_item gree card container padding-16">
+            <h3 id="total_amount" class="right">{{template.total_amount_shop}}</h3>
+            <i class="fa-money-bill-wave fas xxlarge"></i>
+            <br>
+            <span class="hide-small">{{tr.total_amount_new_sales}}</span>
+      </div>
+    </div>
+
+    <div class="col m6 l3">
+      <div onclick="$.get_new_messages();"
+      class="tag_item purp pointer card container padding-16">
+            <h3 class="right">
+              <span class="nb_messages">{{template.nb_messages}}</span>
+            </h3>
+            <i class="fa-envelope far xxlarge"></i>
+            <br>
+            <span class="hide-small">{{tr.messages}} &nbsp;<i class="fas fa-sync"></i></span>
+      </div>
+    </div>
+
+    <div class="col m6 l3">
+      <div onclick="$.open_vue('stats', event);"
+      class="tag_item blu pointer card container padding-16">
+            <h3 class="right today_nb_visits">{{stats.today_nb_visits}}</h3>
+            <i class="fas fa-users xxlarge"></i>
+            <br>
+            <span class="hide-small">{{tr.day_visits}} &nbsp;<i class="fas fa-sync"></i></span>
+      </div>
+    </div>
+
+  </div>
+  <!-- END HOME TAGS -->
+
+  <!-- NEW SALES -->
+  {{>new_sales}}
+  <!-- NEW SALES -->
+
+</script>
+<!-- END  HOME PAGE -->
+
+
+<!-- send_mail_to_customer -->
+<script id="send_mail_to_customer" type="text/html">
+
+  <div class="container text-dark-gray">
+
+    <h5 class="border-bottom border-grey large margin-bottom mrg0">
+      <i class="fa-envelope fa-fw far text-gray xlarge"></i>&nbsp;
+      {{tr.send_a_message_to}} <span class="italic text-teal">{{firstname}}&nbsp;{{lastname}}</span>
+    </h5>
+
+    <p class="mrg0 fw400">
+      {{tr.his_mail}}&nbsp;:&nbsp; <span class="bold">{{mail}}</span>
+    </p>
+
+    <p class="fw400">
+      {{tr.subject}}&nbsp;:
+      <br>
+      <input
+      id="subject"
+      name="subject"
+      type="text"
+      class="border border-blue input margin-top padding-small"
+      autocomplete="off"/>
+    </p>
+
+    <p class="fw400">
+      {{tr.message}}&nbsp;:
+      <br>
+      <textarea
+      id="message"
+      name="message"
+      rows="6"
+      class="border border-blue input margin-top padding-small"
+      autocomplete="off"></textarea>
+    </p>
+
+    <p>
+      <span onclick="$.send_mail_to_customer('{{mail}}');"
+      id="sub_mess_mail"
+      class="blue btn card round margin-right">
+        <i class="fas fa-sign-in-alt"></i>&nbsp; {{tr.send}}
+      </span>
+
+      <span onclick="$.close_modal();"
+      class="dark-gray btn card round">
+          <i class="fas fa-ban"></i>&nbsp; {{tr.abort}}
+      </span>
+    </p>
+
+  </div>
+</script>
+<!-- END send_mail_to_customer -->
+
+
+<!-- END BACKEND_BASE -->
