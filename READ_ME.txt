@@ -61,4 +61,3 @@ Placido-Shop is lovingly developed by Raphaël Castello @Raf-sns
 In order to support our work, you have the possibility of becoming official sponsor of Placido-Shop.
 
 Contact/Security report : contact@sns.pm
-
