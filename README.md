@@ -1,6 +1,7 @@
 # <sub>![Logo Placido-Shop](https://placido-shop.com/img/LOGO_GIT.png)</sub> <sup>Placido-Shop</sup>
-
 ### E-commerce software
+
+![Placido-Shop presentation](https://placido-shop.com/img/prez_GITHUB.jpg)
 
 ###
 
