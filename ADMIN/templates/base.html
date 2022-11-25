@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="{{tr.lang}}" dir="ltr">
+<head>
+  <title>{{title_page}}</title>
+  <meta charset="UTF-8"/>
+  <base href="/{{base}}/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="author" content="Placido-Shop Software - www.placido-shop.com">
+
+	<!-- FAV icons -->
+	<link rel="apple-touch-icon" sizes="180x180" href="../FAV/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../FAV/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../FAV/favicon-16x16.png">
+	<link rel="mask-icon" href="../FAV/safari-pinned-tab.svg" color="#e2e2e2">
+	<link rel="shortcut icon" href="../FAV/favicon.ico">
+	<meta name="msapplication-TileColor" content="#2d89ef">
+	<meta name="msapplication-config" content="../FAV/browserconfig.xml">
+	<meta name="theme-color" content="#e2e2e2">
+	<link rel="manifest" href="manifest.webmanifest">
+
+	<!-- GOOGLE FONT -->
+  <link rel="preconnect"
+  href="https://fonts.gstatic.com">
+  <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap">
+
+	<!-- FONT AWSOME -->
+	<!-- Public kit Placido-Shop for FONT AWSOME 6 -->
+	<!-- <script src="https://kit.fontawesome.com/c015b2ec2a.js" crossorigin="anonymous"></script> -->
+	<!-- embed font awsome 5.15.4 LTS -->
+	<link rel="stylesheet"
+				href="../CSS/all.min.css" rel="preload" as="style">
+
+	<!-- API CSS -->
+  <link rel="stylesheet" href="CSS/toastr.min.css">
+  <link rel="stylesheet" href="CSS/custom.css">
+  <link rel="stylesheet" href="CSS/api.css">
+
+</head>
+<body>
+
+  <div id="render_process"></div>
+
+  <div id="center_page">
+    {{>login_page}}
+  </div>
+
+
+  <!-- BOX RENDER INFOS -->
+  <!-- <div id="mess_render">
+    <div class="modal-content">
+      <span onclick="$.show_alert(false);"
+      class="small padding-small blue right pointer">
+        <i class="fas fa-times"></i>&nbsp; Fermer</span>
+      <div id="mess_render_content"
+      class="card-4 center container text-dark-gray"></div>
+    </div>
+  </div> -->
+
+  <!-- MODAL API -->
+  <div id="modal" class="animated modal zoomInLeft">
+    <div class="card-4 modal-content round-large">
+      <!-- CLOSE BTN -->
+      <span class="btn_close_modal small padding-small blue right pointer round"
+            onclick="$.close_modal();"><i class="fas fa-times"></i>&nbsp; {{tr.close}}</span>
+      <!-- modal_content -->
+      <div id="modal_content" style="margin-bottom: 100px;"></div>
+
+    </div>
+  </div>
+  <!-- MODAL API -->
+
+  <!-- TO TOP BUTTON -->
+  <div id="to_top" onclick="$.scroll_top();"
+  class="btn dark-gray round"
+  title="{{tr.go_to_top_page}}">
+    <i class="fas fa-chevron-up"></i>
+  </div>
+
+
+<!--JavaScript ressources-->
+<script type="text/javascript" src="JS/apps/jquery.min.js"></script>
+<script type="text/javascript" src="JS/apps/mustache.min.js"></script>
+<script type="text/javascript" src="JS/apps/jquery.mustache.js"></script>
+<script type="text/javascript" src="JS/apps/toastr.min.js"></script>
+<script type="text/javascript" src="JS/login.js"></script>
+<script type="text/javascript" src="back-worker.js"></script>
+</body>
+</html>

@@ -1,0 +1,729 @@
+
+<!-- PRODUCTS VUE -->
+<script id="products" type="text/html">
+
+	<div class="pad_product_form">
+
+
+	  <!-- stock_header + stock options  -->
+	  <div id="stock_header" class="border round">
+
+	    <!-- title options -->
+	    <span class="stock_options">{{tr.sort_options}}</span>
+
+
+			<!-- sort by date -->
+	    <p class="">
+	      {{tr.date_add}}&nbsp;&nbsp;
+	      <span onclick="$.sort_stock_ad();"
+	      class="blue btn btn_sort card round">
+	        <i id="sort_a_d" class="fas fa-arrow-down"></i>
+	      </span>
+	    </p>
+
+			<!-- search by words -->
+	    <p class="">
+	      <input onkeyup="$.search_str_in_products();"
+	      id="search_user_products"
+	      class="border border-blue padding-small btn_sort v-top text-dark-gray"
+	      type="text"
+	      placeholder="&#xF002;">&nbsp;
+				<span
+	      onclick="$.empty_search_user_products();"
+	      class="blue btn card round btn_sort v-top">
+	        <i class="fas fa-ban"></i>
+	      </span>
+	    </p>
+
+			<!-- search by quantity -->
+	    <p class="">
+	      {{tr.quantity}}&nbsp;<i class="fas fa-chevron-left small"></i>
+	      <i class="fas fa-equals small"></i>&nbsp;&nbsp;
+	      <input onchange="$.search_by_quant();"
+				oninput="$.search_by_quant();"
+	      id="search_by_quant"
+	      class="border border-blue btn_sort padding-small text-dark-gray"
+	      type="number" step="1" min="0" value="">
+	    </p>
+
+	    <!-- search by category -->
+
+	    <!-- btn show categories list -->
+			<p class="">
+		    <button id="search_product_by_cat"
+		    onclick="$.open_cats_selector_all();"
+		    class="unbind_click blue btn card round small_btn v-top">
+		      <i class="fas fa-stream"></i>&nbsp; {{tr.by_category}}
+		    </button>
+	    </p>
+
+			<!-- hidden list of categories -->
+			<div id="cat_selector_all"
+			class="card-4 dropdown-content round hide">
+
+				<ul class="ul">
+					<li onclick="$.search_products_by_cat();"
+						class="blue hover-shadow li medium pointer round">
+						{{tr.all_categories}}
+					</li>
+				{{#cats}}
+					<li onclick="$.search_products_by_cat({{cat_id}});"
+						class="dark-gray hover-shadow li medium pointer round">
+						{{title}}
+					</li>
+				{{/cats}}
+				{{^cats}}
+					<li class="li blue large round pad">
+						{{tr.no_cat}}
+					</li>
+				{{/cats}}
+				</ul>
+			</div>
+
+			<!-- search by on line / off line  -->
+	    <p class="">
+
+			  <i onclick="$.search_by_on_line('on_line', event);"
+	      class="on_line_state fa-square far
+	      xxlarge text-green pointer"></i>
+				<span class="v-top margin-right">&nbsp;&nbsp;{{tr.on_line}}</span>
+
+	      <i onclick="$.search_by_on_line('off_line', event);"
+	      class="on_line_state fa-square far
+	      xxlarge text-deep-orange pointer"></i>
+				<span class="v-top">&nbsp;&nbsp;{{tr.off_line}}</span>
+
+			</p>
+
+			<!-- re-init serach by default -->
+	    <p class="">
+	      <button onclick="$.empty_search_user_products();"
+	      class="blue btn card round small_btn v-top">
+	        <i class="fa-recycle fas"></i>&nbsp; {{tr.re_init}}
+	      </button>
+	    </p>
+
+	  </div>
+	  <!-- end stock_header + stock options  -->
+
+	  <!-- block pagination -->
+	  <div class="block_pagina">
+	  </div>
+
+	  <!-- render_search_user_products -->
+	  <div id="render_search_user_products" class="center margin-bottom">
+	    {{>search_render_prods}}
+	  </div>
+	  <!-- render_search_user_products -->
+
+
+	  <!-- DIV stock_content -->
+	  <div id="stock_content" class="center margin-bottom">
+
+	      <!-- PRODUCTS -->
+	      {{>partial_template_stock}}
+
+	  </div>
+	  <!-- END  DIV stock_content -->
+
+		<!-- block pagination -->
+	  <div class="block_pagina">
+	  </div>
+
+	</div>
+
+</script>
+<!-- END STOCK VUE -->
+
+
+<!-- PAGINATION BTNS -->
+<script id="pagina" type="text/html">
+  <div>
+    <span onclick="$.pagina_nav( 'prev' );"
+      class="blue btn btn_sort card round">
+      <i class="fas fa-arrow-left"></i>
+    </span>
+
+    <span class="margin-left margin-right">
+      {{tr.page}}&nbsp;: <span class="nb_page_active">{{template.nb_page_active}}</span>/{{template.nb_pages}}
+    </span>
+
+    <span onclick="$.pagina_nav( 'next' );"
+      class="blue btn btn_sort card round">
+      <i class="fas fa-arrow-right"></i>
+    </span>
+  </div>
+</script>
+<!-- PAGINATION BTNS -->
+
+
+<!-- partial search_render_prods -->
+<script id="search_render_prods" type="text/html">
+  <p class="left-align mrg0 padding">
+    {{tr.your_search}}&nbsp;:&nbsp;
+    <span class="large">{{search_nb_render}}</span>&nbsp;&nbsp;{{tr.search_nb_render}}
+  </p>
+  {{#template.search_user_products}}
+    {{>vue_products}}
+  {{/template.search_user_products}}
+</script>
+<!-- end  partial search_render_prods -->
+
+
+<!-- partial_template_stock -->
+<script id="partial_template_stock" type="text/html">
+  <!-- PRODUCTS -->
+  {{#template.products}}
+    {{>vue_products}}
+  {{/template.products}}
+</script>
+<!-- partial_template_stock -->
+
+
+<!-- vue_products -->
+<script id="vue_products" type="text/html">
+
+  <div id="prod-{{id}}" class="prod_block card dark-grey round">
+
+    <!-- title -->
+    <h1 class="fw400 xlarge mrg0">{{title}}</h1>
+
+    <!-- btn open modif prod -->
+    <button onclick="$.open_modif_product( {{id}} );"
+    class="unbind_click margin-top blue btn card round small small_btn">
+      <i class="open_btn far fa-hand-point-right"></i>&nbsp;
+      {{tr.open}}&nbsp;/&nbsp;{{tr.modify}}
+    </button>
+
+    <!-- img prez + infos product -->
+    <div class="prod_img_infos">
+
+      <!-- col img -->
+      <div class="">
+        {{#img_prez}}
+          <img onclick="$.open_modif_product( {{id}} );"
+					data-src="../img/Products/min-{{img_prez}}"
+					src="../img/PS_LOGO.png"
+					{{/img_prez}}
+					{{^img_prez}}
+					src="../img/PS_LOGO.png"
+          alt="{{title}}"
+        {{/img_prez}} class="card hover-shadow lazyload pointer unbind_click">
+      </div>
+
+      <!-- col infos product -->
+      <div class="">
+
+        <p class="mrg0 large text-light-gray">
+
+          <!-- date add -->
+          <span>{{tr.date_added}}&nbsp;:&nbsp;{{date_prod}}</span>
+          <br>
+          <!-- state -->
+          <span>{{tr.state}}&nbsp;:</span>
+          {{#on_line}}
+            <span class="text-light-green bold medium">{{tr.on_line}}</span>
+          {{/on_line}}
+          {{^on_line}}
+            <span class="text-deep-orange bold medium">{{tr.off_line}}</span>
+          {{/on_line}}
+          <br>
+          <!-- quantity -->
+          <span>{{tr.quantity}}</span>&nbsp;:
+          <span class="large">{{quant}}</span>
+          {{^quant}}
+            &nbsp;<span class="text-deep-orange bold medium">{{tr.empty_product}}</span>
+          {{/quant}}
+
+          <br>
+          <!-- cat name -->
+          <span>{{tr.category}}</span>&nbsp;:
+            {{#cat_name}}
+            <span>{{cat_name}}</span>
+            {{/cat_name}}
+            {{^cat_name}}
+            <span class="text-deep-orange bold medium">
+              <i class="fa-exclamation-triangle fas"></i>&nbsp;
+              {{tr.no_category_assigned}}
+            </span>
+            {{/cat_name}}
+          <br>
+          <!-- price / false  -->
+          {{#price}}
+            {{#tax}}
+              <span>
+                {{tr.price_less_tax}}&nbsp;:&nbsp;
+                <span class="">{{price_less_tax_format}}</span>
+              </span>
+               <span class="text-purple">
+                &nbsp;{{tr.tax}}&nbsp;:</span>&nbsp;{{tax}}&nbsp;%
+              <br>
+              <span class="text-purple">
+                {{{tr.tax_value}}}&nbsp;:</span>&nbsp;{{tax_value_format}}
+              <br>
+              <span>
+                {{tr.price_tt}}&nbsp;:&nbsp;
+                <span class="">{{price_tt_format}}</span>
+              </span>
+            {{/tax}}
+            {{^tax}}
+              <span>
+                {{tr.price_tt}}&nbsp;:&nbsp;
+                <span class="">{{price_tt_format}}</span>
+              </span>
+            {{/tax}}
+          {{/price}}
+          {{^price}}
+            <span class="text-deep-orange bold medium">{{tr.no_price_assigned}}</span>
+          {{/price}}
+        </p>
+      </div>
+    </div>
+    <!-- end img prez + infos product -->
+
+  </div>
+  <!-- end col 50% one product -->
+
+</script>
+<!-- end vue_products -->
+
+
+
+<!-- FORM MODIF PRODUCTS -->
+<script id="form_modif_products" type="text/html">
+
+	<!-- START FORM add_product_form -->
+  <form id="add_product_form"
+  class="card-4 dark-gray large padding round">
+
+    {{#modif}}
+    <p class="border-bottom border-gray margin-bottom mrg0 xlarge">
+      <i class="fas fa-cogs text-amber"></i>&nbsp;
+      {{tr.modify_product}}
+    </p>
+    {{/modif}}
+
+
+    <div class="row">
+      <div class="col s12 m6">
+
+				<!-- dropdown cats -->
+        <p class="">
+          {{tr.category}}&nbsp;:&nbsp;
+					<br>
+					<span id="cat_name"
+					class="fw600 wide">{{cat_name}}</span>
+        </p>
+
+
+				<!-- btn show categories list -->
+        <button onclick="$.open_cats_selector_modif();"
+        class="unbind_click blue btn card round" role="button" type="button">
+          <i class="fa-hand-point-right far"></i>&nbsp;
+          {{#modif}}
+            {{tr.modify_category}}
+          {{/modif}}
+          {{^modif}}
+            {{tr.choose_a_category}}
+          {{/modif}}
+        </button>
+
+				<!-- hidden cat selector -->
+				<div id="cat_selector_modif"
+				class="card-4 dropdown-content round hide">
+
+					<ul class="ul">
+            {{#cats}}
+							{{#modif}}
+								<li onclick="$.set_cat_product({{id}}, {{cat_id}});"
+								class="dark-gray hover-shadow li medium pointer round">
+									{{title}}
+								</li>
+							{{/modif}}
+							{{^modif}}
+								<li onclick="$.select_this_cat({{cat_id}});"
+								class="dark-gray hover-shadow li medium pointer round">
+									{{title}}
+								</li>
+							{{/modif}}
+            {{/cats}}
+            {{^cats}}
+            <li class="li large round">
+              {{tr.empty_cats}}
+            </li>
+            {{/cats}}
+          </ul>
+
+      	</div>
+				<!-- end hidden cat selector -->
+
+				<!-- hidden select element keep it we send the form -->
+        <select id="cat"
+        name="cat_id"
+        class="hide">
+          {{#cats}}
+            <option value="{{cat_id}}">{{title}}</option>
+          {{/cats}}
+          {{^cats}}
+            <option value="" disabled></option>
+          {{/cats}}
+        </select>
+
+      </div>
+      <!-- end col 1 cat -->
+
+      <!-- col online -->
+      <div class="col s12 m6">
+
+        <!-- CHOOSE ON LINE / OFF LINE -->
+        <p class="inline-block v-top">
+          {{tr.state}}&nbsp;:
+        </p>
+
+        <p class="mrg0">
+
+					{{#modif}}
+
+						<!-- modif product context -> send check direct to server -->
+
+						<button onclick="$.check_on_off_line( 'on_line', {{id}} );"
+						id="on_line"
+	          class="border btn card dark-gray pointer round"
+						type="button">
+	            <i class="fa-{{#on_line}}check-{{/on_line}}square far xxlarge text-green pointer"></i>
+	            &nbsp;&nbsp;{{tr.on_line}}
+	          </button>
+
+	          <button onclick="$.check_on_off_line( 'off_line', {{id}} );"
+						id="off_line"
+	          class="border btn card dark-gray pointer round"
+						type="button">
+	            <i class="fa-{{^on_line}}check-{{/on_line}}square far xxlarge text-deep-orange pointer"></i>
+	              &nbsp;&nbsp;{{tr.off_line}}
+	          </button>
+
+					{{/modif}}
+					{{^modif}}
+
+						<!-- Choose on/off line on INSERT product -->
+
+						<label onclick="$.product_on_off_line('on_line', event);"
+						for="oon_line"
+						class="pointer">
+							<i class="fa-{{#on_line}}check-{{/on_line}}square far xxlarge text-green pointer"></i>
+	            &nbsp;&nbsp;{{tr.on_line}}
+						</label>
+						<input type="radio" id="oon_line" name="on_off_line" value="on_line" class="hide" checked>
+
+						<br>
+
+						<label onclick="$.product_on_off_line('off_line', event);"
+						for="ooff_line"
+						 class="pointer">
+							<i class="fa-{{^on_line}}check-{{/on_line}}square far xxlarge text-deep-orange pointer"></i>
+	              &nbsp;&nbsp;{{tr.off_line}}
+						</label>
+						<input type="radio" id="ooff_line" name="on_off_line" value="off_line" class="hide">
+
+					{{/modif}}
+
+        </p>
+        <!-- end CHOOSE ON LINE / OFF LINE -->
+      </div>
+      <!-- end col online -->
+    </div>
+    <!-- end row -->
+
+    <p class="">
+      {{tr.title_product}}&nbsp;:&nbsp;
+			<small class="small">{{tr.title_product_info}}</small>
+      <br>
+      <input
+      id="title_prod"
+      name="title_prod"
+      value="{{title}}"
+			maxlength="500"
+      type="text"
+      class="border border-blue input margin-top padding-small" />
+    </p>
+
+    <p class="">
+      {{tr.ref_product}}&nbsp;:
+      <br>
+			<small class="small">{{tr.ref_product_info}}</small>
+      <input
+      id="ref"
+      name="ref"
+      value="{{ref}}"
+			maxlength="500"
+      type="text"
+      class="border border-blue input margin-top padding-small" />
+    </p>
+
+    <p class="">
+      {{tr.descr_prod}}&nbsp;:
+      <br>
+			<small class="small">{{tr.descr_prod_info}}</small>
+      <textarea
+      id="text_prod"
+      name="text_prod"
+      rows="5"
+			maxlength="5000"
+      class="border border-blue input margin-top padding-small"
+      style="width: 100%;">{{{text}}}</textarea>
+    </p>
+
+		{{#modif}}
+		<p class="">
+			{{tr.online_date_prod}}&nbsp;:
+			<br>
+			<input
+      id="year"
+      name="year"
+      value="{{date_db_year}}"
+			type="number"
+			max="4002"
+			min="2022"
+			step="1"
+      class="border border-blue margin-top padding-small margin-right" />
+
+			<input
+      id="month"
+      name="month"
+      value="{{date_db_month}}"
+			type="number"
+			max="12"
+			min="1"
+			step="1"
+      class="border border-blue margin-top padding-small margin-right" />
+
+			<input
+      id="day"
+      name="day"
+      value="{{date_db_day}}"
+			type="number"
+			max="31"
+			min="1"
+			step="1"
+      class="border border-blue margin-top padding-small" />
+		</p>
+		{{/modif}}
+
+    <div class="row">
+      <!-- col price -->
+      <div class="col s12 m6">
+
+        <p class="">
+          {{tr.price}}&nbsp;:
+        </p>
+
+        <p class="mrg0">
+
+          <!-- with NO tax -->
+          <label onclick="$.check_mode( 'no_tax', event );"
+          for="no_tax"
+          class="margin-right pointer">
+
+            <i class="fa-{{#checked_ttc}}check-{{/checked_ttc}}square
+            far xxlarge text-green pointer"></i>&nbsp;&nbsp;{{tr.price_less_tax}}
+
+          </label>
+          <!-- hidden check ttc input -->
+          <input
+          id="no_tax"
+          name="tax_mode"
+          value="no_tax"
+          type="radio"
+          class="mode ttc hide" {{checked_ttc}} />
+
+          <!-- with tax -->
+          <label onclick="$.check_mode( 'w_tax', event );"
+          for="w_tax"
+          class="pointer">
+
+            <i class="fa-{{#checked_ht}}check-{{/checked_ht}}square
+            far xxlarge text-orange pointer"></i>&nbsp;&nbsp;{{tr.price_tt}}
+
+          </label>
+          <!-- hidden  check ht input -->
+          <input
+          id="w_tax"
+          name="tax_mode"
+          value="w_tax"
+          type="radio"
+          class="mode ht hide" {{checked_ht}} />
+
+          <br>
+          <span id="block_ht"
+          style="display: {{#is_taxed}}block;{{/is_taxed}}{{^is_taxed}}none;{{/is_taxed}}">
+
+            {{tr.price_less_tax}}&nbsp;:&nbsp;&nbsp;<input
+            id="price_less_tax"
+            name="price_less_tax"
+            value="{{price_less_tax_input}}"
+            type="number"
+            min="0"
+						max="100000000000"
+            step="0.01"
+            class="border border-blue margin-top padding-small"
+            style="width: 150px;" />
+            <br>
+            {{tr.tax}}&nbsp;:&nbsp;&nbsp;<input
+            id="tax"
+            name="tax"
+            value="{{tax_input}}"
+            type="number"
+            min="0"
+						max="100"
+            step="0.1"
+            class="border border-blue margin-top padding-small"
+            style="width: 150px;" />
+            &nbsp;&nbsp;<span class="fw600 xlarge">%</span>
+            <br>
+          </span>
+
+          {{tr.price_tt}}&nbsp;:&nbsp;&nbsp;<input
+          id="price_tt"
+          name="price_tt"
+          value="{{price_tt_input}}"
+          type="number"
+          min="0"
+					max="100000000000"
+          step="0.01"
+          class="border border-blue margin-top padding-small"
+          style="width: 150px;" />
+        </p>
+
+      </div>
+      <!-- end col price -->
+      <!-- col Qty -->
+      <div class="col s12 m6">
+
+        <p class="">
+          {{tr.quantity}}&nbsp;:
+        </p>
+        <p class="mrg0">
+          <input
+          id="quant"
+          name="quant"
+          value="{{quant}}"
+          type="number"
+          min="0"
+					max="99999"
+          step="1"
+          class="border border-blue margin-top padding-small"
+          style="width: 150px;" />
+        </p>
+
+      </div>
+      <!-- end col Qty -->
+    </div>
+
+    <br>
+
+    <!-- ADD IMAGE -->
+    <div class="margin-top">
+      <!-- BTN ADD IMAGE -->
+      <span onclick="$.add_img_prod();"
+      class="blue btn card margin-bottom round">
+        <i class="far fa-image"></i>&nbsp; {{tr.add_one_or_more_imgs}}
+      </span>
+      <input type="file"
+      id="img"
+      name="img"
+      multiple
+      style="display: none;" />
+
+      <!-- !!  CONTAINER IMG !!  -->
+      <div id="rows_img"></div>
+
+    </div>
+    <!-- END ADD IMAGE -->
+
+    <!-- BUTTONS -->
+    <p class="">
+      <span
+      {{#modif}}
+        onclick="$.add_product(event,'modif',{{id}});"
+      {{/modif}}
+      {{^modif}}
+        onclick="$.add_product(event,null,null);"
+      {{/modif}}
+      id="sub_set_prod"
+      class="blue btn card margin-right round">
+          <i class="fas fa-sign-in-alt"></i>&nbsp; {{tr.record}}
+      </span>
+
+      {{#modif}}
+        <span onclick="$.close_modal();"
+          class="gray btn card margin-right round">
+            <i class="fas fa-ban"></i>&nbsp; {{tr.abort}}
+        </span>
+      {{/modif}}
+      {{^modif}}
+        <span onclick="$.clear_add_product();"
+          class="gray btn card margin-right round">
+            <i class="fas fa-ban"></i>&nbsp; {{tr.re_init}}
+        </span>
+      {{/modif}}
+
+      {{#modif}}
+      <span onclick="$.ask_to_suppr_product(event, {{id}});"
+      id="suppr_prod"
+      class="deep-orange btn card round">
+          <i class="far fa-trash-alt"></i>&nbsp; {{tr.suppr}}
+      </span>
+      {{/modif}}
+
+    </p>
+
+	</form>
+
+<!-- END FROM -->
+</script>
+<!-- END FORM MODIF -->
+
+
+<!-- images_render -->
+<script id="images_render" type="text/html">
+
+  <div id="box_img_{{index_box_img}}"
+   class="border box_img round">
+
+    <img src="{{img}}"
+    class="card" />
+
+    {{#not_for_logo}}
+    <p onclick="$.move_img('box_img_{{index_box_img}}', 'fav');"
+    class="btn card fav_checked light-gray medium mrg0 padding-small pointer round text-dark-gray">
+
+      <i class="fa-{{check}}square
+        far xlarge text-gray v-top pointer"></i>
+
+      <input type="radio"
+      class="check hide"
+      name="name_img_first"
+      value="{{name_img}}" {{checked}}>&nbsp; {{tr.first_img}}
+
+    </p>
+
+    <p class="center arrows">
+      <span onclick="$.move_img('box_img_{{index_box_img}}', 'left');"
+            class="arrow_left btn card light-gray medium pointer round">
+        <i class="fas fa-chevron-left text-gray"></i>
+      </span>
+
+      <span onclick="$.remove_product_img('#box_img_{{index_box_img}}');"
+      class="arrow_left btn card light-gray medium pointer round">
+      <i class="fa-trash-alt far text-gray"></i>&nbsp; {{tr.delete_img}}</span>
+
+      <span onclick="$.move_img('box_img_{{index_box_img}}', 'right');"
+            class="arrow_left btn card light-gray medium pointer round">
+        <i class="fas fa-chevron-right text-gray"></i>
+      </span>
+    </p>
+    {{/not_for_logo}}
+  </div>
+
+</script>
+<!-- images_render -->

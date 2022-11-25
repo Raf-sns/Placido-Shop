@@ -1,0 +1,2330 @@
+
+<<< Insert comments like this >>>
+
+<<<
+	BACK INTERFACE
+	LANG : french
+	CODE LANG : fr
+	AUTHOR : Raf
+	VERSION : 2.0.0
+>>>
+
+
+***
+go_to_top_page
+***
+	Remonter en haut de la page
+***
+warning
+***
+	Important
+***
+welcome_login
+***
+  Bienvenue !<br>Veuillez vous connecter&nbsp;:
+***
+security_alert
+***
+	Alerte de sécurité
+***
+alert_connections
+***
+	Un utilisateur a tenté de se connecter plus de 5 fois à votre interface de gestion,
+ son adresse IP a été bloquée
+***
+welcome
+***
+  Welcome !
+***
+your_name
+***
+  Votre nom / pseudo
+***
+empty_name
+***
+  Veuillez entrer un nom ou un pseudo s.v.p
+***
+too_large_name
+***
+  Votre nom est trop grand, modifiez-le s.v.p
+***
+your_management
+***
+  VOTRE GESTION
+***
+log_out
+***
+	Déconnexion
+***
+home
+***
+  Accueil
+***
+your_products
+***
+  Vos produits
+***
+add_prod
+***
+  Ajouter un produit
+***
+website_categories
+***
+  Catégories du site
+***
+shop_user
+***
+  Votre magasin
+***
+messages
+***
+  Messages
+***
+website_stats
+***
+  Statistiques du site
+***
+archived_sales
+***
+  Ventes archivées
+***
+settings
+***
+  Réglages
+***
+see_website
+***
+  Voir le site
+***
+new_sales
+***
+  Commandes
+***
+total_amount_new_sales
+***
+  Total commandes
+***
+day_visits
+***
+  Visite(s) du jour
+***
+error_gen
+***
+  Erreur dans les données ...
+***
+mail
+***
+  E-mail
+***
+password
+***
+  Mot de passe
+***
+forgot_password
+***
+  Mot de passe oublié
+***
+login
+***
+  Connexion
+***
+empty_subject_mail
+***
+  Vous devez entrer un sujet pour le message s.v.p.
+***
+empty_mess_mail
+***
+  Vous devez entrer un message s.v.p.
+***
+empty_mail
+***
+  Vous devez entrer un e-mail s.v.p.
+***
+too_large_mail
+***
+  Pour le champ "E-mail" : Vous dépassez le nombre
+  maximum de caractères (100)
+***
+unable_renew_password
+***
+  Modification E-mail / Mot de passe impossible
+***
+password_required
+***
+  Veuillez entrer un mot de passe, s.v.p.
+***
+your_password
+***
+  Votre mot de passe
+***
+forgot_password_title_link
+***
+  Cliquez ici pour obtenir un nouveau mot de passe
+***
+forgot_password_success
+***
+  Vous allez recevoir un mot de passe provisoire par e-mail.
+  <br>Vérifiez votre dossier de spam en cas de non réception, merci.
+***
+forgot_password_info
+***
+  Vous pouvez dès à présent vous connecter avec ce mot de passe&nbsp;:
+***
+error_mail_server
+***
+  Erreur du serveur e-mail
+***
+error_private_admin_page
+***
+  Vous n'avez plus accès au site,
+	<br>Utilisez "Mot de passe oublié" ou contactez un administrateur, merci.
+***
+bad_mail
+***
+  Cet e-mail n'est pas valide, rectifiez s.v.p.
+***
+too_long_login_mail
+***
+	Pour le champ "E-mail" : Vous dépassez le nombre
+	maximum de caractères (80)
+***
+bad_login
+***
+	E-mail ou mot de passe invalide,
+														<br> réessayez, s.v.p
+														<br> Il vous reste
+***
+trials
+***
+	essai(s)
+***
+record
+***
+  Enregistrer
+***
+record_settings
+***
+	Enregistrer les paramètres
+***
+empty
+***
+  Vider
+***
+modify
+***
+  Modifier
+***
+suppr
+***
+  Supprimer
+***
+abort
+***
+  Annuler
+***
+open
+***
+  Ouvrir
+***
+close
+***
+	Fermer
+***
+print
+***
+  Imprimer
+***
+respond
+***
+  Répondre
+***
+at
+***
+  à
+***
+the
+***
+  le
+***
+validity_token
+***
+  Validité du jeton
+***
+expired_token
+***
+  Jeton expiré
+***
+expired_token_info
+***
+  Votre jeton de sécurité a expiré&nbsp;... <br>Veuillez vous reconnecter s.v.p.
+***
+week
+***
+ 	Semaine
+***
+month
+***
+	Mois
+***
+year
+***
+	Année
+***
+days
+***
+	jour(s)
+***
+hours
+***
+	h
+***
+minutes
+***
+	m
+***
+seconds
+***
+	s
+***
+waning_not_connected
+***
+	Vous avez été déconnecté du réseau, veuillez patienter
+***
+connection_restored
+***
+	Vous êtes de nouveau connecté au réseau
+***
+bad_context
+***
+  Mauvais contexte attendu ...
+***
+global_empty_fields
+***
+  Veuillez remplir tous les champs, s.v.p.
+***
+update_success
+***
+  La mise à jour a bien été effectuée
+***
+too_long_website_title
+***
+	Le titre de votre site web est trop long (300 caractères max.), modifiez s.v.p.
+***
+empty_website_title
+***
+	Entrez un titre pour votre site s.v.p.
+***
+empty_website_descr
+***
+	Entrez une description pour votre site s.v.p.
+***
+too_long_website_descr
+***
+	La description de votre site web est trop longue (600 caractères max.), modifiez s.v.p.
+***
+image_size
+***
+	Taille de l'image
+***
+bad_value_img_sn_size
+***
+	Pour la taille de l'image,
+	<br>
+	veuillez enter une valeur numérique comprise entre 600 et 1200
+***
+empty_public_mail
+***
+	Veuillez entrer un e-mail public pour les communications venant du site
+***
+public_mail_no_valid
+***
+	Votre e-mail ne semble pas valide, modifiez s.v.p.
+***
+error_create_token
+***
+	Erreur lors de la création du token
+***
+token_expired
+***
+	Votre jeton n'est plus valide, pour votre sécurité,
+	<br>veuillez vous reconnecter s.v.p.
+
+
+
+
+
+  <<< NEW SALES >>>
+
+
+
+
+
+
+***
+new_sales
+***
+  Nouvelles ventes
+***
+order_number
+***
+  Commande n°
+***
+amount
+***
+	Montant
+***
+date_sale
+***
+	Date de la vente
+***
+payment_refs
+***
+  Refs. paiement
+***
+ID_card
+***
+  ID_card
+***
+ID_payment
+***
+  ID_payment
+***
+customer
+***
+  Client
+***
+at_customer
+***
+	au client
+***
+contact_by_mail
+***
+  Contacter par e-mail
+***
+delivery
+***
+  Livraison
+***
+products
+***
+  Produit(s)
+***
+img
+***
+  Image
+***
+title
+***
+  Titre
+***
+unit_price
+***
+  P.U.
+***
+tax
+***
+  Taxe
+***
+quant
+***
+  Q.
+***
+total_row
+***
+  P.U.tt
+***
+total_tax_row
+***
+  Dont&nbsp;taxe
+***
+total_amount_sale
+***
+  Total vente
+***
+total_tax_sale
+***
+  Total&nbsp;taxes
+***
+notif_as_payed
+***
+  Notifier comme "Payé"
+***
+state_sale
+***
+  Statut
+***
+payed
+***
+  Payé
+***
+send_bill_by_mail
+***
+  Envoyer une facture par e-mail au client
+***
+send_order_processing_mail
+***
+  Envoyer une confirmation de traitement par e-mail au client
+***
+archive_sale
+***
+  Valider le traitement et Archiver
+***
+no_new_sales
+***
+	Aucune nouvelle vente
+***
+confirm_suppr_new_sale
+***
+  Veuillez confirmer la suppression de la commande n°
+***
+new_sale_not_found
+***
+  Vente introuvable ...
+***
+error_create_archive
+***
+  Erreur : L'archive n'a pas été crée, ré-essayez s.v.p
+***
+error_archive_not_found
+***
+	Erreur : L'archive est introuvable, ré-essayez s.v.p
+***
+success_delete_new_sale
+***
+	La commande a bien été supprimée
+***
+error_on_delete_customer
+***
+  Erreur : Le client n'a pas pu être supprimé
+***
+products_new_sale_not_found
+***
+	Les produits de la vente n'ont pas été trouvés
+***
+udpate_quantities_failed
+***
+	La mise à jour des quantités a échoué
+***
+error_delete_sold_products
+***
+	Les produits de la vente n'ont pas été supprimés
+***
+error_delete_new_sale
+***
+  Une erreur est survenue lors de l'effacement de la vente,
+  ré-essayez s.v.p.
+***
+change_status_to_paid
+***
+	Passer le statut à "Payé"
+***
+refound_sale
+***
+	Faire un avoir
+***
+execute_archive_sale
+***
+	Pour archiver la commande n°
+***
+confirm
+***
+	Veuillez confirmer s.v.p
+
+
+
+
+
+
+  <<< ARCHIVES >>>
+
+
+
+
+***
+search_by_date
+***
+	Recherche par date
+***
+search_archives_by_number
+***
+	Rechercher un numéro de facture
+***
+search_archives_by_customer
+***
+	Rechercher par client
+***
+re_init_search
+***
+	Ré-initialiser
+***
+nb_archives_found
+***
+	archive(s) trouvée(s)
+***
+error_date_archive
+***
+	Veuillez utiliser le format YYYY-MM-DD pour la date recherchée
+***
+error_number_archive
+***
+	Veuillez utiliser un nombre pour rechercher une facture par numéro
+***
+error_refound_sale
+***
+  Erreur : L'avoir n'a pas été effectué, ré-essayez s.v.p
+***
+success_refound_sale
+***
+  L'avoir a bien été effectué
+***
+your_bill
+***
+  Votre facture
+***
+order_processed
+***
+  Votre commande a été traitée
+***
+order_processed_comm_txt
+***
+  Bonjour,
+  <br />nous vous envoyons ce message pour vous signaler que votre commande a été traitée.<br />Vous devriez la recevoir bientôt.
+  <br /><br />Cordialement,<br />
+***
+order_well_archived
+***
+  La commande a bien été archivée
+***
+bill_payed
+***
+  Payée
+***
+waiting_for_payment
+***
+  En attente de paiement
+***
+show_or_print_bill
+***
+	Afficher/imprimer la facture
+***
+ask_to_send_bill
+***
+	Pour renvoyer la facture n°
+***
+resend_bill_at_customer
+***
+	Renvoyer la facture
+***
+success_send_bill_at_customer
+***
+	La facture a bien été renvoyée
+***
+error_update_as_payed
+***
+	 Erreur : Le statut de la vente n'a pas été modifié, ré-essayez s.v.p
+***
+update_as_payed
+***
+	La statut de la vente a bien été modifié
+***
+load_more_archives
+***
+	Charger plus d'archives
+***
+empty_archives
+***
+	Aucune archive
+***
+bill_number
+***
+	Facture n°
+***
+date_bill
+***
+	Date de la facture
+***
+phone
+***
+	Tel.
+***
+reference
+***
+	Ref.
+***
+refounded_price_unit
+***
+	Avoir sur P.U.
+***
+price_unit_after_refound
+***
+	P.U. après remise
+***
+total_refounded_amount
+***
+	Total avoir
+***
+sub_total
+***
+	Sous-total
+***
+total_before_refound
+***
+	Total avant remise
+***
+credit_on_invoice_number
+***
+	Avoir sur la facture n°
+***
+refounded_date
+***
+	Date de l'avoir
+***
+amount_deducted
+***
+	Net à déduire
+***
+refound_performed_the
+***
+	Avoir effectué le
+***
+refound_amount_bill
+***
+	Faire un avoir à la facture n°
+***
+validate
+***
+	Valider
+***
+modify_state_bill
+***
+	Pour modifier le statut de la facture n°
+***
+invoice_issue_date
+***
+	Date d'émission
+***
+invoice_to
+***
+	Facture à destination de
+***
+unit_price_bill
+***
+	Prix unitaire
+***
+partial_total
+***
+	Total partiel
+***
+discount_on_bill
+***
+	Avoir sur votre facture
+
+
+
+
+
+  <<< SHOP >>>
+
+
+
+
+
+***
+shop_mode
+***
+	Mode du magasin
+***
+online_sale
+***
+	Vente en ligne
+***
+catalog_mode
+***
+	Catalogue ( sans les prix )
+***
+title_shop
+***
+	Titre du magasin
+***
+empty_title_shop
+***
+  Veuillez entrer un titre pour votre magasin, s.v.p.
+***
+too_large_title_shop
+***
+  Pour le champ "Titre" : Vous dépassez le nombre maximum de caractères autorisés
+***
+empty_descr_shop
+***
+  Veuillez entrer une description, s.v.p.
+***
+too_large_descr_shop
+***
+  Pour le champ "Description" : Vous dépassez le nombre
+      maximum de caractères autorisés
+***
+public_address_shop
+***
+	Adresse du siège social ou du magasin
+***
+public_address_shop_info
+***
+	- Sera public sur le site.
+	<br>
+	( max. 500 caractères )
+***
+empty_public_address_shop
+***
+  Veuillez entrer une adresse publique pour votre magasin s.v.p.
+***
+too_large_addr_input
+***
+  Pour le champ "Adresse" : Vous dépassez le nombre
+  maximum de caractères (500)
+***
+public_tel_shop
+***
+	Téléphone&nbsp;:&nbsp;( En option )
+***
+public_tel_shop_info
+***
+	- Sera public sur le site si indiqué.
+***
+empty_phone_input
+***
+  Veuillez entrer un téléphone, s.v.p.
+***
+bad_phone_input
+***
+  Pour le champ "Tel" : Vous dépassez le nombre
+  maximum de caractères (17)
+***
+company_informations
+***
+	Indiquez le nom de la société
+	+ adresse du siège social
+***
+company_informations_info
+***
+	- Sera indiqué sur les factures, sur les bons de commande
+	ou les mentions légales du site.
+	<br>
+	( max. 500 caractères )
+***
+empty_bill_address_shop
+***
+  Veuillez indiquer un nom de société et une adresse de siège social, s.v.P.
+***
+too_large_bill_address
+***
+  Pour le champ "nom de la société + adresse du siège social" : Vous dépassez le nombre
+  maximum de caractères (800)
+***
+bill_legal_text
+***
+	Indiquez les mentions légales ou
+	des informations à ajouter en bas des factures
+***
+bill_legal_text_info
+***
+	- Sera indiqué sur les factures.
+	<br>
+	( max. 3000 caractères )
+***
+empty_bill_legal_text
+***
+  Veuillez indiquer des mentions légales pour vos factures, s.v.p.
+***
+too_large_bill_legal_text
+***
+  Pour le champ "Indiquez vos mentions légales" : Vous dépassez le nombre
+  maximum de caractères (3000)
+***
+add_logo_shop_image
+***
+	Ajouter un logo ou une image
+***
+logo_shop_image_info
+***
+	Ce logo sert pour le site web, les factures et votre interface de gestion.
+***
+one_image_logo_required
+***
+	Une seule image pour votre logo, merci.
+***
+update_shop_success
+***
+	Le magasin a bien été modifié
+***
+update_failed
+***
+	Un problème est survenu, la mise à jour a échoué, ré-essayez s.v.p.
+***
+error_delete_old_imgs
+***
+	Les anciennes images n'ont pas été supprimées, ré-essayez s.v.p.
+***
+one_img_for_logo
+***
+	Une seule image pour votre logo, modifiez s.v.p.
+
+
+
+
+
+<<<  STOCK / PRODUCTS >>>
+
+
+
+
+
+***
+entries
+***
+  Entrées
+***
+your_search
+***
+  Votre recherche
+***
+search_nb_render
+***
+  Produits trouvés
+***
+page
+***
+	Page
+***
+sort_options
+***
+  Options de tri
+***
+date_add
+***
+  Date d'ajout
+***
+all_categories
+***
+  Toutes les catégories
+***
+date_added
+***
+  Ajouté le
+***
+state
+***
+  Statut
+***
+by_category
+***
+  Par catégorie
+***
+quantity
+***
+  Quantité
+***
+on_line
+***
+  En ligne
+***
+off_line
+***
+  Hors-ligne
+***
+re_init
+***
+  ré-initialiser
+***
+first_img
+***
+	Première image
+***
+delete_img
+***
+	Effacer
+***
+empty_product
+***
+  Produit épuisé
+***
+category
+***
+  Catégorie
+***
+no_category_assigned
+***
+  Non-classé
+***
+price_less_tax
+***
+  Prix H.T.
+***
+tax
+***
+  Taxe
+***
+tax_value
+***
+  Montant&nbsp;Taxe
+***
+price_tt
+***
+  Prix T.T.C.
+***
+no_price_assigned
+***
+  Prix non-indiqué
+***
+define_first_img
+***
+  Definissez l'image principale s.v.p
+***
+choose_category
+***
+  Choisissez une catégorie s.v.p
+***
+empty_title
+***
+  Veuillez définir un titre s.v.p
+***
+too_large_title
+***
+  Réduisez la taille de votre titre s.v.p (max. 500)
+***
+empty_text
+***
+  Veuillez entrer un texte s.v.p
+***
+too_large_text
+***
+  Réduisez la taille de votre texte s.v.p (max. 5000)
+***
+too_large_ref_text
+***
+	Pour la référence du produit, utilisez au maximum 500 caractères s.v.p.
+***
+quant_no_defined
+***
+  Veuillez définir une quantité s.v.p
+***
+quant_too_large
+***
+  Réduisez la taille de la quantité s.v.p
+***
+tax_mode_not_defined
+***
+  Veuillez définir le prix avec ou sans taxe s.v.p
+***
+price_product_too_high
+***
+	Le prix de votre produit est trop grand, modifiez s.v.p
+***
+error_on_set_product
+***
+  Erreur lors de l'enregistrement ou de la modification d'un produit
+***
+success_modif_state_product
+***
+	Le statut du produit a bien été modifié
+***
+type_file_not_accepted
+***
+  Un de vos fichiers n'a pas la bonne extension, vérifiez s.v.p
+***
+error_record_db_img
+***
+  Erreur lors de l'enregistrement des images dans la base de donnée
+***
+no_image_uploaded
+***
+  Ajoutez une ou plusieurs images s.v.p
+***
+  search_not_found
+***
+  Aucune correspondance trouvée ...
+***
+product_well_suppr
+***
+  Le produit a bien été supprimé
+***
+success_update_cat_product
+***
+	La catégorie du produit a bien été modifiée
+***
+error_product_is_on_new_sale
+***
+	Ce produit est dans une vente non traitée, vous ne pouvez pas l'effacer
+
+
+
+
+<<< FEATURED PRODUCTS >>>
+
+
+
+
+
+***
+featured_prods
+***
+	Diaporama
+***
+price
+***
+	Prix
+***
+featured_doublon
+***
+	Ce produit est déjà dans le diaporama
+***
+empty_featured_prods
+***
+	Aucun produit dans le diaporama.
+***
+current_slideshow
+***
+	Diaporama actuel
+***
+select_products_for_slideshow
+***
+	Sélectionnez les produits à placer dans le diaporama
+***
+product_added
+***
+	Produit ajouté !
+***
+error_on_insert_featured_prods
+***
+	Erreur lors de l'enregistrement du diaporama, ré-essayez s.v.p.
+***
+well_inserted_featured_prods
+***
+	Le diaporama a bien été mis à jour
+
+
+
+
+
+
+<<<   ADD NEW PRODUCT   >>>
+
+
+
+
+
+***
+modify_product
+***
+	Modifier un produit
+***
+choose_a_category
+***
+	Choisir une catégorie
+***
+modify_category
+***
+	Modifier la catégorie
+***
+title_product
+***
+	Titre du produit
+***
+title_product_info
+***
+	( Max. 500 caractères )
+***
+ref_product
+***
+	Référence du produit
+***
+ref_product_info
+***
+	( Max. 500 caractères, peut être vide, ne sera pas public )
+***
+descr_prod
+***
+	Description du produit
+***
+descr_prod_info
+***
+	( Max. 5000 caractères )
+***
+online_date_prod
+***
+	Produit ajouté le
+***
+add_one_or_more_imgs
+***
+	Ajouter une ou des image(s)
+***
+success_record_product
+***
+	Le produit a bien été ajouté
+***
+product_not_found
+***
+	Aucun produit ne correspond à votre demande
+***
+confirm_suppr_product
+***
+	Veuillez confirmer la suppression du produit
+
+
+
+
+<<<   CATEGORIES   >>>
+
+
+
+
+
+***
+no_cat
+***
+	Aucune catégorie
+***
+empty_cats
+***
+  Il n'y a pas encore de catégorie, créez-en une !
+***
+deploy_all
+***
+  Tout déployer
+***
+move_cat
+***
+  Déplacer
+***
+before_cat
+***
+  Avant
+***
+after_cat
+***
+  Après
+***
+inside_cat
+***
+  Dedans
+***
+error_insert_cat
+***
+  La catégorie n'a pas pu être ajoutée, ré-essayez s.v.p.
+***
+error_update_cat
+***
+  La mise à jour de la catégorie a échoué, ré-essayez s.v.p.
+***
+empty_title_cat
+***
+  Veuillez entrer un titre pour votre catégorie s.v.p.
+***
+record_new_cat
+***
+  Créez une nouvelle catégorie&nbsp;:
+***
+modif_cats
+***
+  Modifier vos catégories&nbsp;:
+***
+confirm_suppr_cat
+***
+  Veuillez confirmer la suppression de la catégorie&nbsp;:
+***
+warning_node
+***
+  Attention ! Cette catégorie contient des sous-catégories.
+***
+cat_not_found
+***
+	Cette catégorie est introuvable, modifiez s.v.p.
+
+
+
+
+<<< MESSAGES >>>
+
+
+
+
+
+***
+show
+***
+  Afficher
+***
+hide
+***
+ 	Cacher
+***
+readed
+***
+  Lu
+***
+not_read
+***
+  Non-lu
+***
+you_have
+***
+  Vous avez
+***
+total_messages
+***
+  message(s)
+***
+mess_not_read
+***
+  message(s) non-lu(s)
+***
+message_of
+***
+  Message de
+***
+date_message
+***
+  Date du message
+***
+error_pass_mess_readed
+***
+  Erreur : Le message n'a pas été marqué comme "lu"
+***
+confirm_suppr_message
+***
+  Veuillez confirmer la suppression du message s.v.p.
+***
+error_delete_message
+***
+  Erreur : Le message n'a pas été supprimé
+***
+success_delete_message
+***
+  Le message a bien été supprimé
+***
+empty_messages
+***
+  Vous n'avez aucun nouveau message
+***
+success_send_message
+***
+  Votre message a bien été envoyé
+***
+send
+***
+  Envoyer
+***
+send_message_to_customer
+***
+	Envoyer un e-mail au client
+***
+send_a_message_to
+***
+  Envoyer un message à
+***
+his_mail
+***
+  Son e-mail
+***
+subject
+***
+  Sujet
+***
+message
+***
+  Message
+***
+mail_to_respond
+***
+  Vous avez la possiblité de nous répondre à cette adresse E-mail
+***
+mail_no_reply
+***
+  Cet email vous a été envoyé automatiquement, veuillez ne pas répondre s.v.p
+
+
+
+
+  <<< SETTINGS >>>
+
+
+
+
+***
+modif_access_codes
+***
+  Modifiez vos codes d'accès
+***
+enter_stripe_keys
+***
+  Entrez vos clés Stripe
+***
+info_stripe_keys
+***
+  Les clés déjà entrées sont cochées en vert mais n'appraissent pas à l'écran.
+  <br>
+  Enregistrer des clés vides mais cochées aura pour effet de les effacer.
+  <br>
+  Les clés de production ont la priorité sur les clés de test.
+  <br>
+  Vous ne pourrez percevoir réellement des paiements
+  qu'avec vos clés de production.
+***
+test_mode
+***
+  Mode Test
+***
+test_mode_info_stripe
+***
+  Entrez-ici vos clés de test, ceci vous permettra de tester les paiements
+***
+stripe_test_public_key
+***
+  Clé publique de test
+***
+stripe_test_secret_key
+***
+  Clé secrète de test
+***
+production_mode
+***
+  Mode Production
+***
+production_mode_info_stripe
+***
+  Entrez-ici vos clés de production, ceci vous permettra de percevoir des paiements
+***
+stripe_production_public_key
+***
+  Clé publique de production
+***
+stripe_production_secret_key
+***
+  Clé secrète de production
+***
+error_one_empty_key
+***
+  Une de vos clé de est vide, corrigez, s.v.p.
+***
+success_record_test_keys
+***
+  Vos clés de test ont bien été enregistrées
+***
+success_delete_test_keys
+***
+  Vos clés de test ont bien été effacées
+***
+success_record_production_keys
+***
+  Vos clés de production ont bien été enregistrées
+***
+success_delete_production_keys
+***
+  Vos clés de production ont bien été effacées
+***
+error_update_stripe_keys
+***
+  Une erreur est survenue lors de l'enregistrement de vos clés, ré-essayez s.v.p.
+***
+pay_mode_success
+***
+  Le mode des paiements a bien été modifié
+***
+pay_mode_error
+***
+  Une erreur est survenue lors de l'enregistrement du mode des paiements, ré-essayez s.v.p.
+***
+pay_modalities
+***
+  Modalités de paiement
+***
+able_to_pay_no_card
+***
+	Vous avez la possibilité d'autoriser l'achat de vos produits
+	par d'autres moyens de paiement ex: Espèces, virement, chèque bancaire.
+	<br>
+	Si vous activez cette fonction,
+	<br>
+	des utilisateurs pourront acheter vos produits et payer plus tard.
+***
+able_to_pay_no_card_warning
+***
+	Attention ! Vous n'êtes pas à l'abrit qu'un utilisateur mal intentionné achète
+	tous vos produits.
+***
+able_to_pay_no_card_info
+***
+	Note : Vous pourrez supprimer une commande qui n'aura pas été payée depuis
+	votre interface de gestion.
+***
+able_other_payment
+***
+	Autoriser l'achat par chèque / espèces / virement
+***
+enable_other_payment
+***
+	Autoriser
+***
+disable_other_payment
+***
+	Ne pas autoriser
+
+
+
+
+
+<<<  API SETTINGS  >>>
+
+
+
+
+
+***
+api_settings
+***
+	Réglages de l'application
+***
+HOST
+***
+	Nom de domaine
+	<br>
+	<small>( sans https ou www ex: website.com )</small>
+***
+NB_FOR_PAGINA
+***
+	Nombre d'articles par page pour l'interface publique
+***
+NB_FOR_PAGINA_BACKEND
+***
+	Nombre d'articles par page pour l'interface d'administration
+***
+error_number_for_pagina
+***
+	Pour le nombre d'articles par page, veuillez entrer un nombre
+	compris entre 1 et 100000, modifiez s.v.p.
+***
+DEF_ARR_SIZES
+***
+	Tailles des images minimale et maximale
+***
+DEF_ARR_SIZES_notice
+***
+	<br>
+	<small>
+	Deux versions des images de vos produits sont enregistrées,
+	une de grande taille et une de petite taille.
+	<br>
+	Le réglage sera effectif sur les produits enregistrés après modification.
+	</small>
+***
+min
+***
+	Taille petite image <small>( largeur en pixels )</small>
+***
+max
+***
+	Taille grande image <small>( largeur en pixels )</small>
+***
+empty_values_def_arr_sizes
+***
+	Veuillez définir des tailles pour les largeurs min et max des images (en px)
+***
+bad_values_def_arr_sizes
+***
+	Veuillez choisir une valeur entre 300 et 3500 pixels de large pour
+	les valeurs min. et max. des images, modifiez s.v.p.
+***
+TOKEN_TIME
+***
+	Durée du jeton de sécurité
+	<br>
+	<small>( en secondes )</small>
+***
+empty_token_time
+***
+	Veuillez indiquer une durée en secondes pour votre jeton de sécurité
+***
+bad_token_time
+***
+	La durée du jeton de sécurité ne peut être qu'entre 300 et 86400 secondes, modifiez s.v.p
+***
+WEBSITE_TITLE
+***
+	Titre du site web
+***
+META_DESCR
+***
+	Description du site
+	<br>
+	<small>( pour les moteurs de recherche et les réseaux sociaux 300 caractères max )</small>
+***
+social_networks_imgs
+***
+	Image réseaux sociaux
+***
+VERSION
+***
+	Version
+***
+COMPRESSED_DATE
+***
+	Date de la dernière compression
+***
+compression
+***
+	Compression
+***
+DO_COMPRESS_JS_CSS
+***
+	Compresser les ressources javascript et css
+***
+execute_compress
+***
+	Exécuter la compression
+***
+yes
+***
+	Oui
+***
+no
+***
+	Non
+***
+COMPRESSED
+***
+	Utiliser la version compressée
+***
+PUBLIC_NOTIFICATION_MAIL
+***
+	E-mail de contact
+	<br>
+	<small>( cet e-mail sera public pour vos correspondances )</small>
+***
+TIMEZONE
+***
+	Fuseau horaire
+***
+LANG_LOCALE
+***
+	Paramètres de langue
+	<br>
+	<small>( assigne la langue pour les traductions
+	automatiques comme les dates, les chiffres ... )</small>
+***
+field
+***
+	Champ
+***
+LANG_FRONT
+***
+	Traduction de l'interface - Partie publique
+	<br>
+	<small>( vous devez avoir un fichier nommé comme en.txt ou fr.txt dans le dossier /translate )</small>
+***
+translation_api_front_not_found
+***
+	La traduction demandée pour l'interface de gestion n'a pas été trouvée,
+	<br>Veuillez la télécharger et ré-essayez par la suite
+***
+LANG_BACK
+***
+	Traduction de l'interface - Partie privée
+	<br>
+	<small>( vous devez avoir un fichier nommé comme en.txt ou fr.txt dans le dossier [ADMIN_FOLDER]/translate )</small>
+***
+translation_api_backend_not_found
+***
+	La traduction demandée pour la partie publique du site n'a pas été trouvée,
+	<br>Veuillez la télécharger et ré-essayez par la suite
+***
+CURRENCY_SIGN
+***
+	Signe monétaire
+***
+CURRENCY_ISO
+***
+	Code ISO de la monnaie
+***
+DATE_FORMAT
+***
+	Format de date
+***
+error_date_format
+***
+	Erreur sur le format de date, modifiez s.v.p.
+***
+DECIMAL_SEP
+***
+	Séparateur des décimales
+***
+error_decimal_separator
+***
+	Erreur sur le séparateur de décimales,
+	<br> les valeurs "." et "," sont autorisées
+***
+SLIDER
+***
+	Diaporama
+***
+slider_settings
+***
+	Réglages du diaporama
+***
+display
+***
+	Afficher le diaporama
+***
+play
+***
+	Défilement automatique du diaporama
+***
+delay
+***
+	Temps de pause entre chaque image
+	<br>
+	<small>( en millièmes de secondes 1s = 1000ms )</small>
+***
+error_delay_time
+***
+	Erreur : Pour le temps de pause entre chaque images, modifiez la valeur s.v.p.
+***
+speed
+***
+	Durée de la transition du diaporama
+	<br>
+	<small>( en millièmes de secondes 1s = 1000ms )</small>
+***
+error_speed_time
+***
+	Erreur : Pour le temps de transition entre chaque images, modifiez la valeur s.v.p.
+***
+ADMIN_FOLDER
+***
+	Dossier de l'administration du site
+	<br>
+	<small>( Vous accédez à votre interface de gestion en rajoutant /[admin_folder] à l'adresse publique de la boutique
+	<br>ex: website.com/My_Admin_Folder_0559 )</small>
+***
+too_long_name_folder_admin
+***
+	Le nom du dossier d'adminstration est trop long,
+	max. 150 caractères, modifiez s.v.p.
+***
+cannot_use_this_folder_name
+***
+	Impossible d'utiliser ce nom de dossier, il est utilisé par le système
+***
+folder_admin_not_found
+***
+	Le dossier de management n'a pas été trouvé,
+	vérifiez le chemin de la partie management du site
+***
+unable_to_rename_folder_admin
+***
+	Impossible de renommer le dossier de management, ré-essayez s.v.p.
+
+
+
+
+
+		<<< BILL MAIL >>>
+
+
+
+
+***
+vendor_message
+***
+  Nous vous remercions pour votre commande,
+	<br>
+	à bientôt !
+***
+no_reply_message
+***
+  Cet email vous a été envoyé automatiquement, veuillez ne pas répondre s.v.p.
+	<br>
+	This email has been sent to you automatically, please do not reply.
+***
+see_our_website
+***
+	Consultez notre site web
+
+
+
+
+
+		<<<  IP REJECTED >>>
+
+
+
+
+***
+note_ip_rejected
+***
+	Note : Les adresses listées ici ne peuvent plus acheter
+	de produits sur le site.
+	<br>Les adresses IP peuvent être réattribuées, pensez à vider la liste de temps en temps.
+***
+ip_rejected
+***
+	Ip rejetée(s)
+***
+last_check_ips
+***
+	Dernière vérification
+***
+ip_address
+***
+	Adresse IP
+***
+ip_rejected_date
+***
+	Bloquée le
+***
+no_ip_rejected
+***
+	Aucune adresse IP rejetée
+***
+list_ip_rejected
+***
+	Liste des adresses rejetées
+***
+unban_ip
+***
+	Retirer de la liste
+***
+confirm_unban_ip
+***
+	Pour retirer cette I.P. de la liste,
+	<br>Veuillez confirmer&nbsp;:
+***
+empty_ip
+***
+	Veuillez fournir une ip à retirer de la liste s.v.p.
+***
+bad_ip
+***
+	Cette IP ne semble pas valide, modifiez s.v.p.
+***
+error_server
+***
+	Erreur du serveur, ré-essayez s.v.p.
+***
+success_unban_ip
+***
+	Cette IP a bien été retirée de la liste
+
+
+
+
+
+	<<< STATIC PAGES >>>
+
+
+
+
+
+***
+static_pages
+***
+	Pages statiques
+***
+your_static_pages
+***
+	Vos pages statiques
+***
+title_static_page
+***
+	Titre de la page
+***
+page_static_url
+***
+	URL de la page
+***
+link_to_page
+***
+	Lien vers la page
+***
+infos_static_pages
+***
+	informations
+***
+title_static_page_info
+***
+	Pour les titres de vos pages employez une pharse normale,
+	<br>ex. : "Know more about us"
+***
+url_static_page_info
+***
+	Pour les url de page utilisez une chaine de caractères sans espaces, ni accents,
+	<br>ex. : "Know-more-about_us"
+	<br> - Utilisez "-" ou "_" pour combler les espaces entre les mots.
+	<br> - Note : Lors de la création d'une page,
+	une page html sera crée dans le répertoire
+	/templates/STATIC_PAGES,
+	<br>à la racine du site.
+	<br> - Vous devriez retrouver votre page ainsi :
+	<br>/templates/STATIC_PAGES/Know-more-about_us.html
+	<br> - Utilisez un éditeur de code html pour éditer cette page.
+	<br>Un modèle de lien ainsi qu'un modèle de bouton à insérer
+	dans l'application seront présents,
+	en commentaire, au début de votre page.
+	<br> - Utilisez-les pour placer des liens ou des boutons dans vos pages,
+	pour profiter des avantages du programme.
+***
+add_new_static_page
+***
+	Ajouter une nouvelle page
+***
+page_contact_not_suppr
+***
+	La page "Contact" ne peut pas être supprimée
+***
+confirm_suppr_static_page
+***
+	Pour supprimer la page
+***
+success_suppr_static_page
+***
+	La page a bien été supprimée
+***
+too_long_page_title
+***
+	Pour le titre de votre page : 500 caractères max.,
+	<br>modifiez s.v.p.
+***
+too_long_page_url
+***
+	Pour l'URL de votre page : 500 caractères max.,
+	<br>modifiez s.v.p.
+***
+bad_format_url
+***
+	L'URL de la page est mal formattée, modifiez s.v.p.
+***
+error_create_static_page
+***
+	Erreur lors de la création de la page, ré-essayez s.v.p.
+***
+success_create_static_page
+***
+	La page a bien été crée
+***
+error_static_page_already_exist
+***
+	Erreur : Une page avec le même nom existe déjà, modifiez s.v.p.
+***
+page_not_found
+***
+	Erreur : Page introuvable ...
+***
+unable_to_suppr_file
+***
+	Le fichier n'a pas été supprimé, ré-essayez s.v.p.
+***
+unable_to_suppr_file_in_db
+***
+	Le fichier n'a pas été supprimé de la base de donnée, ré-essayez s.v.p.
+***
+confirm_modif_static_page
+***
+	Cette action modifie le titre et/ou l'URL de votre page,
+	l'ancien fichier sera renommé mais son contenu ( code html ) sera conservé.
+	<br>
+	<span class="text-deep-orange">
+	Note : Si vous avez déjà crée un lien ou un bouton
+	vers cette page, modifiez votre code avec la nouvelle valeur d'URL de la page.
+	</span>
+	<br>Pour modifier la page
+***
+unable_to_rename_file
+***
+	Le fichier n'a pas été renommé, ré-essayez s.v.p.
+***
+unable_to_rename_file_in_db
+***
+	Le fichier n'a pas été renommé dans la base de donnée, ré-essayez s.v.p.
+***
+success_rename_file
+***
+	Le fichier a bien été renommé
+
+
+
+
+<<< 	MAILBOX 	>>>
+
+
+
+
+***
+mailbox
+***
+	Boîte aux lettres de l'application
+***
+mailbox_info
+***
+	Modifier les données de votre boîte aux lettres
+***
+mailbox_host
+***
+	Serveur de courrier sortant de la boîte aux lettres
+***
+mailbox_port
+***
+	Port sortant de la boîte aux lettres
+***
+mailbox_address
+***
+	Adresse e-mail
+***
+mailbox_password
+***
+	Mot de passe
+***
+empty_thing_mailbox
+***
+	Veuillez remplir tous les champs, s.v.p
+***
+mailbox_well_recorded
+***
+	La boîte aux lettres a été enregistrée avec succès
+***
+mailbox_rec_error
+***
+	Erreur de la mise à jour des données de la boîte aux lettres
+
+
+
+
+
+<<< 	STATS 	>>>
+
+
+
+
+
+***
+record_stats_token_api
+***
+	Enregister votre token
+***
+infos_stats_token_api
+***
+	Pour avoir des informations plus détaillées
+	sur la localisation de vos visiteurs il vous faut un token ( une chaîne de caratères )
+	que vous obtiendrez après vous être inscrit sur le site de
+***
+see_token_tab
+***
+	Voir l'onglet "Token"
+***
+start_with_ip_info
+***
+	Pour commencer créez un compte gratuit sur le site IPinfo
+***
+paste_your_stats_token_api
+***
+	Entrez votre Token ici, enregistrez, et vous pourrez collecter
+	des informations sur
+	la ville, la région, le pays et la zone géographique de vos visiteurs
+***
+erase_stats_token_api
+***
+	Enregistrer quand le champ est vide efface votre token dans l'application.
+	<br>
+	L'application ne reçois plus d'informations depuis IPinfo.
+***
+enter_your_stats_token_api
+***
+	Entrez votre token
+***
+stats_token_api_recorded
+***
+	Un token est enregistré
+***
+empty_stats_token_api
+***
+	Pas de token enregistré
+***
+localities
+***
+	Localités
+***
+visitors
+***
+	Visiteurs
+***
+stats_products
+***
+	Produits vus
+***
+stats_cart
+***
+	Produits achetés
+***
+move_back
+***
+	Reculer
+***
+forward
+***
+	Avancer
+***
+stats_for_today
+***
+	Données du jour
+***
+chart_type_doughnut
+***
+	Graphique en donut
+***
+chart_type_line
+***
+	Graphique en ligne
+***
+chart_type_bar
+***
+	Graphique en barre
+***
+loading_datas
+***
+	Chargement des données
+***
+visit
+***
+	Visite
+***
+visits
+***
+	Visites
+***
+empty_visits
+***
+	Aucune visite
+***
+empty_visits_products
+***
+	Aucun produit vu
+***
+average
+***
+	Moyenne
+***
+stats_days
+***
+	Jours
+***
+day
+***
+	jour
+***
+Day
+***
+	Jour
+***
+week_number
+***
+	Semaine n°
+***
+average_for
+***
+	Moyenne pour
+***
+products_by_day
+***
+	Produits/jour
+***
+conversion_rate_for
+***
+	Taux de conversion pour
+***
+stats_max
+***
+	Max.
+***
+stats_min
+***
+	Min.
+***
+token_stats_too_long
+***
+	Le token est trop long, max. 500 caractères, modifiez s.v.p.
+***
+token_stats_well_recorded
+***
+	Le token de l'application a bien été enregistré
+***
+product_wiews
+***
+	Vue(s)
+***
+articles_stats_processed
+***
+	Articles traités
+***
+empty_cart_visits
+***
+	Aucun produit mis en panier
+***
+products_in_cart
+***
+	Articles mis en panier
+***
+products_purchased
+***
+	Articles achetés
+***
+conversion_rate_by_visits
+***
+	Taux de conversion par visites
+***
+cities
+***
+	Villes
+***
+regions
+***
+	Régions
+***
+countries
+***
+	Pays
+***
+timezones
+***
+	Zones géographiques
+
+
+
+
+
+
+		<<< PWA >>>
+
+
+
+***
+install_app
+***
+  Installer l'application
+***
+public_web_app
+***
+	Application web pour vos utilisateurs
+***
+management_web_app
+***
+	Application pour votre gestion
+***
+install_public_app_infos
+***
+	Note : Pour installer votre boutique comme une application,
+	<br>
+	allez dans la partie publique du site puis cliquez sur "Menu" et "Installer l'application"
+***
+web_app
+***
+	Application web
+***
+manage_your_web_app
+***
+	Gérez votre application web ( P.W.A. )
+***
+web_app_info_text
+***
+	Ceci est une fonctionnalité expérimentale qui permet à
+	vos utilisateurs
+	<br>
+	d'installer votre boutique comme une application
+	ou un programme.
+***
+web_app_info_text_admin
+***
+	Créez ici aussi votre application d'administration de votre boutique.
+	<br>
+	Vous pourrez alors accéder d'un simple click à votre interface de gestion que ce soit
+	<br>
+	depuis votre mobile, votre tablette ou votre ordinateur.
+***
+settings_public_web_app
+***
+	Réglages pour l'application publique
+***
+settings_private_web_app
+***
+	Réglages pour votre application privée
+***
+add_web_app_img
+***
+	Image pour votre application web
+***
+web_app_short_name
+***
+	Nom court de l'application
+***
+web_app_name
+***
+	Nom de l'application
+***
+web_app_descr
+***
+	Decription courte de l'application
+***
+web_app_theme_color
+***
+	Couleur générale du thème de l'application ( Pour image transparente )
+***
+web_app_bkg_color
+***
+	Couleur du fond de l'application ( Pour écrans d'amorçage )
+***
+web_app_display
+***
+	Mode de rendu de l'application
+***
+web_app_start_url
+***
+	Point d'entrée de l'application
+***
+error_color_selected_hexa
+***
+	Veuillez fournir une couleur au format hexadécimal commme : #ffffff
+***
+bad_pwa_display
+***
+	Le mode de rendu de l'application est erroné, modifiez s.v.p.
+***
+pwa_start_url_too_long
+***
+	L'adresse du point d'entrée de l'application est trop long ( 800 caracrtères max. )
+***
+pwa_well_updated
+***
+	Les données de l'application web ont bien été enregistrés
+***
+error_pwa_record
+***
+	L'application n'a pas été enregistrée, ré-essayer s.v.p.
+***
+square_image_required
+***
+	Veuillez choisir une image au format carré,
+	<br>
+	ceci est important.
+***
+min_size_pwa_required
+***
+	Votre image doit faire au minimum 512 pixels de large
+
+
+
+
+<<<  MODULES >>>
+
+
+***
+module
+***
+	Module
+
+<<< end >>>
