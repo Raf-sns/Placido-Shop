@@ -113,6 +113,15 @@ class control {
 	        	settings::update_mailbox();
 	      break;
 
+				// switch_production_mode
+				case 'switch_production_mode' :
+	        	settings::init_production_mode();
+	      break;
+
+				// record_token_placido
+				case 'record_token_placido' :
+	        	settings::record_Token_Placido_User();
+	      break;
 
 	      // STATISTICS
 				// get_stats_by_interval

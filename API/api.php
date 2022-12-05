@@ -345,7 +345,8 @@ class api extends config {
 
 
   /**
-   *  api::api_crypt( $string, $action ); - encrypt or decrypt
+   *  api::api_crypt( $string, $action ); 'encr' / 'decr'
+	 * - encrypt or decrypt
    *
    * @param  {str} $string   string to encrypt or decrypt
    * @param  {str} $action = 'encr' / 'decr'

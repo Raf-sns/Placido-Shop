@@ -11,6 +11,18 @@
     style="vertical-align: middle;"></i>
   </button>
 
+	<!-- PRODUCTS DISPLAY -->
+	<div id="products_display"
+  class="inline-block display_top_sort hide-medium hide-small margin-right">
+
+    <button onclick="$.display_products();"
+    class="button pointer bold"
+    aria-label="{{tr.line_display_products}}">
+      <i class="ico_display fas {{#view.display_inline}}fa-th{{/view.display_inline}}
+      	{{#view.display_mozaic}}fa-th-list{{/view.display_mozaic}}"></i>
+    </button>
+	</div>
+
   <!-- PAGINA NB OPTION -->
   <div id="sort_nb_pagina"
   class="display_top_sort inline-block hide-small margin-right">

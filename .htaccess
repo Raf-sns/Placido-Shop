@@ -1,4 +1,9 @@
 RewriteEngine on
+
+# redirect www. to non-www.
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
 RewriteCond %{HTTPS} !=on
 RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
@@ -24,8 +29,6 @@ Header set Access-Control-Allow-Methods "POST,GET"
 Header set Access-Control-Allow-Credentials "true"
 
 Header set Access-Control-Allow-Private-Network "true"
-
-Header set Server "Placido-Shop"
 
 ##  age : 31536000 seconds / 365 days
 Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"

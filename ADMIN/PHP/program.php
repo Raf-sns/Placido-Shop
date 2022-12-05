@@ -17,6 +17,7 @@
  * program::set_token( $user_id, $mail, $mdp );
  * program::clean_tokens( $user_id );
  * program::verify_token( $token );
+ * private program::get_Token_Placido();
  * program::verify_admin( $user_id );
  * program::renew_password( $context );
  *
@@ -65,11 +66,13 @@ class program {
 
       // CONSTRUCT USER
       $ARR['user'] =
-      array( 'name'=> $USER['name'],
-        'mail' => $USER['mail'], // obso ?
+      array(
+				'name'=> $USER['name'],
+        'mail' => $USER['mail'], // used in settings
         'token_max_time' => TOKEN_TIME,
         'token' =>
-          program::set_token( $USER['id'], $USER['mail'], $USER['passw'] )
+          program::set_token( $USER['id'], $USER['mail'], $USER['passw'] ),
+				'token_Placido' => program::get_Token_Placido()
       );
 
 
@@ -114,7 +117,9 @@ class program {
         'nb_page_active' => 1 ,
         'lang' => LANG_BACK ,
 				'count_not_read' => 0,
-				'nb_messages' => 0
+				'nb_messages' => 0,
+				'display_mozaic' => ( DISPLAY_PRODUCTS == 'mozaic' ) ? true : false,
+				'display_inline' => ( DISPLAY_PRODUCTS == 'inline' ) ? true : false
       );
 
       // model vue default
@@ -145,11 +150,12 @@ class program {
 			// GET STATIC PAGES
 			$ARR['static_pages'] = static_pages::get_static_pages();
 
-      // NB VISITS - return string (nb + string transl)
+      // NB VISITS - return string (nb + string translated)
       $ARR['stats']['today_nb_visits'] = stats::get_stat_day_nb();
 
 			// check if token IPinfo stats. was recorded
 			$ARR['stats']['token_api'] = stats::check_token_api();
+
 
       // destroy sessions
       $count = $_SESSION['count'];
@@ -592,6 +598,43 @@ class program {
   /**
    * END program::verify_token( $token );
    */
+
+
+	///////////// TOKEN PLACIDO ////////////////
+
+
+	/**
+	 * program::get_Token_Placido();
+	 *
+	 * @return {string}  return Placido Shop user token decrypted
+	 */
+	private static function get_Token_Placido(){
+
+
+			// prepa. db::server()
+			$ARR_pdo = array( 'id' => 0 );
+			$response = 'one';
+			$last_id = false;
+
+			// SQL request
+			$sql = 'SELECT token FROM token_Placido WHERE id=:id';
+
+			// execute
+			$TOKEN = db::server($ARR_pdo, $sql, $response, $last_id);
+
+			// empty token case
+			if( empty($TOKEN) ){
+
+					return false;
+			}
+
+			// return decrypted token Placido
+			return api::api_crypt( $TOKEN['token'], 'decr' );
+
+	}
+	/**
+	 * program::get_Token_Placido();
+	 */
 
 
 

@@ -78,7 +78,12 @@ $.extend({
     // adjust obj.view
     $.return_for_pagina(OBJ);
 
-    $.show_center_page('fade', div, 'products_view');
+		// template products in context 'inline' / 'mozaic'
+		var templ_products =
+			( $.o.view.display_products == 'inline')
+				? 'products_view_inl' : 'products_view';
+
+    $.show_center_page('fade', div, templ_products);
 
 		$('#view_nb_wanted').text($.o.view.nb_wanted);
 
@@ -274,17 +279,17 @@ $.extend({
 		// wrap products view
 		$('#products_view')
 		.wrap(`<div class="to_suppr_content"
-		style="position: absolute;
-		top: 0;
-		left: 0;
-		max-width: 1200px;
-		width: `+width_center+`px;
-		height: 100%;"></div>`)
-		.removeAttr('id').attr('id','products_view_old');
+						style="position: absolute;
+						top: 0;
+						left: 0;
+						max-width: 1200px;
+						width: `+width_center+`px;
+						height: 100%;"></div>`)
+		.removeAttr('id')
+		.attr('id','products_view_old');
 
 		// make wrapper for new items
 		$('#center_page').append('<div class="new_wrapper"></div>');
-
 
     // add 100 for marge between wrappers
     move_new = ( dir == 'next' )
@@ -300,8 +305,13 @@ $.extend({
       'width' : width_center+'px'
     });
 
+		// template products in context 'inline' / 'mozaic'
+		var templ_products =
+			( $.o.view.display_products == 'inline')
+				? 'products_view_inl' : 'products_view';
+
 		// add products new page in wrapper
-		$('.new_wrapper').mustache( 'products_view', $.o );
+		$('.new_wrapper').mustache( templ_products, $.o );
 
 
 		// launch previously lazy_load_imgs()
@@ -320,23 +330,23 @@ $.extend({
 		// append new items
 		$('.new_wrapper').animate({'left' : '0'},
 		{ duration : anim_time,
-		queue : false,
-		done : function(){
+			queue : false,
+			done : function(){
 
-				// remove old content
-				$('.to_suppr_content').remove();
+					// remove old content
+					$('.to_suppr_content').remove();
 
-		    $('#products_view').unwrap('.new_wrapper');
+			    $('#products_view').unwrap('.new_wrapper');
 
-				$('.prev_btn').attr('onclick', "$.pagina('prev')" );
-				$('.next_btn').attr('onclick', "$.pagina('next')" );
+					$('.prev_btn').attr('onclick', "$.pagina('prev')" );
+					$('.next_btn').attr('onclick', "$.pagina('next')" );
 
-				$.pagina_on_animation = false;
+					$.pagina_on_animation = false;
 
-				$('#center_page').removeAttr( 'style' );
+					$('#center_page').removeAttr( 'style' );
 
-		}
-		// end done
+			}
+			// end done
 		});
 		// end  append new items
 

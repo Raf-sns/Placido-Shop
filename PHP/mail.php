@@ -26,7 +26,7 @@ class mail extends config {
    * @Param $to -> mail to send
    * @Param $subject -> suject of mail
    * @Param $message -> html content with datas
-   *  !! need -> classes/Exception.php - classes/PHPMailer.php - classes/SMTP.php
+   *  ? need -> classes/Exception.php - classes/PHPMailer.php - classes/SMTP.php
    *
    * @param  {str} $to        mail to send mail
    * @param  {str} $subject   subject of e-mail
@@ -39,39 +39,44 @@ class mail extends config {
         // $mail->SMTPDebug = 2;
         // error_reporting(E_STRICT | E_ALL);
 
-        $path = dirname(__DIR__);
-        include_once $path.'/PHP/LIBS/PHPMailer/PHPMailer.php';
-        include_once $path.'/PHP/LIBS/PHPMailer/SMTP.php';
-				// var_dump( is_file($path.'/PHP/PHPMailer.php') );
+				// include PHPMailer
+        include_once ROOT.'/PHP/LIBS/PHPMailer/PHPMailer.php';
+        include_once ROOT.'/PHP/LIBS/PHPMailer/SMTP.php';
 
-        // SEND MAIL by PHP MAILER
+        // SEND MAIL by PPHPMailer
         $mail = new PHPMailer();
         $mail->CharSet = 'UTF-8';
-        $mail->isSMTP(); // Paramétrer le Mailer pour utiliser SMTP
-        $mail->Host = self::MAILBOX_HOST; // Spécifier le serveur SMTP
-        $mail->SMTPAuth = true; // Activer authentication SMTP
-        $mail->Username = self::MAILBOX_ACCOUNT; // Votre adresse email d'envoi
-        $mail->Password = self::MAILBOX_PASSW; // Le mot de passe de cette adresse email
-        $mail->SMTPSecure = 'ssl'; // Accepter SSL
-        $mail->Port = self::MAILBOX_PORT;
+				// Use SMTP
+        $mail->isSMTP();
+				$mail->SMTPAuth = true; // Auth. SMTP
+				$mail->SMTPSecure = 'ssl'; // Accept SSL
+				// Mailbox infos
+        $mail->Host = self::MAILBOX_HOST; // Outgoing server
+        $mail->Username = self::MAILBOX_ACCOUNT; // Mailbox email
+        $mail->Password = self::MAILBOX_PASSW; // Mailbox password
+        $mail->Port = self::MAILBOX_PORT; // Mailbox port
 
-        // Personnaliser l'envoyeur
+        // Mail from -> public communication e-mail + domain name
         $mail->setFrom( PUBLIC_NOTIFICATION_MAIL, HOST );
-        // Ajouter le destinataire
+        // Mail to send
         $mail->clearAddresses();
         $mail->addAddress($to);
-        // L'adresse de réponse
+        // Reply address
         $mail->addReplyTo(PUBLIC_NOTIFICATION_MAIL);
-        // $mail->addCC('cc@example.com');
-        // $mail->addBCC('bcc@example.com');
-        // $mail->addAttachment('/var/tmp/file.tar.gz'); // Ajouter un attachement
-        // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');
-        $mail->isHTML(true); // Paramétrer le format des emails en HTML ou non
-
+				// Mail in HTML or not
+        $mail->isHTML(true);
+				// Subject
         $mail->Subject = $subject;
+				// Message
         $mail->Body = $message;
+				// Message in text
         // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
+				// More :
+				// $mail->addCC('cc@example.com');
+				// $mail->addBCC('bcc@example.com');
+				// Add multiples attachments
+				// $mail->addAttachment('/var/tmp/file.tar.gz');
+				// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');
 
         // SEND
         if( !$mail->send() ){

@@ -1,6 +1,10 @@
 # <sub>![Logo Placido-Shop](https://placido-shop.com/img/LOGO_GIT.png)</sub> <sup>Placido-Shop</sup>
 
+![GitHub all releases](https://img.shields.io/github/downloads/Raf-sns/Placido-Shop/total?style=plastic)   ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Raf-sns/Placido-Shop?style=plastic)
+
 ### E-commerce software
+
+![Placido-Shop presentation](https://placido-shop.com/img/prez_GITHUB.jpg)
 
 ###
 
@@ -16,12 +20,14 @@ Placido-Shop allows your customers to buy quickly, without spending time filling
 
 it allows to buy a product in two clicks, without stress and simply.
 
-This program is easy to install and use, 
+This program is easy to install and use,
 it allows you to deploy an online sales solution quickly.
 
-Placido-Shop is a basic online sales program, 
-it can be used as is but you can simply modify it to match your 
+Placido-Shop is a basic online sales program,
+it can be used as is but you can simply modify it to match your
 brand image or your technical needs.
+
+###
 
 **Placido-Shop is an Open-Source online sale software** under license [GNU AGPL](https://www.gnu.org/licenses/why-affero-gpl.fr.html) (see: /LICENSE.txt).
 
@@ -56,7 +62,7 @@ This software is provided as is without any warranty.
 You can copy, modify and resell it provided you make the modified code public and accessible to everyone under the same conditions.
 
 ###
-	
+
 **Data and power consumption :**
 
 The program has been designed to reduce its energy consumption as much as possible and minimizing the data transferred, as much as possible but this has been the main frame of the application code.
@@ -71,7 +77,7 @@ You can contribute to the development, everyone is welcome !
 
 **Governance :**
 
-You can participate in the governance of the application by direct democracy using 
+You can participate in the governance of the application by direct democracy using
 
 the free online application of [VoteMobile](https://votemobile.xyz) -> Group: "Placido-Shop"
 
@@ -81,6 +87,3 @@ the free online application of [VoteMobile](https://votemobile.xyz) -> Group: "P
 
 In order to support our work,
 you have the possibility of [becoming official sponsor of Placido-Shop](https://placido-shop.com/Become-a-sponsor.html).
-
-**Contact/Security report :** contact@sns.pm
-

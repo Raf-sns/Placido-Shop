@@ -33,6 +33,7 @@
 			'payment_form_partial',
 			'payment_success',
 			'products_view',
+			'products_view_inl',
 			'related_prods',
 			'render_sale',
 			'render_sale_login',
@@ -171,9 +172,9 @@ class tools {
   /**
    * tools::cut_string( $nb_chars, $str );
    *
-   * @param  {int} $nb_chars  nb chars to cut string evently
-   * @param  {str} $str      string to cut
-   * @return {str}           string truncated to nearest space
+   * @param  {int} $nb_chars  number or '' -> nb chars to cut string evently
+   * @param  {str} $str       string to cut
+   * @return {str}            string truncated at $nb_chars to nearest space
    */
   public static function cut_string( $nb_chars, $str ){
 

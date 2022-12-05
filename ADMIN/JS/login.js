@@ -18,12 +18,7 @@
  *
  */
 
-
-// List resources loaded
-// var entries = performance.getEntriesByType('resource');
-// entries.map(function(entry) {
-//     console.log('Type: '+entry.initiatorType+' File: '+ entry.name);
-// });
+	const DEV_MODE = false;
 
 // start jQuery
 $(function(){
@@ -31,7 +26,7 @@ $(function(){
 
 
 /* LOGIN BY PRESS ENTER KEY */
-$(document).one('keydown', function(e){
+$(document).on('keydown', function(e){
 
 		if( e.key == 'Enter' ){
 
@@ -85,11 +80,15 @@ $.extend({
 							// off press enter
 							$(document).off('keydown');
 
-              // PASS DATAS API TO $.o OBJECT enter -> $.o <- in a console to see object
-              $.o = data.response;
+							$.o = data.response;
 
-              // SHOW OBJECT API
-              console.log($.o);
+              // PASS DATAS API TO $.o OBJECT enter -> $.o <- in a console to see object
+							if( DEV_MODE ){
+
+									// SHOW OBJECT API
+									console.log($.o);
+							}
+
 
 							// LOAD JS BACKEND BASE TEMPLATE
 							$.Mustache.load('templates/new_sales.html',

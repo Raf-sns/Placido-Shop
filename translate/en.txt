@@ -72,6 +72,10 @@ develop_sort_options
 ***
   Show sorting options
 ***
+line_display_products
+***
+	Display of products
+***
 adjust_nb_pagina
 ***
   show

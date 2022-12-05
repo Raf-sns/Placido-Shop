@@ -32,6 +32,10 @@
 	<!-- Progressive Web Application -->
 	<link rel="manifest" href="manifest.webmanifest">
 
+	<!-- load fonts -->
+	<link rel="stylesheet"
+	href="CSS/fonts.css" rel="preload" as="style">
+
 	<!-- FONT AWSOME if use this kit,
 	not update/compress CSS/all.min.css in API/files_to_compress -->
 	<!-- dont forget to modify CSP -->
@@ -106,7 +110,12 @@
   <!-- MAIN CONTAINER -->
   <main id="center_page">
     {{^page}}
-      {{>../API/products_view}}
+			{{#view.display_mozaic}}
+	      {{>../API/products_view}}
+			{{/view.display_mozaic}}
+			{{#view.display_inline}}
+	      {{>../API/products_view_inl}}
+			{{/view.display_inline}}
     {{/page}}
     {{#page}}
       {{{page_templ}}}

@@ -81,6 +81,67 @@
     <!-- END MODIF ACCESS LOGINS -->
 
 
+
+		<!-- PLACIDO-SHOP TOKEN -->
+    <div id="token_placido"
+    class="card dark-gray panel round">
+
+      <h3 onclick="$.deploy_settings_item('token_placido');"
+      class="pointer">
+        <i class="ico_token_placido fa-fw fa-hand-point-right far text-cyan"></i>&nbsp;
+        <span class="fw400 large title_set">{{tr.token_placido}}</span>&nbsp;:
+      </h3>
+
+      <!-- hidden_token_placido -->
+      <div class="hidden_token_placido animate-zoom large" style="display: none;">
+
+				<p>
+					<i class="fa-info-circle fas text-cyan"></i>&nbsp;
+					{{{tr.token_placido_info}}}
+				</p>
+
+				<p class="text-amber text-medium">
+					{{{tr.token_placido_info_3}}}
+				</p>
+
+				<p>
+					<label for="token_placido_input" class="large">
+						<i class="fa-hand-point-right far"></i>&nbsp;
+						{{tr.token_placido_info_2}}
+					</label>
+
+					<span id="token_placido_state">
+						{{>token_placido_state}}
+					</span>
+
+					<br>
+
+					<input id="token_placido_input"
+					name="token_placido_input"
+					type="text"
+					value="{{#user.token_Placido}}{{user.token_Placido}}{{/user.token_Placido}}"
+					class="border border-blue margin-top padding-small">
+				</p>
+
+				<p>
+					<button onclick="$.record_token_placido();"
+					id="btn_token_placido"
+					type="button"
+					role="button"
+					class="blue btn card round">
+					<i class="fas fa-sign-in-alt"></i>&nbsp;
+					{{tr.record_placido_token}}
+					</button>
+				</p>
+
+			</div>
+      <!-- end hidden_token_placido -->
+
+    </div>
+		<!-- PLACIDO-SHOP TOKEN -->
+
+
+
     <!-- STRIPE KEYS -->
     <div id="stripe_keys"
     class="card dark-gray panel round">
@@ -293,27 +354,21 @@
     <!-- END PAYMENT MODALITIES -->
 
 
-    <!-- API SETTINGS -->
-    <div id="api_settings"
+		<!-- website compression -->
+    <div id="website_compression"
     class="card dark-gray panel round">
 
-      <h3 onclick="$.deploy_settings_item('api_settings');"
+      <h3 onclick="$.deploy_settings_item('website_compression');"
       class="pointer">
-        <i class="ico_api_settings fa-fw fa-hand-point-right far text-cyan"></i>&nbsp;
-        <span class="fw400 large title_set">{{tr.api_settings}}</span>&nbsp;:
+        <i class="ico_website_compression fa-fw fa-hand-point-right far text-cyan"></i>&nbsp;
+        <span class="fw400 large title_set">{{tr.website_compression}}</span>&nbsp;:
       </h3>
 
-
-
-      <!-- hidden_api_settings -->
-      <div class="hidden_api_settings animate-zoom" style="display: none;">
+      <!-- hidden_website_compression -->
+      <div class="hidden_website_compression animate-zoom" style="display: none;">
 
 				<!-- COMPRESSION -->
-				<p>
-					<span class="fw600 large">{{tr.VERSION}}&nbsp;: {{api_settings.VERSION}}</span>
-				</p>
-
-				<fieldset class="border padding padding-16 round">
+				<fieldset class="border margin-bottom padding padding-16 round">
 
 					<legend class="fw600 large"
 					style="padding: 0 16px;">{{tr.compression}}&nbsp;:</legend>
@@ -355,6 +410,31 @@
 				</fieldset>
 				<!-- END COMPRESSION -->
 
+			</div>
+      <!-- END  hidden_website_compression -->
+
+		</div>
+		<!-- END  website compression -->
+
+
+    <!-- API SETTINGS -->
+    <div id="api_settings"
+    class="card dark-gray panel round">
+
+      <h3 onclick="$.deploy_settings_item('api_settings');"
+      class="pointer">
+        <i class="ico_api_settings fa-fw fa-hand-point-right far text-cyan"></i>&nbsp;
+        <span class="fw400 large title_set">{{tr.api_settings}}</span>&nbsp;:
+      </h3>
+
+      <!-- hidden_api_settings -->
+      <div class="hidden_api_settings animate-zoom" style="display: none;">
+
+				<!-- VERSION API -->
+				<p>
+					<span class="fw600 large">{{tr.VERSION}}&nbsp;: {{api_settings.VERSION}}</span>
+				</p>
+
 				<form id="form_api_settings">
 
 					<p>
@@ -381,8 +461,11 @@
 						<label for="META_DESCR">{{{tr.META_DESCR}}}</label>
 						<br>
 						<textarea
-						name="META_DESCR" rows="2" maxlength="350"
-						class="border padding-small round">{{api_settings.META_DESCR}}</textarea>
+						name="META_DESCR"
+						rows="2"
+						maxlength="350"
+						class="border padding-small round"
+						style="resize: auto;">{{api_settings.META_DESCR}}</textarea>
 					</p>
 
 					<p>
@@ -453,6 +536,57 @@
 						type="number" min="1"
 						class="border padding-small round">
 					</p>
+
+					<p>
+						<label for="SHORT_TEXT">{{{tr.truncate_short_text}}}</label>
+						<br>
+						<input
+						name="SHORT_TEXT"
+						value="{{api_settings.SHORT_TEXT}}"
+						type="number" min="1"
+						class="border padding-small round">
+					</p>
+
+					<!-- 'inline' / 'mozaic' -->
+					<p class="mrg0">
+						{{{tr.display_products}}}
+					</p>
+
+					<div>
+
+						<label for="display_mozaic"
+						onclick="$.display_products('mozaic');"
+						class="{{#template.display_mozaic}}gree{{/template.display_mozaic}}
+						{{^template.display_mozaic}}blue{{/template.display_mozaic}} btn card margin-right round">
+						<i class="fas fa-th" aria-hidden="true"></i>&nbsp;
+						{{tr.show_products_mozaic}}
+						</label>
+
+						<input
+						type="radio"
+						name="DISPLAY_PRODUCTS"
+						value="mozaic"
+						id="display_mozaic"
+						class="hide" {{#template.display_mozaic}}checked{{/template.display_mozaic}}>
+
+
+						<label for="display_inline"
+						onclick="$.display_products('inline');"
+						class="{{#template.display_inline}}gree{{/template.display_inline}}
+						{{^template.display_inline}}blue{{/template.display_inline}} btn card round">
+						<i class="fas fa-th-list" aria-hidden="true"></i>&nbsp;
+						{{tr.show_products_on_line}}
+						</label>
+
+						<input
+						type="radio"
+						name="DISPLAY_PRODUCTS"
+						value="inline"
+						id="display_inline"
+						class="hide" {{#template.display_inline}}checked{{/template.display_inline}}>
+
+					</div>
+					<!-- end 'inline' / 'mozaic' -->
 
 					<hr>
 
@@ -557,6 +691,7 @@
 		</div>
     <!-- API SETTINGS -->
 
+
 		<!-- MAILBOX -->
     <div id="mailbox"
     class="card dark-gray panel round">
@@ -566,7 +701,6 @@
         <i class="ico_mailbox fa-fw fa-hand-point-right far text-cyan"></i>&nbsp;
         <span class="fw400 large title_set">{{tr.mailbox}}</span>&nbsp;:
       </h3>
-
 
       <!-- hidden_mailbox -->
       <div class="hidden_mailbox animate-zoom large" style="display: none;">
@@ -670,7 +804,70 @@
     </div>
 		<!-- end  MAILBOX -->
 
+
+		<!-- PRODUCTION MODE -->
+    <div id="prod_mode"
+    class="card dark-gray panel round">
+
+      <h3 onclick="$.deploy_settings_item('prod_mode');"
+      class="pointer">
+        <i class="ico_prod_mode fa-fw fa-hand-point-right far text-cyan"></i>&nbsp;
+        <span class="fw400 large title_set">{{tr.prod_mode}}</span>&nbsp;:
+      </h3>
+
+      <!-- hidden_prod_mode -->
+      <div class="hidden_prod_mode animate-zoom large" style="display: none;">
+
+				<p class="text-amber">
+					<i class="fa-info-circle fas"></i>&nbsp;
+					{{{tr.prod_mode_info}}}
+				</p>
+
+				<p class="text-deep-orange">
+					<i class="fa-exclamation-triangle fas"></i>&nbsp;
+					{{tr.warning}}&nbsp;:
+					<br>
+					<i class="fa-skull-crossbones fas"></i>&nbsp;
+					{{{tr.prod_mode_info_2}}}
+				</p>
+
+				<p>
+					<button onclick="$.confirm_switch_prod_mode();"
+					id="btn_prod_mode"
+					type="button"
+					role="button"
+					class="blue btn card round">
+					<i class="fas fa-sign-in-alt"></i>&nbsp;
+					{{tr.prod_mode}}
+					</button>
+				</p>
+
+			</div>
+      <!-- end hidden_prod_mode -->
+
+    </div>
+		<!-- end  PRODUCTION MODE -->
+
+
   </div>
-  <!-- div gen id="settings" -->
+  <!-- div GEN id="settings" -->
 </script>
 <!-- END SETTINGS VUE -->
+
+
+<!-- PARTIAL PLACIDO TOKEN STATE   -->
+<script id="token_placido_state" type="text/html">
+
+	<br>
+	{{#user.token_Placido}}
+	<span class="medium text-light-green">
+		{{{tr.token_placido_recorded}}}
+	</span>
+	{{/user.token_Placido}}
+	{{^user.token_Placido}}
+	<span class="medium text-orange">
+		{{{tr.token_placido_not_recorded}}}
+	</span>
+	{{/user.token_Placido}}
+
+</script>

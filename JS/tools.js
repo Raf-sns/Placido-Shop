@@ -323,12 +323,14 @@ $.extend({
 
 		// include header bar pdding
 		var pad_top = ( $('#featured_products').is(':visible') == true )
-		? 0
-		: document.getElementById('header_bar').offsetHeight;
+		? $('#header_bar').outerHeight(true)
+		: 0;
 
     var speed = 700; // Durée de l'animation (en ms)
 
-    $('html, body').animate( { scrollTop: $(elem).offset().top-pad_top }, speed ); // Go
+		// animate the scroll
+    $('html, body')
+		.animate( { scrollTop: Math.round($(elem).offset().top-pad_top) }, speed );
 
   },
   /**

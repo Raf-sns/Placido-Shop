@@ -1344,7 +1344,61 @@ mail_no_reply
 
 
 
+
+
+	<<< TOKEN PlACIDO >>>
+
+
+
+***
+token_placido_recorded
+***
+	Un jeton est enregistré&nbsp;!
+***
+token_placido_not_recorded
+***
+	Vous n'avez pas enregistré de jeton,
+	<br>
+	merci de contribuer à l'application.
+***
+token_placido
+***
+	Jeton de Placido-Shop
+***
+token_placido_info
+***
+	Nous vous demandons de payer une licence de 5$/€ minimum par an pour chaque nom de domaine
+	où vous utiliserez Placido-Shop en production.
+	<br>
+	Si vous ne possédez pas déjà une licence pour ce nom de domaine,
+	connectez-vous au <a href="https://placido-shop.com"
+	target="_blank" class="underline">site web de Placido-Shop</a> et créez un compte.
+	<br>
+	A partir de votre compte, vous pourrez acheter une licence pour votre nom de domaine.
+***
+token_placido_info_3
+***
+	Si vous enregistrez un token vide, il sera effacé.
+***
+token_placido_info_2
+***
+	Entrez ici le jeton de licence que vous obtiendrez.
+***
+record_placido_token
+***
+	Enregistrer votre jeton
+***
+token_well_recored
+***
+	Le jeton est bien enregistré
+
+
+
+
+
+
   <<< SETTINGS >>>
+
 
 
 
@@ -1448,7 +1502,7 @@ able_to_pay_no_card
 ***
 able_to_pay_no_card_warning
 ***
-	Attention ! Vous n'êtes pas à l'abrit qu'un utilisateur mal intentionné achète
+	Attention ! Vous n'êtes pas à l'abri qu'un utilisateur mal intentionné achète
 	tous vos produits.
 ***
 able_to_pay_no_card_info
@@ -1501,6 +1555,30 @@ error_number_for_pagina
 ***
 	Pour le nombre d'articles par page, veuillez entrer un nombre
 	compris entre 1 et 100000, modifiez s.v.p.
+***
+truncate_short_text
+***
+	Tronquer les textes courts ( nombre de caractères )
+***
+error_short_text
+***
+	Pour les textes raccourcis,
+	<br>
+	veuillez choisir une valeur entre 1 et 1000 caractères,
+	<br>
+	modifiez, s.v.p.
+***
+display_products
+***
+	Afficher les produits
+***
+show_products_on_line
+***
+	En ligne
+***
+show_products_mozaic
+***
+	En mosaïque
 ***
 DEF_ARR_SIZES
 ***
@@ -1573,9 +1651,13 @@ compression
 ***
 	Compression
 ***
+website_compression
+***
+	Compression du site web
+***
 DO_COMPRESS_JS_CSS
 ***
-	Compresser les ressources javascript et css
+	Compresser les ressources javaScript et CSS
 ***
 execute_compress
 ***
@@ -1993,6 +2075,37 @@ mailbox_rec_error
 ***
 	Erreur de la mise à jour des données de la boîte aux lettres
 
+
+
+
+<<<  PRODUCTION MODE  >>>
+
+
+
+***
+prod_mode
+***
+	Passer en mode production
+***
+prod_mode_info
+***
+	Passer en mode production va effacer&nbsp;:
+	<br>
+	- Toutes les nouvelles ventes
+	<br>
+	- Toutes les ventes archivées
+	<br>
+	- Tous les statistiques du site
+***
+prod_mode_info_2
+***
+	Cette action est irréversible&nbsp;!
+***
+confirm_switch_prod_mode
+***
+	Pour passer en mode production,
+	<br>
+	veuillez confirmer&nbsp;:
 
 
 

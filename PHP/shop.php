@@ -103,8 +103,9 @@ class shop {
           $PRODUCTS[$k_prod]['cat_br'] = $CAT_product['br'];
 
           // Partial text product
+					// - SHORT_TEXT from api.json ( this value must be setted see "settings" )
           $PRODUCTS[$k_prod]['short_text'] =
-          	tools::cut_string(300, $PRODUCTS[$k_prod]['text']);
+          	tools::cut_string( SHORT_TEXT , $PRODUCTS[$k_prod]['text']);
 
 
           // MODE (online sale true[mode->true] or catalog[mode->false])

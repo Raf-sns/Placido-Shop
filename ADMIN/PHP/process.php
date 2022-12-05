@@ -291,10 +291,10 @@ class process {
 		// uniquement si non precedees d'un [="'] ce qui indique qu'on est dans un filter(xx=#?...)
 		$contenu =
 		preg_replace(";([:\s,(])#([0-9a-f])(\\2)([0-9a-f])(\\4)([0-9a-f])(\\6)(?=[^\w\-]);i", "$1#$2$4$6", $contenu);
-		// remplacer font-weight:bold par font-weight:700
-		$contenu = preg_replace("/font-weight:bold(?!er)/ims", "font-weight:700", $contenu);
-		// remplacer font-weight:normal par font-weight:400
-		$contenu = preg_replace("/font-weight:normal/ims", "font-weight:400", $contenu);
+		// // remplacer font-weight:bold par font-weight:700
+		// $contenu = preg_replace("/font-weight:bold(?!er)/ims", "font-weight:700", $contenu);
+		// // remplacer font-weight:normal par font-weight:400
+		// $contenu = preg_replace("/font-weight:normal/ims", "font-weight:400", $contenu);
 		// si elle est 0, enlever la partie entière des unites decimales
 		$contenu = preg_replace("/\b0+\.(\d+em)/ims", ".$1", $contenu);
 		// supprimer les declarations vides

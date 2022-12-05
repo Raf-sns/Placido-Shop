@@ -72,6 +72,10 @@ develop_sort_options
 ***
   Afficher les options de tri
 ***
+line_display_products
+***
+	Présentation des produits
+***
 adjust_nb_pagina
 ***
   Afficher
@@ -639,7 +643,7 @@ new_message_from_website
 ***
 success_send_message
 ***
-  Votre message nous a bien été transmit.
+  Votre message nous a bien été transmis.
   <br>Nous vous répondrons dans les meilleurs délais, merci.
 ***
 error_retry
@@ -743,7 +747,7 @@ details
 ***
 see_prev_products
 ***
-	Voir les produits prédédents
+	Voir les produits précédents
 ***
 see_next_products
 ***
@@ -751,7 +755,7 @@ see_next_products
 ***
 empty_search
 ***
-	Auncun élément ne correspond à votre recherche
+	Aucun élément ne correspond à votre recherche
 ***
 waning_not_connected
 ***
