@@ -4,7 +4,7 @@
 .pointer{cursor:pointer}
 .underline{text-decoration:underline}
 .no-deco{text-decoration:none}
-.bold{font-weight:700!important}
+.bold{font-weight:bold!important}
 .italic{font-style:italic}
 .inline-block{display:inline-block;vertical-align:top}
 html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
@@ -18,7 +18,7 @@ b,strong{font-weight:bolder}dfn{font-style:italic}mark{background:#ff0;color:#00
 small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
 sub{bottom:-.25em}sup{top:-.5em}figure{margin:1em 40px}img{border-style:none}
 code,kbd,samp{font-family:monospace,monospace;font-size:1em}hr{box-sizing:content-box;height:0;overflow:visible}
-button,input,select,textarea,optgroup{font:inherit;margin:0}optgroup{font-weight:700}
+button,input,select,textarea,optgroup{font:inherit;margin:0}optgroup{font-weight:bold}
 button,input{overflow:visible}button,select{text-transform:none}
 button,[type=button],[type=reset],[type=submit]{-webkit-appearance:button}
 button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}
@@ -272,7 +272,7 @@ ul#select_nb_options{padding:16px 16px 0;margin:5px 0 0;animation-duration:0.2s}
 .info_slider_prod{margin-top:6px}
 #sort_block{padding:0 5px 0 0;display:flex;width:100%;margin:0;flex-direction:row;flex-wrap:wrap;align-content:center;justify-content:flex-end;align-items:center}
 #sort_block>button,#sort_block>div,#sort_block>span,#sort_block>.pagination_arrows{margin:16px 0 0;box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)}
-#cat_render{margin:16px 0 0;font-weight:700;background:rgb(255 250 250 / 92%);color:#696d72;font-size:var(--text-xlarge)}
+#cat_render{margin:16px 0 0;font-weight:bold;background:rgb(255 250 250 / 92%);color:#696d72;font-size:var(--text-xlarge)}
 #center_page{min-height:70vh;margin:16px auto 0;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);perspective-origin:top;perspective:1000;backface-visibility:hidden;-webkit-perspective:1000;-webkit-backface-visibility:hidden;-moz-perspective:1000;-moz-backface-visibility:hidden;-ms-perspective:1000;-ms-backface-visibility:hidden;-o-perspective:1000;-o-backface-visibility:hidden}
 #products_view,#products_view_old{text-align:center;display:flex;flex-direction:row;flex-wrap:wrap;align-content:center;justify-content:center;align-items:start}
 #products_view img:hover{transform:translateZ(0) scale(1.08);transition-delay:0.2s}
@@ -358,10 +358,10 @@ img.other_imgs{width:100px}
 #slider_loader{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
 #slider_loader i{font-size:24vmax;color:rgb(185 185 185 / 38%)}
 @media all and (max-width:900px){.box_one_prod{padding:10px 0 20px}
-.box_one_prod h1{margin:0;font-size:20px;font-weight:700;line-height:28px;color:var(--color-title-one-prod);color:var(--color-title-one-prod)}
+.box_one_prod h1{margin:0;font-size:20px;font-weight:bold;line-height:28px;color:var(--color-title-one-prod);color:var(--color-title-one-prod)}
 .box_one_prod ul{font-size:17px}}
 @media all and (max-width:552px){.single_prod_descr{margin:16px 0 0;padding:.01em 0;font-size:18px}}
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');body{background:url(../img/background.jpg),no-repeat;background-size:auto;background-attachment:fixed;font-size:16px;font-family:"Open Sans",system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}
+body{background:url(../img/background.jpg),no-repeat;background-size:auto;background-attachment:fixed;font-size:16px;font-family:"Open Sans",system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}
 :root{--color-title-shop:#329cb8;--color-theme:#129cb8;--color-text:#1a1a1a;--color-icon-global:#129cb8;--color-title-icon:#129cb8;--color-text-icon:#129cb8;--color-icon:#e99476;--dim-color-text:#545454;--back-button:#129cb8;--text-button:#fff;--bkg-btn-prod:#02bda3;--bkg-content:#ebebeb;--bkg-slider:#ebebeb;--bkg-products:#ebebeb;--bkg-footer:#ebebeb;--bkg-error:#bd4213;--bkg-info:#1c7ead;--bkg-success:#2e9688;--bkg-warning:#da7e1e;--blue:#29a2f8;--dark-gray:#525252;--gray:#787878;--light-gray:#c3c3c3;--mid-gray:#9c9c9c;--dark-blue:#2790da;--pale-purple:#af88bb;--placeholder:#fff;--placeholder-search:#129cb8;--text-info:#009688;--text-success:#4fcd81;--text-warning:#ff5722;--text-xxlarge:26px;--text-xlarge:22px;--text-large:20px;--text:18px;--text-small:16px;--white-dim:#ebebeb;--white-light:#fefefe}
 @media all and (max-width:900px){:root{--text-xxlarge:22px;--text-xlarge:20px;--text-large:18px;--text:16px;--text-small:16px}}
 input#search_input::placeholder{color:var(--placeholder-search)}

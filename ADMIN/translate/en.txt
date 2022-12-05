@@ -1343,6 +1343,58 @@ mail_no_reply
 
 
 
+
+	<<< TOKEN PlACIDO >>>
+
+
+
+
+***
+token_placido_recorded
+***
+	A token is registered&nbsp;!
+***
+token_placido_not_recorded
+***
+	You have not registered a token,
+	<br>
+	please contribute to the application.
+***
+token_placido
+***
+	Placido-Shop token
+***
+token_placido_info
+***
+	We ask you to pay a license of 5$/€ minimum per year for each domain name
+	where you will use Placido-Shop in production.
+	<br>
+	If you do not already have a license for this domain name,
+	connect to <a href="https://placido-shop.com"
+	target="_blank" class="underline">the Placido-Shop website</a> and create an account.
+	<br>
+	From your account, you can buy a license for your domain name.
+***
+token_placido_info_3
+***
+	If you save an empty token, it will be erased.
+***
+token_placido_info_2
+***
+	Enter here the license token you will get.
+***
+record_placido_token
+***
+	Register your token
+***
+token_well_recored
+***
+	The token is well recorded
+
+
+
+
+
   <<< SETTINGS >>>
 
 
@@ -1484,7 +1536,7 @@ api_settings
 ***
 HOST
 ***
-	domain name
+	Domain name
 	<br>
 	<small>( without https or www ex: website.com )</small>
 ***
@@ -1500,6 +1552,30 @@ error_number_for_pagina
 ***
 	For the number of items per page, please enter a number
 	between 1 and 100000, please modify.
+***
+truncate_short_text
+***
+	Truncate short texts (number of characters)
+***
+error_short_text
+***
+	For shortened texts,
+	<br>
+	please choose a value between 1 and 1000 characters,
+	<br>
+	modify, please.
+***
+display_products
+***
+	Show products
+***
+show_products_on_line
+***
+	On line
+***
+show_products_mozaic
+***
+	Mosaic
 ***
 DEF_ARR_SIZES
 ***
@@ -1572,9 +1648,13 @@ compression
 ***
 	Compression
 ***
+website_compression
+***
+	Website compression
+***
 DO_COMPRESS_JS_CSS
 ***
-	Compress javascript and css resources
+	Compress javaScript and CSS resources
 ***
 execute_compress
 ***
@@ -1698,7 +1778,7 @@ error_speed_time
 ***
 ADMIN_FOLDER
 ***
-	Site administration file
+	Site administration folder
 	<br>
 	<small>( You access your management interface by adding /[admin_folder] to the public address of the store
 	<br>ex: website.com/My_Admin_Folder_0559 )</small>
@@ -1990,6 +2070,40 @@ mailbox_rec_error
 ***
 	Mailbox data update error
 
+
+
+
+
+<<<  PRODUCTION MODE  >>>
+
+
+
+
+
+***
+prod_mode
+***
+	Switch to production mode
+***
+prod_mode_info
+***
+	Switching to production mode will erase&nbsp;:
+	<br>
+	- All new sales
+	<br>
+	- All sales archived
+	<br>
+	- All site statistics
+***
+prod_mode_info_2
+***
+	This action is irreversible&nbsp;!
+***
+confirm_switch_prod_mode
+***
+	To switch to production mode,
+	<br>
+	please confirm&nbsp;:
 
 
 

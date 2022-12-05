@@ -9,7 +9,7 @@
  *
  * CLASS tr
  *
- * DEFINE GLOBAL ARRAY TR[] FOR ALL SCRIPTS ex. TR['key_to_translate_str'];
+ * DEFINE GLOBAL ARRAY OF TRANSLATION FOR ALL SCRIPTS use: tr::$TR['key']
  *
  * tr::get_langs_to_tr();
  * tr::init_tr( $context );

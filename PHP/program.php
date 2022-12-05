@@ -147,6 +147,15 @@ class program {
         'max' => DEF_ARR_SIZES['max']
       );
 
+			// How to display products
+			$ARR['view']['display_products'] = DISPLAY_PRODUCTS;
+
+			$ARR['view']['display_mozaic'] =
+				( DISPLAY_PRODUCTS == 'mozaic' ) ? true : false;
+
+			$ARR['view']['display_inline'] =
+				( DISPLAY_PRODUCTS == 'inline' ) ? true : false;
+
       // GET STATIC PAGES
       $ARR['static_pages'] = process::get_static_pages();
 

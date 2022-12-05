@@ -1,6 +1,6 @@
 /**
  * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2021-2022
+ * Copyright © Raphaël Castello , 2022
  * Organisation: SNS - Web et Informatique
  * Web site: https://sns.pm
  * @link: contact@sns.pm
@@ -10,13 +10,17 @@
  * $.deploy_settings_item();
  * $.change_admin_pass();
  * $.clear_set_admin_pass();
+ * $.record_token_placido();
  * $.set_stripe_keys( context );
  * $.select_pay_mode( mode );
  * $.update_by_money();
  * $.compress_ressources();
  * $.use_compressed_ressources( use );
+ * $.display_products( display );
  * $.record_api_settings();
  * $.update_mailbox( command );
+ * $.confirm_switch_prod_mode();
+ * $.switch_to_prod_mode();
  *
  */
 
@@ -153,6 +157,72 @@ $.extend({
   /**
    * $.clear_set_admin_pass();
    */
+
+
+
+	/**
+	 * $.record_token_placido();
+	 *
+	 * @return {json}  success/error
+	 */
+	record_token_placido : function(){
+
+
+			// disable btn
+			$('#btn_token_placido')
+			.removeAttr('onclick')
+			.append(`<span class="spinner">
+			&nbsp;<i class="fas fa-circle-notch fa-spin fa-fw"></i></span>`);
+
+			// set a FormData
+			var formData = new FormData();
+
+			// append command
+			formData.append( 'set', 'record_token_placido' );
+
+			// append token user
+			formData.append( 'token', $.o.user.token );
+
+			// append token Placido
+			formData.append( 'token_placido', $('#token_placido_input').val() );
+
+			// post datas - false on form - unbug event listener button
+			$.sender(false, 'POST', 'index.php', formData, 'json',
+			function(data){
+
+					// succes
+					if( data.success ){
+
+							// assign value to token - same as server
+							$.o.user.token_Placido = $('#token_placido_input').val();
+
+							// state
+							$('#token_placido_state').empty()
+							.mustache('token_placido_state', $.o );
+
+							$.show_alert('success', data.success, false);
+					}
+
+					// error
+					if( data.error ){
+
+							$.show_alert('warning', data.error, false);
+					}
+
+					// enable click btn
+					$('#btn_token_placido')
+					.attr('onclick', '$.record_token_placido();');
+
+					// remove spinner
+					$('.spinner').remove();
+
+			});
+			// end $.sender
+
+	},
+	/**
+	 * $.record_token_placido();
+	 */
 
 
 
@@ -441,6 +511,49 @@ $.extend({
 
 
 	/**
+	 * $.display_products( display, event );
+	 *
+	 * @param  {string} display 'inline' / 'mozaic'
+	 * @param  {event} 	event
+	 * @return {void}   choose how to display products in view
+	 */
+	display_products : function(  display, event  ){
+
+			if( display != 'inline' && display != 'mozaic' ){
+				return;
+			}
+
+			// both
+			$('label[for="display_mozaic"],label[for="display_inline"]')
+			.removeClass('gree').addClass('blue');
+
+			$('input#display_inline, input#display_mozaic')
+			.removeAttr('checked');
+
+			// display on line
+			if( display == 'inline' ){
+
+					// $('input#display_inline').attr('checked', true).prop('checked', true);
+
+					$('label[for="display_inline"]')
+					.removeClass('blue').addClass('gree');
+			}
+			else{
+
+					// $('input#display_mozaic').attr('checked', true).prop('checked', true);
+
+					$('label[for="display_mozaic"]')
+					.removeClass('blue').addClass('gree');
+			}
+
+	},
+	/**
+	 * $.display_products( display, event );
+	 */
+
+
+
+	/**
 	 * $.record_api_settings();
 	 *
 	 * @return {json}  api_settings
@@ -481,11 +594,18 @@ $.extend({
 				formData.append('img[]', $.obj.files[0]);
 		}
 
+		// test entries :
+		// for (var variable of formData.entries() ) {
+		//
+		// 		console.log( 	variable );
+		// }
+		// return;
+
 		// post datas - false on form - unbug event listener button
 		$.sender(false, 'POST', 'index.php', formData, 'json',
 		function(data){
 
-				// succes
+				// success
 				if( data.success ){
 
 						$.show_alert('success', data.success, false);
@@ -493,7 +613,14 @@ $.extend({
 						// re-init datas object
 						$.o.api_settings = data.api_settings;
 
-						// $('#add_sn_img').attr('onclick', '$.add_img_prod();');
+						// render displaying type of products view on settings
+						// 'inline'
+						$.o.template.display_inline =
+							( $.o.api_settings.DISPLAY_PRODUCTS == 'inline' ) ? true : false;
+						// 'mozaic'
+						$.o.template.display_mozaic =
+							( $.o.api_settings.DISPLAY_PRODUCTS == 'mozaic' ) ? true : false;
+
 				}
 
 				// error
@@ -588,6 +715,90 @@ $.extend({
 	/**
 	 * $.update_mailbox( command );
 	 */
+
+
+
+  /**
+   * $.confirm_switch_prod_mode();
+   *
+   * @return {html}		ask to confirm
+	 * 									to switch to production mode
+   */
+  confirm_switch_prod_mode : function(){
+
+
+      var html =
+			`<p>`+$.o.tr.confirm_switch_prod_mode+`</p>
+      <button class="btn deep-orange card round left"
+      onclick="$.switch_to_prod_mode();" role="button">
+      <i class="fa-sign-in-alt fas"></i>&nbsp; `+$.o.tr['confirm']+`</button>
+      <button class="btn dark-gray card round right"
+      onclick="$.show_alert(false);" role="button">
+      <i class="fa-ban fas"></i>&nbsp; `+$.o.tr['abort']+`</button>`;
+
+      $.show_alert('info', html, true);
+
+  },
+  /**
+   * $.confirm_switch_prod_mode();
+   */
+
+
+
+	/**
+	 * $.switch_to_prod_mode();
+	 *
+	 * @return {type}  description
+	 */
+	switch_to_prod_mode : function(){
+
+
+			// disable btn
+			$('#btn_prod_mode')
+			.removeAttr('onclick')
+			.append(`<span class="spinner">
+			&nbsp;<i class="fas fa-circle-notch fa-spin fa-fw"></i></span>`);
+
+			// set a FormData
+			var formData = new FormData();
+
+			// append command
+			formData.append( 'set', 'switch_production_mode' );
+
+			// append token user
+			formData.append( 'token', $.o.user.token );
+
+			// post datas - false on form - unbug event listener button
+			$.sender(false, 'POST', 'index.php', formData, 'json',
+			function(data){
+
+					// succes
+					if( data.success ){
+
+							$.show_alert('success', data.success, false);
+					}
+
+					// error
+					if( data.error ){
+
+							$.show_alert('warning', data.error, false);
+					}
+
+					// enable click btn
+					$('#btn_prod_mode')
+					.attr('onclick', '$.switch_to_prod_mode();');
+
+					// remove spinner
+					$('.spinner').remove();
+
+			});
+			// end $.sender
+
+	},
+	/**
+	 * $.switch_to_prod_mode();
+	 */
+
 
 
 

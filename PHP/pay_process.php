@@ -424,7 +424,7 @@ class pay_process {
       // SEND ORDER TO CUSTOMER BY EMAIL
       mail::send_order_to_customer( $SALE );
 
-      // need to sleep for send multiples e-mails
+      // ... need to sleep for send multiples e-mails ?
       sleep(2);
 
       //  SEND NEW SALE ALERT TO SELLER BY EMAIL
@@ -577,13 +577,13 @@ class pay_process {
       if( $DELETE_SALE_IN_STRIPE->status == 'canceled' ){
 
           // $tab['deleted_in_stripe'] = true;
+
+					// return success
+					$tab['success'] = true;
+					echo json_encode($tab, JSON_FORCE_OBJECT);
+					exit;
       }
 
-
-      // return success
-      $tab['success'] = true;
-      echo json_encode($tab, JSON_FORCE_OBJECT);
-      exit;
 
   }
   /**
@@ -1236,7 +1236,8 @@ class pay_process {
 
 
     // VERIFY ADDRESS
-    $address = (string) trim(htmlspecialchars($_POST['address'.$_sup.'']));
+    $address =
+		(string) trim(htmlspecialchars($_POST['address'.$_sup.''], ENT_NOQUOTES , 'UTF-8'));
 
     // EMPTY
     if( empty($address) ){
@@ -1297,7 +1298,7 @@ class pay_process {
     // END POST CODE
 
     // CITY
-    $city = (string) trim(htmlspecialchars($_POST['city'.$_sup.'']));
+    $city = (string) trim(htmlspecialchars($_POST['city'.$_sup.''], ENT_NOQUOTES , 'UTF-8'));
 
     // EMPTY CITY
     if( empty($city) ){

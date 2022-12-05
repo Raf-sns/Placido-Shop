@@ -1,9 +1,6 @@
 /* ________  GLOBAL SHOP CSS   ________ */
 /*  i. - This file will never updated   */
 
-/* Import Google font - Manage your fonts here */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
-
 body {
   background: url(../img/background.jpg), no-repeat;
   background-size: auto;

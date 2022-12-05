@@ -303,6 +303,7 @@ html, body {
 #main {
   color: #e6e6e6;
   width: 100%;
+	overflow-x: hidden;
 }
 #main h5 {
   color: #e6e6e6;
@@ -686,11 +687,18 @@ hr {
 .title_set:hover {
   text-decoration: underline;
 }
-#stripe_keys input {
+#stripe_keys input, #token_placido input {
+    width: 300px;
+    max-width: 85%;
+}
   width: 300px;
   max-width: 85%;
 }
 /* API settings  */
+#form_api_settings label {
+    display: inline-block;
+    margin: 0 0 6px;
+}
 #form_api_settings input:not([type="range"]),
 #form_api_settings select,
 #form_api_settings textarea,
@@ -716,6 +724,7 @@ select#LANG_LOCALE option:disabled {
   background: #616161;
   color: #fbdfda;
 }
+
 /* INPUTS STATIC PAGES  */
 #static_pages input {
   font-size: 20px;

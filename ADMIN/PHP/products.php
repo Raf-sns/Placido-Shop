@@ -20,7 +20,6 @@
  * products::modify_state_product();
  * products::record_slider_settings();
  * products::record_featured_products();
- * products::get_featured_products( $ARR['products'] );
  *
  */
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : jeu. 17 nov. 2022 à 02:14
+-- Généré le : lun. 05 déc. 2022 à 02:17
 -- Version du serveur :  10.5.18-MariaDB
 -- Version de PHP : 7.4.30
 
@@ -40,7 +40,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `mail`, `passw`, `name`) VALUES
-(0, 'user@placido-shop.com', '$2y$10$bZlvwET/7soScWHsB/qwYegMu1Pt91SYjEjdAqCa4yGfY14Gk/R2G', 'Admin');
+(0, 'user@placido-shop.com', '$2y$10$zLZOUnbeh7t/gB4FQApwYuejeAy5F3mF3cc7zJJxsosoTe4I/iReW', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -167,7 +167,7 @@ CREATE TABLE `messages` (
 --
 
 INSERT INTO `messages` (`mess_id`, `mail`, `name`, `message`, `date_mess`, `readed`) VALUES
-(0, 'user@placido-shop.com', 'Raf - dev. Placido-Shop', 'Welcome to Placido-Shop software !', '2022-11-16 23:46:00', 0);
+(0, 'user@placido-shop.com', 'Raf - dev. Placido-Shop', 'Welcome to Placido-Shop software !', '2022-12-05 02:10:00', 0);
 
 -- --------------------------------------------------------
 
@@ -211,17 +211,17 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `cat_id`, `title`, `text`, `ref`, `quant`, `price`, `tax`, `date_prod`, `url`, `on_line`) VALUES
-(48, 57, 'Ethnic motif terracotta jug', 'Yellow terracotta jug.\r\n\r\nBeautiful decorative jug with ethnic motifs.', '', 8, 5500, 0, 1664002800, 'Ethnic-motif-terracotta-jug', 1),
-(43, 53, 'Decorative Moroccan yellow bowl', 'Decorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\n\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl', '', 8, 1500, 0, 1664143200, 'Decorative-Moroccan-yellow-bowl', 1),
-(44, 54, 'Decorative Moroccan blue bowl', 'Decorative Moroccan blue bowl\r\nDecorative Moroccan blue bowl\r\n\r\nDecorative Moroccan blue bowl', '', 10, 1500, 0, 1664060400, 'Decorative-Moroccan-blue-bowl', 1),
+(48, 57, 'Ethnic motif terracotta jug', 'Yellow terracotta jug.\r\n\r\nBeautiful decorative jug with ethnic motifs.', '', 6, 5500, 0, 1664002800, 'Ethnic-motif-terracotta-jug', 1),
+(43, 53, 'Decorative Moroccan yellow bowl', 'Decorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\n\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl', '', 7, 1500, 0, 1664143200, 'Decorative-Moroccan-yellow-bowl', 1),
+(44, 54, 'Decorative Moroccan blue bowl', 'Decorative Moroccan blue bowl\r\nDecorative Moroccan blue bowl\r\n\r\nDecorative Moroccan blue bowl', '', 9, 1500, 0, 1664060400, 'Decorative-Moroccan-blue-bowl', 1),
 (49, 57, 'Natural color terracotta jug', 'Natural color terracotta jug.\r\n\r\nBeautiful jug with its natural color.', '', 9, 7500, 0, 1664146800, 'Natural-color-terracotta-jug', 1),
 (41, 55, 'Large ethnic style terracotta dish', 'Large ethnic style terracotta dish.\r\nPerfectly decorate your interior as well as your exterior.', '', 3, 32000, 0, 1664002800, 'Large-ethnic-style-terracotta-dish', 1),
 (42, 22, 'Green terracotta bowl', 'Green terracotta bowl.\r\nWonderfully decorated your interior.', '', 10, 850, 0, 1664143200, 'Green-terracotta-bowl', 1),
-(35, 52, 'Terracotta bowl shimmering colors', 'Terracotta bowl set with pretty colors.\r\nWill decorate your interior as well as your exterior perfectly !', '', 7, 2600, 0, 1664143200, 'Terracotta-bowl-shimmering-colors', 1),
-(36, 49, 'Natural color terracotta bowl', 'Natural color terracotta bowl.\r\n\r\nWill perfectly decorate your interior as well as your exterior', '', 10, 1500, 0, 1664143200, 'Natural-color-terracotta-bowl', 1),
+(35, 52, 'Terracotta bowl shimmering colors', 'Terracotta bowl set with pretty colors.\r\nWill decorate your interior as well as your exterior perfectly !', '', 12, 2600, 0, 1664143200, 'Terracotta-bowl-shimmering-colors', 1),
+(36, 49, 'Natural color terracotta bowl', 'Natural color terracotta bowl.\r\n\r\nWill perfectly decorate your interior as well as your exterior', '', 9, 1500, 0, 1664143200, 'Natural-color-terracotta-bowl', 1),
 (37, 55, 'Large natural color terracotta dish', 'Large natural color terracotta dish.\r\n\r\nWill perfectly decorate your interior as well as your exterior.', '', 10, 9900, 0, 1664143200, 'Large-natural-color-terracotta-dish', 1),
 (38, 51, 'Moroccan style terracotta bowl', 'Moroccan style terracotta bowl.\r\nPerfectly decorate your interior as well as your exterior !', '', 9, 2300, 0, 1664143200, 'Moroccan-style-terracotta-bowl', 1),
-(39, 52, 'Moroccan style terracotta dish', 'Moroccan style terracotta dish.\r\nPerfectly decorate your interior as well as your exterior.', '', 9, 8500, 0, 1664143200, 'Moroccan-style-terracotta-dish', 1),
+(39, 52, 'Moroccan style terracotta dish', 'Moroccan style terracotta dish.\r\nPerfectly decorate your interior as well as your exterior.', '', 10, 8500, 0, 1664143200, 'Moroccan-style-terracotta-dish', 1),
 (40, 50, 'Ethnic style terracotta dish', 'Ethnic style terracotta dish.\r\nPerfectly decorate your interior as well as your exterior.', '', 9, 3700, 0, 1664143200, 'Ethnic-style-terracotta-dish', 1);
 
 -- --------------------------------------------------------
@@ -398,6 +398,7 @@ CREATE TABLE `tokens` (
 --
 
 CREATE TABLE `token_Placido` (
+  `id` tinyint(4) NOT NULL,
   `token` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -533,7 +534,7 @@ ALTER TABLE `stats_token`
 -- Index pour la table `token_Placido`
 --
 ALTER TABLE `token_Placido`
-  ADD UNIQUE KEY `token` (`token`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `user_shop`
@@ -561,7 +562,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT pour la table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `mess_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `mess_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `new_sales`

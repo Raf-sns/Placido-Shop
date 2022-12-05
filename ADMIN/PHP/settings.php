@@ -14,6 +14,9 @@
  * settings::set_settings( array() );
  * settings::record_api_settings();
  * settings::update_mailbox();
+ * settings::update_mailbox();
+ * settings::init_production_mode();
+ * settings::record_Token_Placido_User();
  *
  */
 
@@ -772,6 +775,46 @@ class settings {
 			$ARR_API['NB_FOR_PAGINA_BACKEND'] = $NB_FOR_PAGINA_BACKEND;
 
 
+			//  SHORT TEXT
+			$SHORT_TEXT =
+			(int) abs(trim(htmlspecialchars($_POST['SHORT_TEXT'])));
+
+			// empty $SHORT_TEXT
+			if( empty($SHORT_TEXT) ){
+
+					// error
+          $tab = array( 'error' => tr::$TR['error_short_text'] );
+          echo json_encode($tab, JSON_FORCE_OBJECT);
+          exit;
+			}
+			// bad number required
+			if( $SHORT_TEXT < 1 || $SHORT_TEXT > 1000 ){
+
+					// error
+          $tab = array( 'error' => tr::$TR['error_short_text'] );
+          echo json_encode($tab, JSON_FORCE_OBJECT);
+          exit;
+			}
+			// include SHORT_TEXT
+			$ARR_API['SHORT_TEXT'] = $SHORT_TEXT;
+
+
+			//  DISPLAY_PRODUCTS
+			$DISPLAY_PRODUCTS =
+				(string) trim(htmlspecialchars($_POST['DISPLAY_PRODUCTS']));
+
+			// empty $SHORT_TEXT
+			if( empty($DISPLAY_PRODUCTS)
+			|| ($DISPLAY_PRODUCTS != 'mozaic' && $DISPLAY_PRODUCTS != 'inline')
+			){
+
+					// set mozaic by default
+        	$DISPLAY_PRODUCTS != 'mozaic';
+			}
+			// include SHORT_TEXT
+			$ARR_API['DISPLAY_PRODUCTS'] = $DISPLAY_PRODUCTS;
+
+
 			// DEF_ARR_SIZES
 			// ARRAY SIZES MIN AND MAX PICTURES PRODUCTS
 			$DEF_ARR_SIZES_min =
@@ -1060,6 +1103,129 @@ class settings {
 	}
 	/**
 	 * settings::update_mailbox();
+	 */
+
+
+
+	/**
+	 * settings::init_production_mode();
+	 *
+	 * Switch to production mode :
+	 * - Delete new_sales + customers + sold_products
+	 * - Delete archived_sales
+	 * - Delete all statistics
+	 *
+	 * @return {json}  success/error
+	 */
+	public static function init_production_mode(){
+
+
+			//  VERIFY TOKEN
+			$token = trim(htmlspecialchars($_POST['token']));
+			program::verify_token($token);
+
+		  // prepa. db::server()
+			$ARR_pdo = false;
+			$response = false;
+			$last_id = false;
+
+			// make an array of SQL requests
+			$SQL = array(
+				'DELETE FROM archived_sales',
+				'DELETE FROM customers; ALTER TABLE customers AUTO_INCREMENT = 1',
+				'DELETE FROM new_sales; ALTER TABLE new_sales AUTO_INCREMENT = 1',
+				'DELETE FROM sold_products; ALTER TABLE sold_products AUTO_INCREMENT = 1',
+
+				'DELETE FROM stats_cart',
+				'DELETE FROM stats_loca',
+				'DELETE FROM stats_prods',
+
+			);
+
+			// delete all on a loop
+			foreach ( $SQL as $sql ) {
+
+					try{
+
+							// execute SQL requests along the loop
+							db::server($ARR_pdo, $sql, $response, $last_id);
+					}
+					catch(Throwable $t){
+
+							// error
+							$ARR = array( 'error' => $t->getMessage() );
+							echo json_encode( $ARR, JSON_FORCE_OBJECT);
+							exit;
+					}
+
+			}
+			// end loop delete all
+
+
+			// success
+			$ARR = array( 'success' => tr::$TR['update_shop_success'] );
+			echo json_encode( $ARR, JSON_FORCE_OBJECT);
+			exit;
+
+	}
+	/**
+	 * settings::init_production_mode();
+	 */
+
+
+
+	/**
+	 * settings::record_Token_Placido_User();
+	 *
+	 * Record or delete an encrypted Placdio-Shop user token
+	 *
+	 * @return {json}  success/error
+	 */
+	public static function record_Token_Placido_User(){
+
+
+			//  VERIFY TOKEN
+			$token = trim(htmlspecialchars($_POST['token']));
+			program::verify_token($token);
+
+			$token_placido = (string) trim(htmlspecialchars($_POST['token_placido']));
+
+			// empty token allowed
+			$token_placido = ( empty($token_placido) )
+			? ''
+			: api::api_crypt($token_placido, 'encr');
+
+			// prepa. db::server()
+			$ARR_pdo = array( 'id' => 0, 'token' =>  $token_placido );
+			$response = false;
+			$last_id = false;
+
+			// SQL request
+			$sql = 'INSERT INTO token_Placido (token) VALUES (:token)
+			ON DUPLICATE KEY UPDATE token=:token';
+
+			try{
+
+					// execute SQL requests along the loop
+					db::server($ARR_pdo, $sql, $response, $last_id);
+			}
+			catch(Throwable $t){
+
+					// error
+					$ARR = array( 'error' => $t->getMessage() );
+					echo json_encode( $ARR, JSON_FORCE_OBJECT);
+					exit;
+			}
+
+
+			// success
+			$ARR = array( 'success' => tr::$TR['token_well_recored'] );
+			echo json_encode( $ARR, JSON_FORCE_OBJECT);
+			exit;
+
+	}
+	/**
+	 * settings::record_Token_Placido_User();
 	 */
 
 

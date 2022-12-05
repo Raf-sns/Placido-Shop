@@ -1,4 +1,7 @@
-Placido-Shop - E-commerce software
+
+Placido-Shop - www.placido-shop.com
+
+- E-commerce software
 
 What is Placido-Shop ?
 
@@ -30,10 +33,12 @@ PHP >= 7.5 (tested on PHP 8.1)
 MySQL database
 Outgoing SMTP server settings of an email client
 One image for your logo and one image for your social networks tallest than 512px
+
 Optional but recommended :
 
 A Stripe account for test and perceive bank card payments.
 A token from IPinfo.io they offer a free plan for less than 50k requests per month.
+
 Disclaimer :
 
 Special attention has been paid to the security of the application.
@@ -61,4 +66,3 @@ Placido-Shop is lovingly developed by Raphaël Castello @Raf-sns
 In order to support our work, you have the possibility of becoming official sponsor of Placido-Shop.
 
 Contact/Security report : contact@sns.pm
-

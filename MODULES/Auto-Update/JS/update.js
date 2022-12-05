@@ -43,7 +43,7 @@ $.extend({
 					command : 'check_update',
 					host : $.o.host,
 					version_used : $.o.api_settings.VERSION,
-					token_Placido : ''
+					token_Placido : $.o.user.token_Placido
 			};
 
 			// Post request to Placio-Shop Update center
@@ -197,7 +197,7 @@ $.extend({
 					host : $.o.host,
 					version : version,
 					token : $.o.user.token,
-					token_Placido : ''
+					token_Placido : $.o.user.token_Placido
 			};
 
 			// Post request to Placio-Shop Update center
@@ -283,7 +283,7 @@ $.extend({
 			var Obj = {
 					command : 'infos_files_not_updated',
 					host : $.o.host,
-					token_Placido : ''
+					token_Placido : $.o.user.token_Placido
 			};
 
 			// Post request to Placio-Shop Update center
@@ -520,7 +520,7 @@ $.extend({
 					for_interface : for_interface,
 					host : $.o.host,
 					token : $.o.user.token,
-					token_Placido : ''
+					token_Placido : $.o.user.token_Placido
 			};
 
 			// Post request to Placio-Shop Update center
