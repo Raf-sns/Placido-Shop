@@ -14,7 +14,7 @@
     "LANG_BACK": "en",
     "LANG_FRONT": "en",
     "LANG_LOCALE": "en_US",
-    "LAST_UPDATE": "Monday, December 5, 2022 at 5:20 AM",
+    "LAST_UPDATE": "Sunday, December 11, 2022 at 10:45 PM",
     "LOGO": "logo-shop-alhnzivtfyqrcswogebdxmukpj-0-1670200102.png",
     "LOGO_SN": "logo-sn-wnrbfzqchoiykdtaegpumxjvls-0-1670213667.png",
     "LOGO_SN_SIZE": 900,
@@ -31,6 +31,6 @@
     },
     "TIMEZONE": "America\/Los_Angeles",
     "TOKEN_TIME": 7200,
-    "VERSION": "2.1.5",
+    "VERSION": "2.1.6",
     "WEBSITE_TITLE": "Placido-Shop"
 }

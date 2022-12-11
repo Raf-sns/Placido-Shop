@@ -321,16 +321,11 @@ $.extend({
 
     event.preventDefault();
 
-		// include header bar pdding
-		var pad_top = ( $('#featured_products').is(':visible') == true )
-		? $('#header_bar').outerHeight(true)
-		: 0;
-
     var speed = 700; // Durée de l'animation (en ms)
 
 		// animate the scroll
     $('html, body')
-		.animate( { scrollTop: Math.round($(elem).offset().top-pad_top) }, speed );
+		.animate( { scrollTop: Math.round($(elem).offset().top) }, speed );
 
   },
   /**

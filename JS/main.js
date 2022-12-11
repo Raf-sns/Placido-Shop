@@ -1769,10 +1769,12 @@ $.extend({
 	sticky_header_init : false,
 	sticky_header : function(){
 
+
+			// no sticky header
 			if( $.sticky_header_init == false ){
 				return;
 			}
-			// NO STICKY HEADER IN CONTEXT
+
 			// if orientation == 'landscape' on mobile + NOT IN CART -> this bad UX
 			if( $(window).width() < 800
 			|| ( $(window).width() < 800 && window.screen.orientation.type == 'landscape-primary' )

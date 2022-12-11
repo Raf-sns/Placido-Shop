@@ -93,7 +93,7 @@ $(function(){
 				// end splash screen
 
 				// enable sticky_header
-				$.sticky_header_init = true;
+				$.sticky_header_init = false;
 
 				// check cart in memory
 				$.check_cart_in_memory();

@@ -177,7 +177,7 @@ ul#select_nb_options {
   align-content: center;
 }
 .head_text {
-  padding: 0% 20px 0 26px;
+  padding: 0 26px 0;
   line-height: 26px;
 }
 .info_slider_prod {
@@ -331,45 +331,43 @@ img.first_img {
 }
 /* INLINE PRODUCTS */
 .prods_inl .box_gen {
-    background: var(--bkg-products);
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin: 0 0 16px;
-    padding: 10px;
+  background: var(--bkg-products);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 0 16px;
+  padding: 10px;
 }
 .prods_inl .box_product {
-    width: 200px;
-    margin: 0;
+  width: 200px;
+  margin: 0;
 }
 .prods_inl .show_info_product {
-
-    margin: 0;
+  margin: 0;
 }
 #products_view.prods_inl img {
-    margin: 0 0 0 0 !important;
-    min-width: 200px;
+  margin: 0 0 0 0 !important;
+  min-width: 200px;
 }
 .prods_inl .cont_title_descr {
-    width: 40%;
+  width: 40%;
 }
 .prods_inl .prod_title {
-    display: block;
-    font-size: var(--text-large);
-    margin: 10px auto 0 16px;
-    color: var(--color-text);
-    font-weight: 400;
-    min-width: 375px;
+  display: block;
+  font-size: var(--text-large);
+  margin: 10px auto 0 16px;
+  color: var(--color-text);
+  font-weight: 400;
+  min-width: 375px;
 }
 .prods_inl .cont_prod_infos {
-	width: 23%;
+  width: 23%;
 }
 /* END INLINE PRODUCTS */
 /* END PRODUCTS CSS */
-
 /* single product thumbnails */
 img.other_imgs {
   width: 100px;
@@ -448,10 +446,10 @@ img.other_imgs {
   .slider_short_text {
     display: none;
   }
-	/* not show -> button display products */
-	#products_display {
-		display: none;
-	}
+  /* not show -> button display products */
+  #products_display {
+    display: none;
+  }
 }
 /* END media querys 900px */
 /* media querys 768px */

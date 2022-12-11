@@ -37,12 +37,12 @@ class control {
 			// for test
 			// control::test_router();
 
-			// REQ METHOD
+			// REQUEST METHOD
 			$method = $_SERVER['REQUEST_METHOD'];
 
 			// test length (in octets) of request -> too long -> exit
 			// accept only POST OR GET requests -> other -> exit
-			if( strlen($_SERVER['REQUEST_URI']) > 3000
+			if( strlen($_SERVER['REQUEST_URI']) > 1000
 					|| $method != 'GET' && $method != 'POST' ){
 
 					// -> redirect to 404
@@ -57,107 +57,111 @@ class control {
 					return $method;
 			}
 
-			// trim / escape url request
-			$request = trim(htmlspecialchars($_SERVER['REQUEST_URI']));
+			// check that the request is indeed the GET method
+			if(  $method != 'GET'  ){
 
-
-			// capture  GET  url requests
-			if(  $method == 'GET'  ){
-
-					// default
-					if( $request == '/' ){
-							// ask program to give the home page
-							program::get_home_page(); // this exit in program::
-					}
-
-					// default - FB REQUEST
-		      if( !empty($_GET['fbclid']) ){
-
-		          program::get_home_page();
-		      }
-
-
-					// EXPLODE URL by '/'
-					// this return an array
-					$TAB_url = explode('/', $_SERVER['REQUEST_URI'] );
-
-					// limit 10 items in array
-					$c = count($TAB_url);
-
-					if( $c > 10 ){
-
-							// -> redirect to 404
-							header('Location: https://'.HOST.'/404.php');
-							exit;
-					}
-
-
-					// if( product ?) ^(.*)/product/([0-9]+)$
-					if( isset($TAB_url[$c-2]) && $TAB_url[$c-2] == 'product' ){
-
-							api::$REQ = array(	'prod_id' => $TAB_url[$c-1],
-																	'url_request' => 'single_product'  );
-
-							program::get_home_page();
-					}
-					// end prod
-
-
-					// if( category ?) ^(.*)/category/([0-9]+)$
-					if( isset($TAB_url[$c-2]) && $TAB_url[$c-2] == 'category' ){
-
-							api::$REQ = array( 'cat_id' => $TAB_url[$c-1],
-																	'url_request' => 'cat'  );
-
-							program::get_home_page();
-					}
-					// end category
-
-
-					// if( cart ?) ^cart/(.*)$
-					if( isset($TAB_url[$c-2]) && $TAB_url[$c-2] == 'cart' ){
-							// page_api=cart
-							api::$REQ = array( 'page_api' => 'cart'  );
-
-							program::get_home_page();
-					}
-					// end cart
-
-
-					// if( sale ?) ^sale/(.*)/(.*)$  $1: sale_id , $2: hash_customer
-					if( isset($TAB_url[$c-3]) && $TAB_url[$c-3] == 'sale' ){
-							// page_api=sale
-							api::$REQ = array( 'page_api' => 'sale' ,
-																	'sale_id' => $TAB_url[$c-2],
-																	'hash_customer' => $TAB_url[$c-1],
-																);
-
-							program::get_home_page();
-					}
-					// end sale
-
-
-					// if( static_page ?) ^(.*).html$
-					if( isset($TAB_url[$c-1])
-					&& boolval(preg_match( '/(\.html)/i', $TAB_url[$c-1] )) === true  ){
-
-							// page=url without '.html'
-							$page = substr($TAB_url[$c-1], 0, strpos($TAB_url[$c-1],'.html') );
-
-							api::$REQ = array( 'page' => $page );
-
-							program::get_home_page();
-					}
-					// end static page
-
-
-					// default :
 					// -> redirect to 404
 					header('Location: https://'.HOST.'/404.php');
 					exit;
 
 			}
-			// END capture  GET  url requests
+
+
+			// trim / escape url request
+			$request = trim(htmlspecialchars($_SERVER['REQUEST_URI']));
+
+
+			// default
+			if( $request == '/' ){
+					// ask program to give the home page
+					program::get_home_page(); // this exit in program::
+			}
+
+			// default - FB REQUEST
+      if( !empty($_GET['fbclid']) ){
+
+					$request = explode("?",$request)[0];
+      }
+
+
+			// EXPLODE URL by '/'
+			// this return an array
+			$TAB_url = explode('/', $request );
+
+			// limit 10 items in array
+			$c = count($TAB_url);
+
+			if( $c > 10 ){
+
+					// -> redirect to 404
+					header('Location: https://'.HOST.'/404.php');
+					exit;
+			}
+
+
+			// if( product ?) ^(.*)/product/([0-9]+)$
+			if( isset($TAB_url[$c-2]) && $TAB_url[$c-2] == 'product' ){
+
+					api::$REQ = array(	'prod_id' => $TAB_url[$c-1],
+															'url_request' => 'single_product'  );
+
+					program::get_home_page();
+			}
+			// end prod
+
+
+			// if( category ?) ^(.*)/category/([0-9]+)$
+			if( isset($TAB_url[$c-2]) && $TAB_url[$c-2] == 'category' ){
+
+					api::$REQ = array( 'cat_id' => $TAB_url[$c-1],
+															'url_request' => 'cat'  );
+
+					program::get_home_page();
+			}
+			// end category
+
+
+			// if( cart ?) ^cart/(.*)$
+			if( isset($TAB_url[$c-2]) && $TAB_url[$c-2] == 'cart' ){
+					// page_api=cart
+					api::$REQ = array( 'page_api' => 'cart'  );
+
+					program::get_home_page();
+			}
+			// end cart
+
+
+			// if( sale ?) ^sale/(.*)/(.*)$  $1: sale_id , $2: hash_customer
+			if( isset($TAB_url[$c-3]) && $TAB_url[$c-3] == 'sale' ){
+					// page_api=sale
+					api::$REQ = array(  'page_api' => 'sale' ,
+															'sale_id' => $TAB_url[$c-2],
+															'hash_customer' => $TAB_url[$c-1]
+														);
+
+					program::get_home_page();
+			}
+			// end sale
+
+
+			// if( static_page ?) ^(.*).html$
+			if( isset($TAB_url[$c-1])
+			&& boolval(preg_match( '/(\.html)/i', $TAB_url[$c-1] )) === true  ){
+
+					// page=url without '.html'
+					$page = substr($TAB_url[$c-1], 0, strpos($TAB_url[$c-1],'.html') );
+
+					api::$REQ = array( 'page' => $page );
+
+					program::get_home_page();
+			}
+			// end static page
+
+
+			// default :
+			// -> redirect to 404
+			header('Location: https://'.HOST.'/404.php');
+			exit;
 
 	}
 	/**
