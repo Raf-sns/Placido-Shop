@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : lun. 05 déc. 2022 à 02:17
+-- Généré le : Dim 11 déc. 2022 à 22:42
 -- Version du serveur :  10.5.18-MariaDB
 -- Version de PHP : 7.4.30
 
@@ -40,7 +40,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `mail`, `passw`, `name`) VALUES
-(0, 'user@placido-shop.com', '$2y$10$zLZOUnbeh7t/gB4FQApwYuejeAy5F3mF3cc7zJJxsosoTe4I/iReW', 'Admin');
+(0, 'user@placido-shop.com', '$2y$10$Z3/XcJVvyVTy.e6xSmLNKOYFIssjN6zjtCEo0id/YKiS6zFOXcj26', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -550,7 +550,7 @@ ALTER TABLE `user_shop`
 -- AUTO_INCREMENT pour la table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `customers`
@@ -562,7 +562,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT pour la table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `mess_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `mess_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `new_sales`
@@ -574,13 +574,13 @@ ALTER TABLE `new_sales`
 -- AUTO_INCREMENT pour la table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `products_imgs`
 --
 ALTER TABLE `products_imgs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `sold_products`
@@ -592,7 +592,7 @@ ALTER TABLE `sold_products`
 -- AUTO_INCREMENT pour la table `static_pages`
 --
 ALTER TABLE `static_pages`
-  MODIFY `page_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `page_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

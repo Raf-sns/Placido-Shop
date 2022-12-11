@@ -1,14 +1,13 @@
 /* ________  GLOBAL SHOP CSS   ________ */
 /*  i. - This file will never updated   */
-
 body {
   background: url(../img/background.jpg), no-repeat;
   background-size: auto;
   background-attachment: fixed;
-	/* minium font size */
+  /* minium font size */
   font-size: 16px;
-	/* "Open Sans" is downloaded otherwise use system font */
-	font-family: "Open Sans", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  /* "Open Sans" is downloaded otherwise use system font */
+  font-family: "Open Sans", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 /* i. :ROOT vars -> use it like :
     .my_text {
@@ -303,40 +302,40 @@ span.erase_search {
 }
 /* STATIC PAGES */
 #page {
-    background: var(--bkg-content);
-    padding: 2% 4% 4%;
-    color: var(--color-text);
+  background: var(--bkg-content);
+  padding: 2% 4% 4%;
+  color: var(--color-text);
 }
 #page h2 {
-    font-size: var(--text-xxlarge);
-    margin: 10px 0 50px;
-    color: var(--color-text);
-    font-weight: 500 !important;
+  font-size: var(--text-xxlarge);
+  margin: 10px 0 50px;
+  color: var(--color-text);
+  font-weight: 500 !important;
 }
 #page h3 {
-    font-size: var(--text-xlarge);
-    margin: 36px 0 0;
-    color: var(--color-text);
-    font-weight: 500;
+  font-size: var(--text-xlarge);
+  margin: 36px 0 0;
+  color: var(--color-text);
+  font-weight: 500;
 }
 #page p {
-    margin: 26px 0 0;
-    font-size: var(--text-large);
-    color: var(--color-text);
+  margin: 26px 0 0;
+  font-size: var(--text-large);
+  color: var(--color-text);
 }
 #page strong {
-    font-size: var(--text-large);
-    font-weight: 500;
+  font-size: var(--text-large);
+  font-weight: 500;
 }
 #page ul {
-    padding: 0;
-    margin: 16px 0 42px;
+  padding: 0;
+  margin: 16px 0 42px;
 }
 #page li {
-    list-style-type: none;
-    font-size: var(--text);
-    border-bottom: none;
-    margin: 1% 2% 0;
+  list-style-type: none;
+  font-size: var(--text);
+  border-bottom: none;
+  margin: 1% 2% 0;
 }
 /*  <HEADER>  */
 /* header bar - all but not slider OR jumbo text */
@@ -377,7 +376,7 @@ h1#title_shop {
   margin: 0 auto 0 4%;
   font-size: 40px;
   font-weight: 400;
-	line-height: 48px;
+  line-height: 48px;
 }
 /* A - 2 - CART BTN + MENU BTN */
 #cart_container {}
@@ -568,10 +567,10 @@ footer hr {
     line-height: 32px;
   }
   #page h2 {
-	    font-size: var(--text-xxlarge);
-	    margin: 10px 0 0;
-	    text-align: left !important;
-	}
+    font-size: var(--text-xxlarge);
+    margin: 10px 0 0;
+    text-align: left !important;
+  }
   #toast-container>.toast {
     width: 97% !important;
   }
@@ -617,10 +616,9 @@ footer hr {
 /* end media querys 768px */
 /* media querys 580px */
 @media all and (max-width: 580px) {
-
-	h1#title_shop {
-		font-size: 30px;
-	}
+  h1#title_shop {
+    font-size: 30px;
+  }
 }
 /* media querys 580px */
 /* ________  GLOBAL SHOP CSS   ________ */

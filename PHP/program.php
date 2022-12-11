@@ -28,17 +28,19 @@ class program {
    */
   public static function get_home_page(){
 
+			if (session_status() === PHP_SESSION_NONE){
 
-      // STORE DATAS API IN SESSION FOR AJAX REQUEST
-      session_start([
-          'name' => 'PLACIDO-SHOP',
-          'use_strict_mode' => true,
-          'cookie_samesite' => 'Strict',
-          'cookie_lifetime' => 30, // 30 sec.
-          'gc_maxlifetime' => 30,
-          'cookie_secure' => true,
-          'cookie_httponly' => true
-      ]);
+					// STORE DATAS API IN SESSION FOR AJAX REQUEST
+					session_start([
+						'name' => 'PLACIDO-SHOP',
+						'use_strict_mode' => true,
+						'cookie_samesite' => 'Strict',
+						'cookie_lifetime' => 30, // 30 sec.
+						'gc_maxlifetime' => 30,
+						'cookie_secure' => true,
+						'cookie_httponly' => true
+					]);
+			}
 
 
       // AJAX REQUEST WHEN SESSION EXIST - SAVE ENERGY
@@ -50,6 +52,7 @@ class program {
           && isset($_SESSION['datas'])  ){
 
             // RENDER JS OBJECT
+						header('Content-type: application/json');
             echo json_encode($_SESSION['datas'], JSON_NUMERIC_CHECK);
 
             // DELETING SESSION - do not deleting the session globally

@@ -1430,8 +1430,8 @@ class pay_process {
           }
 
           // test TEST PRODUCTION CARD
-          if( !empty($PUBLIC_KEYS['prod_pub_key'])
-              && !empty($PUBLIC_KEYS['prod_pub_key'])
+          if( !empty($SHOP['prod_pub_key'])
+              && !empty($SHOP['prod_priv_key'])
               && boolval($SHOP['mode']) == true ){
 
               $SHOP['mode_payment'] = 'card_production';
