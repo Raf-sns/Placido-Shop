@@ -1,8 +1,14 @@
 # <sub>![Logo Placido-Shop](https://placido-shop.com/img/LOGO_GIT.png)</sub> <sup>Placido-Shop</sup>
 
-![GitHub all releases](https://img.shields.io/github/downloads/Raf-sns/Placido-Shop/total?style=plastic)   ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Raf-sns/Placido-Shop?style=plastic)
+![GitHub all releases](https://img.shields.io/github/downloads/Raf-sns/Placido-Shop/total?color=brightgreen&style=flat-square)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/Raf-sns/Placido-Shop?color=blue&style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/Raf-sns/Placido-Shop?color=blue&style=flat-square)
+![GitHub language count](https://img.shields.io/github/languages/count/Raf-sns/Placido-Shop?color=important&style=flat-square)
+![GitHub top language](https://img.shields.io/github/languages/top/Raf-sns/Placido-Shop?color=blue&style=flat-square)
 
-### E-commerce software
+![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade/dev.placido-shop.com?publish&style=flat-square)
+![GitHub branch checks state](https://img.shields.io/github/checks-status/Raf-sns/Placido-Shop/master?color=brightgreen&style=flat-square)
+![GitHub](https://img.shields.io/github/license/Raf-sns/Placido-Shop?logo=GNU&color=lightgrey&style=flat-square)
 
 ![Placido-Shop presentation](https://placido-shop.com/img/prez_GITHUB.jpg)
 
@@ -23,6 +29,8 @@ it allows to buy a product in two clicks, without stress and simply.
 This program is easy to install and use,
 it allows you to deploy an online sales solution quickly.
 
+Particular attention has been paid to the security of the application throughout its development.
+
 Placido-Shop is a basic online sales program,
 it can be used as is but you can simply modify it to match your
 brand image or your technical needs.
@@ -36,6 +44,8 @@ brand image or your technical needs.
 **Placido-Shop [has some pretty cool features](https://placido-shop.com/All-features-of-Placido-Shop.html).**
 
 Get more informations from the [Placido-Shop](https://placido-shop.com) website.
+
+You can [download the latest version archive here](https://placido-shop.com/Downloads.html).
 
 Installation guide, documentation, see : [How to install Placido-Shop](https://placido-shop.com/Documentation.html).
 
@@ -54,8 +64,6 @@ Installation guide, documentation, see : [How to install Placido-Shop](https://p
 ###
 
 **Disclaimer :**
-
-Special attention has been paid to the security of the application.
 
 This software is provided as is without any warranty.
 
