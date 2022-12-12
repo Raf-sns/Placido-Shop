@@ -17,6 +17,8 @@ it allows to buy a product in two clicks, without stress and simply.
 
 This program is easy to install and use, it allows you to deploy an online sales solution quickly.
 
+Particular attention has been paid to the security of the application throughout its development
+
 Placido-Shop is a basic online sales program, it can be used as is but you can simply modify it to match your brand image or your technical needs.
 
 Placido-Shop is an Open-Source online sale software under license GNU AGPL (see: /LICENSE.txt).
@@ -41,8 +43,6 @@ A token from IPinfo.io they offer a free plan for less than 50k requests per mon
 
 Disclaimer :
 
-Special attention has been paid to the security of the application.
-
 This software is provided as is without any warranty.
 
 You can copy, modify and resell it provided you make the modified code public and accessible to everyone under the same conditions.
@@ -64,5 +64,3 @@ the free online application of VoteMobile -> Group: "Placido-Shop"
 Placido-Shop is lovingly developed by Raphaël Castello @Raf-sns
 
 In order to support our work, you have the possibility of becoming official sponsor of Placido-Shop.
-
-Contact/Security report : contact@sns.pm
