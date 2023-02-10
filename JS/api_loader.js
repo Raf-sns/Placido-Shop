@@ -7,7 +7,7 @@
  *
  * Script name:	api_loader.js
  *
- * const DEV_MODE = true/false; // show object api
+ * const DEV_MODE = false; // show object api
  *
  * function get_templates();
  * function get_object_api();
