@@ -2,7 +2,7 @@ RewriteEngine on
 
 # redirect www. to non-www.
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 RewriteCond %{HTTPS} !=on
 RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
@@ -68,7 +68,7 @@ BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
 Header append Vary User-Agent env=!dont-vary
 
 ## Expire headers
-## cache de 24h -> 86400 | 48 h -> 172800 | 8 jours -> 691200
+## Expires : 24h -> 86400 | 48h -> 172800 | 8 days -> 691200
 	<IfModule mod_expires.c>
 
 		ExpiresActive On

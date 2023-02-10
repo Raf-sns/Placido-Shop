@@ -681,13 +681,11 @@ class settings {
 			}
 			else{
 
+
+					// delete old img logo SN
+					array_map('unlink', glob(ROOT.'/img/Logos/logo-sn*'));
+
 					$dir_path = ROOT.'/img/Logos';
-
-					// delete old img SN
-					if( file_exists( $dir_path.'/'.LOGO_SN ) ){
-
-							unlink( $dir_path.'/'.LOGO_SN );
-          }
 
 					// 1200 px recommanded by FB
 					// - here html ranger get value between 600 & 1200

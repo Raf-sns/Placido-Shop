@@ -1800,7 +1800,12 @@ folder_admin_not_found
 unable_to_rename_folder_admin
 ***
 	Unable to rename the management folder, please try again.
-
+***
+administration_folder_modified
+***
+	The administration folder has been modified,
+	<br>
+	you will be redirected to the login page.
 
 
 
@@ -2426,12 +2431,17 @@ square_image_required
 min_size_pwa_required
 ***
 	Your image must be at least 512 pixels wide
+***
+clear_cache_pwa
+***
+	Please clear your browser cache and relaunch your application
 
 
 
 
 
 <<<  MODULES >>>
+
 
 
 

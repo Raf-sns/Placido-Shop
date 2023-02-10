@@ -1,7 +1,7 @@
 {
     "ADMIN_FOLDER": "ADMIN",
     "COMPRESSED": false,
-    "COMPRESSED_DATE": "Monday, November 21, 2022 at 12:45 PM",
+    "COMPRESSED_DATE": "Wednesday, November 30, 2022 at 7:30 PM",
     "COMPRESSED_STAMP": 1669865452,
     "CURRENCY_ISO": "USD",
     "DEF_ARR_SIZES": {
@@ -10,18 +10,18 @@
     },
     "DISPLAY_PRODUCTS": "mozaic",
     "DO_COMPRESS_JS_CSS": false,
-    "HOST": "my-website.com",
+    "HOST": "dev.placido-shop.com",
     "LANG_BACK": "en",
     "LANG_FRONT": "en",
     "LANG_LOCALE": "en_US",
-    "LAST_UPDATE": "Sunday, December 11, 2022 at 10:45 PM",
+    "LAST_UPDATE": "Monday, November 21, 2022 at 12:45 PM",
     "LOGO": "logo-shop-alhnzivtfyqrcswogebdxmukpj-0-1670200102.png",
-    "LOGO_SN": "logo-sn-wnrbfzqchoiykdtaegpumxjvls-0-1670213667.png",
+    "LOGO_SN": "logo-sn-mzposnfgwqalrvxuicdtbykhje-0-1675869781.png",
     "LOGO_SN_SIZE": 900,
     "META_DESCR": "Placido-Shop Online Sale Software",
     "NB_FOR_PAGINA": 4,
     "NB_FOR_PAGINA_BACKEND": 4,
-    "PUBLIC_NOTIFICATION_MAIL": "user@placido-shop.com",
+    "PUBLIC_NOTIFICATION_MAIL": "raf@sns.pm",
     "SHORT_TEXT": 300,
     "SLIDER": {
         "display": true,
@@ -31,6 +31,6 @@
     },
     "TIMEZONE": "America\/Los_Angeles",
     "TOKEN_TIME": 7200,
-    "VERSION": "2.1.6",
+    "VERSION": "2.1.5",
     "WEBSITE_TITLE": "Placido-Shop"
 }

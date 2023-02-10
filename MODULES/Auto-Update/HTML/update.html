@@ -204,6 +204,16 @@ ul.placido_versions {
 				</span>
 			{{/latest}}
 
+			{{#infos}}
+				<button onclick="$.see_infos_update('{{version}}');"
+				type="button"
+				role="button"
+				class="btn card blue margin-left round small small_btn v-top">
+					<i class="fas fa-info-circle"></i>&nbsp;
+					{{tr.infos_version}}
+				</button>
+			{{/infos}}
+
 			<button onclick="$.ask_to_update('{{version}}');"
 			data-version="{{version}}"
 			type="button"

@@ -59,6 +59,8 @@
 			href="CSS/api.css" rel="preload" as="style">
 		<link rel="stylesheet"
 			href="CSS/single_product.css" rel="preload" as="style">
+		<link rel="stylesheet"
+		href="CSS/payment.css" rel="preload" as="style">
     <link rel="stylesheet"
 			href="CSS/shop.css" rel="preload" as="style">
   {{/website.css_compressed}}
@@ -74,7 +76,7 @@
 	<link itemprop="url" href="https://{{website.host}}"/>
 
 	<!-- splash_screen -->
-	<div id="splash_screen">
+	<div id="splash_screen" onclick="$('#splash_screen').remove();">
 		<img src="{{view.logo}}"
 		alt="{{view.title}}"
 		class="animated fadeInDown"

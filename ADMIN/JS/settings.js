@@ -608,6 +608,50 @@ $.extend({
 				// success
 				if( data.success ){
 
+
+						// need to login again if ADMIN FOLDER change
+						// test before re-init object
+						if( $.o.api_settings.ADMIN_FOLDER
+								!= data.api_settings.ADMIN_FOLDER ){
+
+									// countdown to redirection
+									var message = data.success+`<br>
+										`+$.o.tr.administration_folder_modified;
+
+									var timer_install = 5;
+
+									$.show_alert( 'success',
+									message+`<br><span class="xxlarge">
+									`+timer_install+`</span>`, true );
+
+									// countdown to redirection
+									var myInterval = window.setInterval(function(){
+
+											$('.toast-message')
+											.html(message+`<br><span class="xxlarge">
+											`+timer_install+`</span>` );
+
+											timer_install--;
+
+											// END OF TIMER
+											if( timer_install < 0 ){
+
+													window.clearInterval(myInterval);
+
+													window.location.href =
+														'https://'+$.o.host+'/'+data.api_settings.ADMIN_FOLDER;
+
+											} // END OF TIMER
+
+									}, 1000);
+									// end countdown to redirection
+
+									// STOP HERE
+									return;
+						}
+						// end need to login again if ADMIN FOLDER change
+
+						// render success message
 						$.show_alert('success', data.success, false);
 
 						// re-init datas object
@@ -617,11 +661,13 @@ $.extend({
 						// 'inline'
 						$.o.template.display_inline =
 							( $.o.api_settings.DISPLAY_PRODUCTS == 'inline' ) ? true : false;
+
 						// 'mozaic'
 						$.o.template.display_mozaic =
 							( $.o.api_settings.DISPLAY_PRODUCTS == 'mozaic' ) ? true : false;
 
 				}
+				// end success
 
 				// error
 				if( data.error ){
@@ -775,7 +821,29 @@ $.extend({
 					// succes
 					if( data.success ){
 
+
 							$.show_alert('success', data.success, false);
+
+							// empty new sales array
+							$.o.new_sales = [];
+
+							// set nb new sales to 0
+							$.o.template.nb_new_sales = 0;
+
+							// re-init price to 0, well locally translated
+							var lang_locale = $.o.api_settings.LANG_LOCALE.replace('_','-');
+
+							$.o.template.total_amount_shop =
+								new Intl.NumberFormat( lang_locale,
+									{ style: 'currency',
+										currency: $.o.api_settings.CURRENCY_ISO }).format(0);
+
+							// re-init stats count to 0
+							$.o.stats.today_nb_visits = '0 '+$.o.tr.visits;
+
+							// empty array archives
+							$.o.archives = [];
+
 					}
 
 					// error

@@ -1046,13 +1046,6 @@ $.extend({
 			// get value
 			var val = $('#search_archives_by_'+what+'').val();
 
-			// not fire for one char
-			if( val.length == 1 ){
-
-					// stop here
-					return;
-			}
-
 			// length == 0 -> get default view
 			if( val.length == 0 ){
 

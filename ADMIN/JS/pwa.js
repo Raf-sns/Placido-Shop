@@ -38,17 +38,18 @@
   // Code to handle install prompt()
   var DeferredPrompt = null;
 
-  // capture event before install APP
-  window.addEventListener('beforeinstallprompt', function(event){
 
-	    // Prevent Chrome 67 and earlier from automatically showing the prompt
-	    event.preventDefault();
+	// capture event before install APP
+	window.addEventListener('beforeinstallprompt', function(event){
 
-	    // Stash the event so it can be triggered later.
-	    DeferredPrompt = event;
+		// Prevent Chrome 67 and earlier from automatically showing the prompt
+		event.preventDefault();
 
-  });
-  // INSTALL APPLICATION - MANUAL INSTALLATION BY EVENT
+		// Stash the event so it can be triggered later.
+		DeferredPrompt = event;
+
+	});
+	// INSTALL APPLICATION - MANUAL INSTALLATION BY EVENT
 
 
   /**
@@ -71,10 +72,6 @@
 			}
 			else{
 
-					$.show_alert('info',
-					`Please clear your browser cache and relaunch your application`,
-					true);
-
 					// try to destroy registration worker ...
 					if( 'serviceWorker' in navigator ){
 
@@ -85,6 +82,8 @@
 							});
 					}
 
+					$.show_alert('info', $.o.tr.clear_cache_pwa, true);
+
 					return;
 			}
 			// end beforeinstallprompt in unaviable
@@ -94,23 +93,23 @@
 			// USER CHOICE -> INSTALL / DECLINE
 			DeferredPrompt.userChoice.then((choiceResult) => {
 
-				// accept installation
-				if( choiceResult.outcome === 'accepted' ){
+					// accept installation
+					if( choiceResult.outcome === 'accepted' ){
 
-						// console.log('User accepted the A2HS prompt');
+							// console.log('User accepted the A2HS prompt');
 
-				}
-				else{
+					}
+					else{
 
-						// decline installation
-						// console.log('User dismissed the A2HS prompt');
-				}
+							// decline installation
+							// console.log('User dismissed the A2HS prompt');
+					}
 
-				// Pass deferred to null
-				DeferredPrompt = null;
+					// Pass deferred to null
+					DeferredPrompt = null;
 
-		 });
-		 // end USER CHOICE -> INSTALL / DECLINE
+			});
+			// end USER CHOICE -> INSTALL / DECLINE
 
   }
   /**

@@ -490,14 +490,17 @@ class program {
       program::clean_tokens($user_id);
 
       $token = password_hash($mail.$mdp.microtime(true), PASSWORD_DEFAULT);
-      $stamp = time();
-      // REC token
+
+			$stamp = time();
+
+			// REC token
       $ARR_pdo = array(
 				'user_id' => $user_id,
 				'token' => $token,
 				'stamp' => $stamp
 			);
-      $sql = 'INSERT INTO tokens (user_id, token, stamp)
+
+			$sql = 'INSERT INTO tokens (user_id, token, stamp)
 			VALUES (:user_id, :token, :stamp)';
       $response = false;
       $last_id = false;

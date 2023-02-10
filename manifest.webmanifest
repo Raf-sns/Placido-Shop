@@ -1,95 +1,95 @@
 {
-    "id": "Placido-Shop-PWA-1664005654",
+    "id": "Placido-Shop-PWA-1674671381",
     "name": "Placido-Shop",
     "short_name": "Placido-Shop",
     "description": "OnLine Sale Software",
     "icons": [
         {
-            "src": "/img/Web-App/web-app-48x48-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-48x48-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "48x48",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-57x57-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-57x57-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "57x57",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-60x60-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-60x60-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "60x60",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-72x72-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-72x72-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "72x72",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-76x76-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-76x76-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "76x76",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-96x96-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-96x96-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "96x96",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-114x114-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-114x114-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "114x114",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-120x120-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-120x120-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "120x120",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-144x144-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-144x144-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "144x144",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-152x152-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-152x152-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "152x152",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-180x180-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-180x180-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "180x180",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-192x192-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-192x192-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-256x256-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-256x256-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "256x256",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-384x384-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-384x384-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "384x384",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/img/Web-App/web-app-512x512-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png",
+            "src": "/img/Web-App/web-app-512x512-divhnjwzqfclmsruxatbpokyge-0-1674671380.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
@@ -106,5 +106,5 @@
     "display": "standalone",
     "start_url": "/",
     "orientation": "any",
-    "default_img": "web-app-512x512-erhcmjfwqsdztaupbvoiyklgnx-0-1664005653.png"
+    "default_img": "web-app-512x512-divhnjwzqfclmsruxatbpokyge-0-1674671380.png"
 }

@@ -5,7 +5,7 @@
 	LANG : french
 	CODE LANG : fr
 	AUTHOR : Raf
-	VERSION : 0.0.2
+	VERSION : 0.0.3
 >>>
 
 ***
@@ -16,6 +16,18 @@ update
 your_version
 ***
 	Version utilisée&nbsp;:
+***
+infos_version
+***
+	Lisez ceci
+***
+no_infos_message
+***
+	Pas d'informations pour cette mise à jour
+***
+infos_title
+***
+	Informations sur cette mise à jour
 ***
 last_update
 ***

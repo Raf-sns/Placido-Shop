@@ -1,6 +1,6 @@
 /**
  * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2022
+ * Copyright © Raphaël Castello , 2022-2023
  * Organisation: SNS - Web et Informatique
  * Web site: https://sns.pm
  * @link: contact@sns.pm
@@ -323,7 +323,9 @@
 
 
 			// test in new date setted is bigger than date today
-			if( Sort_date.obj.getTime() > Sort_date.now.getTime() ){
+			// test on seconds values !
+			if( Math.round(Sort_date.obj.getTime()/1000)
+					> Math.round(Sort_date.now.getTime()/1000) ){
 
 					// re-init Sort_date.obj AT TODAY - 00:00:00
 					Sort_date.obj = set_obj_date_now();

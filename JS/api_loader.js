@@ -7,7 +7,7 @@
  *
  * Script name:	api_loader.js
  *
- * const DEV_MODE = false; // show object api
+ * const DEV_MODE = true/false; // show object api
  *
  * function get_templates();
  * function get_object_api();
@@ -78,8 +78,8 @@ $(function(){
 						console.log($.o);
 				}
 
-				// remove splash screen
 
+				// remove splash screen
 				// or slideOutUp or class ...
 				$('#splash_screen').addClass('animated fadeOut');
 
@@ -100,6 +100,9 @@ $(function(){
 
 				// launch swiper -> header slideshow
 				$.launch_slider();
+
+				// enable swipe thumbnails products see : JS/main.js
+				$.swipe_products();
 
 
 	      // FOR START HISTORY - FOR THINGS ASKED BY URL
@@ -150,6 +153,9 @@ $(function(){
 					// PAGE VIEW
 	        case 'page':
 
+							// disable touchSwipe - touchSwipe disable inputs
+							$('#center_page').swipe('disable');
+
 							history.pushState({
 							page: $.o.histo.page }, '', $.o.histo.url);
 
@@ -158,6 +164,9 @@ $(function(){
 					// CART
 	        case 'cart':
 
+							// disable touchSwipe
+							$('#center_page').swipe('disable');
+
 							// no set history here / see JS/cart.js
 							$.open_payment_form();
 
@@ -165,6 +174,9 @@ $(function(){
 
 					// RENDER SALE
 	        case 'sale':
+
+							// disable touchSwipe
+							$('#center_page').swipe('disable');
 
 							history.pushState({
 							page: 'sale',

@@ -75,7 +75,7 @@ class mail extends config {
         if( !$mail->send() ){
 
            // render error if it is
-           $tab = array('error' => 'Mailer Error: '.$mail->ErrorInfo );
+           $tab = array('error' => 'E-Mail error : '.$mail->ErrorInfo );
            echo json_encode($tab, JSON_FORCE_OBJECT);
            exit;
         }

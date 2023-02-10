@@ -14,6 +14,7 @@
  * $.prevent_file_update( file_path );
  * $.open_customize_update();
  * $.download_lang( lang , event );
+ * $.see_infos_update( version );
  *
  */
 
@@ -558,6 +559,47 @@ $.extend({
 	/**
 	 * $.download_lang( lang , for_interface, event );
 	 */
+
+
+
+	/**
+	 * $.see_infos_update( version );
+	 *
+	 * @param  {string} version version to get infos
+	 * @return {text/html}      infos for this version
+	 */
+	see_infos_update : function( version ){
+
+
+			// get the good info text
+			for (var i = 0; i < $.o.downloads.versions.length; i++) {
+					if( $.o.downloads.versions[i].version == version ){
+							break;
+					}
+			}
+
+			// manage empty / full infos text
+			var infos =
+				( typeof $.o.downloads.versions[i].infos != 'undefined'
+					&& $.o.downloads.versions[i].infos.trim() != '' )
+				? $.o.downloads.versions[i].infos : $.o.tr.no_infos_message;
+
+			// show infos
+			$('#modal_content').empty()
+			.html( `<div class="large padding-24 padding-large">
+			<h3 class="border-bottom border-gray text-gray">
+			<i class="fas fa-info-circle"></i>&nbsp; `+$.o.tr.infos_title+`</h3>
+			<p lang="en">`+infos+`</p>
+			</div>` );
+
+			$('#modal').show();
+
+	},
+	/**
+	 * $.see_infos_update( version );
+	 */
+
+
 
 });
 // end extend

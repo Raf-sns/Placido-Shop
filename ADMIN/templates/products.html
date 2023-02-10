@@ -112,7 +112,9 @@
 
 	  <!-- render_search_user_products -->
 	  <div id="render_search_user_products" class="center margin-bottom">
-	    {{>search_render_prods}}
+
+				<!-- RENDER RESEARCH  -->
+				{{>search_render_prods}}
 	  </div>
 	  <!-- render_search_user_products -->
 
@@ -163,9 +165,11 @@
     {{tr.your_search}}&nbsp;:&nbsp;
     <span class="large">{{search_nb_render}}</span>&nbsp;&nbsp;{{tr.search_nb_render}}
   </p>
-  {{#template.search_user_products}}
-    {{>vue_products}}
-  {{/template.search_user_products}}
+	<div id="flex_search_products">
+		{{#template.search_user_products}}
+			{{>vue_products}}
+		{{/template.search_user_products}}
+	</div>
 </script>
 <!-- end  partial search_render_prods -->
 

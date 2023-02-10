@@ -1,7 +1,7 @@
 <?php
 /**
  * PlACIDO-SHOP FRAMEWORK - FRONT
- * Copyright © Raphaël Castello  2022
+ * Copyright © Raphaël Castello, 2022-2023
  * Organisation: SNS - Web et Informatique
  * Web site: https://sns.pm
  * @link: contact@sns.pm
@@ -31,6 +31,7 @@
 			ROOT.'/CSS/custom.css',
 			ROOT.'/CSS/api.css',
 			ROOT.'/CSS/single_product.css',
+			ROOT.'/CSS/payment.css',
 			ROOT.'/CSS/shop.css',
 	];
 

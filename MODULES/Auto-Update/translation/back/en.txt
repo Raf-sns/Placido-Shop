@@ -6,7 +6,7 @@
 	LANG : english
 	CODE LANG : en
 	AUTHOR : Raf
-	VERSION : 0.0.2
+	VERSION : 0.0.3
 >>>
 
 ***
@@ -17,6 +17,18 @@ update
 your_version
 ***
 	Version used&nbsp;:
+***
+infos_version
+***
+	Read this
+***
+no_infos_message
+***
+	No information for this update
+***
+infos_title
+***
+	Informations about this update
 ***
 last_update
 ***
