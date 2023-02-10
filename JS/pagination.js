@@ -194,9 +194,7 @@ $.extend({
 
   },
   /**
-	 *
    * END $.return_for_pagina( OBJECT );
-	 *
    */
 
 
@@ -301,8 +299,8 @@ $.extend({
       'top': '0',
       'left' : move_new+'px',
       'max-width': '1200px',
-      'height': '100%',
-      'width' : width_center+'px'
+			'width' : width_center+'px',
+      'height': '100%'
     });
 
 		// template products in context 'inline' / 'mozaic'

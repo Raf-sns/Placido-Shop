@@ -1,3 +1,14 @@
+/**
+ * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
+ * Copyright © Raphaël Castello , 2019-2023
+ * Organisation: SNS - Web et Informatique
+ * Web site: https://sns.pm
+ * @link: contact@sns.pm
+ *
+ * script name: api.css
+ *
+ */
+
 :root {
   --oran: #e9790b;
   --blue: #02b0e4;
@@ -456,7 +467,7 @@ hr {
 #render_search_user_products {
   display: none;
 }
-#stock_content {
+#stock_content, #flex_search_products {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -673,6 +684,7 @@ hr {
 .one {
   width: 49.5%;
   margin: 12px 0 0;
+	overflow-wrap: break-word;
 }
 /* SETTINGS */
 #settings {

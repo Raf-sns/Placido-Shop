@@ -253,12 +253,6 @@ input#search_input {
   min-width: 40px;
   line-height: 0;
 }
-#search_bar i.search_icon {
-  padding: 0 10px 0 16px;
-}
-span.erase_search {
-  padding: 0 18px 0 12px;
-}
 .pagination_arrows {
   display: inline-block;
   font-size: var(--text);

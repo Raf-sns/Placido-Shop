@@ -173,7 +173,8 @@ class pay_process {
 
 
     // get vendor STRIPE keys
-    // i. $SALE['shop']['mode_payment'] => 'card_test' / 'card_production' / 'other'
+    // i. $SALE['shop']['mode_payment']
+		// => 'card_test' / 'card_production' / 'other'
 
     // test mode card payment
     if( $SALE['shop']['mode_payment'] == 'card_test' ){

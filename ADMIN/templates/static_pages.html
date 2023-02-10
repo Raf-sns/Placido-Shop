@@ -6,7 +6,7 @@
 
 		<!-- btn show infos -->
 		<p>
-			<button onclick="$('#info_text').toggle('hide');"
+			<button onclick="$.show_infos_static_page();"
 			role="button"
 			class="btn card gree margin-top round small small_btn">
 				<i class="fas fa-info-circle"></i>&nbsp;
@@ -25,8 +25,7 @@
 
 
 		<!-- button add new page -->
-		<button onclick="$('#form_new_page').toggle('hide');
-		$('#open_form_new_page').toggleClass(['fa-hand-point-right', 'fa-hand-point-down']);"
+		<button onclick="$.show_form_static_page();"
 			class="blue btn card round margin-bottom"
 			type="button"
 			role="button">

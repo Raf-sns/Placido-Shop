@@ -529,6 +529,9 @@ $.extend({
     // scroll to top
     $.scroll_top();
 
+		// disable touchSwipe
+		$('#center_page').swipe('disable');
+
 		// set good title of page
 		document.title = $.o.view.title+' - '+$.o.tr.cart_url;
 
@@ -894,7 +897,7 @@ $.extend({
 
             // console.log( data.key );
 
-            // pass total amount caluled by server TO CART
+            // pass total amount calulated by server TO CART
             $.o.cart.total_amount_sale_text = data.total_amount_sale_text;
 
             // pass two keys in global context for use it on ask_to_pay + submit card
@@ -1361,7 +1364,7 @@ $.extend({
       // sender send datas to server asynchronous and return data.obj
       $.sender(el_to_prevent, method, url, datas, data_type, function(data){
 
-          // info -> sale is treated 
+          // info -> sale is treated
           if( data.info ){
 
               // show error

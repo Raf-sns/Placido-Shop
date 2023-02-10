@@ -4,7 +4,7 @@
  *  KEEP IT !
  */
 
-	// PRODUCTION : Turn off all error reporting -> uncomment
+	// PRODUCTION : Turn off all error reporting -> comment
   error_reporting(0);
 
   // include MUSTACHE

@@ -544,7 +544,7 @@
 					// !important set to 00:00:00
 					Sort_date.obj.setHours(0, 0, 0);
 					// console.log( Sort_date.get_full_string() );
-					test_date = date_overflow_test();
+					// test_date = date_overflow_test();
 				break;
 
 				// year

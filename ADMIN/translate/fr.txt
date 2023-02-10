@@ -1803,8 +1803,12 @@ folder_admin_not_found
 unable_to_rename_folder_admin
 ***
 	Impossible de renommer le dossier de management, ré-essayez s.v.p.
-
-
+***
+administration_folder_modified
+***
+	Le dossier d'administration a été modifié,
+	<br>
+	vous allez être redirigé vers la page de connexion.
 
 
 
@@ -2428,11 +2432,18 @@ square_image_required
 min_size_pwa_required
 ***
 	Votre image doit faire au minimum 512 pixels de large
+***
+clear_cache_pwa
+***
+	Veuillez vider le cache de votre navigateur et vous re-connecter, merci
+
 
 
 
 
 <<<  MODULES >>>
+
+
 
 
 ***

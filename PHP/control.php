@@ -63,7 +63,6 @@ class control {
 					// -> redirect to 404
 					header('Location: https://'.HOST.'/404.php');
 					exit;
-
 			}
 
 
@@ -71,17 +70,17 @@ class control {
 			$request = trim(htmlspecialchars($_SERVER['REQUEST_URI']));
 
 
+			// default - FB REQUEST
+			if( !empty($_GET['fbclid']) ){
+
+				$request = explode("?",$request)[0];
+			}
+
 			// default
 			if( $request == '/' ){
 					// ask program to give the home page
 					program::get_home_page(); // this exit in program::
 			}
-
-			// default - FB REQUEST
-      if( !empty($_GET['fbclid']) ){
-
-					$request = explode("?",$request)[0];
-      }
 
 
 			// EXPLODE URL by '/'

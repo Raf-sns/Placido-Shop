@@ -1,6 +1,6 @@
 /**
  * PlACIDO-SHOP FRAMEWORK - JS FRONT
- * Copyright © Raphaël Castello , 2019-2022
+ * Copyright © Raphaël Castello , 2019-2023
  * Organisation: SNS - Web et Informatique
  * Web site: https://sns.pm
  * @link: contact@sns.pm
@@ -28,9 +28,10 @@
  * $.send_message();
  * $.drop_show(elem);
  *
- * $.render_search = [];
- * $.search( input );
- * $.erase_search( elem );
+ * $.fire_search_on_enter( input, event );
+ * $.render_search : [],
+ * $.search( input, event );
+ * $.erase_search( input );
  * $.show_sort_options();
  * $.sort_by_price( order );
  *
@@ -45,7 +46,9 @@
  * $.launch_slider();
  * $.breadcrumb( cat_id );
  * $.lazy_load_imgs();
+ * $.sticky_header_init : true / false;
  * $.sticky_header();
+ * $.swipe_products();
  *
  *
  * jQuery not extended :
@@ -70,93 +73,94 @@ $.extend({
   /**
    * $.show_page( event, about );
    *
-   * @param  {type} event description
-   * @param  {type} about   description
-   * @return {type}       description
+   * @param  {event}  event
+   * @param  {string} about  key for template
+   * @return {html}   return an html page according to the requested template
    */
   show_page : function( event, about ){
 
-    // home page
-    if( about == 'home' ){
 
-      	// template products in context 'inline' / 'mozaic'
-				var template =
-					( $.o.view.display_products == 'inline')
-						? 'products_view_inl' : 'products_view';
-    }
+	    // home page
+	    if( about == 'home' ){
 
-    // category page
-    if( about == 'cat' ){
+	      	// template products in context 'inline' / 'mozaic'
+					var template =
+						( $.o.view.display_products == 'inline')
+							? 'products_view_inl' : 'products_view';
+	    }
 
-        var template = 'products_view';
-    }
+	    // category page
+	    if( about == 'cat' ){
 
-    // contact page
-    if( about == 'contact' ){
+	        var template = 'products_view';
+	    }
 
-        var template = 'contact_form';
-    }
+	    // contact page
+	    if( about == 'contact' ){
 
-    // one product page
-    if( about == 'single_product' ){
+	        var template = 'contact_form';
+	    }
 
-        var template = 'single_product';
-    }
+	    // one product page
+	    if( about == 'single_product' ){
 
-    // cart page
-    if( about == 'cart' ){
+	        var template = 'single_product';
+	    }
 
-        var template = 'payment_form';
-    }
+	    // cart page
+	    if( about == 'cart' ){
 
-    // render sale
-    if( about == 'render_sale' ){
+	        var template = 'payment_form';
+	    }
 
-        var template = 'render_sale';
-    }
+	    // render sale
+	    if( about == 'render_sale' ){
 
-    // render sale login page
-    if( about == 'render_sale_login' ){
+	        var template = 'render_sale';
+	    }
 
-        var template = 'render_sale_login';
-    }
+	    // render sale login page
+	    if( about == 'render_sale_login' ){
 
-    // page_url
-    if( $.o.static_pages.hasOwnProperty(about)
-    && $.o.static_pages[about].url == about ){
+	        var template = 'render_sale_login';
+	    }
 
-        var template = about; // about == page_url
-    }
+	    // page_url
+	    if( $.o.static_pages.hasOwnProperty(about)
+	    && $.o.static_pages[about].url == about ){
+
+	        var template = about; // about == page_url
+	    }
 
 
-		var prom = new Promise(function(resolve, reject) {
+			var prom = new Promise(function(resolve, reject) {
 
-        // wrap old content
-        $('#center_page').contents()
-        .wrap(`<div class="old_content"></div>`);
+	        // wrap old content
+	        $('#center_page').contents()
+	        .wrap(`<div class="old_content"></div>`);
 
-        $('#center_page').append().mustache( template, $.o );
+	        $('#center_page').append().mustache( template, $.o );
 
-        resolve();
+	        resolve();
 
-    }).then((success)=>{
+	    }).then((success)=>{
 
-          $('.old_content').remove();
+	          $('.old_content').remove();
 
-          $.lazy_load_imgs();
+	          $.lazy_load_imgs();
 
-					$.put_aria_hiddens();
+						$.put_aria_hiddens();
 
-					$.close_all_menus();
+						$.close_all_menus();
 
-    });
+	    });
 
-    // HIDE SIDEBAR
-    // getter sidebar
-    if( $.getter_open_sidebar == true ){
+	    // HIDE SIDEBAR
+	    // getter sidebar
+	    if( $.getter_open_sidebar == true ){
 
-        $.open_sidebar();
-    }
+	        $.open_sidebar();
+	    }
 
   },
   /**
@@ -173,46 +177,48 @@ $.extend({
   open_home : function(){
 
 
-    // set page page_context
-    $.o.view.page_context = 'home';
+	    // set page page_context
+	    $.o.view.page_context = 'home';
 
-    // launch slider
-		$.o.view.slider.show = true;
-    $.launch_slider();
+	    // launch slider
+			$.o.view.slider.show = true;
+	    $.launch_slider();
 
-    // DISPLAY SORTINGS - all
-    $('.display_top_sort').css('display', 'inline-block');
+	    // DISPLAY SORTINGS - all
+	    $('.display_top_sort').css('display', 'inline-block');
 
-		$.o.view.display_top_sort = 'display: block;';
+			$.o.view.display_top_sort = 'display: block;';
 
-    // pagination with default nb products
-		$.o.view.nb_wanted = $.o.view.def_nb_prods;
-    $.return_for_pagina($.o.products);  // by default
+	    // pagination with default nb products
+			$.o.view.nb_wanted = $.o.view.def_nb_prods;
+	    $.return_for_pagina($.o.products);  // by default
 
-    // IF SORT BLOCK WAS HIDDEN - SHOW IT
-    $('#sort_block').css('display', 'flex');
+	    // IF SORT BLOCK WAS HIDDEN - SHOW IT
+	    $('#sort_block').css('display', 'flex');
 
-    // remove breadcrumb
-    $('#breadcrumb').remove();
+	    // remove breadcrumb
+	    $('#breadcrumb').remove();
 
-    // NOT display cat title render
-    $.cat_render();
+	    // NOT display cat title render
+	    $.cat_render();
 
-    // page shower
-    $.show_page( event, 'home' );
+	    // show page
+	    $.show_page( event, 'home' );
 
+			// enable touchSwipe
+			$('#center_page').swipe('enable');
 
-		// scoll to top
-    $.scroll_top();
+			// scoll to top
+	    $.scroll_top();
 
-		// set good title of page
-		document.title = $.o.view.title;
+			// set good title of page
+			document.title = $.o.view.title;
 
-    // HISTORY
-    if( history.state.page != 'home' ){
+	    // HISTORY
+	    if( history.state.page != 'home' ){
 
-        history.pushState({page : 'home'}, '','');
-    }
+	        history.pushState({page : 'home'}, '','');
+	    }
 
   },
   /**
@@ -231,36 +237,39 @@ $.extend({
   open_render_sale : function(){
 
 
-    var template = ( typeof($.o.SALE) === 'undefined' ) ?
-    'render_sale_login' : 'render_sale';
+	    var template = ( typeof($.o.SALE) === 'undefined' ) ?
+	    'render_sale_login' : 'render_sale';
 
-    $.clean_sort_block();
+	    $.clean_sort_block();
 
-    // show page : render sale OR render sale login
-    $.show_page( event, template );
+	    // show page : render sale OR render sale login
+	    $.show_page( event, template );
 
-		// set good title of page
-		document.title = $.o.view.title+' - '+$.o.tr.your_order;
+			// disable touchSwipe
+			$('#center_page').swipe('disable');
 
-    // if sale exist - push in history
-    if( typeof($.o.SALE) !== 'undefined' ){
+			// set good title of page
+			document.title = $.o.view.title+' - '+$.o.tr.your_order;
 
-        // HISTORY
-        history.pushState({
-          page: 'sale',
-          sale_id: $.sale_id,
-          hash_customer: $.hash_customer
-        },'', '/sale/'+$.sale_id+'/'+$.hash_customer );
+	    // if sale exist - push in history
+	    if( typeof($.o.SALE) !== 'undefined' ){
 
-    }
-    else{
-        // new sale is not in object $.o.SALE
-        // HISTORY - push state home -> on url page for render_sale_login
-        if( history.state.page != 'home' ){
+	        // HISTORY
+	        history.pushState({
+	          page: 'sale',
+	          sale_id: $.sale_id,
+	          hash_customer: $.hash_customer
+	        },'', '/sale/'+$.sale_id+'/'+$.hash_customer );
 
-            history.pushState({page : 'home'}, '','');
-        }
-    }
+	    }
+	    else{
+	        // new sale is not in object $.o.SALE
+	        // HISTORY - push state home -> on url page for render_sale_login
+	        if( history.state.page != 'home' ){
+
+	            history.pushState({page : 'home'}, '','');
+	        }
+	    }
 
   },
   /**
@@ -268,9 +277,11 @@ $.extend({
    */
 
 
+
   ////////////////////////////////////////////////////////////////////
   ////////////    O P E N   A  C A T E G O R Y     ///////////////////
   ////////////////////////////////////////////////////////////////////
+
 
 
   /**
@@ -394,6 +405,9 @@ $.extend({
 		// close api modals
 		$.close_all_menus();
 
+		// enable touchSwipe
+		$('#center_page').swipe('enable');
+
 		// close menu sidebar if opened
 		if( $('#sidebar').css('display') == 'block' ){
 
@@ -485,9 +499,11 @@ $.extend({
 	 */
 
 
+
 //////////////////////////////////////////////////////////////
 ////////////   O P E N   O N E   P R O D U C T     ///////////
 //////////////////////////////////////////////////////////////
+
 
 
   /**
@@ -521,6 +537,9 @@ $.extend({
 
 		// scroll to top
     $.scroll_top();
+
+		// disable touchSwipe
+		$('#center_page').swipe('disable');
 
 		// launch swipe for product thunbails
     $.swipe_imgs();
@@ -739,6 +758,12 @@ $.extend({
 
 				$.scroll_top();
 
+				// disable touchSwipe
+				$('#center_page').swipe('disable');
+
+				// set $.o.view.page_context
+				$.o.view.page_context = 'page';
+
 				// set good title of page
 				document.title = $.o.static_pages[page_url].page_title+' - '+$.o.view.title;
 
@@ -766,6 +791,7 @@ $.extend({
    * @param  {bool}
    */
   link_prod_copied : false,
+
 
   /**
    * $.copy_link( elem, event );
@@ -831,6 +857,7 @@ $.extend({
    */
   getter_open_sidebar : false,
 
+
   /**
    * $.open_sidebar();
    *
@@ -874,38 +901,39 @@ $.extend({
   open_cats_menu : function(){
 
 
-    if( $.getter_cats_menu == false ){
+	    if( $.getter_cats_menu == false ){
 
-        $('#cats_menu').removeClass('animated zoomOutLeft')
-        .addClass('animated zoomInLeft').show();
+	        $('#cats_menu').removeClass('animated zoomOutLeft')
+	        .addClass('animated zoomInLeft').show();
 
-        $.getter_cats_menu = true;
+	        $.getter_cats_menu = true;
 
-    }
-    else{
+	    }
+	    else{
 
-        $('#cats_menu').removeClass('animated zoomInLeft')
-        .addClass('animated zoomOutLeft');
+	        $('#cats_menu').removeClass('animated zoomInLeft')
+	        .addClass('animated zoomOutLeft');
 
-        $.animateCss('#cats_menu', 'zoomOutLeft', 300, function(){
+	        $.animateCss('#cats_menu', 'zoomOutLeft', 300, function(){
 
-            $('#cats_menu').css('display', 'none');
+	            $('#cats_menu').css('display', 'none');
 
-            $('#cats_menu ul.deploy')
-            .addClass('off').removeClass('in');
+	            $('#cats_menu ul.deploy')
+	            .addClass('off').removeClass('in');
 
-            $('#cats_menu i.cat_icon')
-            .css('transform', 'rotate(0deg)');
+	            $('#cats_menu i.cat_icon')
+	            .css('transform', 'rotate(0deg)');
 
-        });
+	        });
 
-        $.getter_cats_menu = false;
-    }
+	        $.getter_cats_menu = false;
+	    }
 
   },
   /**
    *  $.open_cats_menu();
    */
+
 
 
   /**
@@ -1016,19 +1044,18 @@ $.extend({
    */
   drop_show : function(elem){
 
-    if( $(elem).css('display') == 'none' ){
+	    if( $(elem).css('display') == 'none' ){
 
-        $('.drop_show').css('display', 'none');
+	        $('.drop_show').css('display', 'none');
 
-        $(elem).css('display', 'block');
+	        $(elem).css('display', 'block');
 
-        return;
-    }
-    else{
+	        return;
+	    }
+	    else{
 
-        $('.drop_show').css('display', 'none');
-    }
-
+	        $('.drop_show').css('display', 'none');
+	    }
 
   },
   /**
@@ -1037,9 +1064,36 @@ $.extend({
 
 
 
-//////////////////////////////////////////////////////////////
-////////////      S E A R C H   //////////////////////////////
-//////////////////////////////////////////////////////////////
+///////////////////////////////////////////
+////////////    S E A R C H    ////////////
+///////////////////////////////////////////
+
+
+
+	/**
+	 * $.fire_search_on_enter( input, event );
+	 *
+	 * Called by onkeydown event
+	 * @param  {string} input id of the field to watch
+	 * @param  {event}  event
+	 * @return {void}   call $.search() function on press key enter
+	 */
+	fire_search_on_enter : function( input, event ){
+
+			// if the key pressed is Enter & the field is filled
+			if( event.key == 'Enter'
+					&& $('#search_input').val().length != 0 ){
+
+					$.search( input, event );
+			}
+			else {
+
+					return;
+			}
+	},
+	/**
+	 * $.fire_search_on_enter( input, event );
+	 */
 
 
 
@@ -1050,21 +1104,20 @@ $.extend({
   render_search : [],
 
   /**
-   * $.search(input); -> carrefull pass '#myId' in param
-   * search products
+   * $.search( input, event );
+	 * -> carrefull pass '#myId' in param
+   *
    * @param  {string} input id of input ex. '#myId'
-   * @return {html}
+   * @return {html}		search in products
    */
-  search : function( input ){
+  search : function( input, event ){
+
 
 			// text entered
       var value = $(input).val();
 
 			// length of text entered
 			var len = value.length;
-
-      // dont fire until 2 chars
-      if( len == 1 ){ return; }
 
 			// when length == 0 -> get default page
       if( len == 0 ){
@@ -1116,9 +1169,24 @@ $.extend({
       });
       // end  BIG loop
 
+			// open home if search is requested from another page
+			if( $.o.view.page_context != 'home' ){
+
+					// this set $.o.view.page_context = 'home'
+					$.open_home();
+			}
 
       // IF NOT FOUND
       if( $.o.render_search.length == 0 ){
+
+					// hide render searched value
+					// note: use category title block to render searched value
+					if( $('#title_cat_block').css('display') == 'block' ){
+
+							$('#title_cat_block').hide();
+
+							$('#cat_title_text').empty();
+					}
 
           $('#center_page').empty()
           .html(`<div id="search_not_found">
@@ -1132,10 +1200,19 @@ $.extend({
 					// show .display_top_sort elements
 					$('.display_top_sort').show();
 
-          // ADJUST $.o.view -> see pagination.js -> $.return_for_pagina( OBJECT, NB_items_by page )
+          // ADJUST $.o.view -> see: pagination.js
+					// -> $.return_for_pagina( OBJECT, NB_items_by page )
           $.return_for_pagina($.o.render_search);
 
-          $.show_center_page('fade', '#center_page', 'products_view');
+					var template_products =
+					( $.o.view.display_products == 'inline' )
+					? 'products_view_inl' : 'products_view';
+
+          $.show_center_page('fade', '#center_page', template_products);
+
+					// use category title block to render searched value
+					$('#cat_title_text').html($.o.tr.your_research+`&nbsp;:&nbsp;`+value);
+					$('#title_cat_block').show();
 
       }
 
@@ -1143,6 +1220,9 @@ $.extend({
 
 			// scroll to sort block
 			$.scroll_to_elem('#sort_block', event);
+
+			// empty search field
+      $(input).val('');
 
   },
   /**
@@ -1152,21 +1232,21 @@ $.extend({
 
 
   /**
-   *  $.erase_search( elem );
+   *  $.erase_search( input );
    *
-   * @param  {type} elem description
-   * @return {type}      description
+   * @param  {string} input search field to erase
+   * @return {html}   re-init. products page by default, open home
    */
-  erase_search : function( elem ){
+  erase_search : function( input ){
 
 			// empty search field
-      $(elem).val('');
+      $(input).val('');
 
 			$.open_home();
 
-  },
+	},
   /**
-   *  $.erase_search( elem );
+   *  $.erase_search( input );
    */
 
 
@@ -1605,10 +1685,8 @@ $.extend({
 					return;
 			}
 
-
 			// init swiper
 			$.init_swiper();
-
 
   },
   /**
@@ -1709,6 +1787,7 @@ $.extend({
    */
 
 
+
 	/*
    *  $.lazy_load_imgs();
    *  Lazy Loading Image Loader
@@ -1750,9 +1829,6 @@ $.extend({
       });
       // END loop over imgs
 
-
-      // console.log( 'lazy load executed');
-
   },
   /*
    *  END $.lazy_load_imgs();
@@ -1761,18 +1837,26 @@ $.extend({
 
 
 	/**
+	 * $.sticky_header_init : true / false;
+	 * enable / diasble sticky header
+	 */
+	sticky_header_init : false,
+
+
+	/**
 	 * $.sticky_header();
+	 * see: $.sticky_header_init = true/false; in JS/api_loader.js
+ 	 * for enable or diasble sticky header
 	 *
 	 * @return {void}  fix header on scroll or resize
 	 */
-	/* $.sticky_header_init; */
-	sticky_header_init : false,
 	sticky_header : function(){
 
 
 			// no sticky header
 			if( $.sticky_header_init == false ){
-				return;
+
+					return;
 			}
 
 			// if orientation == 'landscape' on mobile + NOT IN CART -> this bad UX
@@ -1848,6 +1932,113 @@ $.extend({
 
 
 
+	/**
+	 * $.swipe_products();
+	 *
+	 * i. touchSwipe disable inputs, must be enabled / disabled
+	 * @return {html}  Swipe left / right on the products
+	 * for simulate a pagination click
+	 */
+	swipe_products : function(){
+
+
+			// max distance to fire
+			var distance_max = 90;
+
+			$('#center_page').swipe({
+
+					// ! carefool swipeStatus != swipe funct.
+					// in swipe
+					swipeStatus : function( event, phase, direction, distance ){
+
+							// console.log('phase : '+ phase);
+							// console.log('direction : '+ direction);
+							// console.log('distance : '+ distance);
+
+							if( phase == 'move'
+							&& (direction != 'right' && direction != 'left') ){
+
+									return;
+							}
+
+							// enable it only on products page
+							if( $.o.view.page_context != 'home'
+									&& $.o.view.page_context != 'cat' ){
+
+									return;
+							}
+
+
+							// move
+							if( phase == 'move'
+							&& distance <= distance_max ){
+
+									distance = ( direction == 'right' )
+										? distance : Math.round(distance*-1);
+
+
+									$('#products_view').css({
+										'transition' : 'transform 0.6s ease',
+										'transform': 'translateX('+distance+'px)'
+									});
+
+							}
+
+							// end
+							if( ( phase == 'end' || phase == 'cancel' )
+									&& distance <= distance_max ){
+
+									$('#products_view').css({
+										'transition' : 'transform 0.6s ease',
+										'transform': 'translateX(0)'
+									});
+
+							}
+
+							// next page
+							// move
+							if( ( phase == 'move' )
+							&& distance > distance_max ){
+
+
+									// need to pass overflow-x hidden for unbug mobile devices
+									$('body').css('overflow-x','hidden');
+
+									// go to prev / next page
+									distance = ( direction == 'right' )
+									? $.pagina('prev')
+									: $.pagina('next');
+
+									// remove start transition after fire $.pagina(...)
+									$('#products_view').css({
+										'transition' : '',
+										'transform': ''
+									});
+
+									// remove overflow-x hidden form body
+									var ti = window.setTimeout(function(){
+											$('body').css('overflow-x','');
+											window.clearTimeout(ti);
+									}, 600);
+							}
+
+					},
+					// options :
+					triggerOnTouchEnd: false,
+					allowPageScroll:"horizontal",
+					preventDefaultEvents: true,
+					threshold: 100,
+			});
+			// END TOUCHSWIPE
+
+	},
+	/**
+	 * $.swipe_products();
+	 */
+
+
+
+
 });
 // END EXTEND
 
@@ -1857,9 +2048,8 @@ $.extend({
 ////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////
-////////////      C L A S S I C A L   JS      //////////////////////
+////////////      C L A S S I C A L   JS/jQuery      //////////////////////
 ////////////////////////////////////////////////////////////////////
-
 
 ///////////////////////////////////////////////
 ///////   WEB  CONNECTED / NOT CONNECTED  /////
@@ -1991,13 +2181,16 @@ $(window).on('click', function(e){
 // ////////////////////////////////////////////////////////////////////
 
   // ON SCROLL
-  var Scoll_top_action = false;
+  var Scroll_top_action = false;
   var Scroll_Timer;
+
   // TO TOP BTN - loader imgs
-  $(window).scroll(function () {
+  $(window).on('scroll touchmove mousewheel', function(e){
 
 
 		// fix header
+		// see: $.sticky_header_init = true/false; in JS/api_loader.js
+		// for enable or diasble sticky header
 		$.sticky_header();
 
     // TO TOP
@@ -2010,7 +2203,7 @@ $(window).on('click', function(e){
 		}
 
     // for update on end of the scroll
-    if( Scoll_top_action === false ){
+    if( Scroll_top_action === false ){
 
         clearTimeout(Scroll_Timer);
 
@@ -2022,7 +2215,7 @@ $(window).on('click', function(e){
         }, 300);
 
     }
-    // end if Scoll_top_action === false
+    // end if Scroll_top_action === false
 
   });
   // END WINDOW.SCROLL()
@@ -2034,11 +2227,11 @@ $(window).on('click', function(e){
 
       e.stopImmediatePropagation();
 
-      Scoll_top_action = true;
+      Scroll_top_action = true;
 
       $('html,body').animate({ scrollTop: 0 }, 300, function(){
 
-        Scoll_top_action = false;
+        Scroll_top_action = false;
       });
   });
   // END TO TOP

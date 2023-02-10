@@ -1,6 +1,6 @@
 /**
  * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2021
+ * Copyright © Raphaël Castello , 2019-2023
  * Organisation: SNS - Web et Informatique
  * Web site: https://sns.pm
  * @link: contact@sns.pm
@@ -22,7 +22,6 @@
  * $.calcul_price_ttc();
  * $.add_img_prod();
  * $.clear_add_product();
- *
  *
  * SORTING :
  *
@@ -860,7 +859,7 @@ $.extend({
       if( $('#render_search_user_products').css('display') == 'block' ){
 
           	$('#render_search_user_products').empty().css('display', 'none');
-      	    $('#stock_content').css('display', 'block');
+      	    $('#stock_content').css('display', 'flex');
       }
 
       // DO THE DUST on inputs
@@ -921,7 +920,7 @@ $.extend({
 		  var value = $('#search_user_products').val().toLowerCase();
 
       // if multiples spaces only don't fire research
-      while ( value.trim() == '') {
+      while ( value.length > 0 && value.trim() == '') {
         return;
       }
 
@@ -1017,7 +1016,7 @@ $.extend({
           // show render_search with not found message
           $('#render_search_user_products')
           .empty()
-          .html(`<p class="large">`+$.o.tr.search_not_found+`</p>`)
+          .html(`<p class="left-align mrg0 padding">`+$.o.tr.search_not_found+`</p>`)
           .css('display', 'block');
 
           // hide stock_content
@@ -1069,7 +1068,7 @@ $.extend({
       $.pagination_init( 'products' );
 
       // show stock content
-      $('#stock_content').css('display', 'block');
+      $('#stock_content').css('display', 'flex');
 
       return;
   },
@@ -1172,7 +1171,7 @@ $.extend({
     			$('#stock_content').css('display', 'none');
 
           $('#render_search_user_products')
-          .html(`<p class="large">`+$.o.tr.search_not_found+`</p>`)
+          .html(`<p class="left-align mrg0 padding">`+$.o.tr.search_not_found+`</p>`)
           .css('display', 'block');
 
           return;
@@ -1267,7 +1266,7 @@ $.extend({
     			$('#stock_content').css('display', 'none');
 
           $('#render_search_user_products')
-          .html(`<p class="large">`+$.o.tr.search_not_found+`</p>`)
+          .html(`<p class="left-align mrg0 padding">`+$.o.tr.search_not_found+`</p>`)
           .css('display', 'block');
 
           return;
@@ -1348,7 +1347,7 @@ $.extend({
     			$('#stock_content').css('display', 'none');
 
           $('#render_search_user_products')
-          .html(`<p class="large">`+$.o.tr.search_not_found+`</p>`)
+          .html(`<p class="left-align mrg0 padding">`+$.o.tr.search_not_found+`</p>`)
           .css('display', 'block');
 
           return;

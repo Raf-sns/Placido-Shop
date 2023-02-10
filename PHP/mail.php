@@ -82,8 +82,9 @@ class mail extends config {
         if( !$mail->send() ){
 
            // render error
-           echo 'Mailer Error: '.$mail->ErrorInfo;
-           return;
+	         $tab = array('error' => 'E-Mail error : '.$mail->ErrorInfo );
+	         echo json_encode($tab, JSON_FORCE_OBJECT);
+	         exit;
         }
 
         return true;
@@ -435,7 +436,7 @@ class mail extends config {
 
     if( boolval($send_mail) == true ){
 
-        // ERROR
+        // SUCCESS
         $tab = array('success' => tr::$TR['success_send_message'] );
         echo json_encode($tab, JSON_FORCE_OBJECT);
         exit;

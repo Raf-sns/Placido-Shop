@@ -1,6 +1,6 @@
 /**
  * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2022
+ * Copyright © Raphaël Castello , 2019-2023
  * Organisation: SNS - Web et Informatique
  * Web site: https://sns.pm
  * @link: contact@sns.pm

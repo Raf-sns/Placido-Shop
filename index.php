@@ -24,14 +24,12 @@
   Mustache_Autoloader::register();
 
   // CALL CLASSES by spl_autoload_register()
-  spl_autoload_register(function ($class){
+  spl_autoload_register(function($class){
 
 			// load API classes
 			$path_API = 'API/' . $class . '.php';
 			// load PHP application classes
 	    $path_PHP_front = 'PHP/' . $class . '.php';
-			// for the future ...
-	    // $path_MODULES = 'MODULES/' . $class . '.php';
 
 	    if( file_exists($path_API) ) require $path_API;
 			elseif( file_exists($path_PHP_front) ) require $path_PHP_front;

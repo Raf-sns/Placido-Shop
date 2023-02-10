@@ -333,22 +333,11 @@ $welcome = '
 			// PATH TO FILE
 			$page = ROOT.'/templates/STATIC_PAGES/'.$GET_PAGE['page_url'].'.html';
 
-			// ! file no exist
-			if( !file_exists($page) ){
+			// unlink if file exist -> OR pass next step
+			if( file_exists($page) ){
 
-					$tab = array('error' => tr::$TR['page_not_found'] );
-					echo json_encode($tab, JSON_FORCE_OBJECT);
-					exit;
+					unlink($page);
 			}
-
-			// DELETE FILE IN /STATIC_PAGES folder
-			if( unlink($page) === false ){
-
-					$tab = array('error' => tr::$TR['unable_to_suppr_file'] );
-					echo json_encode($tab, JSON_FORCE_OBJECT);
-					exit;
-			}
-
 
 			// DELETE refs page IN DATA BASE
 			$ARR_pdo = array(

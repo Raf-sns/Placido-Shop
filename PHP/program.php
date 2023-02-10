@@ -20,7 +20,6 @@
 class program {
 
 
-
   /**
    * program::get_home_page();
    *
@@ -125,7 +124,7 @@ class program {
       // OG TAGS
       $ARR['og']['title'] = WEBSITE_TITLE;
       $ARR['og']['url'] = 'https://'.HOST.'/';
-      $ARR['og']['image'] = 'https://'.HOST.'/Logos/'.LOGO_SN;
+      $ARR['og']['image'] = 'https://'.HOST.'/img/Logos/'.LOGO_SN;
       // inline meta og descr
       $ARR['og']['description'] = tools::inline_string( META_DESCR );
       // END OG TAGS
@@ -150,7 +149,7 @@ class program {
         'max' => DEF_ARR_SIZES['max']
       );
 
-			// How to display products
+			// How to display products - 'mozaic' / 'inline'
 			$ARR['view']['display_products'] = DISPLAY_PRODUCTS;
 
 			$ARR['view']['display_mozaic'] =
@@ -402,7 +401,7 @@ class program {
 			// -> products_view.html
       $ARR['page'] = false;
 
-      // ovverdie title
+      // override title
       $ARR['website']['title'] = $cat_title.' - '.WEBSITE_TITLE;
       $ARR['view']['title'] = WEBSITE_TITLE;
       // OVERRIDE OG TAGS
@@ -472,7 +471,7 @@ class program {
           // if key page exist $k -> page_url
           if( $k == $page ){
 
-              // yeah a static page is found
+              // a static page is found
               $page_found = true;
               break; // break here
           }
@@ -799,10 +798,10 @@ class program {
 			$SALE = array();
 
 			// GET class new_sales
-			require_once dirname(__DIR__).'/'.ADMIN_FOLDER.'/PHP/new_sales.php';
+			require_once ROOT.'/'.ADMIN_FOLDER.'/PHP/new_sales.php';
 
 			// GET class archives
-			require_once dirname(__DIR__).'/'.ADMIN_FOLDER.'/PHP/archives.php';
+			require_once ROOT.'/'.ADMIN_FOLDER.'/PHP/archives.php';
 
 			// GET ONE ARCHIVE - return false if not found
 			$ARCH = archives::get_ONE_archive( $sale_id );

@@ -12,6 +12,8 @@
  * $.ask_to_suppr_static_page( page_id );
  * $.suppr_static_page( page_id );
  * $.modify_static_page( page_id );
+ * $.show_infos_static_page();
+ * $.show_form_static_page();
  *
  */
 
@@ -309,6 +311,40 @@ $.extend({
 	/**
 	 * $.modify_static_page( page_id );
 	 */
+
+
+
+	/**
+	 * $.show_infos_static_page();
+	 *
+	 * show/hide infos about static page management
+	 */
+	show_infos_static_page : function(){
+
+			$('#info_text').toggle('hide');
+	},
+	/**
+	 * $.show_infos_static_page();
+	 */
+
+
+
+	/**
+	 * $.show_form_static_page();
+	 *
+	 * @return {void}  show/hide the form to add a static page
+	 */
+	show_form_static_page : function(){
+
+			$('#form_new_page').toggle('hide');
+
+			$('#open_form_new_page')
+			.toggleClass(['fa-hand-point-right', 'fa-hand-point-down']);
+	},
+	/**
+	 * $.show_form_static_page();
+	 */
+
 
 
 

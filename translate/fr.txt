@@ -753,6 +753,10 @@ see_next_products
 ***
 	Voir les produits suivants
 ***
+your_research
+***
+	Votre recherche
+***
 empty_search
 ***
 	Aucun élément ne correspond à votre recherche

@@ -1,0 +1,232 @@
+/* HERE CSS FOR CARD FORM AND USER INFOS FORM */
+/* CSS USER PAYMENT FORM */
+.payment h2 {
+  margin: 10px 0 30px !important;
+}
+.payment h3 {
+  margin: 36px 0 16px !important;
+}
+.purchase {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  color: var(--color-text);
+}
+.purch_cont_img_title {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+}
+.purchase img {
+  max-width: 200px;
+  max-height: 200px;
+}
+.purchase_title {
+  margin: 0 auto 0 30px;
+}
+.block_quant_unit_price {
+  text-align: right;
+  min-width: 200px;
+  font-size: var(--text);
+  font-weight: 400;
+}
+.payment .suppr_item {
+  margin-right: 12px;
+  background: var(--dark-gray) !important;
+  color: var(--white-dim) !important;
+}
+.payment .quant_button_group {
+  border-radius: 4px;
+  margin: 5px 0 5px auto;
+  display: inline-block;
+  background: var(--blue);
+  color: var(--text-button);
+}
+.suppr_item,
+.quant_button_sub,
+.quant_button_add,
+.render_quant {
+  width: 38px;
+  height: 35px;
+  padding: 0 12px !important;
+  text-align: center;
+}
+.payment .quant_button_sub {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border: 1px solid var(--dark-blue);
+  background: var(--blue);
+}
+.payment .quant_button_add {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border: 1px solid var(--dark-blue);
+  background: var(--blue);
+}
+.payment .render_quant {
+  font-size: var(--text-large);
+  margin: 0;
+  font-weight: bold;
+}
+.payment .block_total_cart {
+  text-align: right;
+}
+input[name="post_code"],
+input[name="post_code_sup"] {
+  width: 120px !important;
+}
+/* media querys 768px */
+@media all and (max-width: 768px) {
+  .purchase {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .purch_cont_img_title {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: center;
+  }
+  .purchase img {
+    max-width: 98%;
+    max-height: inherit;
+  }
+  .purchase_title {
+    margin: 5px 5px 10px 5px;
+    font-size: var(--text-large);
+    font-weight: 400;
+  }
+  .block_quant_unit_price {
+    margin: 10px 5px 5px 5px;
+    font-size: var(--text);
+    text-align: left;
+  }
+  .block_total_cart {
+    text-align: left;
+  }
+}
+/* end media querys 768px */
+/* end CSS USER PAYMENT FORM */
+/*
+
+
+-------------------------------------------
+
+
+*/
+/* CSS FOR CARD FORM */
+/* CSS CARD MODAL CONTAINER */
+#card_form {
+  padding: 16px;
+  background: var(--white-dim);
+  border-radius: 4px;
+  font-size: var(--text);
+  color: var(--color-text);
+  margin-bottom: 100px;
+}
+#card_form section.form_card_header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+#card_form img#logo_shop {
+  margin: 0 26px 0 0;
+  max-height: 75px;
+  width: auto;
+  vertical-align: top;
+}
+#card_form h2 {
+  color: var(--color-title-shop);
+  font-weight: 400;
+  font-size: 28px;
+}
+#card_container {
+  width: 360px;
+  margin: 0 auto;
+}
+#buttons_card {
+  width: 375px;
+  margin: -8px auto 8px auto;
+}
+button#submit_card, button#destroy_card {
+  font-size: var(--text-large);
+}
+#card-number-element,
+#card-expiry-element,
+#card-cvc-element {
+  user-select: text;
+  padding: 6px 10px;
+  border: 2px solid #b1b1b1;
+  margin: 0 0 10px 0;
+  border-radius: 4px;
+  background: #dedede;
+  outline: none !important;
+  font-size: 20px;
+  text-align: center;
+}
+#card_number {
+  width: 270px;
+  max-width: 270px;
+}
+#card_exp {
+  width: 170px;
+  max-width: 170px;
+}
+#card_cvc {
+  width: 100px;
+  max-width: 100px;
+}
+#card-number-element {
+  width: 270px;
+}
+#card-expiry-element {
+  width: 120px;
+}
+#card-cvc-element {
+  width: 96px;
+}
+#card_form label {
+  margin: 0 0 5px 2px;
+  display: inline-block;
+  max-width: 170px;
+  overflow-wrap: anywhere;
+}
+#card-errors {
+  color: orangered;
+  margin: 26px 0 0px;
+  display: none;
+}
+.separator {
+  height: 2px;
+  background: var(--back-button);
+  margin: 16px auto;
+  width: 98%;
+}
+#render_pay_work {
+  display: none;
+}
+i.fa-lock {
+  color: var(--text-success);
+}
+/* @media querys 768px  */
+@media all and (max-width: 768px) {
+  #card_container {
+    width: 92%;
+  }
+  #buttons_card {
+    width: 92%;
+  }
+}
+/* end  CSS FOR CARD FORM */

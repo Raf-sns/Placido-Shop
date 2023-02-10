@@ -231,10 +231,6 @@ $.extend({
     }
 
 
-    var hei =  $('#center_page').height();
-    hei = Number( hei.toFixed(0) );
-    // console.log(hei);
-
     var class_anim_1;
     var class_anim_2;
     var duration;
@@ -269,29 +265,24 @@ $.extend({
 
     }
 
-    // $('#center_page').css('height', hei+'px');
 
-    // anim start
+    // animation start
     $.animateCss(div, class_anim_1, duration, function(){
 
 
-        // fill the VUE
+        // fill the view
         $(div).empty().mustache(template, $.o );
 
 
         // anim 2
         $.animateCss(div, class_anim_2, duration, function(){
 
-            // if( scroll_to_top == true ){
-						//
-            //     $.scroll_top();
-            // }
 
-            $.lazy_load_imgs(); // here lazy load
+						// here lazy load
+            $.lazy_load_imgs();
 
 						$.put_aria_hiddens();
 
-            // $.swipe_imgs();
 
         });
         // end anim 2
