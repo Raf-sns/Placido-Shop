@@ -13,5 +13,5 @@ Thanks for your help, best regards.
 Raf - Developer of Placido-Shop
 
 Contact: mailto:contact@sns.pm
-Expires: 2022-12-31T22:59:00.000Z
+Expires: 2023-12-31T22:59:00.000Z
 Preferred-Languages: en, fr
