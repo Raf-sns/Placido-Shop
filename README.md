@@ -47,7 +47,7 @@ brand image or your technical needs.
 
 **Installation guide, documentation, see : [How to install Placido-Shop](https://placido-shop.com/Documentation/How-to-install-Placido-Shop).**
 
-**You can *[try Placido-Shop online](https://demo.placido-shop.com/)* ** in demonstration mode: 
+**You can [try Placido-Shop online](https://demo.placido-shop.com/)** in demonstration mode: 
 
 The recording functions have been disabled but you can preview the software.
 
