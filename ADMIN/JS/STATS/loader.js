@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello  2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact : https://sns.pm
  *
  * script name: loader.js
  *
@@ -17,7 +16,6 @@
  */
 
 
-
 	/**
 	 * load_stats_scripts();
 	 *
@@ -25,7 +23,6 @@
 	 * @return {api}  Placido-Stats API
 	 */
 	function load_stats_scripts() {
-
 
 
 		if( typeof Chart != 'undefined' ){
@@ -84,12 +81,7 @@
 		Promise.allSettled(Proms_array)
 		.then( (Results) => {
 
-				// console.log(Results)
-
 				Results.forEach((one_result) => {
-
-						// console.log(one_result)
-						// one_result : { status: 'fulfilled', value: a_value }
 
 						// test if each are fulfilled
 						if( one_result.status == 'fulfilled' ){

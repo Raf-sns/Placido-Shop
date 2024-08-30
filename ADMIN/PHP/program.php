@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	program.php
  *
@@ -13,12 +12,7 @@
  * program::login();
  * program::log_out();
  * program::get_by_money( $user_id );
- *
- * program::set_token( $user_id, $mail, $mdp );
- * program::clean_tokens( $user_id );
- * program::verify_token( $token );
  * private program::get_Token_Placido();
- * program::verify_admin( $user_id );
  * program::renew_password( $context );
  *
  */
@@ -71,9 +65,12 @@ class program {
         'mail' => $USER['mail'], // used in settings
         'token_max_time' => TOKEN_TIME,
         'token' =>
-          program::set_token( $USER['id'], $USER['mail'], $USER['passw'] ),
+          token::set_token( $USER['id'], $USER['mail'], $USER['passw'] ),
 				'token_Placido' => program::get_Token_Placido()
       );
+
+      // GET LIST ADMINS
+      $ARR['admins_list'] = settings::get_admins_list( $USER['mail'] );
 
 
       // GET SHOP
@@ -157,11 +154,6 @@ class program {
 			$ARR['stats']['token_api'] = stats::check_token_api();
 
 
-      // destroy sessions
-      $count = $_SESSION['count'];
-      unset( $_SESSION['count'], $count );
-
-
       // RETURN RESULT TAB ADMIN
       $tab = array('success'  => true, 'response' => $ARR );
 			// var_dump( json_encode($tab, JSON_NUMERIC_CHECK) );
@@ -183,20 +175,8 @@ class program {
    */
   public static function get_login_page(){
 
-			if( session_status() === PHP_SESSION_NONE ){
 
-          session_start([
-            'name' => 'PLACIDO-SHOP',
-            'use_strict_mode' => true,
-            'cookie_samesite' => 'Strict',
-            'cookie_lifetime' => 180, // 1 min. by default - no effect if server config
-            'gc_maxlifetime' => 180, // depend on php_ini ?
-            'cookie_secure' => true,
-            'cookie_httponly' => true
-          ]);
-      }
-
-      // JUST PASS TITLE PAGE
+      // ARRAY FOR MUSTACHE FOR DISPLAY LOGIN PAGE
       $ARR = array(
         'title_page' => tr::$TR['your_management'],
         'year' => date('Y'),
@@ -206,7 +186,9 @@ class program {
 
       // TEST COOKIE - retrieve mail user
       if( isset($_COOKIE['PL-GEST-mail']) ){
-        $ARR['mail'] = api::api_crypt( $_COOKIE['PL-GEST-mail'], 'decr' );
+
+					$ARR['mail'] =
+						api::api_crypt( $_COOKIE['PL-GEST-mail'], 'decr' );
       }
 
       // MUSTACHE
@@ -243,12 +225,12 @@ class program {
 			if( session_status() === PHP_SESSION_NONE ){
 
           session_start([
-            'name' => 'PLACIDO-SHOP',
+            'name' => 'PLACIDO-SHOP-BACKEND',
             'use_strict_mode' => true,
             'cookie_samesite' => 'Strict',
-            'cookie_lifetime' => 60*60*12, // 12 h
-						//- no effect if server config
-            'gc_maxlifetime' => 60*60*12, // depend on php_ini ?
+            'cookie_lifetime' => 60*60*12, // 12 hours
+						//- no effect if server config - depend on php_ini ?
+            'gc_maxlifetime' => 60*60*12, // 12 hours
             'cookie_secure' => true,
             'cookie_httponly' => true
           ]);
@@ -306,7 +288,7 @@ class program {
       // VERIFY  E-MAIL
       if( !empty($_POST['mail']) ){
 
-          $mail = trim(htmlspecialchars($_POST['mail']));
+          $mail = (string) trim(htmlspecialchars($_POST['mail']));
 
           // IF MAX LENGTH
           if( iconv_strlen($mail) > 80 ){
@@ -339,7 +321,7 @@ class program {
       }
       else {
 
-          $mdp = trim(htmlspecialchars($_POST['mdp']));
+          $mdp = (string) trim(htmlspecialchars($_POST['mdp']));
 
       }
       // END PASSWORD
@@ -392,14 +374,16 @@ class program {
 
       // LOGIN OK - CONTINUE
 
+      // destroy session
+      unset($_SESSION['count']);
+
       // store mail in coockie
-      /* expire in 150 days */
       setcookie(
 				"PL-GEST-mail", // name
 				api::api_crypt( $mail, 'encr' ), // value
-				time()+60*60*24*150, // expires + 150 days
-				'/'.ADMIN_FOLDER.'/', // path auth
-				'/', // domain ?
+				time()+TOKEN_TIME, // expires + TOKEN_TIME
+				'/'.ADMIN_FOLDER.'/', // allowed folder path
+				HOST, // domain
 				true, // secure
 				true // http only
 		 );
@@ -424,14 +408,11 @@ class program {
   public static function log_out(){
 
 
-			// token recived
-			$token = (string) trim(htmlspecialchars($_POST['token']));
-
-			// VERIFY user
-			$user_id = program::verify_token( $token );
+			// GET USER ID
+			$user_id = token::verify_token();
 
 			// delete token
-			$log_out = program::clean_tokens( $user_id );
+			$log_out = token::clean_tokens( $user_id );
 
 			$tab = array( 'success' => true );
       echo json_encode($tab);
@@ -466,140 +447,6 @@ class program {
   }
   /**
    * program::get_by_money( $user_id );
-   */
-
-
-//////////////////////////////////////////////////////
-///////////////   TOKEN   ////////////////////////////
-//////////////////////////////////////////////////////
-
-  // validity of token : 2 hours
-  // const TOKEN_TIME = (3600 * 2);
-
-  /**
-   * program::set_token( $user_id, $mail, $mdp );
-   *
-   * @param  {int} $user_id description
-   * @param  {str} $mail    description
-   * @param  {str} $mdp     description
-   * @return {str}          encrypted token
-   */
-  public static function set_token( $user_id, $mail, $mdp ){
-
-      // BEFORE CLEAN TOKENS
-      program::clean_tokens($user_id);
-
-      $token = password_hash($mail.$mdp.microtime(true), PASSWORD_DEFAULT);
-
-			$stamp = time();
-
-			// REC token
-      $ARR_pdo = array(
-				'user_id' => $user_id,
-				'token' => $token,
-				'stamp' => $stamp
-			);
-
-			$sql = 'INSERT INTO tokens (user_id, token, stamp)
-			VALUES (:user_id, :token, :stamp)';
-      $response = false;
-      $last_id = false;
-
-      $INSERT_TOKEN = db::server($ARR_pdo, $sql, $response, $last_id);
-
-      if( boolval($INSERT_TOKEN) == true ){
-
-          return $token;
-      }
-      else{
-
-          $tab = array( 'error' => tr::$TR['error_create_token'] );
-          echo json_encode($tab);
-          exit;
-      }
-
-  }
-  /**
-   * END program::set_token( $user_id, $mail, $mdp );
-   */
-
-
-
-  /**
-   * program::clean_tokens( $user_id );
-   *
-   * @param  {int} $user_id
-   */
-  public static function clean_tokens( $user_id ){
-
-      $time = time();
-      // compare time now - token time duration in sec.
-      $stamp_limit = $time - TOKEN_TIME;
-
-      // CLEAN old tokens OR token alerady created
-      $ARR_pdo = array( 'stamp_limit' => $stamp_limit, 'user_id' => $user_id );
-      $sql = 'DELETE FROM tokens WHERE stamp < :stamp_limit OR user_id=:user_id';
-      $response = false;
-      $last_id = false;
-
-      $CLEAN_TOKENS = db::server($ARR_pdo, $sql, $response, $last_id);
-
-  }
-  /**
-   * END program::clean_tokens( $user_id );
-   */
-
-
-
-  /**
-   * program::verify_token( $token );
-   *
-   * @param  {str} $token    encrypted string
-   * @return {int}           user id
-   */
-  public static function verify_token( $token ){
-
-
-      $token = trim(htmlspecialchars($token));
-
-      $time = time();
-      // validity token time
-      $stamp_limit = $time - TOKEN_TIME;
-
-      // FETCH by token
-      $ARR_pdo = array('token' => $token);
-      $sql = 'SELECT * FROM tokens WHERE token=:token';
-      $response = 'one';
-      $last_id = false;
-
-      $ONE_TOKEN = db::server($ARR_pdo, $sql, $response, $last_id);
-      // var_dump($ONE_TOKEN);
-
-      // ERROR 1 TOKEN NOT FOUND
-      if( boolval($ONE_TOKEN) == false ){
-
-          $tab = array('error' =>
-          "Mmmm ! You shouldn't be here.
-          <br>Please, don't hack me !
-          <br>Security report : <contact@sns.pm>");
-          echo json_encode($tab);
-          exit;
-      }
-
-      // ERROR 2 TOKEN TIME TOO OLD
-      if( $ONE_TOKEN['stamp'] < $stamp_limit ){
-
-          $tab = array( 'error' => tr::$TR['token_expired'] );
-          echo json_encode($tab);
-          exit;
-      }
-
-      // IF IT'S OK -> RETURN user_id
-      return (int) $ONE_TOKEN['user_id'];
-
-  }
-  /**
-   * END program::verify_token( $token );
    */
 
 
@@ -640,30 +487,6 @@ class program {
 	 */
 
 
-
-  /**
-   * program::verify_admin( $user_id ); - obso ?
-   *
-   * @param  {int} $user_id
-   * @return {bool}
-   */
-  public static function verify_admin( $user_id ){
-
-      $ARR_pdo = array('id' => $user_id);
-      $sql = 'SELECT sup_adm FROM admins WHERE id=:id';
-      $response = 'one';
-      $last_id = false;
-
-      $SUPER_ADMIN = db::server($ARR_pdo, $sql, $response, $last_id);
-
-      return boolval($SUPER_ADMIN['sup_adm']);
-
-  }
-  /**
-   * program::verify_admin( $user_id );
-   */
-
-
 /////////////////////////////////////////////////////////
 ///////////////   PASSWORD   ////////////////////////////
 /////////////////////////////////////////////////////////
@@ -677,132 +500,16 @@ class program {
    */
   public static function renew_password( $context ){
 
-
-      // EMPTY
-      if( empty($_POST['mail']) ){
-          $tab = array('error' => tr::$TR['empty_mail'] );
-          echo json_encode($tab);
-          exit;
-      }
-
-      // VERIFY  E-MAIL
-      if( !empty($_POST['mail']) ){
-
-          $mail = (string) trim(htmlspecialchars($_POST['mail']));
-
-          // IF MAX LENGTH
-          if( iconv_strlen($mail) > 100 ){
-
-              $tab = array('error' => tr::$TR['too_large_mail'] );
-              echo json_encode($tab);
-              exit;
-          }
-
-          // IF BAD FORMAT
-          if( filter_var($mail, FILTER_VALIDATE_EMAIL ) == false ){
-
-              $tab = array('error' => tr::$TR['bad_mail'] );
-              echo json_encode($tab);
-              exit;
-          }
-
-      }
-      // END E-MAIL
-
-
-      // IN CONTEXT OF ADMIN CHANGE HIS LOGS
-			// - NOT AUTOMATIC RENEW PASSORD - exit on context
-      if( $context == 'change_admin_pass' ){
-
-
-          // VERIFY TOKEN
-          $token = trim(htmlspecialchars($_POST['token']));
-          // NOW IS THE TRUE ID
-          $id = program::verify_token($token);
-
-
-          // VERIFY MAIL !!! -> for not set an another user by his e-mail
-          // fetch old mail user BY ID - already verified by token
-          $ARR_pdo = array('id' => $id );
-          $sql = 'SELECT mail FROM admins WHERE id=:id';
-          $response = 'one';
-          $last_id = false;
-          $OLD_MAIL_USER = db::server($ARR_pdo, $sql, $response, $last_id);
-
-          // VERIFY MAIL ASKED
-          $mail_asked = tools::fetch_mail_admin($mail);
-
-          // IF MAIL != OLD_MAIL AND if $mail_asked == true (still exist) -> error
-          if( $mail != $OLD_MAIL_USER['mail'] && boolval($mail_asked) == true ){
-
-                $tab = array('error' => tr::$TR['unable_renew_password'] );
-                echo json_encode($tab);
-                exit;
-          }
-          // END VERIFY MAIL !!!
-
-
-          // VERIFY PASSWORD
-          // EMPTY PASS
-          if( trim($_POST['passw']) == "" || empty($_POST['passw']) ){
-
-              $tab = array('error' => tr::$TR['password_required'] );
-              echo json_encode($tab);
-              exit;
-          }
-          else {
-
-              $passw = trim(htmlspecialchars($_POST['passw']));
-
-          }
-          // END PASS
-
-          $new_pass =  password_hash($mail.$passw, PASSWORD_DEFAULT);
-
-          // RECORD NEW PASS IN DB
-          $ARR_pdo = array( 'passw' => $new_pass, 'mail' => $mail, 'id' => $id );
-
-          $sql = 'UPDATE admins SET passw=:passw, mail=:mail WHERE id=:id';
-
-          $response = false;
-          $last_id = false;
-
-          $UPDATE = db::server($ARR_pdo, $sql, $response, $last_id);
-
-          // IF OK - EXIT HERE !
-          if( boolval($UPDATE) == true ){
-
-              // RE-INIT COOCKIE
-				      /* expire in 150 days */
-				      setcookie(
-								"PL-GEST-mail", // name
-								api::api_crypt( $mail, 'encr' ), // value
-								time()+60*60*24*150, // expires 150 days
-								'/'.ADMIN_FOLDER.'/', // path auth
-								'/', // domain ?
-								true, // secure
-								true // http only
-						 );
-
-              $tab = array('success' => tr::$TR['update_success']);
-              echo json_encode($tab);
-              exit;
-
-          }
-
-
-      }
-      // END IN CONTEXT OF ADMIN
-
+      // set session
 			if( session_status() === PHP_SESSION_NONE ){
 
           session_start([
-            'name' => 'PLACIDO-SHOP',
+            'name' => 'PLACIDO-SHOP-BACKEND',
             'use_strict_mode' => true,
             'cookie_samesite' => 'Strict',
             'cookie_lifetime' => 60*60*12, // 12 hours
-						//- no effect if server config
-            'gc_maxlifetime' => 60*60*12, // depend on php_ini ?
+						//- no effect if server config - depend on php_ini ?
+            'gc_maxlifetime' => 60*60*12, // 12 hours
             'cookie_secure' => true,
             'cookie_httponly' => true
           ]);
@@ -817,12 +524,10 @@ class program {
 
 			// if max count - exit !
       if( isset($_SESSION['count']) && $_SESSION['count'] < 1
-			||	ip_rejected::test_ip_rejected() == false ){
-
+			    || ip_rejected::test_ip_rejected() == false ){
 
 					// get ip user -> if false : already rejected
 					$ip_user = ip_rejected::test_ip_rejected();
-
 
 					if( $_SESSION['count'] == 0 ){
 
@@ -845,6 +550,47 @@ class program {
       // TEST ERROR LOGINS COUNT
 
 
+      // EMPTY
+      if( empty($_POST['mail']) ){
+
+          // decrement session
+          $_SESSION['count']--;
+
+          $tab = array('error' => tr::$TR['empty_mail'] );
+          echo json_encode($tab);
+          exit;
+      }
+
+      // VERIFY  E-MAIL
+      if( !empty($_POST['mail']) ){
+
+          $mail = (string) trim(htmlspecialchars($_POST['mail']));
+
+          // IF MAX LENGTH
+          if( iconv_strlen($mail) > 100 ){
+
+              // decrement session
+              $_SESSION['count']--;
+
+              $tab = array('error' => tr::$TR['too_large_mail'] );
+              echo json_encode($tab);
+              exit;
+          }
+
+          // IF BAD FORMAT
+          if( filter_var($mail, FILTER_VALIDATE_EMAIL ) == false ){
+
+              // decrement session
+              $_SESSION['count']--;
+
+              $tab = array('error' => tr::$TR['bad_mail'] );
+              echo json_encode($tab);
+              exit;
+          }
+
+      }
+      // END E-MAIL
+
 
       // FECTH USER - FOR AUTOMATIC RENEW ['mail'] IS THE ONLY INFORMATION PASSED ...
       // $USER
@@ -856,116 +602,119 @@ class program {
       $USER = db::server($ARR_pdo, $sql, $response, $last_id);
 
       // IF USER IS FOUND && MAIL==MAIL
-      if( count($USER) != 0 && $USER['mail'] == $mail ){
+      if( boolval($USER) == true
+          && $USER['mail'] == $mail ){
 
-            // RENEW PASSORD
-            // set a hard wordpass
-            $alpha = array('A','B','C','D','E','F','G',
-            			   'H','I','J','K','L','M','N','O','P',
-            			   'Q','R','S','T','U','V','W',
-            			   'X','Y','Z',
-            			   '0','1','2','3','4','5',
-            			   '6','7','8','9');
+          // RENEW PASSORD
+          // set a hard wordpass
+          $alpha = array('A','B','C','D','E','F','G',
+          			   'H','I','J','K','L','M','N','O','P',
+          			   'Q','R','S','T','U','V','W',
+          			   'X','Y','Z',
+          			   '0','1','2','3','4','5',
+          			   '6','7','8','9');
 
-            shuffle($alpha);
+          shuffle($alpha);
 
-            $pass_randed = '';
+          $pass_randed = '';
 
-            // get 8 pairs of letters/numbers
-            for( $i=0; $i < 16; $i++ ){
+          // get 8 pairs of letters/numbers
+          for( $i=0; $i < 16; $i++ ){
 
-              	$pass_randed .= $alpha[$i];
+            	$pass_randed .= $alpha[$i];
 
-              	if( $i%2 != 0 && $i != 15 ){
-              		$pass_randed .= '_';
-              	}
+            	if( $i%2 != 0 && $i != 15 ){
+            		$pass_randed .= '_';
+            	}
 
-            }
+          }
 
-            // echo $pass_randed; // get str. like : PL_H9_A1_SX_CR_O7_KU_MV
+          // echo $pass_randed; // get str. like : PL_H9_A1_SX_CR_O7_KU_MV
 
-            $new_pass = password_hash($mail.$pass_randed, PASSWORD_DEFAULT);
+          $new_pass = password_hash($mail.$pass_randed, PASSWORD_DEFAULT);
 
-            // RECORD NEW PASS IN DB
-            $ARR_pdo = array(
-							'passw' => $new_pass,
-							'mail' => $mail,
-							'id' => $USER['id']
-						);
+          // RECORD NEW PASS IN DB
+          $ARR_pdo = array(
+						'passw' => $new_pass,
+						'mail' => $mail,
+						'id' => $USER['id']
+					);
 
-            $sql = 'UPDATE admins SET passw=:passw WHERE mail=:mail AND id=:id';
+          $sql = 'UPDATE admins SET passw=:passw WHERE mail=:mail AND id=:id';
 
-            $response = false;
-            $last_id = false;
+          $response = false;
+          $last_id = false;
 
-            $REC = db::server($ARR_pdo, $sql, $response, $last_id);
+          $REC = db::server($ARR_pdo, $sql, $response, $last_id);
 
-            // IF ERROR
-            if( boolval($REC) != true ){
+          // IF ERROR
+          if( boolval($REC) != true ){
 
-                $tab = array('error' => tr::$TR['unable_renew_password'] );
-                echo json_encode($tab);
-                exit;
+              // DECREM SESSION COUNT
+  						$_SESSION['count']--;
 
-            }
+              $tab = array('error' => tr::$TR['unable_renew_password'] );
+              echo json_encode($tab);
+              exit;
 
-						// DECREM SESSION COUNT
-						$_SESSION['count']--;
+          }
 
-            // SEND NEW PASSWORD BY MAIL
-            $subject = tr::$TR['your_password'];
-            $message = tr::$TR['forgot_password_info'].'&nbsp; <b>'.$pass_randed.'</b>
-            <br />';
+          // SEND NEW PASSWORD BY MAIL
+          $subject = tr::$TR['your_password'];
+          $message = tr::$TR['forgot_password_info'].'&nbsp; <b>'.$pass_randed.'</b>
+          <br />';
 
-						// date mail
-			      $Date_Now = new DateTime('now', new DateTimeZone(TIMEZONE) );
-			      $date_mail = tools::format_date_locale( $Date_Now, 'FULL' , 'SHORT', null );
+					// date mail
+		      $Date_Now = new DateTime('now', new DateTimeZone(TIMEZONE) );
+		      $date_mail = tools::format_date_locale( $Date_Now, 'FULL' , 'SHORT', null );
 
-			      // array for mustache
-			      $ARR = array(
-							'subject' => $subject,
-				      'message' => $message,
-				      'shop_title' => WEBSITE_TITLE,
-				      'shop_img' => LOGO,
-				      'shop_mail' => false,
-				      'date' => ucfirst($date_mail),
-				      'host' => HOST,
-							'year' => date('Y'),
-				      'lang' => LANG_FRONT, // here use lang front
-				      'tr' => tr::$TR
-						);
+		      // array for mustache
+		      $ARR = array(
+						'subject' => $subject,
+			      'message' => $message,
+			      'shop_title' => WEBSITE_TITLE,
+			      'shop_img' => LOGO,
+			      'shop_mail' => false,
+			      'date' => ucfirst($date_mail),
+			      'host' => HOST,
+						'year' => date('Y'),
+			      'lang' => LANG_FRONT, // here use lang front
+			      'tr' => tr::$TR
+					);
 
-			      // MUSTACHE FOR TEMPLATE
-			      $options =  array('extension' => '.html');
-			      // // template loader
-			      $m = new Mustache_Engine(array(
-			          'loader' => new Mustache_Loader_FilesystemLoader(dirname(__DIR__) . '/templates', $options)
-			      ));
+		      // MUSTACHE FOR TEMPLATE
+		      $options =  array('extension' => '.html');
 
-			      // ask template -> mail_confirm_traitement.html
-			      $templ = 'just_comm_mail';
+          // template loader
+		      $m = new Mustache_Engine(array(
+		          'loader' => new Mustache_Loader_FilesystemLoader(dirname(__DIR__) . '/templates', $options)
+		      ));
 
-			      // loads template from `templates/$templ.html` and renders it with the ARRAY.
-			      $html_message = $m->render($templ, $ARR);
+		      // ask template -> mail_confirm_traitement.html
+		      $templ = 'just_comm_mail';
 
-			      // SEND MAIL by PHP MAILER
-            if( mail::send_mail_by_PHPMailer($mail, $subject, $html_message) == true ){
+		      // loads template from `templates/$templ.html` and renders it with the ARRAY.
+		      $html_message = $m->render($templ, $ARR);
 
-                $tab = array('success' => tr::$TR['forgot_password_success'] );
-                echo json_encode($tab);
-                exit;
-            }
-            else{
+		      // SEND MAIL by PHP MAILER
+          if( mail::send_mail_by_PHPMailer($mail, $subject, $html_message) == true ){
 
-                // ERROR MAIL
-                $tab = array('error' => tr::$TR['error_mail_server'] );
-                echo json_encode($tab);
-                exit;
-            }
+              $tab = array('success' => tr::$TR['forgot_password_success'] );
+              echo json_encode($tab);
+              exit;
+          }
+          else{
 
-      } // USER NOT FOUND
+              // ERROR MAIL
+              $tab = array('error' => tr::$TR['error_mail_server'] );
+              echo json_encode($tab);
+              exit;
+          }
+
+      }
       else{
 
+          // USER NOT FOUND
 					$_SESSION['count']--;
 
           $tab = array('error' => tr::$TR['error_private_admin_page'] );

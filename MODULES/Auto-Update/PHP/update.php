@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP MODULE AUTO-UPDATE
- * Copyright © Raphaël Castello , 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP MODULE AUTO-UPDATE
+ * Copyright © Raphaël Castello, 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	update.php
  *
@@ -16,8 +15,11 @@
  * private function excluded_from_update();
  * private function update_api();
  * private function delete_folder_update( $path );
+ * private function empty_the_folder( $path );
  * public function download_lang();
  * public function add_or_remove_file();
+ * public function zip_api();
+ * public function delete_backup();
  *
  * -> init. new Object + small switch controller
  * IN BOTTOM of script
@@ -30,19 +32,21 @@
 	require_once $_SERVER['DOCUMENT_ROOT'].'/API/tr.php';
 	require_once $_SERVER['DOCUMENT_ROOT'].'/API/api.php';
 
-	// define constants for API from api.json for all scripts include back-end
+	// init. constants for API/constants.php
 	api::init_settings(); // this define ROOT const
 
 	// add translations
 	api::init_modules( 'back' );
 
-	// require program for verify token
-	require_once ROOT.'/'.ADMIN_FOLDER.'/PHP/program.php';
-	// require tools for translate date update
+	// require token.php for verify token
+	require_once ROOT.'/'.ADMIN_FOLDER.'/PHP/token.php';
+	// require tools.php for translate date update
 	require_once ROOT.'/'.ADMIN_FOLDER.'/PHP/tools.php';
+	// require settings class for update VERSION and LAST_UPDATE
+	require_once ROOT.'/'.ADMIN_FOLDER.'/PHP/settings.php';
 
 
-class update {
+class update extends config {
 
 
 	// constructor of class update
@@ -52,6 +56,7 @@ class update {
 
 					$posts = $_POST;
 
+					// contruct object properties with $_POST datas key->value
 					foreach( $posts as $key => $value ){
 
 							$_key =
@@ -79,8 +84,8 @@ class update {
 	public function fetch_source(){
 
 
-		  // VERIFY USER
-      program::verify_token($this->token);
+		  // VERIFY TOKEN
+      token::verify_token();
 
 			// FIRST clean UPLOAD_TEMP directory
 			$this->delete_folder_update();
@@ -153,8 +158,8 @@ class update {
 					curl_close( $cURL );
 
 					// error
-					$ARR = array( 'error' => $t->getMessage() );
-					echo json_encode( $ARR, JSON_FORCE_OBJECT);
+					$Arr = array( 'error' => $t->getMessage() );
+					echo json_encode( $Arr, JSON_FORCE_OBJECT);
 					exit;
 			}
 
@@ -163,8 +168,8 @@ class update {
 			if( empty($response) ){
 
 					// error
-					$ARR = array( 'error' => tr::$TR['update_not_available'] );
-					echo json_encode( $ARR, JSON_FORCE_OBJECT);
+					$Arr = array( 'error' => tr::$TR['update_not_available'] );
+					echo json_encode( $Arr, JSON_FORCE_OBJECT);
 					exit;
 			}
 
@@ -204,13 +209,14 @@ class update {
 			$temp_path =
 				$_SERVER['DOCUMENT_ROOT'].'/MODULES/Auto-Update/UPLOAD_TEMP';
 
+
 			// create FOLDER in not exist -> api not compress empty folders ...
-			if( !file_exists($temp_path) ){
+			if( !is_dir($temp_path) ){
 
 					// CREATE FOLDER UPLOAD_TEMP
-					mkdir($temp_path, 0700);
+					mkdir( $temp_path, 0700 );
 			}
-			
+
 			// previous name of zip file -> will be 1.9.99.zip
 			// 1.9.99 -> version number asked by client
 			$achive_zip_path =  $temp_path.'/'.$this->version.'.zip';
@@ -237,7 +243,7 @@ class update {
 					// CREATE FOLDER TO UNCOMPRESS SOURCES
 					$unzip_folder = $temp_path.'/UNZIP';
 
-					// CREATE FOLDER
+					// CREATE FOLDER UNZIP
 					mkdir($unzip_folder, 0700);
 
 					// CREATE ZIP MANAGER - for unzip archive app
@@ -246,23 +252,24 @@ class update {
 					// open zip file and extract it
 					if( $zip->open( $achive_zip_path ) === TRUE ){
 
-						  $zip->extractTo( $unzip_folder );
+							// WELL EXTRACTED
+						  if(  $zip->extractTo($unzip_folder)  ){
 
-						  $zip->close();
-							// END EXTRACTION ZIP
+									// END EXTRACTION ZIP
+									$zip->close();
+
+									// UPDATE REPLACE ALL FILES by UPDATED
+									$this->update_api();
+
+									// DELETE 'UNZIP' folder + .zip update file
+									$this->delete_folder_update();
 
 
-							// UPDATE REPLACE ALL FILES by UPDATED
-							$this->update_api();
-
-							// DELETE 'UNZIP' folder + .zip update file
-							$this->delete_folder_update();
-
-
-							// success
-							$ARR = array( 'success' => true );
-							echo json_encode( $ARR, JSON_FORCE_OBJECT);
-							exit;
+									// success
+									$ARR = array( 'success' => true );
+									echo json_encode( $ARR, JSON_FORCE_OBJECT);
+									exit;
+							}
 
 					}
 					else{
@@ -345,31 +352,47 @@ class update {
 	private function update_api(){
 
 
+			// DELETE Stripe folder before renew
+			$this->empty_the_folder( ROOT.'/PHP/LIBS/Stripe' );
+
+
 			// GET list of user excluded files for update
 			// as ARRAY
 			$Exclude_list = $this->excluded_from_update();
-
 
 			// get absolute path to unzip folder
 			$unzip_folder = ROOT.'/MODULES/Auto-Update/UPLOAD_TEMP/UNZIP';
 
 			// iterator
+			// $mode ::SELF_FIRST -> list parents first
+			$mode = RecursiveIteratorIterator::SELF_FIRST;
+
 			$it =
-				new RecursiveIteratorIterator(new RecursiveDirectoryIterator($unzip_folder,
-										RecursiveDirectoryIterator::SKIP_DOTS));
+				new RecursiveIteratorIterator(
+					new RecursiveDirectoryIterator(
+						$unzip_folder, RecursiveDirectoryIterator::SKIP_DOTS
+					), $mode
+				);
 
 
 			// loop iterator
 			foreach( $it as $file ){
 
+
 					// replace admin folder name in paths
-					$path_source =
-						str_replace('ADMIN', ADMIN_FOLDER, $it->getSubPathName() );
+					if( preg_match( '/(ADMIN)/', $it->getSubPathName() ) === true ){
+
+							$path_source =
+								str_replace('ADMIN', ADMIN_FOLDER, $it->getSubPathName() );
+					}
+					else{
+							$path_source = $it->getSubPathName();
+					}
 
 					// NOT update excluded files or folders
 					foreach( $Exclude_list as $k => $v) {
 
-							if( preg_match( '/^('.preg_quote($v,'/').')/', $path_source ) == true ){
+							if( preg_match( '/^('.preg_quote($v,'/').')/', $path_source ) === true ){
 
 									// break this loop and parent loop
 									continue 2;
@@ -377,41 +400,77 @@ class update {
 					}
 					// end loop list
 
-					// UPDATE Placido-Shop !
-					rename( $unzip_folder.'/'.$path_source, ROOT.'/'.$path_source );
-
 					// for Test
 					// echo $path_source."\r\n";
+					// echo $it->getSubPath()."\r\n";
+
+					// create folder if not exist
+					if( is_dir( $unzip_folder.'/'.$it->getSubPath() )
+					&& !is_dir( ROOT.'/'.$it->getSubPath() )  ){
+
+							mkdir(ROOT.'/'.$it->getSubPath(), 0700, true);
+					}
+
+					// copy : The first parameter cannot be a directory
+					// then continue ...
+					if( is_dir( $unzip_folder.'/'.$path_source ) ){
+
+							continue;
+					}
+
+					// UPDATE Placido-Shop !
+					copy( $unzip_folder.'/'.$path_source, ROOT.'/'.$path_source );
 
 			}
 			// end  loop iterator
 
 
+			// Manage OLD API/api.json
+			if( file_exists(ROOT.'/API/api.json')
+					&& ( VERSION == '2.1.6' || VERSION == '2.2.3' )  ){
+
+
+					// UPDATE new API/constants.php with old api.json for VERION <= 2.2.3
+					$old_json_file = file_get_contents( ROOT.'/API/api.json' );
+
+					// decode old api.json in array
+					$OLD_json = json_decode($old_json_file, true);
+
+					// require settings class for update VERSION and LAST_UPDATE
+					require_once ROOT.'/'.ADMIN_FOLDER.'/PHP/settings.php';
+
+					// UPDATE new constants from old old api.json
+					settings::set_settings_api( $OLD_json );
+
+					// delete old json - for sup. versions
+					// unlink( ROOT.'/API/api.json' );
+
+					// require tools class for update VERSION and LAST_UPDATE
+					require_once ROOT.'/'.ADMIN_FOLDER.'/PHP/tools.php';
+
+					// manage robots.txt
+					tools::record_robots_txt( HOST, $context='allow' );
+			}
+
+
 			// UPDATE VERSION API
-			// fetch settings
-			$get_json_settings = file_get_contents(ROOT.'/API/api.json');
-
-			// replace version number in API/api.json
-			$pattern = '/^("VERSION": "(.*)")$/';
-
-			$new_version = preg_replace('/"VERSION": "(.*)"/',
-				'"VERSION": "'.$this->version.'"', $get_json_settings);
-
 
 			// UPDATE last updated date
 			// make date object
-			$New_update_date = new DateTime('now', new DateTimeZone(TIMEZONE) );
+			$New_update_date = new DateTime( 'now', new DateTimeZone(TIMEZONE) );
 
 			// format date in locale
 			$last_update =
 				tools::format_date_locale( $New_update_date, 'FULL' , 'SHORT', null );
 
-			// replace last updated date in api.json
-			$new_version_updated = preg_replace('/"LAST_UPDATE": "(.*)"/',
-				'"LAST_UPDATE": "'.$last_update.'"', $new_version);
+			// array update version + last update
+			$ARR_to_replace = array(
+				'VERSION' => $this->version,
+				'LAST_UPDATE' => $last_update
+			);
 
-			// write new api.json with version + last updated date
-			file_put_contents( ROOT.'/API/api.json', $new_version_updated );
+			// write new datas in API/PHP/constants.php
+			settings::set_settings_api( $ARR_to_replace );
 
 	}
 	/**
@@ -453,6 +512,37 @@ class update {
 
 
 	/**
+	 * private function empty_the_folder( $path );
+	 *
+	 * @param  {string} $path DELETE EVERYTHING IN THE FOLDER BY PATH
+	 * @return {void}
+	 *
+	 */
+	private function empty_the_folder( $path ){
+
+
+		  // is dir ?
+			if( !is_dir($path) ){	return; }
+
+			$it =
+			new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS);
+	    $it =
+			new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+
+			// delete content of folder
+			foreach($it as $file) {
+	        if( $file->isDir() ){ rmdir( $file->getPathname() ); }
+	        else{ unlink( $file->getPathname() ); }
+	    }
+
+	}
+	/**
+	 * private function empty_the_folder( $path );
+	 */
+
+
+
+	/**
 	 * public function download_lang();
 	 *
 	 * @return {type}  description
@@ -461,7 +551,7 @@ class update {
 
 
 		  // VERIFY USER
-      program::verify_token($this->token);
+      token::verify_token();
 
 			// prepare an array for processing header
 			// will contain :
@@ -574,6 +664,12 @@ class update {
 			// MAKE A TEMP FOLDER
 			$temp_path = ROOT.'/MODULES/Auto-Update/UPLOAD_TEMP';
 
+			// create folder if not exist
+			if( !is_dir($temp_path) ){
+
+					mkdir( $temp_path, 0700 );
+			}
+
 			// A TEMP NAME - $this->lang eg. "en.txt"
 			$temp_file = $temp_path.'/'.$this->lang;
 
@@ -593,7 +689,7 @@ class update {
 						exit;
 			}
 
-			// set flie path for 'back'  or 'front'
+			// set file path for 'back'  or 'front'
 			$file_path = ( $this->for_interface == 'front' )
 			? ROOT.'/translate/'.$this->lang
 			: ROOT.'/'.ADMIN_FOLDER.'/translate/'.$this->lang;
@@ -638,8 +734,8 @@ class update {
 	public function add_or_remove_file(){
 
 
-			// VERIFY USER
-      program::verify_token($this->token);
+			// VERIFY TOKEN
+      token::verify_token();
 
 			// empty file name
 			if( empty($this->file) ){
@@ -778,6 +874,182 @@ class update {
 	 */
 
 
+
+	/**
+	 * public function zip_api();
+	 *
+	 * @return {json}	ZIP THE ENTIRE API + database
+	 */
+	public function zip_api(){
+
+
+			// VERIFY TOKEN
+      token::verify_token();
+
+			try{
+
+					$ZIP_FOLDER = 'MODULES/Auto-Update/ZIP_API';
+
+					// create folder ZIP_API
+					if( !is_dir( ROOT.'/'.$ZIP_FOLDER )  ){
+
+							// works with chmod to 0711
+							mkdir( ROOT.'/'.$ZIP_FOLDER, 0711 );
+					}
+
+					// DIRECTORY TO COMPRESS
+					$dir_to_zip = ROOT;
+
+					$micro_time = microtime(true)*10000;
+
+					// name of .zip file ex: Backup_koko.com_2024_07_30-1212121212.zip
+					$zip_name = 'Backup'.'_'.HOST.'_'.date('Y_m_d').'-'.$micro_time.'.zip';
+
+					// real path to FUTURE ARCHIVE
+					$zip_dest = ROOT.'/'.$ZIP_FOLDER.'/'.$zip_name;
+
+					// browse API files and folders and compress them
+
+					// create zip archive - the .zip file will be automatically created
+					$zip = new ZipArchive;
+					$zip->open( $zip_dest,
+						ZipArchive::CREATE | ZipArchive::OVERWRITE );
+
+					// iterator
+					$it =
+						new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir_to_zip,
+												RecursiveDirectoryIterator::SKIP_DOTS));
+
+					// loop iterator
+					foreach( $it as $file ){
+
+
+							// ignore ZIP_API folder
+							if( preg_match('/(ZIP_API)/', $it->getSubPath()) == true ){
+
+									continue;
+							}
+
+							// no need to check if is a DIRECTORY with $it->getSubPathName()
+							// DIRECTORIES are added automatically
+							$zip->addFile( $it->getPathname(),  $it->getSubPathName() );
+
+					}
+					// end  loop
+
+
+					// BACKUP DATABASE
+
+					// create folder to save database
+					if( !is_dir( ROOT.'/'.$ZIP_FOLDER.'/DB' )  ){
+
+							// works with chmod to 0711
+							mkdir( ROOT.'/'.$ZIP_FOLDER.'/DB', 0711 );
+					}
+
+					// directory where record backup database
+					$dir_db = ROOT.'/'.$ZIP_FOLDER.'/DB/';
+
+					// execute
+					$output = null;
+					$retval = null;
+					$command =
+					'MYSQL_PWD='.self::DB_PASSWORD.' mysqldump -u '.self::DB_USER.' --single-transaction --skip-lock-tables '.self::DB_NAME.' -h '.self::DB_HOST.' > '.$dir_db.self::DB_NAME.'.sql';
+					exec( $command, $output, $retval );
+
+					// add database backup to .zip files
+					$zip->addFile( $dir_db.self::DB_NAME.'.sql',  self::DB_NAME.'.sql' );
+					// END BACKUP DATABASE
+
+
+					$zip->close();
+					// END ZIP API
+
+
+					// delete database file
+					unlink( $dir_db.self::DB_NAME.'.sql' );
+
+					// modify permissions of .zip file
+					chmod( ROOT.'/'.$ZIP_FOLDER.'/'.$zip_name, 0755 );
+
+					// get zip url
+					$zip_url = 'https://'.HOST.'/'.$ZIP_FOLDER.'/'.$zip_name;
+
+					// success
+					$Arr = array(
+						'success' => tr::$TR['back_up_success'],
+					 	'zip_url' => $zip_url,
+						'zip_name' => $zip_name
+					);
+
+					echo json_encode( $Arr );
+					exit;
+
+
+			// end try
+			}
+			catch(Throwable $t){
+
+					// error
+					$Arr = array( 'error' => $t->getMessage() );
+					echo json_encode( $Arr );
+					exit;
+			}
+
+	}
+	/**
+	 * public function zip_api();
+	 */
+
+
+
+	/**
+	 * public function delete_backup();
+	 *
+	 * @return {json} delete the backup  folder entirely
+	 */
+	public function delete_backup(){
+
+
+	 		// VERIFY USER
+	    token::verify_token();
+
+			try{
+
+					// backup folder path
+					$backup_folder = ROOT.'/MODULES/Auto-Update/ZIP_API';
+
+					// empty the folder
+					$this->empty_the_folder( $backup_folder );
+
+					// remove the folder
+					rmdir( $backup_folder );
+
+			}
+			catch(Throwable $t){
+
+					// error
+					$Arr = array( 'error' => $t->getMessage() );
+					echo json_encode( $Arr );
+					exit;
+			}
+
+
+			// all ok - return success
+			$Arr = array(
+				'success' => tr::$TR['back_up_deleted']
+			);
+
+			echo json_encode( $Arr );
+			exit;
+	}
+	/**
+	 * public function delete_backup();
+	 */
+
+
+
+
 }
 ///////////////////////
 // end class update  //
@@ -792,21 +1064,29 @@ class update {
 	// switch command
 	switch( $Update->command ){
 
-		case 'install_version':
-			$Update->fetch_source();
-		break;
+			case 'install_version':
+				$Update->fetch_source();
+			break;
 
-		case 'download_lang':
-			$Update->download_lang();
-		break;
+			case 'download_lang':
+				$Update->download_lang();
+			break;
 
-		case 'add_remove_to_update':
-			$Update->add_or_remove_file();
-		break;
+			case 'add_remove_to_update':
+				$Update->add_or_remove_file();
+			break;
 
-		default:
-			exit('Upload Module : Bad command ...');
-		break;
+			case 'backup':
+				$Update->zip_api();
+			break;
+
+			case 'delete_backup':
+				$Update->delete_backup();
+			break;
+
+			default:
+				exit('Upload Module : Bad command ...');
+			break;
 	}
 	// end switch command
 

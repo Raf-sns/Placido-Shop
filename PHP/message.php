@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - FRONT
- * Copyright © Raphaël Castello  2019-2021
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - FRONT
+ * Copyright © Raphaël Castello, 2019-2021
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	message.php
  *
@@ -20,11 +19,11 @@ class message {
   /**
    * message::record_message( $mail, $name, $message,	$date_mess );
    *
-   * @param  {type} $mail      description
-   * @param  {type} $name      description
-   * @param  {type} $message   description
-   * @param  {type} $date_mess description
-   * @return {type}            description
+   * @param  {string} $mail
+   * @param  {string} $name
+   * @param  {string} $message
+   * @param  {string} $date_mess
+   * @return {void}   record a message from frontend into the database
    */
   public static function record_message( $mail, $name, $message,	$date_mess ){
 

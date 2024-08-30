@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello - 2019, 2021, 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	cats.php
  *
@@ -270,9 +269,9 @@ class cats {
    */
   public static function insert_cat() {
 
-      // verify token
-      $token = trim(htmlspecialchars($_POST['token']));
-      program::verify_token( $token );
+
+      // VERIFY token
+	    token::verify_token();
 
       $title = trim($_POST['title']);
 
@@ -318,8 +317,9 @@ class cats {
 
       // INSERT CATEGORY IN SITEMAP
       $url = tools::suppr_accents($title, $encoding='utf-8');
-      // $for = 'article' / 'category'
-      tools::add_to_sitemap( (int) $INSERT_CAT, $url, 'category' );
+
+      // add caterogry to sitemap.xml
+      sitemap::add_to_sitemap( (int) $INSERT_CAT, $url, 'category' );
 
       // SUCCESS
       $CATS = cats::get_cats(); // get fresh datas
@@ -351,9 +351,8 @@ class cats {
   public static function update_cat() {
 
 
-      // verify token
-      $token = trim(htmlspecialchars($_POST['token']));
-      program::verify_token( $token );
+      // VERIFY token
+	    token::verify_token();
 
       // context for suppress OR update
       $context = trim(htmlspecialchars($_POST['context']));
@@ -403,32 +402,32 @@ class cats {
       // MODIFICATION CASE
       if( $context == 'modif' ){
 
+          // manage sitemap
+          // delete old entry to sitemap
+          sitemap::suppr_to_sitemap( $cat_id );
 
-        // update one cat
-        $ARR_pdo = array( 'cat_id' => $cat_id, 'title' => $title );
-        $sql = 'UPDATE categories SET title=:title WHERE cat_id=:cat_id';
-        $response = false;
-        $last_id = false;
+          // INSERT CATEGORY IN SITEMAP
+          $url = tools::suppr_accents($title, $encoding='utf-8');
 
-        // return array br => num. str
-        $UPDATE_CAT = db::server($ARR_pdo, $sql, $response, $last_id);
+          // add new entry to sitemap
+          sitemap::add_to_sitemap( $cat_id, $url, 'category' );
 
-        if( boolval($UPDATE_CAT) == false ){
+          // update one cat
+          $ARR_pdo = array( 'cat_id' => $cat_id, 'title' => $title );
+          $sql = 'UPDATE categories SET title=:title WHERE cat_id=:cat_id';
+          $response = false;
+          $last_id = false;
 
-          // json return error
-          $tab = array('error' => tr::$TR['error_update_cat']);
-          echo json_encode($tab, JSON_FORCE_OBJECT);
-          exit;
-        }
+          // return array br => num. str
+          $UPDATE_CAT = db::server($ARR_pdo, $sql, $response, $last_id);
 
-        // manage sitemap
-        // delete old to sitemap
-        tools::suppr_to_sitemap( $cat_id );
+          if( boolval($UPDATE_CAT) == false ){
 
-        // INSERT CATEGORY IN SITEMAP
-        $url = tools::suppr_accents($title, $encoding='utf-8');
-        // $for = 'article' / 'category'
-        tools::add_to_sitemap( $cat_id, $url, 'category' );
+              // json return error
+              $tab = array('error' => tr::$TR['error_update_cat']);
+              echo json_encode($tab, JSON_FORCE_OBJECT);
+              exit;
+          }
 
       }
       // END MODIFICATION CASE
@@ -436,6 +435,9 @@ class cats {
 
       // SUPPRESSION CASE
       if( $context == 'suppr' ){
+
+          // delete to sitemap
+          sitemap::suppr_to_sitemap( $cat_id );
 
           // get cat borns
           $ARR_pdo = array( 'cat_id' => $cat_id );
@@ -447,10 +449,10 @@ class cats {
           // error
           if( boolval($CAT) == false ){
 
-            // json return error
-            $tab = array('error' => tr::$TR['error_update_cat']);
-            echo json_encode($tab, JSON_FORCE_OBJECT);
-            exit;
+              // json return error
+              $tab = array('error' => tr::$TR['error_update_cat']);
+              echo json_encode($tab, JSON_FORCE_OBJECT);
+              exit;
           }
 
 
@@ -483,10 +485,10 @@ class cats {
 
           if( boolval($DELETE_CAT) == false ){
 
-            // json return error
-            $tab = array('error' => tr::$TR['error_update_cat']);
-            echo json_encode($tab, JSON_FORCE_OBJECT);
-            exit;
+              // json return error
+              $tab = array('error' => tr::$TR['error_update_cat']);
+              echo json_encode($tab, JSON_FORCE_OBJECT);
+              exit;
           }
 
 
@@ -505,15 +507,11 @@ class cats {
 
           if( boolval($UPDATE_ALL_CATS) == false ){
 
-            // json return error
-            $tab = array('error' => tr::$TR['error_update_cat']);
-            echo json_encode($tab, JSON_FORCE_OBJECT);
-            exit;
+              // json return error
+              $tab = array('error' => tr::$TR['error_update_cat']);
+              echo json_encode($tab, JSON_FORCE_OBJECT);
+              exit;
           }
-
-
-          // delete to sitemap
-          tools::suppr_to_sitemap( $cat_id );
 
       }
       // SUPPRESSION CASE
@@ -538,13 +536,10 @@ class cats {
    * @return {array}  cats_html + cats
    */
 
-//////////////////////////////////////////////////////
-//////////////////////////////////////////////////////
+
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 ///////  INTERVAL DATA TREE REPRESENTATION  //////////
-//////////////////////////////////////////////////////
-//////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 
@@ -560,15 +555,13 @@ class cats {
     public static function move_cat() {
 
 
-        // verify token
-        $token = trim(htmlspecialchars($_POST['token']));
-        program::verify_token( $token );
+        // VERIFY token
+  	    token::verify_token();
 
         $ARR_cats = json_decode($_POST['ARR_cats'], true);
 
         // var_dump( $ARR_cats["cat_cible"] );
         // exit;
-
 
         // categorie moved
         $CAT = $ARR_cats['cat'];

@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - FRONT
- * Copyright © Raphaël Castello  2021-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - FRONT
+ * Copyright © Raphaël Castello, 2021-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	shop.php
  *
@@ -15,6 +14,7 @@
  * shop::get_all_categories();
  * shop::get_imgs_product( $IMGS, $prod_id );
  * shop::get_cat_product( $CATS, $cat_id );
+ * shop::get_one_product( $id );
  *
  */
 
@@ -27,7 +27,7 @@ class shop {
    */
   public static function get_shop(){
 
-      // MAKE (only) 4 SERVER REQUESTS
+      // MAKE (only) 4 DATABASE REQUESTS
 
       // GET ALL PRODUCTS ON LINE
       // * @return {} id
@@ -103,7 +103,8 @@ class shop {
           $PRODUCTS[$k_prod]['cat_br'] = $CAT_product['br'];
 
           // Partial text product
-					// - SHORT_TEXT from api.json ( this value must be setted see "settings" )
+					// - const SHORT_TEXT from constants.php
+          // ( this value must be setted see "settings" )
           $PRODUCTS[$k_prod]['short_text'] =
           	tools::cut_string( SHORT_TEXT , $PRODUCTS[$k_prod]['text']);
 
@@ -274,6 +275,9 @@ class shop {
       $SHOP['by_money'] = boolval( $SHOP['by_money'] );
       $SHOP['mode'] = boolval( $SHOP['mode'] );
 
+      // break lines for footer shop address
+      $SHOP['addr'] = nl2br($SHOP['addr']);
+
       return $SHOP;
 
   }
@@ -286,17 +290,17 @@ class shop {
   /**
    * shop::get_all_products_on_line();
    * @return {array}  array of all products online
-   * @return {} id
-   * @return {} cat_id
-   * @return {} title
-   * @return {} text
-   * @return {} ref
-   * @return {} quant
-   * @return {} price
-   * @return {} tax
-   * @return {} date_prod
-   * @return {} url
-   * @return {} on_line
+   * @return {int}    id
+   * @return {int}    cat_id
+   * @return {string} title
+   * @return {string} text
+   * @return {string} ref
+   * @return {int}    quant
+   * @return {int}    price
+   * @return {float}  tax
+   * @return {int}    date_prod
+   * @return {string} url
+   * @return {bool}   on_line
    */
   public static function get_all_products_on_line(){
 
@@ -380,23 +384,6 @@ class shop {
             $ALL_CATS[$k]['url'] = tools::suppr_accents($v['title'], $encoding='utf-8');
           }
 
-					// - WHY ?
-          // SORT ALPHABETICALLY CATEGORIES
-          // function cmp($a, $b){
-					//
-          //     if( $a['title'] == $b['title'] ){
-          //         return 0;
-          //     }
-          //     // strcmp — Comparaison binaire de chaînes Retourne < 0 si str1 est inférieure à str2
-          //     return strcmp(
-          //       strtolower(tools::suppr_accents($a['title'], $encoding='utf-8'))  ,
-          //       strtolower(tools::suppr_accents($b['title'], $encoding='utf-8'))
-          //     );
-					//
-          // }
-          // // SORT ALPHABETICALLY CATEGORIES
-          // usort($ALL_CATS, "cmp");
-
           return $ALL_CATS;
       }
 
@@ -474,9 +461,33 @@ class shop {
 
 
 
+  /**
+   * shop::get_one_product( $id );
+   *
+   * @param  {int} $id  prod id
+   * @return {array}    one product
+   */
+  public static function get_one_product($id){
+
+      // GET ONE PRODUCT
+      $ARR_pdo = array( 'id' => (int) $id, 'order_img' => 0 );
+      $sql = 'SELECT * FROM products_imgs
+      INNER JOIN products
+      ON products_imgs.parent_id = products.id
+      WHERE products_imgs.parent_id=:id AND products_imgs.order_img=:order_img';
+      $response = 'one';
+      $last_id = false;
+
+      return db::server($ARR_pdo, $sql, $response, $last_id);
+
+  }
+  /**
+   * shop::get_one_product( $id );
+   */
+
+
+
+
 }
 // END CLASS shop::
-
-
-
 ?>

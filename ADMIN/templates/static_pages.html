@@ -144,8 +144,16 @@
 
 			<p>
 				<!-- btn modify   -->
-				<button onclick="$.ask_to_modif_static_page( {{page_id}}, '{{page_title}}' );"
+				<button onclick="$.ask_to_modif_static_page({{page_id}},'{{page_title}}');"
 					id="modify_static-{{page_id}}"
+					role="button"
+					class="btn card blue round margin-right">
+					<i class="fas fa-sign-in-alt"></i>&nbsp;
+					{{tr.record}}
+				</button>
+
+        <!-- btn edit   -->
+				<button onclick="$.edit_static_page(event,{{page_id}});"
 					role="button"
 					class="btn card blue round margin-right">
 					<i class="fa-cogs fas"></i>&nbsp;
@@ -153,7 +161,7 @@
 				</button>
 
 				<!-- btn suppr -->
-				<button onclick="$.ask_to_suppr_static_page( {{page_id}}, '{{page_title}}' );"
+				<button onclick="$.ask_to_suppr_static_page({{page_id}},'{{page_title}}');"
 					id="suppr_static-{{page_id}}"
 					role="button"
 					class="btn card dark-gray round">
@@ -165,5 +173,71 @@
 
 		</div>
 	{{/static_pages}}
+
+</script>
+
+
+<!-- page editor -->
+<script id="page_editor" type="text/html">
+
+  <div class="pad_product_form">
+
+    <!-- buttons -->
+    <div id="btns_edit_static_pages">
+      <!-- btn infos -->
+      <button onclick="$.show_infos_static_page();"
+      role="button"
+      class="btn card orange round">
+      <i class="fas fa-info-circle"></i>&nbsp;
+      {{tr.read_this}}
+      </button>
+
+      <!-- btn return -->
+      <button onclick="$.open_vue('static_pages', '');"
+        role="button"
+        class="btn card gray round">
+        <i class="fa-reply fas"></i>&nbsp;
+        {{tr.abort}}
+      </button>
+
+      <!-- btn record -->
+      <button onclick="$.save_edit_static_page(event,{{STATIC_page.page_id}});"
+        role="button"
+        class="btn card blue round">
+        <i class="fas fa-sign-in-alt"></i>&nbsp;
+        {{tr.record}}
+      </button>
+
+		</div>
+
+    <!-- block hidden infos -->
+    <div id="info_text" class="hide large">
+
+      <p class="text-orange">
+        {{{tr.edit_static_info_1}}}
+      </p>
+      <p>
+        {{{tr.edit_static_info_2}}}
+      </p>
+      <p>
+        {{{tr.edit_static_info_3}}}
+      </p>
+
+    </div>
+    <!-- end block hidden infos -->
+
+    <!-- link to the page -->
+    <p class="large">
+      {{tr.link_to_page}}&nbsp;:
+      <a href="https://{{host}}/{{STATIC_page.page_url}}.html"
+      title="{{STATIC_page.page_title}}"
+      target="_blank"
+      class="underline">https://{{host}}/{{STATIC_page.page_url}}.html</a>
+    </p>
+
+    <!-- hook for trumbowyg editor -->
+    <div id="page_editor"></div>
+
+  </div>
 
 </script>

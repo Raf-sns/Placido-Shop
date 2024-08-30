@@ -1,25 +1,23 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	tools.php
  *
  * tools::suppr_accents($str, $encoding='utf-8');
  * tools::format_in_url( $str );
- * tools::fetch_mail_admin($mail); // used by renew password
+ * tools::inline_string( $str );
  * tools::img_recorder( $dir_path, $ARR_sizes );
- * tools::add_to_sitemap($id, $title, $for);
- * tools::suppr_to_sitemap($id);
  * tools::parse_line_breaks($text);
  * tools::intl_number( $num );
  * tools::intl_currency( $price );
  * tools::format_date_locale( $date, $dateType , $timeType, $pattern );
  * tools::get_locales_settings();
  * tools::get_timezones();
+ * tools::record_robots_txt( $host, $context );
  *
  */
 
@@ -110,38 +108,25 @@ class tools {
 
 
 
-  /**
-   * tools::fetch_mail_admin($mail);
-   *
-   * @param  {str}        $mail
-   * @return {bool}       search if this mail is the admin's mail
-   */
-  public static function fetch_mail_admin($mail){
+	/**
+	 * tools::inline_string( $str );
+	 * remove all line breaks and +2 spaces
+	 *
+	 * @param  {string} $str 	string to inline
+	 * @return {string}      	return string without any line break
+	 */
+	public static function inline_string( $str ){
 
+			$regex = '/\s+/';
+			$replacement = " "; // !! ONLY "" ARE INTERPRETED
+			$str = preg_replace($regex, $replacement, $str);
 
-      $ARR_pdo = array( 'mail' => $mail );
-      $sql = 'SELECT mail FROM admins WHERE mail=:mail';
-      $response = 'one';
-      $last_id = false; // RETURN last id
+			return $str;
 
-      //  ->  fetch
-      $FETCH_MAIL_ADMIN = db::server($ARR_pdo, $sql, $response, $last_id);
-
-      // TEST RETURNED VALUE
-      if( boolval($FETCH_MAIL_ADMIN) == true AND $FETCH_MAIL_ADMIN['mail'] == $mail ){
-
-        return true;
-      }
-      else{
-
-        return false;
-      }
-
-
-  }
-  /**
-   * tools::fetch_mail_admin($mail);
-   */
+	}
+	/**
+	 * END tools::inline_string( $str );
+	 */
 
 
 
@@ -357,120 +342,6 @@ class tools {
   /**
    * END tools::img_recorder( $dir_path, $ARR_sizes );
    *
-   */
-
-
-
-  /**
-   * tools::add_to_sitemap( $id, $url, $for );
-   *
-   * @param  {int} 		$id     product_id OR category_id
-   * @param  {string} $url    in url string
-   * @param  {string} $for    'article' / 'category' / 'static_page'
-   * @return {void}         	add article, category, static_page on sitemap
-   */
-  public static function add_to_sitemap( $id, $url, $for ){
-
-
-      $id = (int) $id;
-
-      // set it here for translate before
-      // $for = ($for == 'article') ? 'article' : 'category';
-
-			switch ($for) {
-
-					case 'article':
-						$location = HOST.'/'.$url.'/article/'.$id;
-					break;
-
-					case 'category':
-						$location = HOST.'/'.$url.'/category/'.$id;
-					break;
-
-					case 'static_page':
-						$location = HOST.'/'.$url;
-					break;
-
-					default:
-						return;
-					break;
-			}
-			// end switch
-
-      $dom = new DOMDocument;
-      $path = ROOT.'/sitemap.xml';
-      $dom->formatOutput = true;
-      $dom->preserveWhiteSpace = false;
-      $dom->load($path);
-
-      // FORMAT THE TITLE IN CORRECT URL
-      // $location : www.myWebSite.com/my-product-is-something/article/42
-      // or www.myWebSite.com/my-category-is-something/category/42
-
-
-      // make a date
-      $da = new DateTime('now', new DateTimeZone(TIMEZONE) );
-      $date = $da->format('Y-m-d');
-
-      $ns = 'http://www.sitemaps.org/schemas/sitemap/0.9';
-
-      $urlElt = $dom->createElementNS($ns, 'url');
-      $urlElt->appendChild($dom->createElementNS($ns, 'loc', $location));
-      $urlElt->appendChild($dom->createElementNS($ns, 'lastmod', $date ));
-      $urlElt->appendChild($dom->createElementNS($ns, 'changefreq', 'weekly'));
-      $urlElt->appendChild($dom->createElementNS($ns, 'priority', '1.0'));
-
-      $dom->documentElement->appendChild($urlElt);
-
-      $dom->save($path);
-
-  }
-  /**
-   *   END tools::add_to_sitemap( $id, $url, $for );
-   */
-
-
-
-  /**
-   * tools::suppr_to_sitemap($id);
-   *
-   * @param  {int} 	$id   product_id, category_id, url of a static page
-   * @return {void}     	delete an item on the sitemap
-   */
-  public static function suppr_to_sitemap($id){
-
-
-      $path = ROOT.'/sitemap.xml';
-
-      // suppression d'une page avec l'id
-      $dom = new DOMDocument;
-      $dom->formatOutput = true;
-      $dom->preserveWhiteSpace = false;
-      $dom->load($path);
-
-      $ns = 'http://www.sitemaps.org/schemas/sitemap/0.9';
-
-      foreach( $dom->getElementsByTagNameNS($ns, 'loc') as $locNode ){
-
-          $nodeValue = $locNode->nodeValue;
-					// id is always in last on url, url of static pages too
-          $locID = explode('/', $nodeValue );
-          $ID = end($locID);
-
-					// id must be an int. or a string url
-					// for suppress refs to static pages
-          if( $ID == $id ){
-
-              $dom->documentElement->removeChild($locNode->parentNode);
-              break;
-          }
-      }
-
-      $dom->save($path);
-
-  }
-  /**
-   * tools::suppr_to_sitemap($id);
    */
 
 
@@ -735,6 +606,54 @@ class tools {
 	}
 	/**
 	 * tools::get_timezones();
+	 */
+
+
+
+	/**
+	 * tools::record_robots_txt( $host, $context );
+	 *
+	 * @param  {string} $host  		host name e.g.: my-website.com
+	 * @param  {mixed}  $context  null or (string) 'allow'
+	 * @return {void}   return error message on error
+	 */
+	public static function record_robots_txt( $host, $context ){
+
+			// cast in string
+			$host = (string) $host;
+
+			// for all bots
+			$content = "User-Agent: *"."\r\n";
+			
+			// if $context == 'allow'
+			if( $context ){
+
+					// allow all
+					$content .= "Allow: /"."\r\n";
+
+					// specify sitemap file
+					$content .= "Sitemap: https://".$host."/sitemap.xml";
+			}
+			else{
+
+					// disallow all
+					$content .= "Disallow: /"."\r\n";
+			}
+
+			// encode on utf-8
+			$content_encoded = mb_convert_encoding($content, "UTF-8");
+
+			try {
+
+					file_put_contents( ROOT.'/robots.txt', $content_encoded, LOCK_EX );
+			}
+			catch (Exception $e) {
+
+					echo $e->getMessage();
+			}
+	}
+	/**
+	 * tools::record_robots_txt( $host );
 	 */
 
 

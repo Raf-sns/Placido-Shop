@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - FRONT
+ * PLACIDO-SHOP FRAMEWORK - API
  * Copyright © Raphaël Castello, 2022-2023
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	files_to_compress.php
  *
@@ -39,7 +38,7 @@
 	const JS_RESSOURCES_TO_COMPRESS = [
 
 			// APPS TO COMPRESS
-			// - first put libraries in top of bundle
+			// - first put libraries in top of the list
 			ROOT.'/JS/apps/jquery.min.js',
 			ROOT.'/JS/apps/mustache.min.js',
 			ROOT.'/JS/apps/jquery.mustache.js',

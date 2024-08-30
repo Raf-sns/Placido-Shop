@@ -103,6 +103,45 @@ warning_update_2
 ***
 	- Sauvegardez tous les fichiers et les dossiers de votre application actuelle.
 ***
+backup_process_in_progress
+***
+	Le processus de sauvegarde est en cours,
+	<br>
+	cela peut prendre plusieurs minutes,
+	<br>
+	veuillez patienter s.v.p.
+***
+backup_the_app
+***
+	Sauvegarder l'application
+***
+back_up_success
+***
+	Votre application a bien été compressée.
+	<br>
+	Veuillez l'enregistrer dans un endroit sûr.
+***
+back_up_info
+***
+	Lorsque vous cliquerez sur le bouton "Sauvegarder", 
+	tous les dossiers et les fichiers de votre application
+	ainsi que votre base de données seront
+	compressés dans un fichier .zip puis vous serez invité à le télécharger.
+***
+back_up_warning
+***
+	Veuillez supprimer la sauvegarde après l'avoir téléchargée,
+	<br>
+	ceci est très important pour la sécurité de vos données&nbsp;!
+***
+delete_backup
+***
+	Supprimer la sauvegarde
+***
+back_up_deleted
+***
+	La sauvegarde a été bien supprimée
+***
 not_upload_files
 ***
 	Ne pas mettre à jour les fichiers ou les dossiers suivants&nbsp;:

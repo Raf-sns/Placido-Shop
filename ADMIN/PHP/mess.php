@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello - 2020, 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2020-2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	 mess.php
  *
@@ -99,12 +98,11 @@ class mess {
   public static function get_fresh_messages(){
 
 
-			// id of last messge in view
-			$last_id = (int) trim(htmlspecialchars($_POST['last_id']));
+      // VERIFY token
+      token::verify_token();
 
-      // verify token
-      $token = trim(htmlspecialchars($_POST['token']));
-      program::verify_token($token);
+      // id of last messge in view
+			$last_id = (int) trim(htmlspecialchars($_POST['last_id']));
 
       // GET NEW MESSAGES
       $ARR_pdo = array( 'last_id' => $last_id );
@@ -168,11 +166,10 @@ class mess {
   public static function update_mess_readed(){
 
 
-      $mess_id = (int) trim(htmlspecialchars($_POST['mess_id']));
+      // VERIFY token
+      token::verify_token();
 
-      // verify token
-      $token = trim(htmlspecialchars($_POST['token']));
-      program::verify_token($token);
+      $mess_id = (int) trim(htmlspecialchars($_POST['mess_id']));
 
       // UPDATE TO READED
       $ARR_pdo = array( 'readed' => 1, 'mess_id' => $mess_id );
@@ -212,11 +209,10 @@ class mess {
   public static function suppr_message(){
 
 
-    $mess_id = (int) trim(htmlspecialchars($_POST['mess_id']));
+    // VERIFY token
+    token::verify_token();
 
-    // verify token
-    $token = trim(htmlspecialchars($_POST['token']));
-    program::verify_token($token);
+    $mess_id = (int) trim(htmlspecialchars($_POST['mess_id']));
 
     // UPDATE TO READED
     $ARR_pdo = array( 'mess_id' => $mess_id );

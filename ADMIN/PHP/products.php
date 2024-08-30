@@ -1,15 +1,14 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	 products.php
- * Class for manage products
  *
- * process::get_products( $ARR_CAT );
+ * products::get_online_products();
+ * products::get_products( $ARR_CAT );
  * products::get_all_imgs_products();
  * products::get_imgs_for_one_product( $prod_id );
  * products::get_pagina( $ARR['products'] );
@@ -24,6 +23,32 @@
  */
 
  class products {
+
+
+  /**
+   * products::get_online_products();
+   *
+   * @return {array}  return array of online products
+   * !ONLY id + url - used by sitemap.php
+   */
+  public static function get_online_products(){
+
+
+      // prepa. db::server()
+      $ARR_pdo = array( 'on_line' => 1 );
+      $sql = 'SELECT id, url FROM products
+        WHERE on_line=:on_line ORDER BY date_prod DESC';
+      $response = 'all';
+      $last_id = false;
+
+      // get all products of an user
+      $ONLINE_PRODS = db::server($ARR_pdo, $sql, $response, $last_id);
+
+      return $ONLINE_PRODS;
+  }
+  /**
+   * products::get_online_products();
+   */
 
 
 
@@ -335,9 +360,8 @@
   public static function rec_prod(){
 
 
-    //  VERIFY TOKEN
-    $token = trim(htmlspecialchars($_POST['token']));
-    program::verify_token($token);
+    // VERIFY token
+    token::verify_token();
 
 
     // no image uploaded
@@ -552,7 +576,7 @@
         products::delete_all_imgs_product( $id );
 
 
-				// RECORD PRODUCT
+				// MODIFY PRODUCT
 				// array for PDO
 				$ARR_pdo = array(
 					'id' => $id,
@@ -581,11 +605,13 @@
 
         $last_id = false;   // i. FALSE IT IS AN UPDATE
 
-
-    } // IN FIRST RECORD PRODUCT CASE
+    }
     else{
 
-          $id = 0; // for pdo next
+          // RECORD PRODUCT CASE
+
+          // for pdo next
+          $id = 0;
 
 					// On off line in first record
 					// -> i. product already recorded have a direct server management on/off line
@@ -650,7 +676,7 @@
         // modif context
         // delete to sitemap -> was recorded after
         $prod_id = $id;
-        tools::suppr_to_sitemap($id);
+        sitemap::suppr_to_sitemap($prod_id);
 
 				// evently if sucess
 				$tab['success'] = tr::$TR['update_success'];
@@ -667,7 +693,7 @@
 
 
     // RECORD IN SITEMAP
-    tools::add_to_sitemap( $prod_id, $url, 'article' );
+    sitemap::add_to_sitemap( $prod_id, $url, 'product' );
 
 
     // 2 - RECORD IMAGES
@@ -728,7 +754,6 @@
             exit;
         }
 
-
     }
     // END FOREACH ARRAY NAMES RETURNED - ADD TO DB
 
@@ -762,9 +787,8 @@
   public static function suppr_prod(){
 
 
-      //  VERIFY TOKEN
-      $token = trim(htmlspecialchars($_POST['token']));
-      program::verify_token($token);
+      // VERIFY token
+      token::verify_token();
 
       $prod_id =  trim(htmlspecialchars($_POST['prod_id']));
 
@@ -809,8 +833,8 @@
 			}
 
 
-      // delete to sitemap -> was recorded after
-      tools::suppr_to_sitemap( $prod_id );
+      // delete to sitemap
+      sitemap::suppr_to_sitemap( $prod_id );
 
       // 1 - DELETE IMGS OF ONE PRODUCT ON FLODER && ON DB
       $DELETE_PRODUCTS_IMGs = products::delete_all_imgs_product( $prod_id );
@@ -866,9 +890,8 @@
 	public static function set_category_of_product(){
 
 
-			//  VERIFY TOKEN
-			$token = (string) trim(htmlspecialchars($_POST['token']));
-			program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 			// id product
 			$prod_id = (int) trim(htmlspecialchars($_POST['prod_id']));
@@ -965,14 +988,16 @@
 	public static function modify_state_product(){
 
 
-			//  VERIFY TOKEN
-      $token = trim(htmlspecialchars($_POST['token']));
-			program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 			// id product
 			$prod_id = (int) trim(htmlspecialchars($_POST['prod_id']));
 
-			// state
+      // url product
+      $prod_url = (string) trim(htmlspecialchars($_POST['url']));
+
+      // state
 			$state = (string) trim(htmlspecialchars($_POST['state']));
 
 			// state error
@@ -985,7 +1010,22 @@
 			}
 
 			// set value on_line for DB
-			$on_line = ( $state == 'on_line' ) ? 1 : 0;
+      if( $state == 'on_line' ){
+
+          // product is on line
+          $on_line = 1;
+
+          // add to sitemap
+          sitemap::add_to_sitemap( $prod_id, $prod_url, 'product' );
+      }
+      else{
+
+          // product is off line
+          $on_line = 0;
+
+          // remove form sitemap
+          sitemap::suppr_to_sitemap( $prod_id );
+      }
 
 			$ARR_pdo = array( 'id' => $prod_id, 'on_line' => $on_line );
       $sql = 'UPDATE products SET on_line=:on_line WHERE id=:id';
@@ -1024,53 +1064,53 @@
 	public static function record_slider_settings(){
 
 
-			//  VERIFY TOKEN
-      $token = trim(htmlspecialchars($_POST['token']));
-			program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
-			// pass all datas as strings
-			$display = (string) trim(htmlspecialchars($_POST['SLIDER-display'])); // 'true'/'false'
-			$play = (string) trim(htmlspecialchars($_POST['SLIDER-play'])); // 'true'/'false'
-			$delay = (string) trim(htmlspecialchars($_POST['SLIDER-delay'])); // 4000
-			$speed = (string) trim(htmlspecialchars($_POST['SLIDER-speed'])); // 800
+			// data recived
+      // 1 || 0 - display slider
+			$display = (int) trim(htmlspecialchars($_POST['SLIDER-display']));
+      // 1 || 0 - autoplay slider
+			$play = (int) trim(htmlspecialchars($_POST['SLIDER-play']));
+      // 3000 - delay between slides
+			$delay = (int) trim(htmlspecialchars($_POST['SLIDER-delay']));
+      // 2000 - speed of animation
+			$speed = (int) trim(htmlspecialchars($_POST['SLIDER-speed']));
 
-
-			// if too long request
-			if( iconv_strlen($display) > 10
-			|| iconv_strlen($play) > 10
-			|| iconv_strlen($delay) > 10
-			|| iconv_strlen($speed) > 10 ){
+      // bad values $display
+      if( $display != 1 && $display != 0 ){
 
           // json return error
           $tab = array('error' => tr::$TR['error_gen'] );
           echo json_encode($tab, JSON_FORCE_OBJECT);
           exit;
+      }
 
-			}
-			// end if too long
+      // bad values $play
+      if( $play != 1 && $play != 0 ){
 
+          // json return error
+          $tab = array('error' => tr::$TR['error_gen'] );
+          echo json_encode($tab, JSON_FORCE_OBJECT);
+          exit;
+      }
 
-			// affect good values for json
-			$display = ( $display == 'true' ) ? true : false;
-			$play = ( $play == 'true' ) ? true : false;
-
-			// test good interval of values
-			$delay = (int) $delay;
+			// test good interval of values for $display
 			if( $delay < 1000 || $delay > 30000 ){
 
-				// json return error
-				$tab = array('error' => tr::$TR['error_delay_time'] );
-				echo json_encode($tab, JSON_FORCE_OBJECT);
-				exit;
+  				// json return error
+  				$tab = array('error' => tr::$TR['error_delay_time'] );
+  				echo json_encode($tab, JSON_FORCE_OBJECT);
+  				exit;
 			}
 
-			$speed = (int) $speed;
+			// test good interval of values for $display
 			if( $speed < 100 || $speed > 5000 ){
 
-				// json return error
-				$tab = array('error' => tr::$TR['error_speed_time'] );
-				echo json_encode($tab, JSON_FORCE_OBJECT);
-				exit;
+  				// json return error
+  				$tab = array('error' => tr::$TR['error_speed_time'] );
+  				echo json_encode($tab, JSON_FORCE_OBJECT);
+  				exit;
 			}
 
 			// set up an array to insert in api.json
@@ -1084,13 +1124,13 @@
 						)
 			);
 
-			// this return an array of json API settings ref. -> API/api.json
-			$API_SETTINGS = settings::set_settings_api( $ARR_SET );
+			// this return an array
+			$SLIDER = settings::set_settings_api( $ARR_SET );
 
 			// tab to return
 			$tab = array(
 			'success' => tr::$TR['well_inserted_featured_prods'],
-			'api_settings' => $API_SETTINGS
+			'slider' => $SLIDER['SLIDER']
 			);
 
 			// return json
@@ -1112,9 +1152,8 @@
 	public static function record_featured_products(){
 
 
-			//  VERIFY TOKEN
-      $token = trim(htmlspecialchars($_POST['token']));
-      program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 			$LIST_ids = json_decode( $_POST['list_ids'], true );
 

@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - FRONT
- * Copyright © Raphaël Castello  2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - FRONT
+ * Copyright © Raphaël Castello, 2019-2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	stats.php
  *
@@ -344,7 +343,7 @@ class stats {
 			}
 
 			// get the product
-			$PROD = process::get_one_product( $prod_id );
+			$PROD = shop::get_one_product( $prod_id );
 
 			// exit if empty
 			if( empty($PROD) ){
@@ -508,7 +507,7 @@ class stats {
 
 			// POSTED PROD_ID
 			$prod_id = (int) trim(htmlspecialchars($_POST['prod_id']));
-			$PROD = process::get_one_product( $prod_id );
+			$PROD = shop::get_one_product( $prod_id );
 			$prod_id = (int) $PROD['id']; // pass true prod id
 
 			// product not found

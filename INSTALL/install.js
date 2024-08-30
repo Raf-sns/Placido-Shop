@@ -1,14 +1,14 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - INSTALL
- * Copyright © Raphaël Castello, 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - INSTALL
+ * Copyright © Raphaël Castello, 2020-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	install.js
  *
  * $.test_database();
  * $.set_install();
+ * $.allow_search_engines();
  * $.showImage( src, container );
  * $.choose_img( for_input );
  * $.render_range( elem );
@@ -26,10 +26,6 @@
 // start jQuery
 $(function(){
 
-	// auto-complete fields with placeholders - for tests
-	// $('input, textarea').each(function(){
-	// 	$(this).val( $(this).attr('placeholder') );
-	// });
 
 // EXTEND ALL METHODS -> Call them width $.myMethod()
 // EXTEND ALL OBJECTS -> Call them width $.myOject
@@ -113,6 +109,10 @@ $.extend({
    */
 
 
+	// auto-complete fields with placeholders - for tests
+	// $('input, textarea').each(function(){
+	// 	$(this).val( $(this).attr('placeholder') );
+	// });
 
   /**
    * $.set_install();
@@ -121,8 +121,8 @@ $.extend({
    */
   set_install: function(){
 
-
-			$('install_app').removeAttr('onclick');
+      // remove onclick on install button
+			$('#install_app').removeAttr('onclick');
 
       // LOADER INSTALL
       $('#install_loader').show();
@@ -142,13 +142,12 @@ $.extend({
       // sender send datas to server asynchronous and return data.obj
       $.sender(el_to_prevent, method, url, datas, data_type, function(data){
 
-					// hide button loader
-					$('#install_loader').hide();
-
-					$('install_app').attr('onclick', '$.set_install();');
 
           // success
           if( data.success ){
+
+              // hide button loader
+    					$('#install_loader').hide();
 
 							// countdown to redirection
 							var message = data.success;
@@ -183,9 +182,16 @@ $.extend({
 							}, 5000 );
 
           }
+          // end success
 
           // error
           if( data.error ){
+
+              // hide button loader
+    					$('#install_loader').hide();
+
+              // re-attr onclick install()
+              $('#install_app').attr('onclick', '$.set_install();');
 
 							$.show_alert( 'warning', data.error, true );
 
@@ -201,6 +207,7 @@ $.extend({
 									});
 							}
 					}
+          // end error
 
       });
       // end sender
@@ -210,6 +217,36 @@ $.extend({
    * $.set_install();
    */
 
+
+
+  /**
+   * $.allow_search_engines();
+   *
+   * @param  {event} e
+   * @return {void}  set value of input[name="ALLOW_SEARCH_ENGINES"]
+   */
+  allow_search_engines : function(e){
+
+      e.stopImmediatePropagation();
+
+      // check this
+      if( $('input[name="ALLOW_SEARCH_ENGINES"]').val() == '' ){
+
+          // allow
+          $('input[name="ALLOW_SEARCH_ENGINES"]').val('allow');
+          return;
+      }
+      else{
+
+          // un-check this - disallow
+          $('input[name="ALLOW_SEARCH_ENGINES"]').val('');
+          return;
+      }
+
+  },
+  /**
+   * $.allow_search_engines();
+   */
 
 
 	/**

@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP AUTO-UPDATE
- * Copyright © Raphaël Castello , 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP MODULE - AUTO-UPDATE
+ * Copyright © Raphaël Castello, 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	update.js
  *
@@ -15,6 +14,8 @@
  * $.open_customize_update();
  * $.download_lang( lang , event );
  * $.see_infos_update( version );
+ * $.back_up_api( event );
+ * $.delete_backup( event );
  *
  */
 
@@ -284,7 +285,8 @@ $.extend({
 			var Obj = {
 					command : 'infos_files_not_updated',
 					host : $.o.host,
-					token_Placido : $.o.user.token_Placido
+					token_Placido : $.o.user.token_Placido,
+					version_used : $.o.api_settings.VERSION
 			};
 
 			// Post request to Placio-Shop Update center
@@ -598,6 +600,151 @@ $.extend({
 	/**
 	 * $.see_infos_update( version );
 	 */
+
+
+
+	/**
+	 * $.back_up_api();
+   *
+	 * @param {event}  event
+	 * @return {json}  Backup the app
+	 */
+	back_up_api : function( event ){
+
+
+			// disable btn
+			$(event.currentTarget).attr('disabled',true);
+
+			// add spinner
+			$(event.currentTarget).append(`<span class="lil_spinner">&nbsp;<i
+			class="fa-circle-notch fa-fw fa-spin fas"></i>&nbsp;</span>`);
+
+      // message in progress
+      $.show_alert( 'info', $.o.tr.backup_process_in_progress, true );
+
+
+			// make an object of datas to send
+			let Obj = {
+					command : 'backup',
+					token : $.o.user.token,
+			};
+
+			// Post request to Placio-Shop Update center
+			$.post('/MODULES/Auto-Update/PHP/update.php',
+				Obj, function(data){
+
+					// success
+					if( data.success ){
+
+							$.show_alert( 'success', data.success, true );
+
+              // create link to auto-download the backup
+              let a = document.createElement('a');
+              a.href = data.zip_url;
+              a.download = data.zip_name;
+              a.click();
+
+              // show info backup
+              $('#info_backup').empty().append(`
+                <span class="large text-amber">
+                `+$.o.tr.back_up_warning+`
+                </span>
+                <br>
+                <button onclick="$.delete_backup(event);"
+                class="amber btn margin-bottom pointer round text-black">
+                <i class="fa-fw fa-trash-alt far"></i>&nbsp;
+                  `+$.o.tr.delete_backup+`
+                </button>
+              `).show();
+
+
+					}
+					// end success
+
+
+					// error
+					if( data.error ){
+
+							$.show_alert( 'warning', data.error, true );
+					}
+
+
+					// remove spinner
+					$('.lil_spinner').remove();
+
+					// re-attr onclick
+					$('.btn[disabled="disabled"]').removeAttr('disabled');
+
+
+			}, 'json');
+			// end Post request
+
+
+	},
+	/**
+	 * $.back_up_api( event );
+	 */
+
+
+
+  /**
+   * $.delete_backup( event );
+   *
+   * @param {event}  event
+	 * @return {json}  delete the backup
+   */
+  delete_backup : function( event ){
+
+
+			// disable btn
+			$(event.currentTarget).attr('disabled',true);
+
+			// add spinner
+			$(event.currentTarget).append(`<span class="lil_spinner">&nbsp;<i
+			class="fa-circle-notch fa-fw fa-spin fas"></i>&nbsp;</span>`);
+
+      // make an object of datas to send
+			let Obj = {
+					command : 'delete_backup',
+					token : $.o.user.token,
+			};
+
+			// Post request to Placio-Shop Update center
+			$.post('/MODULES/Auto-Update/PHP/update.php',
+				Obj, function(data){
+
+					// success
+					if( data.success ){
+
+							$.show_alert( 'success', data.success, false );
+
+              // show info backup
+              $('#info_backup').empty().hide();
+
+					}
+					// end success
+
+
+					// error
+					if( data.error ){
+
+							$.show_alert( 'warning', data.error, true );
+
+              // remove spinner
+              $('.lil_spinner').remove();
+
+              // re-attr onclick
+              $('.btn[disabled="disabled"]').removeAttr('disabled');
+					}
+
+			}, 'json');
+			// end Post request
+
+  },
+  /**
+   * $.delete_backup( event );
+   */
+
 
 
 

@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2021-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2021-2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * script name: new_sales.js
  *
@@ -177,9 +176,11 @@ $.extend({
               $('#count_new_sales').text($.o.template.nb_new_sales);
 
 
-              // remove sale from the DOM
-              $.animateCss('#new_sale_id-'+sale_id+'', 'rollOut', function(){
+              // remove sale from the DOM - with animation
+              $('#new_sale_id-'+sale_id+'').addClass('slideOutRight');
 
+              $('#new_sale_id-'+sale_id+'').one('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd',
+              function(){
                   $('#new_sale_id-'+sale_id+'').remove();
               });
 
@@ -338,6 +339,9 @@ $.extend({
 			// animate process render bar
       $('#render_process').animate({width: '100%'}, 1000);
 
+      // animate spinner
+      $('.spinner_new_sales').addClass('fa-spin');
+
       // sender send datas to server asynchronous and return data.obj
       $.sender(el_to_prevent, method, url, datas, data_type, function(data){
 
@@ -377,6 +381,9 @@ $.extend({
 							// error
               $.show_alert('error', data.error, false );
           }
+
+          // hide spinner
+          $('.spinner_new_sales').removeClass('fa-spin');
 
       });
       // end sender

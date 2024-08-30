@@ -1,0 +1,55 @@
+:root {
+	--tbw-cell-vertical-padding: 4px;
+	--tbw-cell-horizontal-padding: 20px;
+	--tbw-cell-line-height: 1.5em;
+}
+.trumbowyg-box .trumbowyg-editor {
+	min-height: 100vh;
+	margin: 0 auto;
+}
+.trumbowyg-box, .trumbowyg-editor-box {
+	border: none;
+}
+.trumbowyg-box {
+	margin-top: 22px;
+}
+.trumbowyg-button-pane {
+	padding: 0;
+}
+.trumbowyg-editor-box {
+	font-family: 'Open Sans', system-ui, sans-serif;
+}
+.trumbowyg-editor.trumbowyg-reset-css p {
+	font-size: 20px !important;
+}
+.trumbowyg-editor.trumbowyg-reset-css ul {
+	font-size: 18px !important;
+}
+.trumbowyg-editor iframe {
+	width: 400px;
+  height: 225px;
+}
+.trumbowyg-editor table {
+	margin-bottom: var(--tbw-cell-line-height);
+	border-collapse: collapse;
+}
+.trumbowyg-editor th,
+.trumbowyg-editor td {
+	height: calc(var(--tbw-cell-vertical-padding) * 2 + var(--tbw-cell-line-height));
+	min-width: calc(var(--tbw-cell-horizontal-padding) * 2);
+	padding: var(--tbw-cell-vertical-padding) var(--tbw-cell-horizontal-padding);
+	border: 1px solid #e7eaec;
+}
+.trumbowyg-dropdown {
+	max-height: inherit;
+}
+#container-colors {
+	display: inline-grid;
+	grid-template-columns: repeat(11, 1fr);
+	column-gap: 2px;
+	row-gap: 2px;
+	margin-top: 20px;
+}
+.drag-hover {
+	outline: 1px dotted black;
+}

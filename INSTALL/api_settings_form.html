@@ -8,7 +8,8 @@
 		</h2>
 
 		<p>
-			*&nbsp;Note: Almost all parameters can be modified from your management interface.
+			*&nbsp;Note: All of the following settings can be modified
+      from your management interface after installation.
 		</p>
 
 		<h3 class="medium">Your website&nbsp:</h3>
@@ -280,7 +281,7 @@
 			create your own translation files respecting the standard:
 			[2-letter language code].txt e.g.: en.txt, fr.txt, etc ...
 			<br>
-			See : <a href="https://placido-shop.com/Documentation.html"
+			See : <a href="https://placido-shop.com/Documentation/How-to-translate-Placido-Shop-interfaces"
 			title="See how to translate Placido-Shop interfaces"
 			target="_blank"
 			class="underline">How to translate Placido-Shop interfaces</a>
@@ -318,6 +319,20 @@
 				{{/api_lang_BACK}}
 			</select>
 		</p>
+
+    <p>
+      <input onclick="$.allow_search_engines(event);"
+      type="checkbox"
+      id="ALLOW_SEARCH_ENGINES"
+      name="ALLOW_SEARCH_ENGINES"
+      value=""
+      class="pointer">
+      <label 
+      for="ALLOW_SEARCH_ENGINES"
+      class="pointer">
+        Allow search engines to index your online store
+      </label>
+    </p>
 
 		<p style="margin: 36px 0 26px!important;">
 			<button onclick="$.set_install();"

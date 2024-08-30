@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
  * Copyright © Raphaël Castello, 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * Organisation: SNS - Web et informatique
+ * Website / contact : https://sns.pm
  *
  * script name: stats_products.js
  *
@@ -197,7 +196,6 @@
 					console.log(error.message);
 			});
 			// end fetch promise
-
 
 	}
 	/**

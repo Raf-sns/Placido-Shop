@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	web_app.php
  *
@@ -26,9 +25,8 @@ class web_app {
 	public static function record_web_app_settings(){
 
 
-			//  VERIFY TOKEN
-			$token = trim(htmlspecialchars($_POST['token']));
-			program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 			// test empty datas - if just one is empty -> error
 			$empty = false;

@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2023
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name: products.js
  *
@@ -33,7 +32,7 @@
  * $.search_by_quant();
  * $.search_by_on_line( state, event );
  *
- * SLIDER
+ * SLIDER :
  * $.init_featured_prods();
  * $.select_for_featured_prods( id );
  * $.move_prod( id,  dir );
@@ -377,10 +376,9 @@ $.extend({
 
 
 /////////////////////////////////
+///////   MODIFY PRODUCT  ///////
 /////////////////////////////////
-  // MODIFY PRODUCT
-/////////////////////////////////
-/////////////////////////////////
+
 
   /**
    * $.open_modif_product( id );
@@ -494,10 +492,6 @@ $.extend({
 
 			}
 
-			// get current value
-			// var value = $('input[name="on_off_line"]').val();
-			// console.log( value );
-
 	},
   /**
    * $.product_on_off_line();
@@ -507,12 +501,25 @@ $.extend({
 
   /**
    * $.check_on_off_line( state, id );
-   * @Param {str} state 	'on_line' / 'off_line'
-	 * @Param {int} id 			product id
-   * @return {json}  			modify state product directly on server
+   *
+   * @param  {string} state 	'on_line' / 'off_line'
+   * @param  {int}    id 			product id
+   * @return {json}  	modify state product directly on server
    */
   check_on_off_line : function( state, id ){
 
+      let One_product = {};
+
+      // get product object
+      for (var i = 0; i < $.o.products.length; i++) {
+
+          if( $.o.products[i].id == id ){
+
+              One_product = $.o.products[i];
+              break;
+          }
+      }
+      // end loop
 
 			// post modif
 			$.post('index.php',
@@ -520,6 +527,7 @@ $.extend({
 				set: 'modify_state_product',
 				token: $.o.user.token,
 				prod_id: id,
+        url: One_product.url,
 				state: state
 			}, function(data){
 
@@ -547,19 +555,10 @@ $.extend({
 									.addClass('fa-check-square');
 							}
 
-							// manage obj
-							for (var i = 0; i < $.o.products.length; i++) {
-
-									if( $.o.products[i].id == id ){
-
-											// set product online/offline
-											$.o.products[i].on_line =
-											( state == 'on_line' ) ? true : false;
-
-											break;
-									}
-							}
-							// end loop
+							// manage object
+							// set product online/offline
+              One_product.on_line =
+              ( state == 'on_line' ) ? true : false;
 
 							// re-open products for apply modif
 							$.open_vue('products', event);
@@ -1584,13 +1583,16 @@ $.extend({
 
 	/**
 	 * $.record_featured_prods();
-	 *
-	 * @return {type}  description
+	 * template : featured_prods.html
+	 * @return {json} record featured products to display them in the slideshow
 	 */
 	record_featured_prods : function(){
 
 		// disable btn
-		$('#record_featured_prods').removeAttr('onclick');
+		$('#record_featured_prods').removeAttr('onclick')
+    .append(`&nbsp; <span id="slider_settings_spinner" class="spinner">
+    <i class="fas fa-circle-notch fa-spin"></i>
+    </span>`);
 
 		var ARR_ids = [];
 
@@ -1617,10 +1619,12 @@ $.extend({
 						$.show_alert('warning', data.error, false);
 				}
 
-				// enable btn
+				// enable pnclick button
 				$('#record_featured_prods')
 				.attr('onclick', '$.record_featured_prods();');
 
+        // remove spinner
+        $('#slider_settings_spinner').remove();
 
 		}, 'json');
 		// end $.post
@@ -1634,29 +1638,27 @@ $.extend({
 
 	/**
 	 * $.choice_for_slider( for_item, enable_val );
-	 *
-	 * @param  {string} for    'display' or 'play' (autoplay)
-	 * @param  {string} enable_val 'yes' -> enable / 'no' -> disable
-	 * @return {void}        		set hiddens inputs
+	 * template : featured_prods.html
+	 * @param  {string} for        'display' (show/hide slider) or 'play' (slider autoplay)
+	 * @param  {int}    enable_val  1 -> enable || 0 -> disable
+	 * @return {void}   set hiddens inputs
 	 */
 	choice_for_slider : function( for_item, enable_val ){
 
-			if( enable_val == 'yes' ){
+			if( enable_val == 1 ){
 
-				$('#slider-'+for_item+'-yes').removeClass('gray').addClass('blue');
-				$('#slider-'+for_item+'-no').removeClass('blue').addClass('gray');
-
+  				$('#slider-'+for_item+'-yes').removeClass('gray').addClass('blue');
+  				$('#slider-'+for_item+'-no').removeClass('blue').addClass('gray');
 			}
 			else{
-				$('#slider-'+for_item+'-no').removeClass('gray').addClass('blue');
-				$('#slider-'+for_item+'-yes').removeClass('blue').addClass('gray');
+
+  				$('#slider-'+for_item+'-no').removeClass('gray').addClass('blue');
+  				$('#slider-'+for_item+'-yes').removeClass('blue').addClass('gray');
 			}
 
 			// set value
-			enable_val = ( enable_val == 'yes' ) ? true : false;
 			$('#SLIDER-'+for_item+'').val(enable_val);
 
-			// console.log( 'value for : '+for_item+' : '+ enable_val );
 	},
 	/**
 	 * $.choice_for_slider( for_item, enable_val );
@@ -1666,13 +1668,16 @@ $.extend({
 
 	/**
 	 * $.record_slider_settings();
-	 *
-	 * @return {type}  description
+	 * template : featured_prods.html
+	 * @return {json}  return slider settings
 	 */
 	record_slider_settings : function(){
 
 		// disable btn
-		$('#record_slider_settings').removeAttr('onclick');
+		$('#record_slider_settings').removeAttr('onclick')
+    .append(`&nbsp; <span id="slider_settings_spinner" class="spinner">
+    <i class="fas fa-circle-notch fa-spin"></i>
+    </span>`);
 
 		var form = document.getElementById('slider_settings');
 		var formData = new FormData(form);
@@ -1686,10 +1691,11 @@ $.extend({
 
 				// succes
 				if( data.success ){
-						$.show_alert('success', data.success, false);
+
+            $.show_alert('success', data.success, false);
 
 						// re-init datas object
-						$.o.api_settings = data.api_settings;
+						$.o.api_settings.SLIDER = data.slider;
 
 						// re-init view slider settings form
 						$('#slider_settings_form').empty()
@@ -1698,13 +1704,16 @@ $.extend({
 
 				// error
 				if( data.error ){
-						$.show_alert('warning', data.error, false);
+
+            $.show_alert('warning', data.error, false);
 				}
 
 				// enable btn
 				$('#record_slider_settings')
 				.attr('onclick', '$.record_slider_settings();');
 
+        // remove spinner
+        $('#slider_settings_spinner').remove();
 
 		}, 'json');
 		// end $.sender

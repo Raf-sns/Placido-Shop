@@ -54,7 +54,7 @@ Header set X-XSS-Protection "1; mode=block"
 
 # SetOutputFilter DEFLATE
 ## do not cache if these files are already cached
-SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip
+SetEnvIfNoCase Request_URI \.(gif|jpe?g|png|webp)$ no-gzip
 
 
 ## manage very olds browsers
@@ -69,20 +69,21 @@ Header append Vary User-Agent env=!dont-vary
 
 ## Expire headers
 ## Expires : 24h -> 86400 | 48h -> 172800 | 8 days -> 691200
+## 6 motnhs ~ 184 days -> 15897600 | 1 month -> 2678400
 	<IfModule mod_expires.c>
 
 		ExpiresActive On
-		ExpiresDefault "access plus 691200 seconds"
-		ExpiresByType image/jpg "access plus 691200 seconds"
-		ExpiresByType image/jpeg "access plus 691200 seconds"
-		ExpiresByType image/png "access plus 691200 seconds"
-		ExpiresByType image/gif "access plus 691200 seconds"
-		ExpiresByType image/ico "access plus 691200 seconds"
-		ExpiresByType image/icon "access plus 691200 seconds"
-		ExpiresByType image/x-icon "access plus 691200 seconds"
-		ExpiresByType text/css "access plus 172800 seconds"
-		ExpiresByType text/javascript "access plus 172800 seconds"
-		ExpiresByType text/html "access plus 172800 seconds"
+		ExpiresDefault "access plus 15897600 seconds"
+		ExpiresByType image/jpg "access plus 15897600 seconds"
+		ExpiresByType image/jpeg "access plus 15897600 seconds"
+		ExpiresByType image/png "access plus 15897600 seconds"
+		ExpiresByType image/gif "access plus 15897600 seconds"
+		ExpiresByType image/ico "access plus 15897600 seconds"
+		ExpiresByType image/icon "access plus 15897600 seconds"
+		ExpiresByType image/x-icon "access plus 15897600 seconds"
+		ExpiresByType text/css "access plus 2678400 seconds"
+		ExpiresByType text/javascript "access plus 2678400 seconds"
+		ExpiresByType text/html "access plus 2678400 seconds"
 
 	</IfModule>
 ## END Expire headers
@@ -90,22 +91,23 @@ Header append Vary User-Agent env=!dont-vary
 
 ## Cache-Control Headers
 ## cache in seconds : 24h -> 86400 | 48 h -> 172800 | 8 days -> 691200
+## 6 motnhs ~ 184 days -> 15897600 | 1 month -> 2678400
 	<IfModule mod_headers.c>
 
-		<FilesMatch "\.(ico|jpe?g|png|gif|swf|gz|ttf)$">
-			Header set Cache-Control "max-age=691200, public, must-revalidate"
+		<FilesMatch "\.(ico|x-icon|jpe?g|png|gif|webp|swf|gz|ttf|woff2)$">
+			Header set Cache-Control "max-age=15897600, public, must-revalidate"
 		</FilesMatch>
 
 		<FilesMatch "\.(css)$">
-			Header set Cache-Control "max-age=691200, public, must-revalidate"
+			Header set Cache-Control "max-age=2678400, public, must-revalidate"
 		</FilesMatch>
 
 		<FilesMatch "\.(js)$">
-			Header set Cache-Control "max-age=691200, public, must-revalidate"
+			Header set Cache-Control "max-age=2678400, public, must-revalidate"
 		</FilesMatch>
 
 		<filesMatch "\.(html|htm)$">
-			Header set Cache-Control "max-age=691200, public, must-revalidate"
+			Header set Cache-Control "max-age=2678400, public, must-revalidate"
 		</filesMatch>
 
 		## Disable caching for scripts and other dynamic files

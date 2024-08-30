@@ -1,19 +1,17 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
  * Copyright © Raphaël Castello, 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * Organisation: SNS - Web et informatique
+ * Website / contact : https://sns.pm
  *
  * script name: stats_token.js
  *
  * deploy_form_token_stats();
  * record_stats_token_api(event);
  *
- * this need jQuery
+ * i. this need jQuery
  *
  */
-
 
 
 	/**
@@ -25,7 +23,6 @@
 
 
 			$('#token_input').toggle(['hide', 'show']);
-
 
 			if( $('#deploy_form_token_stats i').hasClass('fa-hand-point-right') == true ){
 

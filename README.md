@@ -37,17 +37,21 @@ brand image or your technical needs.
 
 ###
 
-**Placido-Shop is an Open-Source online sale software** under license [GNU AGPL](https://www.gnu.org/licenses/why-affero-gpl.fr.html) (see: /LICENSE.txt).
+**Placido-Shop is an Open-Source online sale software** under license [GNU AGPL](https://www.gnu.org/licenses/why-affero-gpl.fr.html) (see: /LICENSE).
 
 ###
 
 **Placido-Shop [has some pretty cool features](https://placido-shop.com/All-features-of-Placido-Shop.html).**
 
+**You can [download the latest version archive here](https://placido-shop.com/Downloads.html).**
+
+**Installation guide, documentation, see : [How to install Placido-Shop](https://placido-shop.com/Documentation/How-to-install-Placido-Shop).**
+
+**You can [try Placido-Shop online](https://demo.placido-shop.com/)** in demonstration mode:
+
+The recording functions have been disabled but you can preview the software.
+
 Get more informations from the [Placido-Shop](https://placido-shop.com) website.
-
-You can [download the latest version archive here](https://placido-shop.com/Downloads.html).
-
-Installation guide, documentation, see : [How to install Placido-Shop](https://placido-shop.com/Documentation.html).
 
 ###
 

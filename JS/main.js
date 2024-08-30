@@ -217,7 +217,7 @@ $.extend({
 	    // HISTORY
 	    if( history.state.page != 'home' ){
 
-	        history.pushState({page : 'home'}, '','');
+	        history.pushState({page : 'home'}, '',' ');
 	    }
 
   },

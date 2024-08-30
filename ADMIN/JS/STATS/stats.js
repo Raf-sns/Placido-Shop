@@ -1,9 +1,10 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact : https://sns.pm
+ *
+ * script name: stats.js
  *
  * Summary :
  *
@@ -13,10 +14,6 @@
  * Date management : 			stats_date.js
  * Products : 						stats_products.js
  * Token API : 						stats_token.js
- *
- *
- * script name: stats.js
- *
  *
  * Buttons return their element :
  *
@@ -117,7 +114,6 @@
 
 			// simulate a change on select #sort_stats
 			select_period();
-
 	}
 	/**
 	 * get_today();
@@ -544,7 +540,7 @@
 					// !important set to 00:00:00
 					Sort_date.obj.setHours(0, 0, 0);
 					// console.log( Sort_date.get_full_string() );
-					// test_date = date_overflow_test();
+					test_date = date_overflow_test();
 				break;
 
 				// year
@@ -870,6 +866,7 @@
 	/**
 	 * get_stats_from_server();
 	 */
+
 
 
 	/**
@@ -1728,6 +1725,7 @@
 	 */
 
 
+
 	/**
 	 * set_max_scale_line_cart();
 	 *
@@ -1755,6 +1753,7 @@
 	 */
 
 
+
 	/**
 	 * set_max_scale_bar_cart();
 	 *
@@ -1776,6 +1775,7 @@
 	/**
 	 * set_max_scale_bar_cart()
 	 */
+
 
 
 	/**

@@ -76,14 +76,6 @@
 <!-- PARTIEL slider_settings_form -->
 <script id="slider_settings_form" type="text/html">
 
-	<!-- RECORD slider settings -->
-	<button onclick="$.record_slider_settings();"
-	id="record_slider_settings"
-	class="blue btn card margin-bottom round" type="button" role="button">
-		<i class="fas fa-sign-in-alt"></i>&nbsp;
-		{{tr.record_settings}}
-	</button>
-
 	<form id="slider_settings" class="margin-bottom"
 	style="display: flex;
 			flex-direction: row;
@@ -94,19 +86,16 @@
 		<!-- display slider -->
 		<div class="margin-top margin-right">
 
-			<label for="SLIDER-display">{{{tr.display}}}</label>
+			<span>{{{tr.display}}}</span>
 			<br>
-			<button onclick="$.choice_for_slider('display', 'yes');"
+			<button onclick="$.choice_for_slider('display', 1);"
 			id="slider-display-yes"
-			class="
-			{{#api_settings.SLIDER.display}}blue{{/api_settings.SLIDER.display}}
-			{{^api_settings.SLIDER.display}}gray{{/api_settings.SLIDER.display}}
+			class="{{#api_settings.SLIDER.display}}blue{{/api_settings.SLIDER.display}}{{^api_settings.SLIDER.display}}gray{{/api_settings.SLIDER.display}}
 			btn card round margin-right" role="button" type="button">{{tr.yes}}</button>
 
-			<button onclick="$.choice_for_slider('display', 'no');"
+			<button onclick="$.choice_for_slider('display', 0);"
 			id="slider-display-no"
-			class="{{^api_settings.SLIDER.display}}blue{{/api_settings.SLIDER.display}}
-			{{#api_settings.SLIDER.display}}gray{{/api_settings.SLIDER.display}}
+			class="{{^api_settings.SLIDER.display}}blue{{/api_settings.SLIDER.display}}{{#api_settings.SLIDER.display}}gray{{/api_settings.SLIDER.display}}
 			btn card round margin-right" role="button" type="button">{{tr.no}}</button>
 
 			<input id="SLIDER-display"
@@ -120,20 +109,16 @@
 		<!-- auto play slider -->
 		<div class="margin-top margin-right">
 
-			<label for="SLIDER-play"
-			class="margin-right">{{{tr.play}}}</label>
+			<span class="margin-right">{{{tr.play}}}</span>
 			<br>
-			<button onclick="$.choice_for_slider('play', 'yes');"
+			<button onclick="$.choice_for_slider('play', 1);"
 			id="slider-play-yes"
-			class="
-			{{#api_settings.SLIDER.play}}blue{{/api_settings.SLIDER.play}}
-			{{^api_settings.SLIDER.play}}gray{{/api_settings.SLIDER.play}}
+			class="{{#api_settings.SLIDER.play}}blue{{/api_settings.SLIDER.play}}{{^api_settings.SLIDER.play}}gray{{/api_settings.SLIDER.play}}
 			btn card round margin-right" role="button" type="button">{{tr.yes}}</button>
 
-			<button onclick="$.choice_for_slider('play', 'no');"
+			<button onclick="$.choice_for_slider('play', 0);"
 			id="slider-play-no"
-			class="{{^api_settings.SLIDER.play}}blue{{/api_settings.SLIDER.play}}
-			{{#api_settings.SLIDER.play}}gray{{/api_settings.SLIDER.play}}
+			class="{{^api_settings.SLIDER.play}}blue{{/api_settings.SLIDER.play}}{{#api_settings.SLIDER.play}}gray{{/api_settings.SLIDER.play}}
 			btn card round margin-right" role="button" type="button">{{tr.no}}</button>
 
 			<input id="SLIDER-play"
@@ -171,6 +156,14 @@
 		</div>
 
 	</form>
+
+	<!-- RECORD slider settings -->
+	<button onclick="$.record_slider_settings();"
+	id="record_slider_settings"
+	class="blue btn card round" type="button" role="button">
+		<i class="fas fa-sign-in-alt"></i>&nbsp;
+		{{tr.record_settings}}
+	</button>
 
 </script>
 <!-- end PARTIAL slider_settings_form -->
@@ -244,7 +237,7 @@
 
 	{{#template.featured_prods_selector}}
 		<div onclick="$.select_for_featured_prods({{id}});"
-		id="feat-{{id}}" 
+		id="feat-{{id}}"
 		class="border border-gray card dark-gray margin-bottom round pointer hover-shadow">
 			<img data-src="../img/Products/min-{{img_prez}}"
 			src="../img/PS_LOGO.png"

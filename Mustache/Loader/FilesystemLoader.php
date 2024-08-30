@@ -82,7 +82,14 @@ class Mustache_Loader_FilesystemLoader implements Mustache_Loader
             $this->templates[$name] = $this->loadFile($name);
         }
 
-        return $this->templates[$name];
+        // original script
+        // return $this->templates[$name];
+
+        // modification for Placido-Shop
+        $clean_template =
+          preg_replace('/<!--(.|\s)*?-->/', '', $this->templates[$name]);
+
+        return $clean_template;
     }
 
     /**
@@ -102,22 +109,7 @@ class Mustache_Loader_FilesystemLoader implements Mustache_Loader
             throw new Mustache_Exception_UnknownTemplateException($name);
         }
 
-      	// original return version
-				// return file_get_contents($fileName);
-
-				// modified version
-				$templ = file_get_contents($fileName);
-
-				// CLEAN / UN-ClEAN  -> UN-COMMENT following lines TO CLEAN
-				//                   -> COMMENT for not to clean (preserve comments)
-				$templ = trim($templ); // trim
-				$templ = preg_replace('/\s+|[ ]+/m', " ", $templ); // all white spaces
-				$templ = preg_replace('/<!--.*?-->/m', "", $templ); // all comments
-				$templ = preg_replace('/(\r)+|(\n)+|(\t)+|(\r\n)+/m', " ", $templ); // all
-
-				return $templ;
-				// modified version
-				
+        return file_get_contents($fileName);
     }
 
     /**

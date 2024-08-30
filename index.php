@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - FRONT
- * Copyright © Raphaël Castello, 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - FRONT
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	 index.php
  *
@@ -12,11 +11,8 @@
  *
  */
 
-
-  // DEVELOPMENT : Report all PHP errors
-  // error_reporting(E_ALL);
-
-	// PRODUCTION : Turn off all error reporting -> uncomment
+  // ERROR REPORTING :
+  // E_ALL -> Report all PHP errors | 0 -> Turn off error reporting
   error_reporting(0);
 
   // include MUSTACHE
@@ -32,11 +28,11 @@
 	    $path_PHP_front = 'PHP/' . $class . '.php';
 
 	    if( file_exists($path_API) ) require $path_API;
-			elseif( file_exists($path_PHP_front) ) require $path_PHP_front;
+			if( file_exists($path_PHP_front) ) require $path_PHP_front;
 
 	});
 
-	// define constants for API from api.json for all scripts include back-end
+	// load constants for API from API/constants.php for all scripts include back-end
   api::init_settings();
 
   // public static ARRAY translation

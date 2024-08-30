@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - FRONT
- * Copyright © Raphaël Castello  2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - FRONT
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	control.php
  *
@@ -222,7 +221,7 @@ class control {
 
 					// GET STATIC PAGE
 		      case 'return_static_page' :
-		          tools::get_static_page();
+		          static_pages::return_static_page();
 		      break;
 
 		      // GET OBJECT
@@ -289,7 +288,4 @@ class control {
 
 }
 // END CLASS control::
-
-
-
 ?>

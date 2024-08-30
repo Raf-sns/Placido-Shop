@@ -45,12 +45,10 @@
     visibility: hidden;
   }
 	#block_footer {
-    position: absolute;
     min-width: 400px;
     max-width: 400px;
     bottom: 0;
-    margin: 35px auto 20px;
-    z-index: -1;
+    margin: auto auto 20px;
     background: rgba(255, 255, 255, 0.86);
     display: flex;
     flex-direction: row;
@@ -87,8 +85,7 @@
 
 
     <form class="card center inline-block padding-16 round"
-    id="form_login"
-    autocomplete="off">
+    id="form_login" autocomplete="off">
 
       <p class="large margin">
         {{{tr.welcome_login}}}
@@ -102,7 +99,7 @@
 				id="mail"
 				value="{{mail}}"
 				maxlength="150"
-				autocomplete="off"
+				autocomplete="new-password"
         class="border border-blue input medium padding-small round">
       </p>
 
@@ -114,14 +111,14 @@
         id="mdp"
         value=""
 				maxlength="500"
-        autocomplete="off"
+        autocomplete="new-password"
         class="border border-blue input medium padding-small round">
       </p>
 
       <p onclick="$.forgot_password();"
       class="fields_login_container center text-teal">
           <a href="javascript:void(0);"
-          class="hover-text-dark-gray underline"
+          class="underline"
           title="{{tr.forgot_password_title_link}}">{{tr.forgot_password}}</a>&nbsp;?
       </p>
 
@@ -154,8 +151,9 @@
 				Placido-Shop&nbsp;Software
 				<br>
 				<a href="https://placido-shop.com"
+        class="underline"
 				target="_blank"
-				title="Say me Hello from Placido-Shop !">Placido-Shop</a>&nbsp;&copy;&nbsp;{{year}}
+				title="Open the Placido-Shop website in a new tab">Placido-Shop</a>&nbsp;&copy;&nbsp;{{year}}
 			</div>
 
 		</div>

@@ -1,15 +1,15 @@
 <?php
 /**
- * © Copyright - Raphaël Castello - 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - API
+ * Copyright © Raphaël Castello, 2022-2023
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	tr.php
  *
- * CLASS tr
+ * class tr::
  *
- * DEFINE GLOBAL ARRAY OF TRANSLATION FOR ALL SCRIPTS use: tr::$TR['key']
+ * DEFINE GLOBAL ARRAY OF TRANSLATION FOR ALL SCRIPTS use:  tr::$TR['key']
  *
  * tr::get_langs_to_tr();
  * tr::init_tr( $context );

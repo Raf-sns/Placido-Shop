@@ -1,26 +1,24 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - JS FRONT
- * Copyright © Raphaël Castello , 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
- *
+ * PLACIDO-SHOP FRAMEWORK - JS FRONT
+ * Copyright © Raphaël Castello , 2022-2024
+ * Organisation: SNS - Web et 1nformatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	history.js
  *
+ * history.scrollRestoration = 'manual';
  * ONPOPSTATE events
  *
  */
 
-////////////////////////////////////////////////////////////////////
-////////////         H I S T O R Y         /////////////////////////
-////////////////////////////////////////////////////////////////////
 
 // ON POSPSTATE :
 window.onpopstate = function(event) {
 
+		// Prevent automatic page location restoration - str - 'auto' / 'manual'
     if( history.scrollRestoration ){
-      history.scrollRestoration = 'manual';
+
+				history.scrollRestoration = 'manual';
     }
 
     var Obj_state = history.state;
@@ -55,7 +53,6 @@ window.onpopstate = function(event) {
             // Obj_state.page = page_url
             $.open_static_page( event, Obj_state.page );
       break;
-
 
       default:
           // GET HOME

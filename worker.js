@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - JS FRONT
- * Copyright © Raphaël Castello , 2022-2023
+ * PlACIDO-SHOP FRAMEWORK - FRONT
+ * Copyright © Raphaël Castello , 2022-2024
  * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * Website/contact: https://sns.pm
  *
  * Script name:	worker.js
  *

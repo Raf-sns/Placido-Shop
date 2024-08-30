@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - INSTALL
- * Copyright © Raphaël Castello, 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - INSTALL
+ * Copyright © Raphaël Castello, 2020-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	 index.php
  *
@@ -12,34 +11,37 @@
  *
  */
 
-
   // Report all PHP errors
   error_reporting(E_ALL);
-
-	// Turn off all error reporting -> uncomment
-  // error_reporting(0);
 
   // include MUSTACHE
   require dirname(__DIR__).'/Mustache/Autoloader.php';
   Mustache_Autoloader::register();
 
+  // require config class ->
+  // Even if the data is empty, it is necessary because it extends the "api" class
 	require dirname(__DIR__).'/API/config.php';
+
+  // require api class
 	require dirname(__DIR__).'/API/api.php';
+
+  // init all constants
 	api::init_settings();
 
+  // installation script
 	require 'install.php';
 
-	// REQUESTS
+	// NO REQUESTS - get the installation page
 	if( empty($_GET) && empty($_POST) ){
 
 			install::page_install();
 	}
 
-	// IF $_POST
+	// MANAGE POST REQUESTS
 	if( isset($_POST) && !empty($_POST['set']) ){
 
 
-			$set = trim(htmlspecialchars($_POST['set']));
+			$set = (string) trim(htmlspecialchars($_POST['set']));
 
 			if( iconv_strlen($set) > 100 ){
 
@@ -67,7 +69,7 @@
 			// end switch
 
 	}
-	// END IF $_POST
+	// END MANAGE POST REQUESTS
 
 
 ?>

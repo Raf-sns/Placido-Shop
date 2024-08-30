@@ -1,31 +1,25 @@
 <?php
 /**
- * © Copyright - Raphaël Castello, 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - API
+ * Copyright © Raphaël Castello, 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	api.php
  *
- * IN GLOBAL CONTEXT :
- * const ROOT -> root path of api
- *  css files paths to compress
- *  js files paths to compress
+ * // root path of api
+ * define const ROOT : Root path of API
+ * const ARCH : Architecture of the API's folders
  *
  *
  * CLASS api::
  *
- * DEFINE API const - aviables for all scripts
- *
- * // root path of api
- * define const root path : ROOT
- *
  * // global usage array
  * public static $REQ = array();
  *
- * METHODS :
- *
- * api::init_settings(); // this build CONSTANTS by api.json file
+ * // require API constants from API/constants.php
+ * // define API_SETTINGS : array of API constants - not used in front
+ * api::init_settings();
  *
  * api::require_Module($module_name, $script); // for call a PHP module file
  * api::list_Modules(); // get complete architecture of MODULES folder
@@ -38,7 +32,7 @@
  *
  */
 
-	// define root_path
+	// define root path
 	define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 
 	// architecture folders
@@ -74,6 +68,7 @@ class api extends config {
 	public static $REQ = array();
 
 
+
   /**
    * api::init_settings();
    * define constants api for all scripts
@@ -82,21 +77,29 @@ class api extends config {
   public static function init_settings(){
 
 
-      $get_json_settings = file_get_contents(ROOT.'/API/api.json');
+			// require API constants
+			require_once ROOT.'/API/constants.php';
 
-      $SETTINGS = json_decode($get_json_settings, true);
-			// var_export( $SETTINGS );
-			// exit;
+			// Make an array of constants to pass them to JS api object
+			$SETTINGS = get_defined_constants(true)['user'];
 
-			// define array of API settings - not used in front
-			define('API_SETTINGS', $SETTINGS);
+			// no need ROOT && ARCH for JS
+			unset($SETTINGS['ROOT']);
+			unset($SETTINGS['ARCH']);
 
-			// new - define constants settings
-      foreach( $SETTINGS as $key => $value ){
+			// ONLY FOR BACKEND OR INSTALL
+			if( (preg_match( '/('.ADMIN_FOLDER.')/', getcwd() ) === 1)
+					|| (preg_match( '/(INSTALL)/', getcwd() ) === 1) ){
 
-          // attr values to class api statics properties
-					define($key, $value);
-      }
+					// define array of API settings - not used in front
+					define('API_SETTINGS', $SETTINGS);
+			}
+
+			// test :
+			// echo '<pre>';
+			// var_export( get_defined_constants(true)['user'] );
+			// echo '<pre>';
+			// die();
 
   }
   /**
@@ -132,7 +135,7 @@ class api extends config {
 	 * api::list_dir_recursive($dir);
 	 *
 	 * @param  {string} 	$dir 	path to the folder to scan
-	 * @return {array}     return complete architecture of a folder
+	 * @return {array}    return complete architecture of a folder
 	 */
 	public static function list_dir_recursive( $dir ){
 

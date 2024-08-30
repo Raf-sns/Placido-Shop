@@ -538,7 +538,7 @@ $.extend({
     // HISTORY
     if( history.state === null || history.state.page != 'cart' ){
 
-        history.pushState({ page: 'cart' }, '','/cart/'+$.o.tr.cart_url);
+        history.replaceState({ page: 'cart' }, '','/cart/'+$.o.tr.cart_url);
     }
 
   },
@@ -1300,7 +1300,7 @@ $.extend({
 
           // console.log(data);
 
-          // renew Objet API
+          // renew Object API
           $.o = data;
 
           $.clean_sort_block();
@@ -1378,7 +1378,7 @@ $.extend({
           // success
           if( data.success ){
 
-              // renew Objet API
+              // renew Object API
               $.o.SALE = data.SALE;
 
               // globals sale id + hash customer

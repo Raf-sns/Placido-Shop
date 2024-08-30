@@ -1,5 +1,4 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -17,7 +16,7 @@ CREATE TABLE `admins` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 INSERT INTO `admins` (`id`, `mail`, `passw`, `name`) VALUES
-(0, 'user@placido-shop.com', '$2y$10$sToO0zYUq4VP9cNnCLPWn.ui/KSF1eij4tuWreYK9UEMFURkF57Ra', 'Admin');
+(0, 'user@placido-shop.com', '$2y$10$ru7PD0kAaAdL0Me31JlvlufXC4J1a3eAVa9CkaxAchTQZp7EAMWVK', 'Admin');
 
 CREATE TABLE `archived_sales` (
   `sale_number` int(11) NOT NULL,
@@ -96,7 +95,7 @@ CREATE TABLE `messages` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 INSERT INTO `messages` (`mess_id`, `mail`, `name`, `message`, `date_mess`, `readed`) VALUES
-(0, 'user@placido-shop.com', 'Raf - dev. Placido-Shop', 'Welcome to Placido-Shop software !', '2022-12-05 02:10:00', 0);
+(0, 'user@placido-shop.com', 'Raf - dev. Placido-Shop', 'Welcome to Placido-Shop software !', '2024-07-19 02:10:00', 0);
 
 CREATE TABLE `new_sales` (
   `sale_id` int(11) NOT NULL,
@@ -124,18 +123,18 @@ CREATE TABLE `products` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 INSERT INTO `products` (`id`, `cat_id`, `title`, `text`, `ref`, `quant`, `price`, `tax`, `date_prod`, `url`, `on_line`) VALUES
-(48, 57, 'Ethnic motif terracotta jug', 'Yellow terracotta jug.\r\n\r\nBeautiful decorative jug with ethnic motifs.', '', 7, 5500, 0, 1664002800, 'Ethnic-motif-terracotta-jug', 1),
-(43, 53, 'Decorative Moroccan yellow bowl', 'Decorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\n\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl', '', 6, 1500, 0, 1664143200, 'Decorative-Moroccan-yellow-bowl', 1),
+(48, 57, 'Ethnic motif terracotta jug', 'Yellow terracotta jug.\r\n\r\nBeautiful decorative jug with ethnic motifs.', '', 6, 5500, 0, 1664002800, 'Ethnic-motif-terracotta-jug', 1),
+(43, 53, 'Decorative Moroccan yellow bowl', 'Decorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl\r\n\r\nDecorative Moroccan yellow bowl\r\nDecorative Moroccan yellow bowl', '', 7, 1940, 0, 1664089200, 'Decorative-Moroccan-yellow-bowl', 1),
 (44, 54, 'Decorative Moroccan blue bowl', 'Decorative Moroccan blue bowl\r\nDecorative Moroccan blue bowl\r\n\r\nDecorative Moroccan blue bowl', '', 10, 1500, 0, 1664060400, 'Decorative-Moroccan-blue-bowl', 1),
 (49, 57, 'Natural color terracotta jug', 'Natural color terracotta jug.\r\n\r\nBeautiful jug with its natural color.', '', 9, 7500, 0, 1664089200, 'Natural-color-terracotta-jug', 1),
 (41, 55, 'Large ethnic style terracotta dish', 'Large ethnic style terracotta dish.\r\nPerfectly decorate your interior as well as your exterior.', '', 3, 32000, 0, 1664002800, 'Large-ethnic-style-terracotta-dish', 1),
 (42, 22, 'Green terracotta bowl', 'Green terracotta bowl.\r\nWonderfully decorated your interior.', '', 10, 850, 0, 1664143200, 'Green-terracotta-bowl', 1),
-(35, 52, 'Terracotta bowl shimmering colors', 'Terracotta bowl set with pretty colors.\r\nWill decorate your interior as well as your exterior perfectly !', '', 13, 2600, 0, 1664143200, 'Terracotta-bowl-shimmering-colors', 1),
-(36, 49, 'Natural color terracotta bowl', 'Natural color terracotta bowl.\r\n\r\nWill perfectly decorate your interior as well as your exterior', '', 10, 1500, 0, 1664143200, 'Natural-color-terracotta-bowl', 1),
-(37, 55, 'Large natural color terracotta dish', 'Large natural color terracotta dish.\r\n\r\nWill perfectly decorate your interior as well as your exterior.', '', 10, 9900, 0, 1664143200, 'Large-natural-color-terracotta-dish', 1),
-(38, 51, 'Moroccan style terracotta bowl', 'Moroccan style terracotta bowl.\r\nPerfectly decorate your interior as well as your exterior !', '', 7, 2300, 0, 1664143200, 'Moroccan-style-terracotta-bowl', 1),
+(35, 52, 'Terracotta bowl shimmering colors', 'Terracotta bowl set with pretty colors.\r\nWill decorate your interior as well as your exterior perfectly !', '', 12, 2600, 0, 1664143200, 'Terracotta-bowl-shimmering-colors', 1),
+(36, 49, 'Natural color terracotta bowl', 'Natural color terracotta bowl.\r\n\r\nWill perfectly decorate your interior as well as your exterior', '', 9, 1500, 0, 1664143200, 'Natural-color-terracotta-bowl', 1),
+(37, 55, 'Large natural color terracotta dish', 'Large natural color terracotta dish.\r\n\r\nWill perfectly decorate your interior as well as your exterior.', '', 9, 9900, 0, 1664143200, 'Large-natural-color-terracotta-dish', 1),
+(38, 51, 'Moroccan style terracotta bowl', 'Moroccan style terracotta bowl.\r\nPerfectly decorate your interior as well as your exterior !', '', 4, 1890, 0, 1664089200, 'Moroccan-style-terracotta-bowl', 1),
 (39, 52, 'Moroccan style terracotta dish', 'Moroccan style terracotta dish.\r\nPerfectly decorate your interior as well as your exterior.', '', 10, 8500, 0, 1664143200, 'Moroccan-style-terracotta-dish', 1),
-(40, 50, 'Ethnic style terracotta dish', 'Ethnic style terracotta dish.\r\nPerfectly decorate your interior as well as your exterior.', '', 9, 3700, 0, 1664143200, 'Ethnic-style-terracotta-dish', 1);
+(40, 50, 'Ethnic style terracotta dish', 'Ethnic style terracotta dish.\r\nPerfectly decorate your interior as well as your exterior.', '', 8, 3700, 0, 1664143200, 'Ethnic-style-terracotta-dish', 1);
 
 CREATE TABLE `products_imgs` (
   `id` int(11) NOT NULL,
@@ -161,22 +160,12 @@ INSERT INTO `products_imgs` (`id`, `parent_id`, `name`, `order_img`) VALUES
 (17, 37, 'uihvjelmgxdszfabkyptrcnwqo-2-1664221910.jpg', 2),
 (18, 37, 'egjmqynwbfohusltizkacdxprv-3-1664221910.jpg', 3),
 (19, 37, 'mpeigwycfqdzoktxsjvraulnhb-4-1664221911.jpg', 4),
-(20, 38, 'qjdwsgutcozehamkxplbniyvrf-0-1664221927.jpg', 0),
-(21, 38, 'brycjhuvldopifamgwnsqzkext-1-1664221927.jpg', 1),
-(22, 38, 'pehmukorngaljitswxzfyvcbdq-2-1664221927.jpg', 2),
-(23, 38, 'mtwxyipcqjrhdousfzvablkegn-3-1664221927.jpg', 3),
-(24, 38, 'kevmytcbqarjlhpzsiuognxdwf-4-1664221927.jpg', 4),
-(25, 38, 'lzcatofsepihgqbmyruwvxdnkj-5-1664221927.jpg', 5),
-(26, 38, 'ihjvbyfzdqwcaosexgntlpukrm-6-1664221928.jpg', 6),
 (27, 39, 'wviogljynhabmueszxdqfktcrp-0-1664221941.jpg', 0),
 (28, 39, 'nxqrckedsomauzlhwybjpfigvt-1-1664221941.jpg', 1),
 (29, 39, 'dmqtxgszijlpnbeuocyakwrvhf-2-1664221941.jpg', 2),
 (30, 40, 'vjalmygfkiuwrsbozqhdntcxep-0-1664221956.jpg', 0),
 (31, 40, 'rlhvksduaenoyjctgzwmqfxpbi-1-1664221956.jpg', 1),
 (32, 40, 'syjgoexrqncupmflkbztviadwh-2-1664221957.jpg', 2),
-(33, 43, 'rnqyxliczbujhdeasvfomtgpwk-0-1664225539.jpg', 0),
-(34, 43, 'etzobqsdfkgxmrvwnpauichylj-1-1664225540.jpg', 1),
-(35, 43, 'olwixjvhdkgqzyatbmuernfpcs-2-1664225540.jpg', 2),
 (85, 44, 'hrxtepavomgcdjknwslzifquby-0-1664277833.jpg', 0),
 (86, 44, 'kpyenvrhxiszjfbdmtoaqgwclu-1-1664277833.jpg', 1),
 (87, 44, 'opkaejdwfblscrhqgivmuxtnyz-2-1664277833.jpg', 2),
@@ -190,7 +179,17 @@ INSERT INTO `products_imgs` (`id`, `parent_id`, `name`, `order_img`) VALUES
 (146, 49, 'ilveczyqjsdomrahgfnutwkbxp-0-1675091683.webp', 0),
 (147, 49, 'wgktfvqxcsazbempioyjrulhnd-1-1675091683.webp', 1),
 (148, 49, 'vcfrqjseimtudlxbyzwhkngaop-2-1675091684.webp', 2),
-(149, 49, 'wnycvlofepgzadrjsbkhitxqum-3-1675091684.webp', 3);
+(149, 49, 'wnycvlofepgzadrjsbkhitxqum-3-1675091684.webp', 3),
+(150, 43, 'iupljqcerzvwmxkgyonhtfbads-0-1721415544.jpg', 0),
+(151, 43, 'kgmseopxrdhwzcvlntqujfibay-1-1721415544.jpg', 1),
+(152, 43, 'lhycwbnpqveojuimxrztskdfga-2-1721415544.jpg', 2),
+(153, 38, 'yhprbwdaoxsuqkemlzjcntigvf-0-1721415615.jpg', 0),
+(154, 38, 'etsnzaclwxjivgkfodbmuqrpyh-1-1721415615.jpg', 1),
+(155, 38, 'pzrhbeqoisjkalnuvxmgdwcfyt-2-1721415615.jpg', 2),
+(156, 38, 'znyixbtdqhvlacwmespkrugfjo-3-1721415615.jpg', 3),
+(157, 38, 'qygxhwtendckrjizmpvslfauob-4-1721415615.jpg', 4),
+(158, 38, 'ghvkurfdjbmcsxltoawpeyqniz-5-1721415615.jpg', 5),
+(159, 38, 'airuhsxbtekdgvoymjlnzqfpcw-6-1721415615.jpg', 6);
 
 CREATE TABLE `sold_products` (
   `id` int(11) NOT NULL,
@@ -270,7 +269,6 @@ CREATE TABLE `user_shop` (
 INSERT INTO `user_shop` (`id`, `addr`, `tel`, `legal_addr`, `legal_mention`, `mode`, `by_money`, `test_pub_key`, `test_priv_key`, `prod_pub_key`, `prod_priv_key`) VALUES
 (0, 'My shop\r\n1, road name\r\n75000 Paris', '+33 6 01 23 45 67', 'My shop\r\n1, road name\r\n75000 Paris', 'Legal notices invoice', 1, 1, '', '', '', '');
 
-
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
@@ -320,36 +318,41 @@ ALTER TABLE `stats_prods`
 ALTER TABLE `stats_token`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `tokens`
+  ADD UNIQUE KEY `user_id` (`user_id`);
+
 ALTER TABLE `token_Placido`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `user_shop`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `categories`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 ALTER TABLE `customers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `messages`
-  MODIFY `mess_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `mess_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 ALTER TABLE `new_sales`
   MODIFY `sale_id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 ALTER TABLE `products_imgs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 ALTER TABLE `sold_products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `static_pages`
-  MODIFY `page_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `page_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	 archives.php
  *
@@ -46,10 +45,8 @@ class archives {
   public static function archive_vendor_sale(){
 
 
-      // VERIFY USER
-      $token = trim(htmlspecialchars( $_POST['token'] ));
       // verify token
-      program::verify_token($token);
+      token::verify_token();
 
       // sale_id
       $sale_id = (int) trim(htmlspecialchars($_POST['sale_id']));
@@ -197,7 +194,6 @@ class archives {
           echo json_encode($tab);
           exit;
       }
-
 
 
 			// RETURN A RESPONSE BEFORE SENDING MAIL
@@ -462,10 +458,8 @@ class archives {
   public static function load_more_archives(){
 
 
-	    // VERIFY USER
-	    $token = trim(htmlspecialchars( $_POST['token'] ));
-	    // verify token
-	    program::verify_token($token);
+	    // VERIFY token
+	    token::verify_token();
 
 			$min = (int) abs( $_POST['min'] );
 			$max = (int) abs( $_POST['max'] );
@@ -587,9 +581,8 @@ class archives {
 	public static function send_bill_from_archives(){
 
 
-      // verify token
-      $token = trim(htmlspecialchars( $_POST['token'] ));
-      program::verify_token($token);
+      // VERIFY token
+	    token::verify_token();
 
 			// sale id
 			$sale_id = (int) abs($_POST['sale_id']);
@@ -699,9 +692,9 @@ class archives {
 	 */
 	public static function update_archive_as_payed(){
 
-      // verify token
-      $token = trim(htmlspecialchars( $_POST['token'] ));
-      program::verify_token($token);
+
+      // VERIFY token
+	    token::verify_token();
 
 			// sale id
 			$sale_id = (int) abs($_POST['sale_id']);
@@ -761,9 +754,8 @@ class archives {
   public static function refound_vendor_sale(){
 
 
-      // verify token
-      $token = trim(htmlspecialchars( $_POST['token'] ));
-      program::verify_token($token);
+      // VERIFY token
+	    token::verify_token();
 
 			// sale id
 			$sale_id = (int) abs($_POST['sale_id']);
@@ -839,9 +831,8 @@ class archives {
 	public static function search_in_archives(){
 
 
-	    // verify token
-      $token = trim(htmlspecialchars( $_POST['token'] ));
-      program::verify_token($token);
+	    // VERIFY token
+	    token::verify_token();
 
 			// 'date' / 'number' / 'customer'
 			$what = trim(htmlspecialchars($_POST['what']));

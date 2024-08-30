@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * script name: ip_rejected.js
  *
@@ -148,7 +147,7 @@ $.extend({
 								$('.nb_rejected_container').css('display', 'none');
 						}
 						else{
-								// else adjust number 
+								// else adjust number
 								$('.nb_rejected').text( $.o.ip_rejected.nb_rejected );
 						}
 

@@ -21,7 +21,7 @@ warning
 ***
 welcome_login
 ***
-  Welcome !<br>Please log in&nbsp;:
+  <span class="xlarge">Welcome !</span><br>Please log in&nbsp;:
 ***
 security_alert
 ***
@@ -230,6 +230,10 @@ close
 ***
 	Close
 ***
+read_this
+***
+	Read this
+***
 print
 ***
   Print
@@ -294,6 +298,10 @@ connection_restored
 ***
 	You are now connected to the network again
 ***
+disconnected_from_the_website
+***
+	Attention ! You will soon be disconnected from the website
+***
 bad_context
 ***
   Bad context expected ...
@@ -343,6 +351,10 @@ public_mail_no_valid
 error_create_token
 ***
 	Error during the creation of the token
+***
+empty_token
+***
+	Undefined security token
 ***
 token_expired
 ***
@@ -637,7 +649,7 @@ empty_archives
 ***
 bill_number
 ***
-	Invoice n°
+	Bill n°
 ***
 date_bill
 ***
@@ -740,7 +752,7 @@ online_sale
 ***
 catalog_mode
 ***
-	Catalog ( without prices )
+	Catalog (&nbsp;Online shopping is disabled&nbsp;)
 ***
 title_shop
 ***
@@ -956,7 +968,7 @@ no_category_assigned
 ***
 price_less_tax
 ***
-  Price before tax
+  Price without tax
 ***
 tax
 ***
@@ -968,7 +980,11 @@ tax_value
 ***
 price_tt
 ***
-  Price including VAT
+  Price with tax
+***
+final_price
+***
+	Price with or without tax
 ***
 no_price_assigned
 ***
@@ -1366,7 +1382,7 @@ token_placido
 ***
 token_placido_info
 ***
-	We ask you to pay a license of 5$/€ minimum per year for each domain name
+	We ask you to pay a license of $5/€ minimum per year for each domain name
 	where you will use Placido-Shop in production.
 	<br>
 	If you do not already have a license for this domain name,
@@ -1404,6 +1420,22 @@ token_well_recored
 modif_access_codes
 ***
   Change your access codes
+***
+website_admins
+***
+	Website administrators :
+***
+add_new_admin
+***
+	Add a new administrator
+***
+admin_name
+***
+	Name
+***
+no_other_administrators
+***
+	No other administrators
 ***
 enter_stripe_keys
 ***
@@ -1632,6 +1664,18 @@ META_DESCR
 	<br>
 	<small>( for search engines and social networks 300 characters max )</small>
 ***
+allow_search_engines
+***
+	Allow search engines to index your website
+***
+allow
+***
+	Allow
+***
+disallow
+***
+	Disallow
+***
 social_networks_imgs
 ***
 	Image social networks
@@ -1639,6 +1683,10 @@ social_networks_imgs
 VERSION
 ***
 	Version
+***
+alert_settings
+***
+	Don't forget to save your changes by clicking on the "Save" button at the bottom of the section!
 ***
 COMPRESSED_DATE
 ***
@@ -1671,6 +1719,33 @@ no
 COMPRESSED
 ***
 	Use the compressed version
+***
+rebuild_sitemap
+***
+	Rebuild the sitemap
+***
+rebuild_sitemap_info
+***
+	You have the option of rebuilding the entire sitemap.xml file which is located at the root of the website.
+	<br>
+	This file is used by search engines to crawl all the pages on your site.
+	<br>
+	Here will be listed all the pages of your products,
+	all the categories as well as all the static pages of your site.
+	<br>
+	Sitemap data will be reconstructed with today's date.
+***
+execute_rebuild_sitemap
+***
+	Run sitemap rebuild
+***
+rebuild_sitemap_success
+***
+	The sitemap has been well reconstructed
+***
+rebuild_sitemap_error
+***
+	An error occurred while rebuilding the sitemap
 ***
 PUBLIC_NOTIFICATION_MAIL
 ***
@@ -1938,15 +2013,16 @@ title_static_page_info
 url_static_page_info
 ***
 	For page urls use a string of characters without spaces or accents,
-	<br>ex. : "Know-more-about_us"
-	<br> - Use "-" or "_" to fill in the spaces between words.
+	<br>ex. : "Know-more-about-us"
+	<br> - Use "-" to fill in the spaces between words.
 	<br> - Note: When creating a page,
 	an html page will be created in the repertory
 	/templates/STATIC_PAGES,
 	<br> in the public part of the site.
 	<br> - You should find your page like this:
-	<br>/templates/STATIC_PAGES/Know-more-about_us.html
-	<br> - Use an html code editor to edit this page.
+	<br>/templates > STATIC_PAGES > Know-more-about-us.html
+	<br> - Use an HTML code editor to edit this page (recommended)
+	or use the edit button to edit the page directly here.
 	<br>A link template as well as a button template to insert in the application
 	in the application will be present,
 	as a comment, at the beginning of your page.
@@ -2029,6 +2105,42 @@ unable_to_rename_file_in_db
 success_rename_file
 ***
 	The file has been renamed
+***
+success_edit_page
+***
+	The page has been edited successfully
+***
+error_edit_page
+***
+	Error: The page could not be edited
+***
+edit_static_info_1
+***
+	Note: The best way to edit your pages should be to edit the content
+	HTML with a code editor.
+	<br>
+	The HTML code produced by this editor may be full of errors.
+***
+edit_static_info_2
+***
+	The style rendered in this page editor does not match the design
+	final page of your page.
+	<br>
+	To actually see what your page will look like:
+	<br>
+	1 - Open your page in a new tab.
+	<br>
+	2 - Save your changes here.
+	<br>
+	3 - Reload your open page in this new tab.
+***
+edit_static_info_3
+***
+	If you insert images, use small images as they will be base64 encoded directly on the page.
+	<br>
+	Important: To skip lines, use the key combination (Shift or Shift) + Enter,
+	<br>
+	otherwise it will create a new empty paragraph.
 
 
 

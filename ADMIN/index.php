@@ -1,22 +1,20 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACK OFFICE
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
- * Script name:	 index.php
+ * Script name:	index.php
+ *
+ * ENTRY POINT FOR BACKEND APPLICATION
  *
  */
 
 
-  // Report all PHP errors
-  // error_reporting(E_ALL);
-
-	// Turn off all error reporting -> uncomment
+  // ERROR REPORTING :
+  // E_ALL -> Report all PHP errors - 0 -> Turn off error reporting
   error_reporting(0);
-
 
 	// include MUSTACHE
 	require dirname(__DIR__).'/Mustache/Autoloader.php';
@@ -40,7 +38,7 @@
 	// end SPL auto registrer
 
 
-	// INIT OBJ. WITH WEBSITE_SETTINGS - set TIMEZONE
+	// init. constants ROOT, ARCH, API_SETTINGS, require API/constants.php
 	api::init_settings();
 
 	// SET GLOBAL ARRAY translation -> tr::$TR[]

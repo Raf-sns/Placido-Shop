@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * script name: login.js
  *
@@ -187,33 +186,8 @@ $.extend({
 						$('body').append(
 							`<script type="text/javascript" src="JS/tools.js"></script>`);
 
-						// // add templates to Mustache
-						// Templates.forEach((item, i) => {
-						//
-						// 		$.Mustache.load(item);
-						// });
-						//
-						//
-						// // LOAD JS BACKEND BASE TEMPLATE
-						// new Promise(function(resolve, reject) {
-						//
-						// 	$.Mustache.load('templates/backend_base.html',
-						// 	function(){
-						//
-						// 		resolve();
-						// 	});
-						// }).then(function(result) {
-						//
-						// 	$.Mustache.load('templates/new_sales.html',
-						// 	function(){
-
-								// APPEND PAGE ADMIN when template is charged
-								$('#center_page').empty().mustache('admin_page', $.o );
-
-						// 	});
-						//
-						// });
-
+						// APPEND PAGE ADMIN when template is charged
+						$('#center_page').empty().mustache('admin_page', $.o );
 
 						// REMOVE LOGIN
 						$('script[src="JS/login.js"]').remove();

@@ -1,17 +1,17 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2021-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2020-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	new_sales.php
  *
  * new_sales::get_fresh_sales();
+ * new_sales::get_one_customer( $customer_id );
  * new_sales::get_new_sales_user();
  * new_sales::get_sold_products( $sale_id );
- * new_sales::get_ONE_sale( $sale_id ); // used
+ * new_sales::get_ONE_sale( $sale_id );
  * new_sales::suppr_new_sale();
  *
  */
@@ -37,9 +37,8 @@ class new_sales {
   public static function get_fresh_sales(){
 
 
-      $token = trim(htmlspecialchars($_POST['token']));
-      // verify token
-      program::verify_token($token);
+      // VERIFY token
+      token::verify_token();
 
       $tab['success'] = true;
 
@@ -65,6 +64,62 @@ class new_sales {
   }
   /**
    * new_sales::get_fresh_sales();
+   */
+
+
+
+  /**
+   * new_sales::get_one_customer( $customer_id );
+   *
+   * @param  {int}    $customer_id
+   * @return {array}  customer data array
+   */
+  public static function get_one_customer( $customer_id ){
+
+
+      $ARR_pdo = array('id' => (int) $customer_id);
+      $sql = 'SELECT * FROM customers WHERE id=:id';
+      $response = 'one';
+      $last_id = false;
+      //  ->  fetch
+      $ONE_CUSTOMER = db::server($ARR_pdo, $sql, $response, $last_id);
+
+      // parse tel ...
+      // remove all spaces returns tabs, ...
+      $tel = trim($ONE_CUSTOMER['tel']);
+      $regex = '/(\r\n|\n|\t|\r|\s| ){1,}/';
+      $replacement = ""; // !! ONLY "" ARE INTERPRETED
+      $tel_parsed = preg_replace($regex, $replacement, $tel);
+      // transform in array
+      $ARR_tel_pre = str_split( $tel_parsed, 1 );
+      // reverse array -> walk from the end, last char of tel
+      $ARR_tel = array_reverse($ARR_tel_pre);
+      // var_dump($ARR_tel);
+      // index for get pairs of numbers and insert space
+      $indx = 0;
+      $pre_tel = ''; // string tel for retunr
+
+      $count = count($ARR_tel); // count array for loop
+
+      // concat tel number wll formated
+      for( $i=0; $i < $count; $i++ ){
+
+        $indx++;
+
+        // serach for modulo
+        $pre_tel = ( $indx%2 == 0 ) ?
+        ' '.$ARR_tel[$i].$pre_tel : $ARR_tel[$i].$pre_tel;
+      }
+      // end for
+
+      // var_dump( $pre_tel );
+
+      $ONE_CUSTOMER['tel'] = $pre_tel;
+
+      return $ONE_CUSTOMER;
+  }
+  /**
+   * new_sales::get_one_customer( $customer_id );
    */
 
 
@@ -128,7 +183,7 @@ class new_sales {
 
           // FETCH CUSTOMER
           $customer_id = (int) $v['customer_id'];
-          $NEW_SALES[$k]['customer_settings'] = process::get_one_customer($customer_id);
+          $NEW_SALES[$k]['customer_settings'] = new_sales::get_one_customer($customer_id);
           // adress sup true/false
           $NEW_SALES[$k]['sup'] =
           ( empty($NEW_SALES[$k]['customer_settings']['address_sup']) ) ? false : true;
@@ -488,7 +543,7 @@ class new_sales {
 
     // FETCH CUSTOMER
     $customer_id = (int) $SALE['customer_id'];
-    $SALE['customer_settings'] = process::get_one_customer($customer_id);
+    $SALE['customer_settings'] = new_sales::get_one_customer($customer_id);
     // adress sup true/false
     $SALE['sup'] =
     ( empty($SALE['customer_settings']['address_sup']) ) ? false : true;
@@ -531,9 +586,8 @@ class new_sales {
   public static function suppr_new_sale(){
 
 
-      // verify token
-      $token = trim(htmlspecialchars( $_POST['token'] ));
-      program::verify_token( $token );
+      // VERIFY token
+      token::verify_token();
 
       $sale_id = (int) trim(htmlspecialchars( $_POST['sale_id'] ));
 

@@ -1,9 +1,9 @@
 <?php
 /**
- * © Copyright - Raphaël Castello, 2018-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - API
+ * Copyright © Raphaël Castello, 2018-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	db.php
  *
@@ -55,13 +55,14 @@ class db extends config {
 
   /**
    * db::server( $ARR_pdo, $sql, $response, $last_id );
-   *
-   * @param  {array}  $ARR_pdo      array of vars. for PDO
-   * @param  {str}    $sql          SQL command
-   * @param  {str}    $response     'one' / 'all' / false
-   * -> 1 row response or multiples rows response SET to  false for INSERT / UDPATE / DELETE
-   * @param  {bool}   $last_id      true / false -> true return last inserted id
-   * @return {array}                array from data base
+   * Handles all database queries
+   * @param  {array}        $ARR_pdo       array of vars. for PDO
+   * @param  {string}       $sql           SQL command
+   * @param  {string/bool}  $response      'one' || 'all' || false
+   * 'all' -> one row response, 'all' -> multiples rows response
+   * false -> for return nothing e.g.: INSERT / UDPATE / DELETE
+   * @param  {bool}         $last_id       true || false -> true return last inserted id
+   * @return {array/int}    array from data base
    */
   public static function server( $ARR_pdo, $sql, $response, $last_id ){
 
@@ -94,13 +95,13 @@ class db extends config {
           // get one row
           if( $response == 'one' ){
 
-              return $request->fetch(PDO::FETCH_ASSOC); // fetch one resp
+              return $request->fetch(PDO::FETCH_ASSOC); // fetch ONE response
           }
 
           // get multiples rows
           if( $response == 'all' ){
 
-              return $request->fetchAll(PDO::FETCH_ASSOC); // fetch all resp
+              return $request->fetchAll(PDO::FETCH_ASSOC); // fetch MULTIPLES responses
           }
 
       }
@@ -129,14 +130,12 @@ class db extends config {
   }
   /**
    * END db::server( $ARR_pdo, $sql, $response, $last_id );
-   * @return {array}            array from data base
    */
 
 
 }
 /**
- * END class db:: - herit from api:: settings
- * manage PDOstatement & requests to database
+ * END class db::
  */
 
 ?>

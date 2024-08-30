@@ -1,0 +1,94 @@
+<script id="modal_admin" type="text/html">
+
+<div class="container text-dark-gray">
+
+		<h5 class="border-bottom border-grey large margin-bottom mrg0">
+			<i class="fa-user-plus fa-fw fas text-gray xlarge"></i>&nbsp;
+			{{tr.add_new_admin}}
+
+		</h5>
+
+		<form id="form_add_admin"
+		style="margin: 4% auto;width: 85%;">
+
+			<p class="large">
+				<label for="name">
+					<i class="fa-user-alt fas text-gray"></i>&nbsp; {{tr.admin_name}}&nbsp;:
+				</label>
+				<br>
+				<input
+				id="name"
+				name="name"
+				value="{{admin.name}}"
+				type="text"
+				class="border border-blue padding-small" />
+			</p>
+
+			<p class="large">
+				<label for="mail">
+					<i class="fas fa-at text-gray"></i>&nbsp; {{tr.mail}}&nbsp;:
+				</label>
+				<br>
+				<input
+				id="mail"
+				name="mail"
+				value="{{admin.mail}}"
+				type="text"
+				class="border border-blue padding-small" {{#delete}}readonly{{/delete}}/>
+			</p>
+
+			{{^delete}}
+				<p class="large">
+					<label for="passw">
+						<i class="fas fa-key text-gray"></i>&nbsp;
+						{{tr.password}}&nbsp;:
+					</label>
+					<br>
+					<input
+					id="passw"
+					name="passw"
+					type="text"
+					class="border border-blue padding-small"
+					autocomplete="off"/>
+				</p>
+			{{/delete}}
+
+			<!-- BUTTONS -->
+			<p>
+				<button
+				{{#add}}
+				onclick="$.add_new_admin(event, 'add', null);"
+				{{/add}}
+				{{#modify}}
+				onclick="$.add_new_admin(event, 'modify', {{admin.id}});"
+				{{/modify}}
+				{{#delete}}
+				onclick="$.add_new_admin(event, 'delete', {{admin.id}});"
+				{{/delete}}
+				id="add_admin_btn"
+				class="{{#add}}blue{{/add}}{{#modify}}gree{{/modify}}{{#delete}}orange{{/delete}} btn card round margin-right"
+				type="button"
+				role="button">
+					<i class="fas fa-sign-in-alt"></i>&nbsp;
+				{{#add}}
+					{{tr.record}}
+				{{/add}}
+				{{#modify}}
+					{{tr.modify}}
+				{{/modify}}
+				{{#delete}}
+					{{tr.suppr}}
+				{{/delete}}
+				</button>
+
+				<button onclick="$.close_modal();"
+				class="gray btn card round"
+				type="button"
+				role="button">
+					<i class="fas fa-times"></i>&nbsp; {{tr.close}}
+				</button>
+			</p>
+		</form>
+
+	</div>
+</script>

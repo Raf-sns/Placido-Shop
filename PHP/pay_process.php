@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - FRONT
- * Copyright © Raphaël Castello , 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - FRONT
+ * Copyright © Raphaël Castello, 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	pay_process.php
  *
@@ -200,7 +199,7 @@ class pay_process {
 
 
     // CALL STRIPE PHP
-    require_once('LIBS/Stripe/init.php');
+    require_once 'LIBS/Stripe/init.php';
 
     // CREATE STRIPE PAYMENT AND RETURN 'client_key' : $intent->client_secret
     try{
@@ -210,7 +209,7 @@ class pay_process {
         $intent = $stripe->paymentIntents->create(
           [
             'amount' => $SALE['total_amount_sale'],
-            'currency' => strtolower(CURRENCY_ISO), // lowercase - asked by Stripe ?
+            'currency' => strtolower(CURRENCY_ISO), // lowercase - asked by Stripe
             'automatic_payment_methods' => ['enabled' => true],
             'metadata' =>
             [
@@ -290,7 +289,7 @@ class pay_process {
 
       $SHOP = pay_process::check_mode_payment_shop( $pay_with );
       // return :
-      // $SALE['shop']['mode_payment']
+      // $SHOP['mode_payment']
       // echo json_encode( $SHOP, JSON_FORCE_OBJECT);
       // exit;
 
@@ -322,7 +321,7 @@ class pay_process {
           $SALE_INFOS;
 
           // CALL STRIPE PHP
-          require_once('LIBS/Stripe/init.php');
+          require_once 'LIBS/Stripe/init.php';
 
           // try/catch init. Stripe
           try{
@@ -374,7 +373,7 @@ class pay_process {
       // DECREMENT QUANTITIES FOR SOLD PRODUCTS
       foreach( $SALE['products_settings'] as $k => $v ){
 
-					// 'incr/decr' -> for each sold products
+					// 'incr' / 'decr' -> for each sold products
         	pay_process::update_quant_prod( $v['prod_id'], $v['quant'], 'decr' );
 
 			}
@@ -383,7 +382,7 @@ class pay_process {
 			stats::record_stat_products_purchased( $SALE['products_settings'] );
 
 			// put sale in session for retrieve user new sale during session
-      // see program::page_api( );
+      // see program::page_api();
       // start a session if not exist
       if( session_status() === PHP_SESSION_NONE ){
 
@@ -398,7 +397,7 @@ class pay_process {
           ]);
       }
 
-			// need to mak a session timestamp
+			// need to make a session timestamp
       $_SESSION['render_sale_stamp'] = time();
 
 			// store render sale in a session
@@ -418,23 +417,26 @@ class pay_process {
 
       echo json_encode($tab, JSON_FORCE_OBJECT);
 
-      // make sale render url link
+      // Create a URL where to find the sale if the session exists,
+      // otherwise a connection form will be displayed
       $SALE['sale_render_url'] =
       'https://'.HOST.'/sale/'.$SALE['sale_id'].'/'.$hash_customer;
 
       // SEND ORDER TO CUSTOMER BY EMAIL
       mail::send_order_to_customer( $SALE );
 
-      // ... need to sleep for send multiples e-mails ?
+      // ... need to sleep for send multiples e-mails on my server
       sleep(2);
 
-      //  SEND NEW SALE ALERT TO SELLER BY EMAIL
+      // SEND NEW SALE ALERT TO SELLER BY EMAIL
       mail::send_notif_new_sale( $SALE );
 
-
+      // free up memory and not leave things lying around
       unset($SALE);
       unset($_POST);
+
 			// delete session token
+      // -> already defined in PHP/stats.php
 			unset($_SESSION['token']);
       exit;
   }
@@ -453,7 +455,8 @@ class pay_process {
   public static function delete_new_sale(){
 
 
-      // able to make 10 requests by day after -> rejected
+      // Allowed to make 10 orders
+      // or cancellation per day otherwise -> the IP is rejected
       pay_process::secure_payment();
 
 
@@ -547,7 +550,7 @@ class pay_process {
 
 
       // CALL STRIPE PHP
-      require_once('LIBS/Stripe/init.php');
+      require_once 'LIBS/Stripe/init.php';
 
 
       // CREATE STRIPE CLIENT FOR DELETE INTENT
@@ -577,14 +580,11 @@ class pay_process {
       // sale well canceled - if want to check
       if( $DELETE_SALE_IN_STRIPE->status == 'canceled' ){
 
-          // $tab['deleted_in_stripe'] = true;
-
 					// return success
 					$tab['success'] = true;
 					echo json_encode($tab, JSON_FORCE_OBJECT);
 					exit;
       }
-
 
   }
   /**
@@ -650,10 +650,11 @@ class pay_process {
       // this string will be steel in stripe refs like 'id'
       $payment_id = (string) $payment_id;
 
-      // UPDATE ONE PROD. QUANT. 'ope' -> calcul operation
+      // UPDATE NEW SALE AS PAYED
       $ARR_pdo = array( 'sale_id' => $sale_id,
                         'id_card' => $payment_id,
                         'payed' => 1 );
+
       $sql = 'UPDATE new_sales SET
       id_card=:id_card, payed=:payed WHERE sale_id=:sale_id';
       $response = false;
@@ -670,8 +671,6 @@ class pay_process {
 
           return true;
       }
-
-      // var_dump('updated_as_payed');
 
   }
   /**
@@ -729,7 +728,7 @@ class pay_process {
     // get products - verify quant aviable - calcul total cart
     foreach( $CART['items'] as $k => $v ){
 
-        $get_one_prod = process::get_one_product( $v['id'] );
+        $get_one_prod = shop::get_one_product( $v['id'] );
 
         // error - product not found
         if( boolval($get_one_prod) == false ){
@@ -1351,7 +1350,6 @@ class pay_process {
 
     }
 
-
     // too long request ( i. js max value.length = 58 )
     if( iconv_strlen($country) > 100 ){
 
@@ -1376,7 +1374,6 @@ class pay_process {
 
     $CUSTOMER['country'.$_sup.''] = $country;
     // END COUNTRY
-
 
 
     return $CUSTOMER;
@@ -1422,7 +1419,7 @@ class pay_process {
       if( $pay_with == 'CARD' ){
 
 
-          // test TEST MODE CARD - check if is in catalog mode
+          // test TEST MODE CARD - check if is in catalog mode - true
           if( !empty($SHOP['test_pub_key'])
               && !empty($SHOP['test_priv_key'])
               && boolval($SHOP['mode']) == true ){
@@ -1455,7 +1452,8 @@ class pay_process {
       // test OTHER PAYMENT MODE
       if( $pay_with == 'OTHER' ){
 
-
+          // If the store allows payments other than credit card
+          // What if the store is not in catalog mode
           if( boolval($SHOP['by_money']) == true
               && boolval($SHOP['mode']) == true ){
 
@@ -1511,8 +1509,8 @@ class pay_process {
 
 
       // collect, validate and test ip of visitor
-      // return false -> ban OR IP of user -> not ban
-      $ip_user = process::test_ip_rejected();
+      // return false -> ban |OR| IP of user -> not ban
+      $ip_user = ip_rejected::test_ip_rejected();
 
 
       // 2 - IP user is not correct
@@ -1559,7 +1557,7 @@ class pay_process {
           $_SESSION['CARD_RETRY'] = 10;
 
           // store IP rejected in DB
-          process::record_ip_rejected( $ip_user );
+          ip_rejected::record_ip_rejected( $ip_user );
 
           // return error
           $tab = array( 'error' => true,
@@ -1579,7 +1577,6 @@ class pay_process {
 
 }
 // END CLASS pay_process::
-
 
 
 

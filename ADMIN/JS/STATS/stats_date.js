@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2022-2023
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact : https://sns.pm
  *
  * script name: stats_date.js
  *
@@ -40,18 +39,11 @@
 
 			return date_now;
 
-			// offset test  ... but js return date/hour locally
-			// const offset = date_now.getTimezoneOffset();
-			//
-			// let Da = new Date( date_now.getTime() - (offset*60*1000) );
-			//
-			// Da.setHours(0, 0, 0); // return stamp in int. in milliseconds
-			//
-			// return new Date( Da ); // return Date objet at UTC time at 00:00:00
 	}
 	/**
 	 * set_obj_date_now();
 	 */
+
 
 
 	/**
@@ -99,6 +91,7 @@
 	 */
 
 
+
 	/**
 	 * set_month( date_string, value );
 	 *
@@ -121,6 +114,7 @@
 	/**
 	 * set_month( date_string, value );
 	 */
+
 
 
 	/**
@@ -179,6 +173,7 @@
 	 */
 
 
+
 	/**
 	 * Sort_date.get_full_string();
 	 *
@@ -200,6 +195,7 @@
 	 */
 
 
+
 	/**
 	 * Sort_date.get_year();
 	 *
@@ -213,6 +209,7 @@
 	/**
 	 * Sort_date.get_year();
 	 */
+
 
 
 	/**
@@ -231,6 +228,7 @@
 	 */
 
 
+
 	/**
 	 * Sort_date.get_day();
 	 *
@@ -246,6 +244,7 @@
 	/**
 	 * Sort_date.get_day();
 	 */
+
 
 
 	/**
@@ -290,12 +289,17 @@
 	 */
 
 
+
 	/**
 	 * re_init_date();
 	 *
 	 * @return {object}  Sort_date.obj  - just re-init Sort_date.obj at today
 	 */
 	function re_init_date(){
+
+
+			// attr good text value in button period selector
+			document.getElementById('label_period').innerText = $.o.tr.Day;
 
 			// select period year, day, ...
 			let input = document.getElementById('sort_stats');
@@ -324,8 +328,8 @@
 
 			// test in new date setted is bigger than date today
 			// test on seconds values !
-			if( Math.round(Sort_date.obj.getTime()/1000)
-					> Math.round(Sort_date.now.getTime()/1000) ){
+			if( Math.floor(Sort_date.obj.getTime()/1000)
+					> Math.floor(Sort_date.now.getTime()/1000) ){
 
 					// re-init Sort_date.obj AT TODAY - 00:00:00
 					Sort_date.obj = set_obj_date_now();

@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - FRONT
- * Copyright © Raphaël Castello  2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - FRONT
+ * Copyright © Raphaël Castello, 2019-2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	program.php
  *
@@ -26,6 +25,7 @@ class program {
    * @return html home page or a specific page asked
    */
   public static function get_home_page(){
+
 
 			if (session_status() === PHP_SESSION_NONE){
 
@@ -52,7 +52,7 @@ class program {
 
             // RENDER JS OBJECT
 						header('Content-type: application/json');
-            echo json_encode($_SESSION['datas'], JSON_NUMERIC_CHECK);
+            echo $_SESSION['datas']; // this contain a json represention of $ARR
 
             // DELETING SESSION - do not deleting the session globally
             // see : https://www.php.net/manual/fr/function.session-destroy.php
@@ -71,20 +71,20 @@ class program {
 				'slogan' => 'Placido-Shop - Online Sale Software',
 				'version' => VERSION,
 				'author' => 'Raphaël Castello',
-				'organization' => 'SNS - Web et Informatique',
+				'organization' => 'SNS - Web et informatique',
 				'license' => 'GNU AGPL',
 				'note' => 'Make peace in the world - Are we humans?',
 				'website' => 'www.placido-shop.com'
 			);
 
       // ADD translation - tr::$TR is a global array of translation see: API/tr.php
-			// - this allow to acces translation in JS with $.o.tr.key_for_translation
+			// - this allow to access translation in JS with $.o.tr.key_for_translation
+      // - access translation in PHP with tr::$TR['key_for_translation']
       $ARR['tr'] = tr::$TR;
 
 
 			// get infos modules
-			$ARR['modules'] = api::list_Modules();
-
+			// $ARR['modules'] = api::list_Modules();
 
 			// website[] is for not visible datas DOM object
       // COMPRESSION infos
@@ -103,11 +103,13 @@ class program {
 			$ARR['website']['lang_locale'] =
 				[ LANG_FRONT, str_replace('_','-', LANG_LOCALE) ];
 			$ARR['website']['currency_iso'] = CURRENCY_ISO;
+      // allow / disallow robots
+      $ARR['website']['robots'] = ALLOW_SEARCH_ENGINES;
 
       // CATEGORIES MENU IN HTML
       $ARR['cats_menu'] = cats::get_cats_html();
 
-      // // NEW CONFIG - return $ARR['cats'] - $ARR['shop'] - $ARR['products']
+      // NEW CONFIG - return $SHOP_GEN['cats'] - $SHOP_GEN['shop'] - $SHOP_GEN['products']
       $SHOP_GEN = shop::get_shop();
       $ARR['cats'] = $SHOP_GEN['cats'];
       $ARR['shop'] = $SHOP_GEN['shop'];
@@ -115,7 +117,7 @@ class program {
 
 			// GET FEATURED PRODUCTS
 			$ARR['featured_products'] =
-			featured_products::get_featured_products( $ARR['products'] );
+			   featured_products::get_featured_products( $ARR['products'] );
 
       // BY DEFAULT CART IS EMPTY
       $ARR['cart']['items'] = array();
@@ -131,7 +133,7 @@ class program {
 
 
       // PAGINATION - HERE - RETURN -> $ARR['view'] !!
-      $ARR = process::return_pagination($ARR, $ARR['products'], NB_FOR_PAGINA);
+      $ARR = pagination::return_pagination($ARR, $ARR['products'], NB_FOR_PAGINA);
 
 
       // SET VIEW SETTINGS
@@ -150,8 +152,6 @@ class program {
       );
 
 			// How to display products - 'mozaic' / 'inline'
-			$ARR['view']['display_products'] = DISPLAY_PRODUCTS;
-
 			$ARR['view']['display_mozaic'] =
 				( DISPLAY_PRODUCTS == 'mozaic' ) ? true : false;
 
@@ -159,7 +159,7 @@ class program {
 				( DISPLAY_PRODUCTS == 'inline' ) ? true : false;
 
       // GET STATIC PAGES
-      $ARR['static_pages'] = process::get_static_pages();
+      $ARR['static_pages'] = static_pages::get_static_pages();
 
 
       // GET url request  - ONE PRODUCT asked
@@ -186,7 +186,6 @@ class program {
 
           $ARR = program::page_api($ARR);
       }
-
 
 
       // RENDER HTML WITH MUSTACHE
@@ -222,7 +221,7 @@ class program {
       }
 
 			// put app data in session to render to js API object ajax request
-			$_SESSION["datas"] = $ARR;
+			$_SESSION['datas'] = json_encode($ARR, JSON_NUMERIC_CHECK);
 
       exit;
 
@@ -262,12 +261,12 @@ class program {
           }
       }
 
-
-      // var_dump($ONE_PRODUCT);
-      // exit;
-
+      // OVERRIDE WEBSITE - title and description for one product
+      // "render product title - website title"
       $ARR['website']['title'] = $ONE_PRODUCT['title'].' - '.WEBSITE_TITLE;
-      $ARR['website']['description'] = tools::cut_string(300, $ONE_PRODUCT['text']);
+      // cut string, inline and remove html tags for decription
+      $ARR['website']['description'] =
+        tools::cut_string(SHORT_TEXT, tools::inline_string(strip_tags($ONE_PRODUCT['text'])));
 
       // OVERRIDE OG TAGS
       $ARR['og']['title'] = $ONE_PRODUCT['title'].' - '.WEBSITE_TITLE;
@@ -279,10 +278,8 @@ class program {
       ? 'https://'.HOST.'/img/'.LOGO
       : 'https://'.HOST.'/img/Products/max-'.$ONE_PRODUCT['img_prez'];
 
-      $ARR['og']['description'] = preg_replace('/<br \/>\s{1,}/', ' ', $ONE_PRODUCT['text']);
-      $regex = '/(\r\n|\n|\t|\r){1,}(\s){2,}/';
-      $replacement = " "; // !! ONLY "" ARE INTERPRETED
-      $ARR['og']['description'] = preg_replace($regex, $replacement, $ARR['og']['description']);
+      $ARR['og']['description'] =
+        tools::cut_string(SHORT_TEXT, tools::inline_string(strip_tags($ONE_PRODUCT['text'])));
       // END OG TAGS
 
       $ARR['one_prod'] = $ONE_PRODUCT;
@@ -320,12 +317,12 @@ class program {
 
   /**
    * program::cat_request( $ARR );
+   * category requested by GET method
    *
    * @param  {array} $ARR  general array api
    * @return {array} override $ARR
    */
   public static function cat_request( $ARR ){
-
 
 
       // REQUEST less 1 million length
@@ -395,7 +392,7 @@ class program {
       // var_dump( $Arr_prods_by_cat );
 
       // PAGINATION - FOR ALL SHOP FIRST DEFAULT PAGE
-      $ARR = process::return_pagination($ARR, $Arr_prods_by_cat, NB_FOR_PAGINA);
+      $ARR = pagination::return_pagination($ARR, $Arr_prods_by_cat, NB_FOR_PAGINA);
 
       // pass Arr page to false for obtain the home template by default
 			// -> products_view.html
@@ -494,10 +491,8 @@ class program {
 			$ARR['website']['title'] = $v['page_title'].' - '.WEBSITE_TITLE;
       $ARR['og']['url'] = 'https://'.HOST.'/'.$page.'.html';
       $ARR['og']['image'] = 'https://'.HOST.'/img/'.LOGO;
-      $ARR['og']['description'] = META_DESCR;
-      $regex = '/(\r\n|\n|\t|\r){1,}(\s){2,}/';
-      $replacement = " "; // !! ONLY "" ARE INTERPRETED
-      $ARR['og']['description'] = preg_replace($regex, $replacement, $ARR['og']['description']);
+      $ARR['og']['description'] =
+        tools::inline_string(strip_tags(META_DESCR));
       // END OG TAGS FOR STATIC PAGES
 
       // PAGE CONTEXT
@@ -509,7 +504,7 @@ class program {
 			// add show = false to slider
 			$ARR['view']['slider']['show'] = false;
 
-
+      // FOR HISTORY OBJECT
       $ARR['histo'] = array(
         'page' => $page,
         'url' => $page.'.html' );
@@ -603,17 +598,14 @@ class program {
 							// for browser urls
 							$ARR['website']['title'] = WEBSITE_TITLE.' - '.tr::$TR['your_order'];
 
-              // set histo for api_loader.js - keep 2 versions for context for future
+              // set history object for api_loader.js - keep 2 versions for context for future
               $ARR['histo'] = array(
                 'page' => 'sale',
                 'sale_id' => $sale_id,
                 'hash_customer' => $hash_customer,
                 'url' => '/sale/'.$sale_id.'/'.$hash_customer );
-
-
           }
           else{
-
               // ASK FOR LOGIN RENDER SALE
 
               // set partial template for center page
@@ -628,7 +620,6 @@ class program {
                 'sale_id' => $sale_id,
                 'hash_customer' => $hash_customer,
                 'url' => '/sale/'.$sale_id.'/'.$hash_customer );
-
           }
 
         break;
@@ -866,10 +857,10 @@ class program {
 
       // verify hash customer
       $hash_customer_server =
-      api::api_crypt( $SALE['customer_settings']['mail'].$SALE['sale_id'] , 'encr');
+        api::api_crypt( $SALE['customer_settings']['mail'].$SALE['sale_id'] , 'encr');
 
       $hash_customer =
-      api::api_crypt( $mail.$sale_id , 'encr');
+        api::api_crypt( $mail.$sale_id , 'encr');
 
       if( $hash_customer_server != $hash_customer ){
 
@@ -914,10 +905,7 @@ class program {
 
 
 
-
 }
 // END CLASS program::
-
-
 
 ?>

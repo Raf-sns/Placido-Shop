@@ -263,19 +263,18 @@
 		aria-label="{{tr.accept_terms_and_conditions}}">
       <i class="color_theme checkbox
       fa-{{#cart.CONDS_checked}}check-{{/cart.CONDS_checked}}square far pointer"></i>
+      &nbsp;
+  		{{tr.declare_take_knowledge_of}}&nbsp;<a
+      href="https://{{website.host}}/{{static_pages.terms-of-sale.url}}.html"
+      title="{{tr.consult_our_general_conditions_of_sale}}"
+      target="_blank"
+      class="underline pointer">{{tr.our_general_conditions_of_sale}}</a>.
     </label>
 
     <input type="hidden"
     id="sale_conditions"
     name="sale_conditions"
     value="{{#cart.CONDS_checked}}signed{{/cart.CONDS_checked}}{{^cart.CONDS_checked}}no{{/cart.CONDS_checked}}">
-    &nbsp;
-		{{tr.declare_take_knowledge_of}}&nbsp;<a
-    href="https://{{website.host}}/{{static_pages.terms-of-sale.url}}.html"
-    title="{{tr.consult_our_general_conditions_of_sale}}"
-    target="_blank"
-    class="underline pointer">{{tr.our_general_conditions_of_sale}}</a>.
-
 
   </div>
   <!-- end confirm sale conditions -->

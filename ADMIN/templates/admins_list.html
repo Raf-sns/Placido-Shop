@@ -1,0 +1,36 @@
+<script id="admins_list" type="text/html">
+		{{#admins_list}}
+			<p class="large margin-top mrg0">
+				<span>
+					{{tr.admin_name}}&nbsp;: {{name}}
+				</span>
+				<br>
+				<span>
+					{{tr.mail}}&nbsp;: {{mail}}
+				</span>
+			</p>
+			<!-- buttons -->
+			<p class="mrg0">
+				<!-- button modify -->
+				<button onclick="$.open_modal_admin( {{id}}, 'modify' );"
+				class="btn card gree round small small_btn margin-right"
+				type="button"
+				role="button">
+				<i class="fa-user-edit fas"></i>&nbsp; {{tr.modify}}
+				</button>
+
+				<!-- button delete -->
+				<button onclick="$.open_modal_admin( {{id}}, 'delete' );"
+				class="btn card orange round small small_btn"
+				type="button"
+				role="button">
+				<i class="fa-user-slash fas"></i>&nbsp; {{tr.suppr}}
+				</button>
+			</p>
+		{{/admins_list}}
+		{{^admins_list}}
+			<p>
+				{{tr.no_other_administrators}}
+			</p>
+		{{/admins_list}}
+</script>

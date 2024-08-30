@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello - 2019 - 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	mail.php
  *
@@ -16,9 +15,15 @@
  *
  */
 
-  require ROOT.'/PHP/LIBS/PHPMailer/PHPMailer.php';
-	require ROOT.'/PHP/LIBS/PHPMailer/SMTP.php';
+// PHPMailer namespace
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
+// include PHPMailer
+include_once ROOT.'/PHP/LIBS/PHPMailer/PHPMailer.php';
+include_once ROOT.'/PHP/LIBS/PHPMailer/SMTP.php';
+include_once ROOT.'/PHP/LIBS/PHPMailer/Exception.php';
 
 class mail extends config {
 
@@ -38,38 +43,44 @@ class mail extends config {
    */
   public static function send_mail_by_PHPMailer($to, $subject, $message){
 
-        // debug - un-comment this
-        // $mail->SMTPDebug = 2;
-        // error_reporting(E_STRICT | E_ALL);
+
+    try {
 
         // SEND MAIL by PHP MAILER
         $mail = new PHPMailer();
+        // debug - un-comment this follow
+        // $mail->SMTPDebug = 2; // 1=Client commands, 2=Client commands and server responses
         $mail->CharSet = 'UTF-8';
         $mail->isSMTP(); // Use SMTP protocol
+        // Mailbox infos
         $mail->Host = self::MAILBOX_HOST; // Host who use the mailbox
         $mail->SMTPAuth = true; // Auth. SMTP
         $mail->Username = self::MAILBOX_ACCOUNT; // Mailbox ex. cc@myhost.com
         $mail->Password = self::MAILBOX_PASSW; // Mailbox password
         $mail->SMTPSecure = 'ssl'; // Accept SSL
         $mail->Port = self::MAILBOX_PORT;
+        // Set the encryption mechanism to use:
+        // - SMTPS (implicit TLS on port 465) or
+        // - STARTTLS (explicit TLS on port 587)
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 
-        // Personnaliser l'envoyeur
+        // Priority | null (default), 1 = High, 3 = Normal, 5 = low
+        $mail->Priority = 1;
+
+        // Customize sender
         $mail->setFrom( PUBLIC_NOTIFICATION_MAIL, HOST );
-        // Ajouter le destinataire
+        // Clear
         $mail->clearAddresses();
+        // Add recipient
         $mail->addAddress($to);
-        // L'adresse de réponse
+        // Reply address
         $mail->addReplyTo(PUBLIC_NOTIFICATION_MAIL);
-        // $mail->addCC('cc@example.com');
-        // $mail->addBCC('bcc@example.com');
-        // $mail->addAttachment('/var/tmp/file.tar.gz'); // Ajouter un attachement
-        // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');
-        $mail->isHTML(true); // Paramétrer le format des emails en HTML ou non
-
+        // Set email format to HTML or not
+        $mail->isHTML(true);
+        // Subject
         $mail->Subject = $subject;
+        // Email Body in HTML
         $mail->Body = $message;
-        // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
 
         // SEND
         if( !$mail->send() ){
@@ -80,7 +91,13 @@ class mail extends config {
            exit;
         }
 
-        return true;
+    }
+    catch (Exception $e){
+
+        echo $e->errorMessage();
+    }
+
+    return true;
 
   }
   /**
@@ -99,21 +116,22 @@ class mail extends config {
   public static function mail_confirm_treatment($mail, $ARR){
 
 
-    // MUSTACHE FOR TEMPLATE
-    $options =  array('extension' => '.html');
-    // // template loader
-    $m = new Mustache_Engine(array(
-        'loader' => new Mustache_Loader_FilesystemLoader(dirname(__DIR__) . '/templates', $options)
-    ));
-    // ask template -> mail_confirm_traitement.html
-    $templ = 'just_comm_mail';
-    // loads template from `templates/$templ.html` and renders it with the ARRAY.
-    $message = $m->render($templ, $ARR);
+      // MUSTACHE FOR TEMPLATE
+      $options =  array('extension' => '.html');
+      // // template loader
+      $m = new Mustache_Engine(array(
+          'loader' => new Mustache_Loader_FilesystemLoader(dirname(__DIR__) . '/templates', $options)
+      ));
+      // ask template -> mail_confirm_traitement.html
+      $templ = 'just_comm_mail';
+      // loads template from `templates/$templ.html` and renders it with the ARRAY.
+      $message = $m->render($templ, $ARR);
 
-    // SEND MAIL by PHP MAILER - return true if no error
-    mail::send_mail_by_PHPMailer($mail, $ARR['subject'], $message);
+      // SEND MAIL by PHP MAILER - return true if no error
+      mail::send_mail_by_PHPMailer($mail, $ARR['subject'], $message);
 
-    return true; // if all ok return true send_mail exit on errors
+      // if all ok return true send_mail_by_PHPMailer exit on errors
+      return true;
 
   }
   /**
@@ -146,7 +164,7 @@ class mail extends config {
       // SEND MAIL by PHP MAILER - return true if no error
       mail::send_mail_by_PHPMailer($mail, $ARR['subject'], $message);
 
-      return true; // if all ok return true send_mail exit on errors
+      return true;
 
   }
   /**
@@ -163,9 +181,8 @@ class mail extends config {
   public static function vendor_send_mail(){
 
 
-      // VERIFY TOKEN
-      $token = trim(htmlspecialchars($_POST['token']));
-      program::verify_token($token);
+      // VERIFY token
+			token::verify_token();
 
       // empty cases
       if( empty($_POST['subject']) ){
@@ -193,7 +210,7 @@ class mail extends config {
           exit;
       }
 
-      $subject = trim(htmlspecialchars($_POST['subject']));
+      $subject = trim(htmlspecialchars($_POST['subject'], ENT_NOQUOTES, 'UTF-8'));
 
 		  $message = tools::parse_line_breaks(trim(htmlspecialchars($_POST['message'])));
 
@@ -236,7 +253,6 @@ class mail extends config {
           $tab = array('success' => tr::$TR['success_send_message'] );
           echo json_encode($tab, JSON_FORCE_OBJECT);
           exit;
-
       }
 
   }
@@ -297,7 +313,7 @@ class mail extends config {
    * mail::send_mail_alert();
    */
 
+
 }
 // END class mail::
-
 ?>

@@ -1,30 +1,27 @@
 <?php
-/*
-* © Copyright Castello Raphaël, 2019-2022
-* Organisation: SNS - Web et Informatique
-* Web site: https://sns.pm
-* @link <contact@sns.pm>
-*
-* Script name:	install.php
-*
-* Class install::
-*
-* install::page_install();
-* install::test_database( $context );
-* install::record_config_api();
-* install::insert_tables( $db_host, $db_name, $db_user, $db_passw );
-* install::record_admin( $db_host, $db_name, $db_user, $db_passw );
-* install::record_shop( $db_host, $db_name, $db_user, $db_passw );
-* install::set_settings_api( array() );
-* install::record_api_settings( $logo_shop );
-* install::delete_install_folder();
-* install::install_app();
-* test :
-* $config_file = 'test_config.php'
-* $json_file = 'test_api.json';
-*
-*/
-
+/**
+ * PLACIDO-SHOP FRAMEWORK - INSTALL
+ * Copyright © Raphaël Castello, 2020-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
+ *
+ * Script name:	install.php
+ *
+ * Class install::
+ *
+ * install::page_install();
+ * install::test_database( $context );
+ * install::record_config_api();
+ * install::insert_tables( $db_host, $db_name, $db_user, $db_passw );
+ * install::record_admin( $db_host, $db_name, $db_user, $db_passw );
+ * install::record_shop( $db_host, $db_name, $db_user, $db_passw );
+ * install::set_settings_api( array() );
+ * install::remove_spaces_and_line_breaks( $string );
+ * install::record_api_settings( $logo_shop );
+ * install::delete_install_folder();
+ * install::install_app();
+ *
+ */
 
 class install {
 
@@ -38,19 +35,22 @@ class install {
 
 
 				// require ADMIN/tools.php
-				require ROOT.'/ADMIN/PHP/tools.php';
+				require_once ROOT.'/ADMIN/PHP/tools.php';
 
 				// require API/tr.php
-				require ROOT.'/API/tr.php';
+				require_once ROOT.'/API/tr.php';
 				$API_LANGS = tr::get_translations($req="");
 
 				// get html files
         $homepage = file_get_contents('install.html');
 
+        // database form
 				$api_database_form = file_get_contents('api_database_form.html');
 
+        // settings form
 				$api_settings_form = file_get_contents('api_settings_form.html');
 
+        // array for Mustache
 				$ARR = array(
 					'db_enabled' => false,
 					'api_settings' => API_SETTINGS, // const defined by api::init_settings();
@@ -242,7 +242,6 @@ class install {
 	public static function record_config_api(){
 
 
-			// MODIFY FOR TEST / PRODUCTION
 			$config_file = 'config.php'; // test_config.php
 
 			// test database
@@ -345,22 +344,23 @@ class install {
 			// CALCUL SEC_API_KEY + SEC_API_IV
 			function get_rand_string(){
 
-					$ALPHA = array("m","e","u","B","v","j","Y","a","s","f","U","Z","R","q","n","L","K","W","g","w","t","d","M","k","i","Q","D","c","r","O","A","I","l","P","z","y",
-					"b","x","o","p","X","h","S","N","V","F","J","G","T","E","H","C");
+					$Letters_cap = range('A', 'Z');
+          $Letters_min = range('a', 'z');
+          $Numbers = range(0, 9);
+          $Symbols = array('#','Œ','ö','Ö','Ô','æ','£','Ø','%','ù','ü','Ù','Ü','ï','Ï','Ð','€','!','ç');
+          $Chars = array_merge( $Letters_cap, $Numbers, $Letters_min, $Numbers, $Symbols );
+          $num = random_int(60, 80);
+          $key = '';
 
-					// length of key
-					$num = random_int(50, 100);
+          // loop for construct key
+          for ($i=0; $i < $num; $i++) {
 
-					$key = '';
-
-					// loop for construct key
-					for ($i=0; $i < $num; $i++) {
-
-							// get a rand index
-							$index = random_int(0, (count($ALPHA)-1) );
-							// insert a random letter
-							$key .= $ALPHA[$index];
-					}
+              shuffle($Chars);
+            	// get a rand index
+            	$index = random_int(0, (count($Chars)-1) );
+            	// insert a random letter
+            	$key .= $Chars[$index];
+          }
 
 					return $key;
 			}
@@ -431,7 +431,6 @@ class install {
 						Check database user privileges");
 						echo json_encode($tab);
 						exit;
-
 			}
 
   }
@@ -449,9 +448,11 @@ class install {
 	public static function record_admin( $db_host, $db_name, $db_user, $db_passw ){
 
 
-
 			// admin login mail
-			$login_mail = trim(htmlspecialchars($_POST['login_mail']));
+			$login_mail = (string) trim(htmlspecialchars($_POST['login_mail']));
+
+      $login_mail =
+        install::remove_spaces_and_line_breaks( $login_mail );
 
 			// empty mail
 			if( empty($login_mail) ){
@@ -476,7 +477,7 @@ class install {
 
 
 			// admin login password
-			$login_passw = trim($_POST['login_passw']);
+			$login_passw = (string) trim(htmlspecialchars($_POST['login_passw']));
 
 			// empty password
 			if( empty($login_passw) ){
@@ -500,9 +501,12 @@ class install {
 
 
 			// admin name
-			$admin_name = trim($_POST['admin_name']);
+			$admin_name = (string) trim($_POST['admin_name']);
 
-			if( empty($admin_name) ){
+      $admin_name =
+        install::remove_spaces_and_line_breaks( $admin_name );
+
+    	if( empty($admin_name) ){
 
 					$tab = array('error' =>
 					"Please, enter a name or a nickname for your management interface",
@@ -528,7 +532,7 @@ class install {
 			$admin_passw = password_hash($login_mail.$login_passw, PASSWORD_DEFAULT);
 
 
-			// RECORD NEW PASS IN DB
+			// UPDATE NEW ADMIN in ID = 0
 			$ARR_pdo = array(
 				'id' => 0,
 				'mail' => $login_mail,
@@ -536,9 +540,7 @@ class install {
 				'name' => $admin_name
 			);
 
-			$sql = 'INSERT INTO admins ( id, mail, passw, name )
-			VALUES ( :id, :mail, :passw, :name )
-			ON DUPLICATE KEY UPDATE mail=:mail, passw=:passw, name=:name';
+			$sql = 'UPDATE admins SET mail=:mail, passw=:passw, name=:name WHERE id=:id';
 
 			// INSERT DATAS ADMIN
       try {
@@ -577,7 +579,7 @@ class install {
 	/**
 	 * install::record_shop( $db_host, $db_name, $db_user, $db_passw );
 	 *
-	 * @return {type}  description
+	 * @return {string}  logo shop file name
 	 */
 	public static function record_shop( $db_host, $db_name, $db_user, $db_passw ){
 
@@ -606,9 +608,6 @@ class install {
 
       //  -> must add anothers this return 'logo-' + name img logo
       $ARR_sizes = array( 'logo-shop' => 600 );
-
-			// require ADMIN/tools.php
-			require ROOT.'/ADMIN/PHP/tools.php';
 
       // this return array of names imgs NOT prefixed
       $NEW_logo = tools::img_recorder( $dir_path, $ARR_sizes );
@@ -648,11 +647,11 @@ class install {
       }
 			catch(PDOException $e){
 
-            $tab = array('error' => "Error : ".$e->getMessage()."
-						<br>
-            Record shop failed" );
-						echo json_encode($tab);
-						exit;
+          $tab = array('error' => "Error : ".$e->getMessage()."
+					<br>
+          Record shop failed" );
+					echo json_encode($tab);
+					exit;
 			}
 
 	}
@@ -663,56 +662,87 @@ class install {
 
 
 	/**
-	 * install::set_settings_api( array() );
+	 * install::set_settings_api( $ARR_API );
 	 *
-	 * SET API JSON FOR ONE OR MORE KEYS
+	 * SET constants to API/constants.php FOR ONE OR MORE KEYS
 	 * ex. settings::set_settings_api( array('VERSION' => '1.0.2', 'HOST' => 'website') );
 	 *
 	 * @param  {array} $API array()
-	 * @return {array}     api setting array
+	 * @return {mixed} json error || true on success
 	 */
-	public static function set_settings_api( $API ){
+	public static function set_settings_api( $ARR_API ){
 
 
-		$json_file = 'api.json';
+      // path of the constants file
+      $file_path = ROOT.'/API/constants.php';
 
-		// fetch settings
-		$get_json_settings = file_get_contents( ROOT.'/API/'.$json_file );
+      // fetch constants file
+      $consts = file_get_contents( $file_path );
 
-		$SETTINGS = json_decode($get_json_settings, true);
+      // prepare patterns array
+      $Patterns = array();
 
-		// SORT ALPHABETICAL
-		ksort( $SETTINGS , SORT_STRING );
-		// echo '<pre>';
-		// var_export( $SETTINGS );
-		// echo '<pre>';
+      // prepare the substitution array
+      $Replacements = array();
 
-		// loop on datas recived $k -> string key as 'MY_KEY' => 'my value'
-		foreach( $API as $k => $v ) {
+      // loop over API DATA array
+      foreach ( $ARR_API as $k => $v ) {
 
-				// verify if key exist, then change value
-				if( array_key_exists( $k, $SETTINGS) ){
+          // push pattern dynamically
+          $Patterns[] = '/const '.$k.' = (.*);/';
 
-						// set new value to settings ITEM
-						$SETTINGS[$k] = $v;
-				}
-		}
-		// end loop
+          // push replacements dynamically - watch for integer or string
+          $Replacements[] =
+          ( is_string($v) )
+          ? 'const '.$k.' = "'.$v.'";'
+          : 'const '.$k.' = '.$v.';';
 
-		// encode in json
-		$json_settings = json_encode( $SETTINGS,
-		JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION
-		| JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
+      }
+      // end loop over API DATA array
 
-		// rewrite settings
-		file_put_contents( ROOT.'/API/'.$json_file, $json_settings );
+      // replace all constants with their correct values
+      $consts = preg_replace( $Patterns, $Replacements, $consts );
 
-		return true;
+      try{
+
+          // record the constants file
+          file_put_contents( $file_path, $consts, LOCK_EX );
+      }
+      catch( Exception $e ){
+
+          // error case
+          $tab = array( 'error' => "Error : ".$e->getMessage()."
+                                    <br>
+                                    Set settings api failed" );
+          echo json_encode($tab);
+          exit;
+      }
+
+      // success
+      return true;
 
 	}
 	/**
-	 * install::set_settings_api( array() );
+	 * install::set_settings_api( $ARR_API );
 	 */
+
+
+
+  /**
+   * install::remove_spaces_and_line_breaks( $string );
+   *
+   * @param  {string}  $string
+   * @return {string}  remove too much spaces and line breaks
+   */
+  public static function remove_spaces_and_line_breaks( $string ){
+
+      $string = preg_replace('/\s\s+/', " ", $string);
+
+      return $string;
+  }
+  /**
+   * install::remove_spaces_and_line_breaks( $string );
+   */
 
 
 
@@ -722,7 +752,6 @@ class install {
 	 * @return {json}  success / error for record API settings
 	 */
 	public static function record_api_settings( $logo_shop ){
-
 
 
 			// MAKE AN ARRAY TO PASS AT THE FUNCTION
@@ -740,7 +769,7 @@ class install {
 			&& !empty($lang_locale) ){
 
 					// get index
-					$key_lang =  array_search($lang_locale, array_column($LANGS, 'code'));
+					$key_lang = array_search($lang_locale, array_column($LANGS, 'code'));
 
 					// define lang locale ex: 'af_NA'
 					$ARR_API['LANG_LOCALE'] = $LANGS[$key_lang]['code'];
@@ -768,7 +797,7 @@ class install {
 			|| empty($TIMEZONE) ){
 
 					// error
-          $tab = array( 'error' => "Please enter a time zone from the list",
+          $tab = array( 'error' => "Please enter a timezone from the list",
 					'el' => 'TIMEZONE' );
           echo json_encode($tab, JSON_FORCE_OBJECT);
           exit;
@@ -791,7 +820,7 @@ class install {
 
 
 			// HOST
-			$HOST = (string) trim(htmlspecialchars($_POST['HOST']));
+			$HOST = (string) trim(htmlspecialchars($_POST['HOST'], ENT_NOQUOTES, 'UTF-8'));
 
 			// bad host
 			if( empty($HOST)
@@ -811,7 +840,7 @@ class install {
 
 
 			// WEBSITE_TITLE
-			$WEBSITE_TITLE = (string) trim(htmlspecialchars($_POST['WEBSITE_TITLE']));
+			$WEBSITE_TITLE = (string) trim(htmlspecialchars($_POST['WEBSITE_TITLE'], ENT_NOQUOTES, 'UTF-8'));
 
 			// bad WEBSITE_TITLE
 			if( empty($WEBSITE_TITLE)
@@ -826,11 +855,11 @@ class install {
 
 			}
 			// include WEBSITE_TITLE
-			$ARR_API['WEBSITE_TITLE'] = $WEBSITE_TITLE;
-
+			$ARR_API['WEBSITE_TITLE'] =
+        install::remove_spaces_and_line_breaks( $WEBSITE_TITLE );
 
 			// META_DESCR
-			$META_DESCR = (string) trim(htmlspecialchars($_POST['META_DESCR']));
+			$META_DESCR = (string) trim(htmlspecialchars($_POST['META_DESCR'], ENT_NOQUOTES, 'UTF-8'));
 			// bad META_DESCR
 			if( empty($META_DESCR)
 			|| iconv_strlen($META_DESCR) > 300 ){
@@ -844,13 +873,13 @@ class install {
 
 			}
 			// include META_DESCR
-			$ARR_API['META_DESCR'] = $META_DESCR;
-
+			$ARR_API['META_DESCR'] =
+        install::remove_spaces_and_line_breaks( $META_DESCR );
 
 
 			// PUBLIC_NOTIFICATION_MAIL
 			$PUBLIC_NOTIFICATION_MAIL =
-			(string) trim(htmlspecialchars($_POST['PUBLIC_NOTIFICATION_MAIL']));
+			   (string) trim(htmlspecialchars($_POST['PUBLIC_NOTIFICATION_MAIL']));
 
 			// bad mail
 			if( empty($PUBLIC_NOTIFICATION_MAIL) ){
@@ -874,9 +903,10 @@ class install {
 					echo json_encode($tab);
 					exit;
 			}
-			// include PUBLIC_NOTIFICATION_MAIL
-			$ARR_API['PUBLIC_NOTIFICATION_MAIL'] = $PUBLIC_NOTIFICATION_MAIL;
 
+			// include PUBLIC_NOTIFICATION_MAIL
+			$ARR_API['PUBLIC_NOTIFICATION_MAIL'] =
+        install::remove_spaces_and_line_breaks( $PUBLIC_NOTIFICATION_MAIL );
 
 
 			// LANG_FRONT
@@ -910,6 +940,7 @@ class install {
           echo json_encode($tab, JSON_FORCE_OBJECT);
           exit;
 			}
+
 			// include LANG_FRONT
 			$ARR_API['LANG_FRONT'] = $LANG_FRONT;
 
@@ -937,15 +968,19 @@ class install {
 					echo json_encode($tab, JSON_FORCE_OBJECT);
           exit;
 			}
+
 			// include LANG_BACK
 			$ARR_API['LANG_BACK'] = $LANG_BACK;
 
 
 			// ADMIN_FOLDER
 			$ADMIN_FOLDER =
-			(string) trim(htmlspecialchars($_POST['ADMIN_FOLDER']));
+			   (string) trim(htmlspecialchars($_POST['ADMIN_FOLDER']));
 
-			// name admin folder too long: max = 300
+      $ADMIN_FOLDER =
+        install::remove_spaces_and_line_breaks( $ADMIN_FOLDER );
+
+      // name admin folder too long: max = 300
 			if( iconv_strlen($ADMIN_FOLDER) > 300 ){
 
 					// error
@@ -1006,15 +1041,35 @@ class install {
 			$ARR_API['ADMIN_FOLDER'] = $ADMIN_FOLDER;
 
 
+      // ALLOW_SEARCH_ENGINES
+      if( isset($_POST['ALLOW_SEARCH_ENGINES']) ){
+
+          // check value
+          $allow = (string) trim(htmlspecialchars($_POST['ALLOW_SEARCH_ENGINES']));
+
+          // if value == allow define to 1 else 0
+          $ARR_API['ALLOW_SEARCH_ENGINES'] = ( $allow == 'allow' ) ? 1 : 0;
+      }
+      else{
+
+          // define to 0
+          $ARR_API['ALLOW_SEARCH_ENGINES'] = 0;
+      }
+
+      // record robots.txt in context
+      $context = ( $ARR_API['ALLOW_SEARCH_ENGINES'] == 0 ) ? null : 'allow';
+
+      // record robots.txt with the good host for Sitemap url
+      tools::record_robots_txt( $ARR_API['HOST'], $context );
+
+
 			// ADD LOGO shop
 			$ARR_API['LOGO'] = $logo_shop;
 
 
-			// SORT ALPHABETICAL
-			ksort($ARR_API, SORT_STRING);
-
 			// set api settings
-			$SETTINGS = install::set_settings_api( $ARR_API );
+			install::set_settings_api( $ARR_API );
+
 
 			// success - return admin folder for redirect in success case
 			return $ADMIN_FOLDER;
@@ -1061,23 +1116,25 @@ class install {
 	public static function install_app(){
 
 
+      // require /ADMIN/PHP/tools.php
+      require_once ROOT.'/ADMIN/PHP/tools.php';
+
 			// record settings in API/config.php file
-			// return array if all ok
-			// $INFO_DB['data_base_host']
-			// $INFO_DB['data_base_name']
-			// $INFO_DB['data_base_user']
-			// $INFO_DB['data_base_passw']
-			$INFO_DB = install::record_config_api();
-			// var_dump($INFO_DB);
-			// exit;
+			// return array if all ok :
+			//   $INFO_DB['data_base_host']
+			//   $INFO_DB['data_base_name']
+			//   $INFO_DB['data_base_user']
+			//   $INFO_DB['data_base_passw']
 
+      $INFO_DB = install::record_config_api();
 
+      // set database variables
 			$db_host = $INFO_DB['data_base_host'];
 			$db_name = $INFO_DB['data_base_name'];
 			$db_user = $INFO_DB['data_base_user'];
 			$db_passw = $INFO_DB['data_base_passw'];
 
-			// insert tables model "placido-tables.sql" in database
+			// insert tables from the database model "placido-tables.sql" in database
 			install::insert_tables( $db_host,
 															$db_name,
 															$db_user,
@@ -1085,34 +1142,35 @@ class install {
 
 
 			// record admin - return true if ok
-			// record login email + hashed password + name of admin
+			// record login email + hashed password + name of the admin
 			install::record_admin(  $db_host,
 															$db_name,
 															$db_user,
 															$db_passw );
 
-			// record shop - return file name of logo shop
-			// record adresses + infos shop + infos bills
+			// record the store - return logo image file name
 			$logo_shop = install::record_shop(  $db_host,
 																					$db_name,
 																					$db_user,
 																					$db_passw );
 
-			// record api.json
-			// return $ADMIN_FOLDER
+			// run install::set_settings_api( array() );
+      // -> writes site constants defined by the installation form
+			// return $ADMIN_FOLDER -> name of administration folder
 			$ADMIN_FOLDER = install::record_api_settings( $logo_shop );
 
 			// delete folder /INSTALL
 			install::delete_install_folder();
 
-			// success + write a greeting message
+
+			// installation success + write a greeting message
 			$tab = array(
 				'success' => "Placido-Shop has been successfully installed
 					<br>
 					You will be redirected to the site administration",
 				'admin_folder' => $ADMIN_FOLDER );
 
-			// echo response before delete foler install
+			// echo response after delete folder /INSTALL
 			echo json_encode($tab);
 			exit;
 
@@ -1125,8 +1183,4 @@ class install {
 
 }
 // END class install::
-
-
-
-
 ?>

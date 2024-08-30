@@ -1,14 +1,15 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
- * script name: admin.js
+ * script name: settings.js
  *
  * $.deploy_settings_item();
- * $.change_admin_pass();
+ * $.open_modal_admin( name );
+ * $.add_new_admin( event );
+ * $.change_admin_pass( event );
  * $.clear_set_admin_pass();
  * $.record_token_placido();
  * $.set_stripe_keys( context );
@@ -16,7 +17,9 @@
  * $.update_by_money();
  * $.compress_ressources();
  * $.use_compressed_ressources( use );
+ * $.rebuild_sitemap();
  * $.display_products( display );
+ * $.allow_search_engines( value );
  * $.record_api_settings();
  * $.update_mailbox( command );
  * $.confirm_switch_prod_mode();
@@ -78,33 +81,175 @@ $.extend({
 
 
   /**
-   * $.change_admin_pass();
+   * $.open_modal_admin( id, action );
+   *
+   * @param {int} id of an admin OR null
+   * @param {string} action  add / modify / delete
+   * @return open a modal to manage an admin
+   */
+  open_modal_admin : function( id, action ){
+
+
+      // make an object to pass to Mustache
+      let Obj = { admin : {} };
+
+      // set obj if id -> for modify / delete
+      if( id ){
+
+          $.o.admins_list.forEach((item, i) => {
+
+              if( item.id == id ){
+
+                  Obj.admin = item;
+              }
+          });
+      }
+
+      // set up action button
+      switch (action) {
+        case 'add':
+          Obj.add = true;
+        break;
+        case 'modify':
+          Obj.modify = true;
+        break;
+        case 'delete':
+          Obj.delete = true;
+        break;
+      }
+
+			// Pass translation
+			Obj.tr = $.o.tr;
+
+      // imbibe modal_content
+      $('#modal_content').mustache('modal_admin', Obj);
+
+      // show modal
+      $('#modal').show();
+
+  },
+  /**
+   * $.open_modal_admin( id, action );
+   */
+
+
+
+  /**
+   * $.add_new_admin( event, action, id );
+   *
+   * @param  {event}
+   * @param  {string} action  add / modify / delete
+   * @param  {mixed}  {int} id OR null
+   * @return {json}   add / modify / delete an admin
+   */
+  add_new_admin : function( event, action, id ){
+
+      event.preventDefault();
+
+      // block multiple clics
+      $('#add_admin_btn').removeAttr('onclick')
+			.append(`<span class="spinner">
+			&nbsp;<i class="fas fa-circle-notch fa-spin fa-fw"></i></span>`);
+
+      // create object of datas to send
+      let Obj = {
+          name: $('form#form_add_admin  #name').val(),
+          mail: $('form#form_add_admin #mail').val(),
+          // add password field only for 'add' or 'modify'
+          passw: (action == 'add' || action == 'modify')
+          ? $('form#form_add_admin #passw').val() : '',
+          // append action based command
+          set: (action == 'add' || action == 'modify')
+          ? 'add_new_admin' : 'delete_admin',
+          // append token
+          token: $.o.user.token,
+          // action
+          action: action,
+          // append mail current admin
+          mail_current_admin: $.o.user.mail
+      }
+
+      // add id for modification case
+      if( id ){
+          // for action 'modify' OR 'delete'
+          Obj.id = id;
+      }
+      else{
+          Obj.id = null;
+      }
+
+      // send
+      $.post('index.php', Obj, function(data){
+
+          // success
+          if( data.success ){
+
+              // renew object
+              $.o.admins_list = data.admins_list;
+
+              $.show_alert('success', data.success, false);
+
+              // remove spinner
+    					$('.spinner').remove();
+
+              // renew admin name
+              $.close_modal();
+
+              // renew admins list
+              $('#admins_list').empty().mustache('admins_list', $.o);
+
+          } // error
+          else{
+
+              // error
+              $.show_alert('warning', data.error, false);
+
+              // remove spinner
+    					$('.spinner').remove();
+
+              // re-able to click
+              $('#add_admin_btn').attr('onclick',
+              "$.add_new_admin( event, '"+action+"', "+Obj.id+" );");
+          }
+
+      }, 'json');
+      // end post
+
+  },
+  /**
+   * $.add_new_admin( event );
+   */
+
+
+
+  /**
+   * $.change_admin_pass( event );
    *
    * @return {type}  description
    */
-  change_admin_pass : function(){
+  change_admin_pass : function( event ){
 
+
+      event.preventDefault();
 
       // block multiple clics
-      $('#change_admin_pass').removeAttr('onclick');
+      $('#change_admin_pass').removeAttr('onclick')
+			.append(`<span class="spinner">
+			&nbsp;<i class="fas fa-circle-notch fa-spin fa-fw"></i></span>`);
 
-      var el_to_prevent = false;
-      var method = 'POST';
-      var url = 'index.php';
-      var data_type = 'json';
+      // create FormData
+      let Obj = {
+          name: $('form#form_admin_pass #name').val(),
+          mail: $('form#form_admin_pass #mail').val(),
+          passw: $('form#form_admin_pass #passw').val(),
+          // append command
+          set: 'change_admin_pass',
+          // append token
+          token: $.o.user.token
+      }
 
-      // create form data for AJAX POST
-      var datas = new FormData();
-      // append command
-      datas.append('set', 'change_admin_pass');
-      datas.append('name', $('#name').val() );
-      datas.append('mail', $('#mail').val() );
-      datas.append('passw', $('#passw').val() );
-      datas.append('token', $.o.user.token );
-
-      // sender send datas to server asynchronous and return data.obj
-      $.sender(el_to_prevent, method, url, datas, data_type, function(data){
-
+      // send
+      $.post('index.php', Obj, function(data){
 
           // success
           if( data.success ){
@@ -132,10 +277,14 @@ $.extend({
           }
 
           // re-able to click
-          $('#change_admin_pass').attr('onclick', '$.change_admin_pass();');
+          $('#change_admin_pass').attr('onclick', '$.change_admin_pass(event);');
 
-      });
-      // end sender
+          // remove spinner
+					$('.spinner').remove();
+
+
+      }, 'json');
+      // end post
 
   },
   /**
@@ -437,8 +586,9 @@ $.extend({
 
 						$.show_alert('success', $.o.tr.update_success, false);
 
-						// re-init settings
-						$.o.api_settings = data.api_settings;
+						// re-init obj. settings
+						$.o.api_settings.COMPRESSED_STAMP = data.COMPRESSED_STAMP;
+            $.o.api_settings.COMPRESSED_DATE = data.COMPRESSED_DATE;
 
 						// update last compress date
 						$('#COMPRESSED_DATE').text($.o.api_settings.COMPRESSED_DATE);
@@ -466,8 +616,8 @@ $.extend({
 	/**
 	 * $.use_compressed_ressources( use );
 	 *
-	 * @param  {string} use	-> 'yes' / 'no'
-	 * @return {json}   api_settings
+	 * @param  {int}   use	-> 1 / 0
+	 * @return {json}  api_settings
 	 */
 	use_compressed_ressources : function( use ){
 
@@ -480,10 +630,10 @@ $.extend({
 						$.show_alert('success', $.o.tr.update_success, false);
 
 						// re-init settings
-						$.o.api_settings = data.api_settings;
+						$.o.api_settings.COMPRESSED = data.COMPRESSED;
 
 						// SET COMPRESSED in view
-						if( use == 'yes' ){
+						if( use == 1 ){
 
 							$('#use_compressed_true').addClass('blue').removeClass('gray');
 							$('#use_compressed_false').addClass('gray').removeClass('blue');
@@ -510,46 +660,113 @@ $.extend({
 
 
 
+  /**
+   * $.rebuild_sitemap();
+   *
+   * @return {json}  success / error - Rebuild entirely the sitemap.xml
+   * All products, categories and static pages will be renewed
+   * into the sitemap with the date today
+   */
+  rebuild_sitemap : function(){
+
+      $.post( 'index.php',
+  		{ set: 'rebuild_sitemap', token: $.o.user.token },
+  		function(data){
+
+  				if( data.success ){
+
+  						$.show_alert('success', data.success, false);
+  				}
+
+  				if( data.error ){
+
+  						$.show_alert('warning', data.error, false);
+  				}
+
+  		}, 'json');
+  },
+  /**
+   * $.rebuild_sitemap();
+   */
+
+
+
 	/**
-	 * $.display_products( display, event );
+	 * $.display_products( display );
 	 *
 	 * @param  {string} display 'inline' / 'mozaic'
-	 * @param  {event} 	event
 	 * @return {void}   choose how to display products in view
 	 */
-	display_products : function(  display, event  ){
+	display_products : function( display ){
 
-			if( display != 'inline' && display != 'mozaic' ){
+
+      if( display != 'inline' && display != 'mozaic' ){
 				return;
 			}
 
 			// both
-			$('label[for="display_mozaic"],label[for="display_inline"]')
-			.removeClass('gree').addClass('blue');
+			$('button.display_products')
+			.removeClass('blue').addClass('gray');
 
 			$('input#display_inline, input#display_mozaic')
 			.removeAttr('checked');
 
+
 			// display on line
 			if( display == 'inline' ){
 
-					// $('input#display_inline').attr('checked', true).prop('checked', true);
+          // manage button
+          $('button.display_products_inline')
+    			.removeClass('gray').addClass('blue');
 
-					$('label[for="display_inline"]')
-					.removeClass('blue').addClass('gree');
+          // manage input - keep this
+					$('input#display_inline')
+					.prop('checked', true);
 			}
 			else{
 
-					// $('input#display_mozaic').attr('checked', true).prop('checked', true);
+          // manage button
+          $('button.display_products_mozaic')
+    			.removeClass('gray').addClass('blue');
 
-					$('label[for="display_mozaic"]')
-					.removeClass('blue').addClass('gree');
+          // manage input - keep this
+					$('input#display_mozaic')
+					.prop('checked', true);
 			}
 
 	},
 	/**
-	 * $.display_products( display, event );
+	 * $.display_products( display );
 	 */
+
+
+
+  /**
+   * $.allow_search_engines( value );
+   *
+   * @param  {int}  value  1 || 0
+   * @return {void} assing value to hiden input[name="ALLOW_SEARCH_ENGINES"]
+   */
+  allow_search_engines : function( value ){
+
+      // assing value
+      $('input[name="ALLOW_SEARCH_ENGINES"]').val( value );
+
+      // allow
+      if( value == 1 ){
+
+          $('.allow_search_engines').removeClass('gray').addClass('blue');
+          $('.disallow_search_engines').removeClass('blue').addClass('gray');
+      }
+      else{
+          $('.allow_search_engines').removeClass('blue').addClass('gray');
+          $('.disallow_search_engines').removeClass('gray').addClass('blue');
+      }
+
+  },
+  /**
+   * $.allow_search_engines( value );
+   */
 
 
 

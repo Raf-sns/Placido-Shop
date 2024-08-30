@@ -11,6 +11,12 @@ ul.placido_versions {
     overflow-y: scroll !important;
     max-height: 95vh;
 }
+#backup_button {
+  margin: 5px 0 10px;
+}
+#info_backup {
+    margin: -10px 0 25px;
+}
 </style>
 
   <!-- container gen  id="update" -->
@@ -24,6 +30,22 @@ ul.placido_versions {
 			<i class="fa-fw fa-skull-crossbones fas"></i>&nbsp;
 			{{{tr.warning_update_2}}}
 		</p>
+
+    <!-- backup the app -->
+    <p>
+      <button onclick="$.back_up_api(event);"
+      id="backup_button"
+      class="blue btn pointer round"
+      type="button"
+      role="button">
+      <i class="fa-fw fa-retweet fas"></i>&nbsp;
+      {{tr.backup_the_app}}</button>
+    </p>
+
+    <p id="info_backup">
+      <i class="fa-asterisk fa-fw fas small text-purple"></i>&nbsp;
+      {{tr.back_up_info}}
+    </p>
 
 		<!-- version number info -->
 		<p class="large">

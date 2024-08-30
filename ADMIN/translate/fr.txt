@@ -21,7 +21,7 @@ warning
 ***
 welcome_login
 ***
-  Bienvenue !<br>Veuillez vous connecter&nbsp;:
+  <span class="xlarge">Bienvenue !</span><br>Veuillez vous connecter&nbsp;:
 ***
 security_alert
 ***
@@ -230,6 +230,10 @@ close
 ***
 	Fermer
 ***
+read_this
+***
+	Lisez ceci
+***
 print
 ***
   Imprimer
@@ -294,6 +298,10 @@ connection_restored
 ***
 	Vous êtes de nouveau connecté au réseau
 ***
+disconnected_from_the_website
+***
+	Attention ! Vous allez bientôt être déconnecté du site Web
+***
 bad_context
 ***
   Mauvais contexte attendu ...
@@ -343,6 +351,10 @@ public_mail_no_valid
 error_create_token
 ***
 	Erreur lors de la création du token
+***
+empty_token
+***
+	Jeton de sécurité indéfini
 ***
 token_expired
 ***
@@ -740,7 +752,7 @@ online_sale
 ***
 catalog_mode
 ***
-	Catalogue ( sans les prix )
+	Catalogue (&nbsp;Les achats en ligne sont désactivés&nbsp;)
 ***
 title_shop
 ***
@@ -970,6 +982,10 @@ tax_value
 price_tt
 ***
   Prix T.T.C.
+***
+final_price
+***
+	Prix avec ou sans taxe
 ***
 no_price_assigned
 ***
@@ -1367,7 +1383,7 @@ token_placido
 ***
 token_placido_info
 ***
-	Nous vous demandons de payer une licence de 5$/€ minimum par an pour chaque nom de domaine
+	Nous vous demandons de payer une licence de $5/€ minimum par an pour chaque nom de domaine
 	où vous utiliserez Placido-Shop en production.
 	<br>
 	Si vous ne possédez pas déjà une licence pour ce nom de domaine,
@@ -1407,6 +1423,22 @@ token_well_recored
 modif_access_codes
 ***
   Modifiez vos codes d'accès
+***
+website_admins
+***
+	Administrateurs du site web :
+***
+add_new_admin
+***
+	Ajouter un nouvel administrateur
+***
+admin_name
+***
+	Nom
+***
+no_other_administrators
+***
+	Aucun autre administrateur
 ***
 enter_stripe_keys
 ***
@@ -1635,6 +1667,18 @@ META_DESCR
 	<br>
 	<small>( pour les moteurs de recherche et les réseaux sociaux 300 caractères max )</small>
 ***
+allow_search_engines
+***
+	Autoriser les moteurs de recherche à indexer votre site web
+***
+allow
+***
+	Permettre
+***
+disallow
+***
+	Refuser
+***
 social_networks_imgs
 ***
 	Image réseaux sociaux
@@ -1642,6 +1686,10 @@ social_networks_imgs
 VERSION
 ***
 	Version
+***
+alert_settings
+***
+	N'oubliez pas d'enregistrer vos modifications en cliquant sur le bouton "Enregistrer" placé en bas de la section&nbsp;!
 ***
 COMPRESSED_DATE
 ***
@@ -1674,6 +1722,34 @@ no
 COMPRESSED
 ***
 	Utiliser la version compressée
+***
+rebuild_sitemap
+***
+	Reconstruire le sitemap
+***
+rebuild_sitemap_info
+***
+	Vous avez la possibilité de reconstruire l’intégralité du fichier sitemap.xml
+	qui se trouve à la racine du site web.
+	<br>
+	Ce fichier est utilisé par les moteurs de recherche pour explorer toutes les pages de votre site.
+	<br>
+	Ici seront listées toutes les pages de vos produits,
+	toutes les catégories ainsi que toutes les pages statiques de votre site.
+	<br>
+	Les données du fichier sitemap.xml seront reconstruites avec la date d'aujourd'hui.
+***
+execute_rebuild_sitemap
+***
+	Exécuter la reconstruction du sitemap
+***
+rebuild_sitemap_success
+***
+	Le fichier sitemap.xml a bien été reconstruit
+***
+rebuild_sitemap_error
+***
+	Une erreur est survenue lors de la reconstruction du sitemap
 ***
 PUBLIC_NOTIFICATION_MAIL
 ***
@@ -1942,15 +2018,16 @@ title_static_page_info
 url_static_page_info
 ***
 	Pour les url de page utilisez une chaine de caractères sans espaces, ni accents,
-	<br>ex. : "Know-more-about_us"
-	<br> - Utilisez "-" ou "_" pour combler les espaces entre les mots.
+	<br>ex. : "Know-more-about-us"
+	<br> - Utilisez "-" pour combler les espaces entre les mots.
 	<br> - Note : Lors de la création d'une page,
 	une page html sera crée dans le répertoire
 	/templates/STATIC_PAGES,
 	<br>à la racine du site.
-	<br> - Vous devriez retrouver votre page ainsi :
-	<br>/templates/STATIC_PAGES/Know-more-about_us.html
-	<br> - Utilisez un éditeur de code html pour éditer cette page.
+	<br> - Vous devriez retrouver votre page ainsi&nbsp;:
+	<br>/templates > STATIC_PAGES > Know-more-about-us.html
+	<br> - Utilisez un éditeur de code HTML pour modifier cette page (recommandé) ou
+	utilisez le bouton Modifier pour modifier la page directement ici.
 	<br>Un modèle de lien ainsi qu'un modèle de bouton à insérer
 	dans l'application seront présents,
 	en commentaire, au début de votre page.
@@ -2033,6 +2110,44 @@ unable_to_rename_file_in_db
 success_rename_file
 ***
 	Le fichier a bien été renommé
+***
+success_edit_page
+***
+	La page a bien été éditée
+***
+error_edit_page
+***
+	Erreur : La page n'a pas pu être éditée
+***
+edit_static_info_1
+***
+	Note : La meilleure façon d'éditer vos pages devrait être d'en éditer le contenu
+	HTML avec un éditeur de code.
+	<br>
+	Le code HTML produit par cet éditeur risque d'être rempli d'erreurs.
+***
+edit_static_info_2
+***
+	Le style rendu dans cet éditeur de page ne correspond pas au design
+	final de votre page.
+	<br>
+	Pour voir réellement à quoi va ressembler votre page&nbsp;:
+	<br>
+	1 - Ouvrez votre page dans un nouvel onglet.
+	<br>
+	2 - Enregistrer vos modifications ici.
+	<br>
+	3 - Rechargez votre page ouverte dans ce nouvel onglet.
+***
+edit_static_info_3
+***
+	Si vous insérer des images, utilisez de petites images car
+	elles seront encodées en base64 directement dans la page.
+	<br>
+	Important : Pour sauter des lignes utilisez la combinaison
+	de touches (Maj. ou Shift) + Entrée,
+	<br>
+	sinon cela créera un nouveau paragraphe vide.
 
 
 

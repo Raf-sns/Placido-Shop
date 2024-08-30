@@ -38,28 +38,28 @@
 
         <!-- sale id -->
         <span class="large fw600">
-          <i class="fa-fw fas fa-dolly text-amber"></i>&nbsp;
+          <i class="fa-fw fas fa-dolly text-yellow"></i>&nbsp;
           {{tr.order_number}}&nbsp;<span class="fw600 wide">{{sale_id}}</span>
 				</span>
         <br>
 				<!-- customer -->
         <span class="large">
-          <i class="fa-fw fa-user far text-amber"></i>&nbsp;
+          <i class="fa-fw fas fa-user-alt text-yellow"></i>&nbsp;
 					{{tr.customer}}&nbsp;:
-					<span class="wide text-yellow">
+					<span class="text-yellow">
 						&nbsp;{{customer_settings.lastname}}&nbsp;{{customer_settings.firstname}}
 					</span>
         </span>
 				<br>
 				<!-- date sale  -->
         <span class="large">
-          <i class="fa-fw fa-calendar-alt far text-amber"></i>&nbsp;
+          <i class="fa-fw fa-calendar-alt far text-yellow"></i>&nbsp;
 					{{tr.date_sale}}&nbsp;:&nbsp;&nbsp;{{date_format}}
         </span>
 				<br>
 				<!-- total mount sale -->
 				<span class="large">
-					<i class="fa-fw fas fa-shopping-basket text-amber"></i>&nbsp;
+					<i class="fa-fw fas fa-shopping-basket text-yellow"></i>&nbsp;
 					{{tr.total_amount_sale}}&nbsp;:&nbsp;
 					<span class="wide">
 						{{total_amount_sale}}
@@ -77,19 +77,19 @@
       <div class="customer_datas col m6 s12 dark-gray margin-top padding padding-16">
 
         <p class="mrg0 border-bottom">
-          <i class="fa-fw fas fa-user text-amber"></i>
+          <i class="fa-fw fas fa-user-alt"></i>
           &nbsp;&nbsp;{{tr.customer}}&nbsp;:
         </p>
 
 				<div class="flex_print_address">
 					<!-- icons + button print -->
 					<p class="margin-right margin-top">
-						<i class="fa-fw fa-home fas text-amber v-top"
+						<i class="fa-fw fa-home fas text-yellow v-top"
 						style="margin: 14px 6px 0 0;"></i>
 						<br>
 						<!-- print BTN -->
 						<i onclick="$.print( '#print-{{sale_id}}' );"
-						class="border border-orange fa-print fas hover-shadow padding-small pointer round text-amber"
+						class="border border-orange card fa-print fas hover-shadow padding-small pointer round text-yellow"
 						style="margin: 10px 10px 0 0;"
 						title="{{tr.print}}"></i>
 					</p>
@@ -111,19 +111,19 @@
 
         <p class="mrg0 margin-top">
           <span>
-            <i class="fa-fw fas fa-mobile-alt text-amber"></i>&nbsp;
+            <i class="fa-fw fas fa-mobile-alt text-yellow"></i>&nbsp;
             {{customer_settings.tel}}
           </span>
           <br>
           <span>
-            <i class="fa-fw far fa-envelope text-amber"></i>&nbsp;
+            <i class="fa-fw far fa-envelope text-yellow"></i>&nbsp;
             {{customer_settings.mail}}
             <br>
-            <i class="fa-fw fa-paper-plane far text-amber"></i>&nbsp;
+            <i class="fa-fw fa-paper-plane far text-yellow"></i>&nbsp;
             <a
             onclick="$.open_modal_mail( {{index}} );"
             href="javascript:void(0);"
-            title="Contacter par e-mail"
+            title="{{tr.contact_by_mail}}"
             class="open_modal underline pointer">{{tr.contact_by_mail}}</a>
           </span>
         </p>
@@ -134,19 +134,19 @@
       <div class="customer_datas col m6 s12 dark-gray margin-top padding padding-16">
 
         <p class="mrg0 border-bottom">
-          <i class="fa-fw fas fa-truck text-amber"></i>
+          <i class="fa-fw fas fa-truck text-yellow"></i>
           &nbsp;&nbsp;{{tr.delivery}}&nbsp;:</span>
         </p>
 
 				<div class="flex_print_address">
 
 				  <p class="margin-right margin-top">
-            <i class="fa-fw fa-home fas text-amber v-top"
+            <i class="fa-fw fa-home fas text-yellow v-top"
             style="margin: 14px 6px 0 0;"></i>
             <br>
             <!-- print BTN -->
             <i onclick="$.print( '#print_sup-{{sale_id}}' );"
-            class="border border-orange fa-print fas hover-shadow padding-small pointer round text-amber"
+            class="border border-orange fa-print fas hover-shadow padding-small pointer round text-yellow"
             style="margin: 10px 10px 0 0;"
             title="{{tr.print}}"></i>
           </p>
@@ -176,7 +176,7 @@
     <div class="row sale_item">
       <div class="col s12 dark-gray padding padding-16 margin-top">
         <p class="mrg0 border-bottom">
-          <i class="fa-fw fa-shopping-basket fas text-amber"></i>
+          <i class="fa-fw fa-shopping-basket fas"></i>
           &nbsp;&nbsp;{{tr.products}}&nbsp;:
         </p>
       </div>

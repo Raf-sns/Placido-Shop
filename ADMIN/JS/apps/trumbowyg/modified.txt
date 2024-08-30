@@ -1,0 +1,14 @@
+
+
+dist/trumbowyg.js
+1600 : .on('submit', function (event) {
+		event.preventDefault();
+		$modal.trigger(CONFIRM_EVENT);
+		return false;
+})
+
+dist/plugins/table/trumbowyg.table.js
+1597 :   // $table.css(border);
+
+	$($table[0]).find('td').css(border);
+	$($table[0]).find('th').css(border);

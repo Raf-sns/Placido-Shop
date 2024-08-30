@@ -2,12 +2,23 @@
 <html lang="{{tr.lang}}" dir="ltr">
 <head>
   <title>{{title_page}}</title>
-  <meta charset="UTF-8"/>
+
+  <meta charset="utf-8">
+
   <base href="/{{base}}/">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <meta name="viewport"
+  content="width=device-width,initial-scale=1, minimum-scale=1.0, maximum-scale=5.0">
+
 	<meta name="author" content="Placido-Shop Software - www.placido-shop.com">
 
-	<!-- FAV icons -->
+	<!-- Content-Security-Policy -->
+	{{>CSP}}
+
+  <!-- robots no index -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- FAV icons -->
 	<link rel="apple-touch-icon" sizes="180x180" href="../FAV/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="../FAV/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="../FAV/favicon-16x16.png">
@@ -76,7 +87,6 @@
   title="{{tr.go_to_top_page}}">
     <i class="fas fa-chevron-up"></i>
   </div>
-
 
 <!--JavaScript ressources-->
 <script type="text/javascript" src="JS/apps/jquery.min.js"></script>

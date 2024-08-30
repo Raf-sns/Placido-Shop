@@ -1,14 +1,13 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello - 2019, 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	control.php
  *
- * Controller BACK OFFICE API
+ * backend controller
  *
  * control::start();
  *
@@ -35,25 +34,9 @@ class control {
 				exit;
 		}
 
-		// VERIFY POST METHOD
-		if( $_SERVER['HTTP_HOST'] != HOST
-			|| $_SERVER['REQUEST_METHOD'] != 'POST'
-			|| $_SERVER['QUERY_STRING'] != "" ){
-
-
-				// error
-				$tab = array( 'error' => true,
-											'message' => 'External requests are not possible' );
-				echo json_encode($tab, JSON_FORCE_OBJECT);
-				exit;
-
-		}
-		// end test POST from website
-
 
 		// security 'set' request
-		$set = trim(htmlspecialchars($_POST['set']));
-
+		$set = (string) trim(htmlspecialchars($_POST['set']));
 
 		// test 'set' length
 		if( iconv_strlen($set) > 40 ){
@@ -65,6 +48,20 @@ class control {
 				exit;
 		}
 
+		// VERIFY POST METHOD
+		if( ( $_SERVER['HTTP_HOST'] != HOST && $set != 'record_api_settings' )
+				|| $method != 'POST'
+				|| $_SERVER['QUERY_STRING'] != "" ){
+
+				// error
+				$tab = array( 'error' => true,
+											'message' => 'External requests are not possible' );
+				echo json_encode($tab, JSON_FORCE_OBJECT);
+				exit;
+
+		}
+		// end test POST from website
+
 
     // POST REQUESTS - $set is a key who call a function to run
     switch( $set ){
@@ -72,7 +69,7 @@ class control {
 
 	      // login
 	      case 'login':
-	        	program::login(); // launch func.
+	        	program::login();
 	      break;
 
 				// log_out
@@ -90,6 +87,16 @@ class control {
 	      // change_admin_pass
 	      case 'change_admin_pass':
 	        	settings::update_access_admin();
+	      break;
+
+				// add_new_admin
+				case 'add_new_admin':
+	        	settings::add_new_admin();
+	      break;
+
+				// delete_admin
+				case 'delete_admin':
+	        	settings::delete_admin();
 	      break;
 
 	      // STRIPE KEYS
@@ -123,6 +130,7 @@ class control {
 	        	settings::record_Token_Placido_User();
 	      break;
 
+
 	      // STATISTICS
 				// get_stats_by_interval
 	      case 'get_stats_by_interval' :
@@ -145,7 +153,6 @@ class control {
 	      case 'suppr_sale':
 	          new_sales::suppr_new_sale();
 	      break;
-
 
 				// PRODUCTS
 	      // add_product
@@ -178,7 +185,6 @@ class control {
 				case 'record_slider_settings':
 	          products::record_slider_settings();
 	      break;
-
 
 	      // CATEGORIES
 	      // move_cat
@@ -221,17 +227,26 @@ class control {
 	      break;
 
 
+				// COMPRESSION
 	      // compress_ressources
 	      case 'compress_ressources':
-	          process::compress_js_css();
+	          compress::compress_js_css();
 	      break;
 
 				// use_compressed
 	      case 'use_compressed':
-	          process::use_compressed();
+	          compress::use_compressed();
 	      break;
 
 
+				// SITEMAP
+				// rebuild_sitemap
+				case 'rebuild_sitemap':
+	          sitemap::build_sitemap();
+	      break;
+
+
+				// MAIL
 	      // send_mail_to_customer
 	      case 'send_mail_to_customer':
 	          mail::vendor_send_mail();
@@ -270,7 +285,7 @@ class control {
 				break;
 
 
-				// ip rejected
+				// IP REJECTED
 				// get_ip_rejected
 				case 'get_ip_rejected':
 						ip_rejected::get_ip_rejected();
@@ -282,7 +297,7 @@ class control {
 				break;
 
 
-				// static_pages
+				// STATIC PAGES
 				// record_static_page
 				case 'record_static_page':
 						static_pages::admin_record_static_page();
@@ -298,13 +313,23 @@ class control {
 						static_pages::admin_modify_static_page();
 				break;
 
+				// edit_static_page
+				case 'edit_static_page':
+						static_pages::get_html();
+				break;
 
+				// record_edit_static_page
+				case 'record_edit_static_page':
+						static_pages::set_html();
+				break;
+
+				// PROGRESSIVE WEB APP
 				// record_web_app
 				case 'record_web_app':
 						web_app::record_web_app_settings();
 				break;
 
-
+				// DEFAULT
 				// get login page by default
 	      default:
 	      		program::get_login_page();
@@ -314,7 +339,7 @@ class control {
     // END switch
 
     unset($_POST);
-
+		exit('Bad request ...');
 	}
 	/**
 	 * END control::start();

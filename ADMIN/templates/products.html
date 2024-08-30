@@ -438,7 +438,7 @@
     </div>
     <!-- end row -->
 
-    <p class="">
+    <p>
       {{tr.title_product}}&nbsp;:&nbsp;
 			<small class="small">{{tr.title_product_info}}</small>
       <br>
@@ -451,7 +451,7 @@
       class="border border-blue input margin-top padding-small" />
     </p>
 
-    <p class="">
+    <p>
       {{tr.ref_product}}&nbsp;:
       <br>
 			<small class="small">{{tr.ref_product_info}}</small>
@@ -464,7 +464,7 @@
       class="border border-blue input margin-top padding-small" />
     </p>
 
-    <p class="">
+    <p>
       {{tr.descr_prod}}&nbsp;:
       <br>
 			<small class="small">{{tr.descr_prod_info}}</small>
@@ -478,7 +478,7 @@
     </p>
 
 		{{#modif}}
-		<p class="">
+		<p>
 			{{tr.online_date_prod}}&nbsp;:
 			<br>
 			<input
@@ -514,12 +514,11 @@
 		{{/modif}}
 
     <div class="row">
-      <!-- col price -->
+
+			<!-- col price -->
       <div class="col s12 m6">
 
-        <p class="">
-          {{tr.price}}&nbsp;:
-        </p>
+        <p>{{tr.price}}&nbsp;:</p>
 
         <p class="mrg0">
 
@@ -586,7 +585,7 @@
             <br>
           </span>
 
-          {{tr.price_tt}}&nbsp;:&nbsp;&nbsp;<input
+          {{tr.final_price}}&nbsp;:&nbsp;&nbsp;<input
           id="price_tt"
           name="price_tt"
           value="{{price_tt_input}}"
@@ -603,9 +602,8 @@
       <!-- col Qty -->
       <div class="col s12 m6">
 
-        <p class="">
-          {{tr.quantity}}&nbsp;:
-        </p>
+        <p>{{tr.quantity}}&nbsp;:</p>
+
         <p class="mrg0">
           <input
           id="quant"

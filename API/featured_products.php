@@ -1,16 +1,15 @@
 <?php
 /**
- * © Copyright - Raphaël Castello - 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - API
+ * Copyright © Raphaël Castello, 2018-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	featured_products.php
  *
- * CLASS featured_products
+ * class featured_products::
  *
  * Get featured products for slider + management in back-end
- *
  * featured_products::get_featured_products( $ARR['products'] );
  *
  */

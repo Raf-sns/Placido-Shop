@@ -71,7 +71,7 @@ style="margin: 0; padding: 0;" width="100%">
 
 
   <!-- START OF DOC -->
-  <table width="600" bgcolor="#d4d4d4" cellspacing="0" cellpadding="10" class="100p"
+  <table width="600" bgcolor="#d4d4d4" cellspacing="0" cellpadding="5" class="100p"
   style="background-color: #d4d4d4;">
     <tr>
       <td align="center" valign="top">
@@ -83,13 +83,19 @@ style="margin: 0; padding: 0;" width="100%">
                <!-- IMAGE LOGO -->
                <table width="600" border="0" cellspacing="10" cellpadding="0" bgcolor="#ffffff">
                  <tr>
-                   <td align="left">
-
+                   <td align="right" valign="middle">
 										 <img src="https://{{host}}/img/Logos/{{shop_img}}"
-                      alt="{{{shop_title}}}" border="0" style="max-width: 100px;width: 100px;" />
+                      alt="{{{shop_title}}}" border="0" style="max-width: 100px;width: 100px;margin-bottom: -5px;" />
+									 </td>
 
-                     <h1 class="shop_title">{{{shop_title}}}</h1>
-
+									 <td align="left" valign="middle">
+                     <h1 class="shop_title"
+										 style="font-size: 32px;
+									 	color: #545454;
+									 	font-weight: 400 !important;
+									 	display: inline-block;
+									 	font-family: Arial, sans-serif;
+									 	margin: 0 0 0 4%;">{{{shop_title}}}</h1>
 									 </td>
                  </tr>
                </table>
@@ -104,7 +110,7 @@ style="margin: 0; padding: 0;" width="100%">
         <table width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p"
          style="background-color: #d4d4d4;">
             <tr>
-                <td height="10"></td>
+                <td height="5"></td>
             </tr>
         </table>
         <!-- FIN hauteur de 10px vide -->
@@ -121,7 +127,7 @@ style="margin: 0; padding: 0;" width="100%">
                 <tbody>
                     <tr>
                       <td align="center">
-                        <span style="font-size: 24px;color:#545454;
+                        <span style="font-size: 22px;color:#545454;
 												font-family: Arial, sans-serif;
 												font-weight: 100;">{{subject}}</span>
                       </td>
@@ -141,7 +147,7 @@ style="margin: 0; padding: 0;" width="100%">
         <table width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p"
          style="background-color: #d4d4d4;">
             <tr>
-                <td height="10"></td>
+                <td height="5"></td>
             </tr>
         </table>
         <!-- FIN hauteur de 10px vide -->
@@ -165,7 +171,7 @@ style="margin: 0; padding: 0;" width="100%">
                 <span style="font-size:20px;
                 color: #3c3c3c;
                 font-family: Arial, sans-serif;
-                white-space: break-spaces;">{{{message}}}</span>
+                word-break: break-word;">{{{message}}}</span>
 								<br />
 								<br />
                 <!-- end text -->
@@ -180,7 +186,7 @@ style="margin: 0; padding: 0;" width="100%">
         <table width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p"
         style="background-color: #d4d4d4;">
           <tr>
-            <td height="10"></td>
+            <td height="5"></td>
           </tr>
         </table>
         <!-- FIN hauteur de 10px vide -->
@@ -195,7 +201,7 @@ style="margin: 0; padding: 0;" width="100%">
                 <span style="font-size:18px;
                 color: #3c3c3c;
                 font-family: Arial, sans-serif;
-                white-space: break-spaces;">
+                word-break: break-word;">
                 {{tr.mail_to_respond}}
                 <br />
                 <a href="mailto:{{shop_mail}}?subject={{subject}}"
@@ -224,7 +230,7 @@ style="margin: 0; padding: 0;" width="100%">
         <table width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p"
         style="background-color: #d4d4d4;">
           <tr>
-            <td height="2"></td>
+            <td height="5"></td>
           </tr>
         </table>
         <!-- empty item  -->

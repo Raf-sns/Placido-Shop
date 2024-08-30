@@ -74,7 +74,7 @@
 	#install_content button {
 			font-size: 18px!important;
 	}
-	#install_content input,
+	#install_content input:not(input[name="ALLOW_SEARCH_ENGINES"]),
 	#install_content textarea,
 	#install_content select {
 	    width: 90%;
@@ -93,6 +93,26 @@
 	    max-width: 380px;
 	    margin-bottom: 10px;
 	}
+	/* checkbox serach engines */
+  input[name="ALLOW_SEARCH_ENGINES"] {
+      appearance: none;
+      -webkit-appearance: none; /* Safari, Chrome, Edge, IE */
+			-moz-appearance: none;
+  }
+  input[name="ALLOW_SEARCH_ENGINES"]::before {
+      content: "\f0c8";
+      font-family: "Font Awesome 5 Free";
+      color: #a21f80;
+      font-size: 25px;
+      margin-right: 6px;
+  }
+  input[name="ALLOW_SEARCH_ENGINES"]:checked::before {
+      content: "\f14a";
+      font-family: "Font Awesome 5 Free";
+      color: #a21f80;
+      font-size: 25px;
+      margin-right: 6px;
+  }
 	#LOGO_img_viewer, #LOGO_SN_img_viewer {
 			display: inline-block;
 			margin-left: 16px;
@@ -254,7 +274,8 @@
 		<quote class="text-light-gray">-&nbsp;Welcome&nbsp;to installation&nbsp;page&nbsp;!</quote>
 
 		<p class="padding-small small text-light-gray">
-			See the documentation: <a href="https://placido-shop.com/Documentation.html"
+			See the documentation:
+			<a href="https://placido-shop.com/Documentation/How-to-install-Placido-Shop"
 			title="Open the Placido-Shop documentation on a new tab"
 			target="_blank"
 			class="underline">How to install Placido-Shop</a>.

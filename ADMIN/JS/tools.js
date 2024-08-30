@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * script name: tools.js
  *
@@ -21,7 +20,6 @@
  * $.scroll_to_elem( elem, event );
  * $.scroll_top();
  * $.close_modal();
- * $.animateCss( element, animationName, callback );
  * $.obj : { 'files' : []  };
  * $.index_box_img;
  * $.img_viewer();
@@ -68,6 +66,8 @@ $(function(){
 		'templates/featured_prods.html',
 		'templates/messages.html',
 		'templates/settings.html',
+    'templates/modal_admin.html',
+    'templates/admins_list.html',
 		'templates/shop.html',
 		'templates/stats.html',
 		'templates/products.html',
@@ -81,7 +81,6 @@ $(function(){
 
 			$.Mustache.load(item);
 	});
-
 
 
 	// LOAD HTML AND JS FROM MODULES
@@ -198,12 +197,12 @@ $(function(){
           countDown+ hours +$.o.tr.hours+` ` : countDown;
 
           countDown = ( minutes > 0  ) ?
-          countDown+minutes +$.o.tr.minutes+` ` : countDown;
+          countDown+ minutes +$.o.tr.minutes+` ` : countDown;
 
-          seconds = ( seconds < 10 ) ? '0'+seconds : seconds;
+          seconds = ( seconds < 10 && minutes > 1 ) ? '0'+seconds : seconds;
           // show seconds under 6 minutes
           countDown = ( seconds >= 0 && minutes < 5 ) ?
-          countDown+seconds +$.o.tr.seconds : countDown;
+          countDown+ seconds +$.o.tr.seconds : countDown;
 
           // txt_cool > 300
           if( distance > 300 ){
@@ -225,6 +224,12 @@ $(function(){
               $('#token_timer').removeClass(''+txt_warn+' '+txt_cool+'')
               .addClass(txt_danger)
               .html($.o.tr.validity_token+' '+countDown);
+
+              // show alert
+              if( distance == 120 ){
+
+                  $.show_alert( 'warning', $.o.tr.disconnected_from_the_website, true );
+              }
           }
           // over time token
           if( distance <= 0 ){
@@ -537,54 +542,9 @@ $.extend({
    */
 
 
-
-  /**
-   * $.animateCss( element, animationName, callback );
-   *
-   * @param  {element} 	element       description
-   * @param  {string} 	animationName animate.CSS animation name
-   * @param  {callback} callback      function to call on animation end
-   * @return {css}
-   */
-  animateCss : function(element, animationName, callback) {
-
-    function whichTransitionEvent() {
-
-        var el = document.createElement('fake'),
-            transEndEventNames = {
-                'WebkitAnimation' : 'webkitAnimationEnd',// Saf 6, Android Browser
-                'MozAnimation'    : 'animationend',      // only for FF < 15
-                'animation'       : 'animationend'       // IE10, Opera, Chrome, FF 15+, Saf 7+
-            };
-
-        for( var t in transEndEventNames ){
-            if( el.style[t] !== undefined ){
-                return transEndEventNames[t];
-            }
-        }
-    }
-
-    var transEndEventName = whichTransitionEvent();
-
-    //'webkitAnimationEnd oanimationend msAnimationEnd animationend'
-    $(element).addClass("animated "+animationName+"");
-    $(element).one(transEndEventName, function(e) {
-
-
-        if (typeof callback === 'function') callback();
-        $(element).removeClass(""+animationName+"");
-
-    });
-
- 	},
-  /**
-   * $.animateCss( element, animationName, callback );
-   */
-
-
-/////////////////////////////////////////////
-///////////   IMG   VIEWER   ////////////////
-/////////////////////////////////////////////
+////////////////////////////////////////
+///////////   IMG   VIEWER   ///////////
+////////////////////////////////////////
 
 
   // OBJ files

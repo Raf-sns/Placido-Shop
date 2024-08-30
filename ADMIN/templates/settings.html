@@ -20,58 +20,103 @@
       <div class="hidden_login_access animate-zoom" style="display: none;">
 
         <!-- fields container -->
-        <div style="margin: 30px 0;">
+        <div class="row">
+          <div class="col s12 m6">
+            <!-- ADMIN PASS FORM -->
+            <form id="form_admin_pass" >
 
-          <p class="">
-            <label for="name">
-              <i class="fa-user-alt fas text-amber"></i>&nbsp; {{tr.your_name}}&nbsp;:
-            </label>&nbsp;
-            <input
-            id="name"
-            name="name"
-            value="{{user.name}}"
-            type="text"
-            class="border border-blue padding-small" />
-          </p>
+              <p class="large">
+                <label for="name">
+                  <i class="fa-user-alt fas text-amber"></i>&nbsp; {{tr.your_name}}&nbsp;:
+                </label>
+                <br>
+                <input
+                id="name"
+                name="name"
+                value="{{user.name}}"
+                type="text"
+                class="border border-blue padding-small" />
+              </p>
 
-          <p class="">
-            <label for="mail">
-              <i class="fas fa-at text-amber"></i>&nbsp; {{tr.mail}}&nbsp;:
-            </label>&nbsp;
-            <input
-            id="mail"
-            name="mail"
-            value="{{user.mail}}"
-            type="text"
-            class="border border-blue padding-small" />
-          </p>
+              <p class="large">
+                <label for="mail">
+                  <i class="fas fa-at text-amber"></i>&nbsp; {{tr.mail}}&nbsp;:
+                </label>
+                <br>
+                <input
+                id="mail"
+                name="mail"
+                value="{{user.mail}}"
+                type="text"
+                class="border border-blue padding-small" />
+              </p>
 
-          <p class="">
-            <label for="passw">
-              <i class="fas fa-key text-amber"></i>&nbsp;
-              {{tr.password}}&nbsp;:
-            </label>&nbsp;
-            <input
-            id="passw"
-            name="passw"
-            type="text"
-            class="border border-blue padding-small"
-						autocomplete="off"/>
-          </p>
+              <p class="large">
+                <label for="passw">
+                  <i class="fas fa-key text-amber"></i>&nbsp;
+                  {{tr.password}}&nbsp;:
+                </label>
+                <br>
+                <input
+                id="passw"
+                name="passw"
+                type="text"
+                class="border border-blue padding-small"
+                autocomplete="off"/>
+              </p>
+
+              <!-- BUTTONS -->
+              <p>
+                <button onclick="$.change_admin_pass(event);"
+                id="change_admin_pass"
+                class="blue btn card round margin-right"
+                type="button"
+                role="button">
+                  <i class="fas fa-sign-in-alt"></i>&nbsp; {{tr.record}}
+                </button>
+
+                <button onclick="$.clear_set_admin_pass();"
+                class="gray btn card round"
+                type="button"
+                role="button">
+                  <i class="fas fa-ban"></i>&nbsp; {{tr.abort}}
+                </button>
+              </p>
+
+            </form>
+            <!-- ADMIN PASS FORM -->
+          </div>
+          <!-- end col 1 -->
+          <!-- col 2 -->
+          <div class="col s12 m6">
+
+            <!-- website admins -->
+            <p class="large">
+              <i class="fa-user-friends fas"></i>&nbsp;
+              {{tr.website_admins}}
+            </p>
+
+            <!-- button add new admin -->
+            <p class="mrg0">
+              <button onclick="$.open_modal_admin( null, 'add' );"
+              class="blue btn card round"
+              type="button"
+              role="button"
+              style="margin-top: 0;">
+                <i class="fa-user-plus fas"></i>&nbsp; {{tr.add_new_admin}}
+              </button>
+            </p>
+
+            <!-- other admins block -->
+            <div id="admins_list">
+              {{>admins_list}}
+            </div>
+            <!-- other admins block -->
+
+          </div>
+          <!-- end col 2 -->
         </div>
-
-        <!-- BUTTONS -->
-        <p>
-          <span id="change_admin_pass" onclick="$.change_admin_pass();"
-          class="blue btn card round margin-right">
-            <i class="fas fa-sign-in-alt"></i>&nbsp; {{tr.record}}
-          </span>
-
-          <span onclick="$.clear_set_admin_pass();"
-          class="gray btn card round">
-            <i class="fas fa-ban"></i>&nbsp; {{tr.abort}}
-          </span>
-        </p>
+        <!-- end row -->
 
       </div>
       <!-- end hidden_access_login -->
@@ -381,7 +426,7 @@
 					</p>
 
 					<p>
-						<label for="DO_COMPRESS_JS_CSS">{{{tr.DO_COMPRESS_JS_CSS}}}</label>
+						<span>{{{tr.DO_COMPRESS_JS_CSS}}}</span>
 						<br>
 						<button onclick="$.compress_ressources();"
 						id="compress_ressources"
@@ -392,20 +437,17 @@
 					</p>
 
 					<p class="mrg0">
-					<label for="COMPRESSED">{{{tr.COMPRESSED}}}</label>
-					<br>
-					<button onclick="$.use_compressed_ressources('yes');"
-					id="use_compressed_true"
-					class="
-					{{#api_settings.COMPRESSED}}blue{{/api_settings.COMPRESSED}}
-					{{^api_settings.COMPRESSED}}gray{{/api_settings.COMPRESSED}}
-					btn card round margin-right" role="button" type="button">{{tr.yes}}</button>
+  					<span>{{{tr.COMPRESSED}}}</span>
+  					<br>
+  					<button onclick="$.use_compressed_ressources(1);"
+  					id="use_compressed_true"
+  					class="{{#api_settings.COMPRESSED}}blue{{/api_settings.COMPRESSED}}{{^api_settings.COMPRESSED}}gray{{/api_settings.COMPRESSED}}
+  					btn card round margin-right" role="button" type="button">{{tr.yes}}</button>
 
-					<button onclick="$.use_compressed_ressources('no');"
-					id="use_compressed_false"
-					class="{{^api_settings.COMPRESSED}}blue{{/api_settings.COMPRESSED}}
-					{{#api_settings.COMPRESSED}}gray{{/api_settings.COMPRESSED}}
-					btn card round" role="button" type="button">{{tr.no}}</button>
+  					<button onclick="$.use_compressed_ressources(0);"
+  					id="use_compressed_false"
+  					class="{{^api_settings.COMPRESSED}}blue{{/api_settings.COMPRESSED}}{{#api_settings.COMPRESSED}}gray{{/api_settings.COMPRESSED}}
+  					btn card round" role="button" type="button">{{tr.no}}</button>
 					</p>
 				</fieldset>
 				<!-- END COMPRESSION -->
@@ -415,6 +457,37 @@
 
 		</div>
 		<!-- END  website compression -->
+
+
+		<!-- REBUILD SITEMAP -->
+    <div id="rebuild_sitemap"
+    class="card dark-gray panel round">
+
+      <h3 onclick="$.deploy_settings_item('rebuild_sitemap');"
+      class="pointer">
+        <i class="ico_rebuild_sitemap fa-fw fa-hand-point-right far text-cyan"></i>&nbsp;
+        <span class="fw400 large title_set">{{tr.rebuild_sitemap}}</span>&nbsp;:
+      </h3>
+
+      <!-- hidden_rebuild_sitemap -->
+      <div class="hidden_rebuild_sitemap animate-zoom" style="display: none;">
+
+					<p class="large">
+              {{{tr.rebuild_sitemap_info}}}
+					</p>
+
+          <p>
+            <button onclick="$.rebuild_sitemap();"
+  					class="blue btn card round" role="button" type="button">
+              <i class="fas fa-sign-in-alt"></i>&nbsp; {{tr.execute_rebuild_sitemap}}
+            </button>
+          </p>
+
+			</div>
+      <!-- END  hidden_rebuild_sitemap -->
+
+		</div>
+		<!-- END REBUILD SITEMAP -->
 
 
     <!-- API SETTINGS -->
@@ -432,7 +505,12 @@
 
 				<!-- VERSION API -->
 				<p>
-					<span class="fw600 large">{{tr.VERSION}}&nbsp;: {{api_settings.VERSION}}</span>
+					<span class="large">{{tr.VERSION}}&nbsp;: {{api_settings.VERSION}}</span>
+        </p>
+
+        <p>
+          <i class="fa-exclamation-triangle fa-fw fas text-amber"></i>&nbsp;
+          <span class="text-amber">{{{tr.alert_settings}}}</span>
 				</p>
 
 				<form id="form_api_settings">
@@ -468,12 +546,36 @@
 						style="resize: auto;">{{api_settings.META_DESCR}}</textarea>
 					</p>
 
+          <p>
+            <label>{{tr.allow_search_engines}}</label>
+            <br>
+            <button onclick="$.allow_search_engines(1);"
+            class="allow_search_engines {{#api_settings.ALLOW_SEARCH_ENGINES}}blue{{/api_settings.ALLOW_SEARCH_ENGINES}}{{^api_settings.ALLOW_SEARCH_ENGINES}}gray{{/api_settings.ALLOW_SEARCH_ENGINES}} btn card round margin-right"
+            role="button"
+            type="button">
+		          <i class="fa-check fas"></i>&nbsp; {{tr.allow}}
+		        </button>
+
+            <button onclick="$.allow_search_engines(0);"
+            class="disallow_search_engines {{#api_settings.ALLOW_SEARCH_ENGINES}}gray{{/api_settings.ALLOW_SEARCH_ENGINES}}{{^api_settings.ALLOW_SEARCH_ENGINES}}blue{{/api_settings.ALLOW_SEARCH_ENGINES}} btn card round margin-right"
+            role="button"
+            type="button">
+		          <i class="fa-ban fas"></i>&nbsp; {{tr.disallow}}
+		        </button>
+
+            <!-- hidden input search engines -->
+            <input type="hidden" name="ALLOW_SEARCH_ENGINES" value="{{api_settings.ALLOW_SEARCH_ENGINES}}">
+					</p>
+
+          <hr>
+
 					<p>
 						<button onclick="$.add_img_prod();"
 						id="add_sn_img"
 						class="blue btn card round"
 						role="img"
-						type="button">
+						type="button"
+            style="margin-top: 0;">
 		          <i class="far fa-image"></i>&nbsp; {{tr.social_networks_imgs}}
 		        </button>
 						<input id="img" name="img" type="file" class="hide">
@@ -496,6 +598,8 @@
 
 					<div id="rows_img" style="justify-content: left;">
 					</div>
+
+          <hr>
 
 					<p>
 						<label for="PUBLIC_NOTIFICATION_MAIL">{{{tr.PUBLIC_NOTIFICATION_MAIL}}}</label>
@@ -548,44 +652,46 @@
 					</p>
 
 					<!-- 'inline' / 'mozaic' -->
-					<p class="mrg0">
-						{{{tr.display_products}}}
-					</p>
+					<p>
 
-					<div>
+            <label>{{{tr.display_products}}}</label>
+            <br>
+            
+            <!-- buttons -->
+            <button onclick="$.display_products('mozaic');"
+            class="display_products display_products_mozaic {{#template.display_mozaic}}blue{{/template.display_mozaic}}
+            {{^template.display_mozaic}}gray{{/template.display_mozaic}} btn card margin-right round"
+            type="button"
+            role="button">
+            <i class="fas fa-th" aria-hidden="true"></i>&nbsp;
+            {{tr.show_products_mozaic}}
+            </button>
 
-						<label for="display_mozaic"
-						onclick="$.display_products('mozaic');"
-						class="{{#template.display_mozaic}}gree{{/template.display_mozaic}}
-						{{^template.display_mozaic}}blue{{/template.display_mozaic}} btn card margin-right round">
-						<i class="fas fa-th" aria-hidden="true"></i>&nbsp;
-						{{tr.show_products_mozaic}}
-						</label>
-
-						<input
-						type="radio"
-						name="DISPLAY_PRODUCTS"
-						value="mozaic"
-						id="display_mozaic"
-						class="hide" {{#template.display_mozaic}}checked{{/template.display_mozaic}}>
-
-
-						<label for="display_inline"
-						onclick="$.display_products('inline');"
-						class="{{#template.display_inline}}gree{{/template.display_inline}}
-						{{^template.display_inline}}blue{{/template.display_inline}} btn card round">
+          	<button onclick="$.display_products('inline');"
+						class="display_products display_products_inline {{#template.display_inline}}blue{{/template.display_inline}}
+						{{^template.display_inline}}gray{{/template.display_inline}} btn card round"
+            type="button"
+            role="button">
 						<i class="fas fa-th-list" aria-hidden="true"></i>&nbsp;
 						{{tr.show_products_on_line}}
-						</label>
+            </button>
 
-						<input
+            <!-- hidden inputs -->
+            <input
+            type="radio"
+            name="DISPLAY_PRODUCTS"
+            value="mozaic"
+            id="display_mozaic"
+            class="hide" {{#template.display_mozaic}}checked{{/template.display_mozaic}}>
+
+            <input
 						type="radio"
 						name="DISPLAY_PRODUCTS"
 						value="inline"
 						id="display_inline"
 						class="hide" {{#template.display_inline}}checked{{/template.display_inline}}>
 
-					</div>
+					</p>
 					<!-- end 'inline' / 'mozaic' -->
 
 					<hr>

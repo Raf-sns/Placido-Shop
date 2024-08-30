@@ -103,6 +103,44 @@ warning_update_2
 ***
 	- Backup all files and folders of your current application.
 ***
+backup_process_in_progress
+***
+	The backup process is in progress,
+	<br>
+	it may take several minutes,
+	<br>
+	please wait.
+***
+backup_the_app
+***
+	Backup the app
+***
+back_up_success
+***
+	Your application has been compressed successfully.
+	<br>
+	Please save it in a safe place.
+***
+back_up_info
+***
+	When you click on the "Backup" button, all the folders and files
+	of your application as well as your database
+	will be compressed into a .zip file and then you will be prompted to download it.
+***
+back_up_warning
+***
+	Please delete the backup after downloading it,
+	<br>
+	this is very important for the security of your data!
+***
+delete_backup
+***
+	Delete backup
+***
+back_up_deleted
+***
+	The backup was successfully deleted
+***
 not_upload_files
 ***
 	Do not update the following files or folders&nbsp;:

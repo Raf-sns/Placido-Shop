@@ -9,7 +9,7 @@
   "repository" : {"type": "", "url": ""},
   "main" : "update.js",
 	"main_html" : "update",
-  "version" : "0.0.1",
+  "version" : "1.0.0",
 	"autoload" : {
 
 			"back" : [

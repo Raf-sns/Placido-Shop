@@ -47,9 +47,6 @@ img.first_img {
 img.other_imgs {
   width: 100px;
 }
-.ul li:last-child {
-  border-bottom: 1px solid #ddd;
-}
 .box_cart {
   margin: 0;
 }

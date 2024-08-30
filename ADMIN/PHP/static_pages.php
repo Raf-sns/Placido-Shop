@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2020-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact : https://sns.pm
  *
  * Script name:	static_pages.php
  *
@@ -14,11 +13,12 @@
  * static_pages::verify_inputs( $page_title, $page_url );
  * static_pages::admin_suppr_static_page();
  * static_pages::admin_modify_static_page();
+ * static_pages::get_html();
+ * static_pages::set_html();
  *
  */
 
 class static_pages {
-
 
 
 	/**
@@ -80,18 +80,18 @@ class static_pages {
 	public static function admin_record_static_page(){
 
 
-			// VERIFY USER
-			$token = trim(htmlspecialchars( $_POST['token'] ));
-			// verify token
-			program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 			// datas recived
 			$page_title = (string) trim(htmlspecialchars($_POST['page_title']));
+
 			// not apply htmlspecialchars here
 			$page_url = (string) trim($_POST['page_url']);
 
 			// verify inputs recived - re-used
 			$VERIF = static_pages::verify_inputs( $page_title, $page_url );
+
 			// renew vars with well formated and verified str
 			$page_title = $VERIF['page_title'];
 			$page_url = $VERIF['page_url'];
@@ -132,22 +132,25 @@ i. For access at this page from another place in the website :
 	<a onclick="$.open_static_page(event, \'{{static_pages.'.$page_url.'.url}}\');"
   href="{{static_pages.'.$page_url.'.url}}.html"
   title="{{static_pages.'.$page_url.'.page_title}}"
-  class="underline">Link to my page</a>
-
-';
+  class="underline">Link to my page</a>';
 
 // pass a structure + welcome code
 $welcome = '
 <!-- global container : Use always id="page" -->
 <div class="card round" id="page">
 	<!-- code what you want here ex. : -->
-	<h2 class="bold">Hello from : '.$page_title.'</h2>
+
+
+	<h2>'.$page_title.'</h2>
+
+
+
 </div>
 <!-- END global container -->
 ';
 
 			// use DOMDocument for insert models in commentary
-			$dom = new DOMDocument('1.0');
+			$dom = new DOMDocument('1.0', 'utf-8');
 			// create comm infos.
 			$comm = $dom->createComment($models);
 			// create a structure with a welcome text
@@ -190,7 +193,7 @@ $welcome = '
 			}
 
 			// ADD TO SITEMAP
-			tools::add_to_sitemap( $id=0, $page_url.'.html', 'static_page' );
+			sitemap::add_to_sitemap( null, $page_url.'.html', 'static_page' );
 
 			// success
 			$tab = array(
@@ -287,10 +290,8 @@ $welcome = '
 	public static function admin_suppr_static_page(){
 
 
-			// VERIFY USER
-			$token = trim(htmlspecialchars( $_POST['token'] ));
-			// verify token
-			program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 			$page_id = (int) trim(htmlspecialchars($_POST['page_id']));
 
@@ -361,7 +362,7 @@ $welcome = '
 			}
 
 			// SUPPR TO SITEMAP - pass 'page_url.html' instead of id as parameter
-			tools::suppr_to_sitemap( $GET_PAGE['page_url'].'.html' );
+			sitemap::suppr_to_sitemap( $GET_PAGE['page_url'].'.html' );
 
 			// all ok - return new list of statics pages
 			// success
@@ -389,12 +390,10 @@ $welcome = '
 	public static function admin_modify_static_page(){
 
 
-			// VERIFY USER
-			$token = trim(htmlspecialchars( $_POST['token'] ));
-			// verify token
-			program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
-			// datas recived from server :
+			// datas recived:
 
 			$page_id = (int) trim(htmlspecialchars($_POST['page_id']));
 
@@ -483,10 +482,10 @@ $welcome = '
 
 
 			// SUPPR old page TO SITEMAP - pass 'page_url.html' instead of id as parameter
-			tools::suppr_to_sitemap( $GET_PAGE['page_url'].'.html' );
+			sitemap::suppr_to_sitemap( $GET_PAGE['page_url'].'.html' );
 
 			// ADD new page TO SITEMAP
-			tools::add_to_sitemap( $id=0, $page_url.'.html', 'static_page' );
+			sitemap::add_to_sitemap( null, $page_url.'.html', 'static_page' );
 
 
 			// all ok - return new list of statics pages
@@ -506,9 +505,167 @@ $welcome = '
 
 
 
+	/**
+	 * static_pages::get_html();
+	 *
+	 * @return {json}  get html of a static page
+	 */
+	public static function get_html(){
+
+
+			// VERIFY token
+      token::verify_token();
+
+			// page asked
+			$page_url = (string) trim(htmlspecialchars($_POST['page_url']));
+
+			// lang back asked
+			$lang = (string) trim(htmlspecialchars($_POST['lang']));
+
+			// file exists ?
+			$path = ROOT.'/templates/STATIC_PAGES/'.$page_url.'.html';
+
+			if( !file_exists($path) ){
+
+					$tab = array('error' => tr::$TR['page_not_found'] );
+					echo json_encode($tab, JSON_FORCE_OBJECT);
+					exit;
+			}
+
+			// get html
+			$html = file_get_contents($path);
+			$doc = new DOMDocument('1.0', 'utf-8');
+			$doc->preserveWhiteSpace = false;
+      $doc->formatOutput = true; // true : well indented
+			$doc->loadHTML(mb_convert_encoding($html,'HTML-ENTITIES','UTF-8'));
+
+			// get nodes from <div> with id=page
+			$nodes = $doc->getElementById('page');
+
+			// convert to html
+			$html = trim( $doc->saveHtml($nodes) );
+
+			// remove first <div id=page
+			$html = str_replace('<div class="card round" id="page">', '', $html);
+
+			// remove last </div> tag
+			$html = substr($html, 0, strlen($html)-6);
+
+
+			// verify lang asked or fallback to 'en'
+			$path_lang_trumbowyg =
+				ROOT.'/'.ADMIN_FOLDER.'/JS/apps/trumbowyg/dist/langs/'.$lang.'.min.js';
+
+			// if no lang aviable -> set it to default for js
+			if( !file_exists($path_lang_trumbowyg) ){
+
+					$lang = 'default';
+			}
+
+			// success
+			$tab = array(
+					'success' => true,
+					'html' => $html,
+					'lang' => $lang
+			);
+
+			echo json_encode($tab);
+			exit;
+
+	}
+	/**
+	 * static_pages::get_html();
+	 */
+
+
+
+	/**
+	 * static_pages::set_html();
+	 *
+	 * @return {json}  success / error on record edit static page
+	 */
+	public static function set_html(){
+
+
+			// VERIFY token
+      token::verify_token();
+
+			// url page
+			$page_url = (string) trim(htmlspecialchars($_POST['page_url']));
+
+			// file exists ?
+			$path = ROOT.'/templates/STATIC_PAGES/'.$page_url.'.html';
+
+			if( !file_exists($path) ){
+
+					$tab = array('error' => tr::$TR['page_not_found'] );
+					echo json_encode($tab);
+					exit;
+			}
+
+			// html recived
+			$html_recived = (string) trim($_POST['html']);
+
+			$models = '<!--
+ - Generated by Placido Shop
+
+Page URL : https://'.HOST.'/'.$page_url.'.html
+
+i. For access at this page from another place in the website :
+
+	- Insert a button :
+
+	ex. : Insert a button on sidebar
+
+	<button
+	onclick="$.open_static_page(event, \'{{static_pages.'.$page_url.'.url}}\');"
+  class="bar-item pointer"
+  role="button"
+  aria-label="{{static_pages.'.$page_url.'.page_title}}">
+    <i class="fa-fw fa-hand-point-right far"></i>&nbsp; Translate this</button>
+
+	- Insert a link :
+
+	<a onclick="$.open_static_page(event, \'{{static_pages.'.$page_url.'.url}}\');"
+  href="{{static_pages.'.$page_url.'.url}}.html"
+  title="{{static_pages.'.$page_url.'.page_title}}"
+  class="underline">Link to my page</a>
+-->';
+
+	// pass a structure + welcome code
+	$html = $models.'
+<!-- global container : Use always id="page" -->
+<div class="card round" id="page">
+
+
+	'.$html_recived.'
+
+
+</div>
+<!-- END global container -->';
+
+
+			// record html - ERROR
+			if( !file_put_contents($path, $html, LOCK_EX) ){
+
+					$tab = array('error' => tr::$TR['error_edit_page'] );
+					echo json_encode($tab);
+					exit;
+			}
+			else{
+
+					// - SUCCESS
+					$tab = array('success' => true );
+					echo json_encode($tab);
+					exit;
+			}
+
+	}
+	/**
+	 * static_pages::set_html();
+	 */
+
 
 }
 // END class static_pages::
-
-
 ?>

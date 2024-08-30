@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - FRONT
- * Copyright © Raphaël Castello  2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - FRONT
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	mail.php
  *
@@ -14,81 +13,98 @@
  * mail::send_order_to_customer( $SALE );
  * mail::send_notif_new_sale( $SALE );
  * mail::send_mail_contact();
+ * mail::get_all_admins_mail();
  *
  */
+
+// PHPMailer namespace
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+// include PHPMailer
+include_once ROOT.'/PHP/LIBS/PHPMailer/PHPMailer.php';
+include_once ROOT.'/PHP/LIBS/PHPMailer/SMTP.php';
+include_once ROOT.'/PHP/LIBS/PHPMailer/Exception.php';
 
 class mail extends config {
 
 
   /**
    * mail::send_mail_by_PHPMailer( $to, $subject, $message );
-   * send a mail by PHPMailer method
-   * @Param $to -> mail to send
-   * @Param $subject -> suject of mail
-   * @Param $message -> html content with datas
-   *  ? need -> classes/Exception.php - classes/PHPMailer.php - classes/SMTP.php
+   * send a mail by PHPMailer
    *
-   * @param  {str} $to        mail to send mail
-   * @param  {str} $subject   subject of e-mail
-   * @param  {str} $message   mail content in (x)html
+   * @param  {mixed}  $to        array / mail to send email
+   * @param  {string} $subject   subject of email
+   * @param  {string} $message   mail content in html
    * @return {void}           send mail with PHPMailer library
+   *
    */
   public static function send_mail_by_PHPMailer( $to, $subject, $message ){
 
-        // debug - un-comment this
-        // $mail->SMTPDebug = 2;
-        // error_reporting(E_STRICT | E_ALL);
 
-				// include PHPMailer
-        include_once ROOT.'/PHP/LIBS/PHPMailer/PHPMailer.php';
-        include_once ROOT.'/PHP/LIBS/PHPMailer/SMTP.php';
+      // i. no try catch here : Nothing should derail a sale
 
-        // SEND MAIL by PPHPMailer
-        $mail = new PHPMailer();
-        $mail->CharSet = 'UTF-8';
-				// Use SMTP
-        $mail->isSMTP();
-				$mail->SMTPAuth = true; // Auth. SMTP
-				$mail->SMTPSecure = 'ssl'; // Accept SSL
-				// Mailbox infos
-        $mail->Host = self::MAILBOX_HOST; // Outgoing server
-        $mail->Username = self::MAILBOX_ACCOUNT; // Mailbox email
-        $mail->Password = self::MAILBOX_PASSW; // Mailbox password
-        $mail->Port = self::MAILBOX_PORT; // Mailbox port
+      // SEND MAIL by PPHPMailer
+      $mail = new PHPMailer();
+      // debug - un-comment this follow
+      // $mail->SMTPDebug = 2; // 1=Client commands, 2=Client commands and server responses
 
-        // Mail from -> public communication e-mail + domain name
-        $mail->setFrom( PUBLIC_NOTIFICATION_MAIL, HOST );
-        // Mail to send
-        $mail->clearAddresses();
-        $mail->addAddress($to);
-        // Reply address
-        $mail->addReplyTo(PUBLIC_NOTIFICATION_MAIL);
-				// Mail in HTML or not
-        $mail->isHTML(true);
-				// Subject
-        $mail->Subject = $subject;
-				// Message
-        $mail->Body = $message;
-				// Message in text
-        // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-				// More :
-				// $mail->addCC('cc@example.com');
-				// $mail->addBCC('bcc@example.com');
-				// Add multiples attachments
-				// $mail->addAttachment('/var/tmp/file.tar.gz');
-				// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');
+      $mail->CharSet = 'UTF-8';
+			// Use SMTP
+      $mail->isSMTP();
+			$mail->SMTPAuth = true; // Auth. SMTP
+			$mail->SMTPSecure = 'ssl'; // Accept SSL
+			// Mailbox infos
+      $mail->Host = self::MAILBOX_HOST; // Outgoing server
+      $mail->Username = self::MAILBOX_ACCOUNT; // Mailbox email
+      $mail->Password = self::MAILBOX_PASSW; // Mailbox password
+      $mail->Port = self::MAILBOX_PORT; // Mailbox port
 
-        // SEND
-        if( !$mail->send() ){
+      // Set the encryption mechanism to use:
+      // - SMTPS (implicit TLS on port 465) or
+      // - STARTTLS (explicit TLS on port 587)
+      $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 
-           // render error
-	         $tab = array('error' => 'E-Mail error : '.$mail->ErrorInfo );
-	         echo json_encode($tab, JSON_FORCE_OBJECT);
-	         exit;
-        }
+      // Priority | null (default), 1 = High, 3 = Normal, 5 = low
+      $mail->Priority = 1;
 
-        return true;
+      // Mail from -> public communication email + website title
+      $mail->setFrom( PUBLIC_NOTIFICATION_MAIL, WEBSITE_TITLE );
 
+      $mail->clearAddresses();
+
+      // Mail to send
+      if( is_array($to) ){
+
+          // multiples emails
+          foreach( $to as $admin ){
+              $mail->addAddress( $admin['mail'], $admin['name'] );
+          }
+      }
+      else{
+          // one mail to send
+          $mail->addAddress($to);
+      }
+
+      // Reply address
+      $mail->addReplyTo( PUBLIC_NOTIFICATION_MAIL, WEBSITE_TITLE );
+			// Mail in HTML or not
+      $mail->isHTML(true);
+			// Subject
+      $mail->Subject = $subject;
+			// Message in HTML
+      $mail->Body = $message;
+
+      // SEND
+      if( !$mail->send() ){
+
+          // if error : return false for a test case
+          return false;
+      }
+
+      // return true for a test case
+      return true;
   }
   /**
    * mail::send_mail_by_PHPMailer();
@@ -104,7 +120,8 @@ class mail extends config {
   public static function send_order_to_customer( $SALE ){
 
 
-    // DATES i.-> can remove delivery date &/ payment limit date -> just comment
+    // DATES i.-> can remove delivery date &/ payment limit date
+    // -> just comment
     // specify timezone un-bug in my server
     $timezone = new DateTimeZone(TIMEZONE);
 
@@ -167,9 +184,9 @@ class mail extends config {
 
     // MUSTACHE FOR TEMPLATE
 
-    // // use .html instead of .mustache for default template extension
+    // use .html instead of .mustache for default template extension
     $options =  array('extension' => '.html');
-    // // template loader
+    // template loader
     $m = new Mustache_Engine(array(
         'loader' => new Mustache_Loader_FilesystemLoader(dirname(__DIR__) . '/templates/API', $options)
     ));
@@ -197,13 +214,14 @@ class mail extends config {
   /**
    * mail::send_notif_new_sale( $SALE );
    * @Param $SALE : 	sale
-   * @return {void}   send notification mail new sale to the seller
+   * @return {void}   send notification mail new sale to all admins
    */
   public static function send_notif_new_sale( $SALE ){
 
 
       // send message new sale to vendor at the public notifications mail
-      $to = PUBLIC_NOTIFICATION_MAIL;
+      // get_all_admins_mail() -> return array( [mail], [name] )
+      $to = mail::get_all_admins_mail();
 
       // DATE NOTIF
       // specify timezone
@@ -284,18 +302,22 @@ class mail extends config {
   public static function send_mail_contact(){
 
 
-    // start session for retrieve ARRay of datas for AJAX object
-    session_start([
-        'name' => 'PLACIDO-SHOP',
-        'use_strict_mode' => true,
-        'cookie_samesite' => 'Strict',
-        'cookie_lifetime' => 1200, // 20min.
-        'gc_maxlifetime' => 1200,
-        'cookie_secure' => true,
-        'cookie_httponly' => true
-    ]);
+    // start SESSION if not started
+    if( session_status() == PHP_SESSION_NONE ){
 
-    // put a session to not repost multiple
+        // start session
+        session_start([
+          'name' => 'PLACIDO-SHOP',
+          'use_strict_mode' => true,
+          'cookie_samesite' => 'Strict',
+          'cookie_lifetime' => 3600, // 1 hour
+          'gc_maxlifetime' => 3600,
+          'cookie_secure' => true,
+          'cookie_httponly' => true
+        ]);
+    }
+
+    // put a session to not repost multiples emails
     if( !isset($_SESSION['nb_post_contact']) ){
 
         $_SESSION['nb_post_contact'] = 0;
@@ -316,10 +338,10 @@ class mail extends config {
     }
 
     // security
-    $name = trim(htmlspecialchars($_POST['name']));
+    $name = trim(htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8'));
     $mail = trim(htmlspecialchars($_POST['mail']));
     $mail = filter_var($mail, FILTER_SANITIZE_EMAIL);
-    $message = trim(htmlspecialchars($_POST['message']));
+    $message = trim(htmlspecialchars($_POST['message'], ENT_NOQUOTES, 'UTF-8'));
 
     // TEST EMPTY NAME
     if( empty($name) ){
@@ -457,8 +479,47 @@ class mail extends config {
    */
 
 
+
+  /**
+   * mail::get_all_admins_mail();
+   *
+   * @return {array}  return array of administrators emails
+   */
+  public static function get_all_admins_mail(){
+
+
+      // GET ALL ADMINS MAILS
+      $ARR_pdo = false;
+      $sql = 'SELECT mail, name FROM admins';
+      $response = 'all'; // multiples rows
+      $last_id = false;
+
+      $GET_ADMINS_MAIL = db::server($ARR_pdo, $sql, $response, $last_id);
+
+      // prepa. admins mails array
+      $ADMINS_mails = array();
+
+      // loop
+      foreach( $GET_ADMINS_MAIL as $v ){
+
+          // fill $ADMINS_mails
+          $ADMINS_mails[] = array(
+            'mail' => $v['mail'],
+            'name' => $v['name']
+          );
+      }
+      // end loop
+
+      // return admins mails array
+      return $ADMINS_mails;
+
+  }
+  /**
+   * mail::get_all_admins_mail();
+   */
+
+
+
 }
-// END CLASS mail::
-
-
+// end class mail::
 ?>

@@ -1,13 +1,20 @@
-
 /**
- *	Chart.js config
- * 	Thanks to the Chart.js Team ! See more: https://www.chartjs.org/
- * 	=> show ' Chart.defaults ' in console
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact : https://sns.pm
+ *
+ * script name: Chart.js config
+ * Thanks to the Chart.js Team ! See more: https://www.chartjs.org/
+ * => show ' Chart.defaults ' in console
+ *
  */
-// Chart.defaults
-// responsive / ratio - bug !
-// Chart.defaults.responsive = true;
-// Chart.defaults.maintainAspectRatio = false;
+
+
+  // Chart.defaults
+  // responsive / ratio - bug !
+  // Chart.defaults.responsive = true;
+  // Chart.defaults.maintainAspectRatio = false;
 
 	// CHARTS CONSTANTS
 	const Locations = ['cities','regions','countries','timezones'];

@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	shop.php
  *
@@ -73,9 +72,8 @@ class shop {
   public static function update_shop(){
 
 
-      // verify token
-      $token = trim(htmlspecialchars($_POST['token']));
-      program::verify_token( $token );
+      // VERIFY token
+      token::verify_token();
 
       // ALL EMPTY
       if( empty($_POST) ){
@@ -232,7 +230,7 @@ class shop {
 					exit;
       }
 
-			// ! this return shoop with const LOGO already getted -> must renew name logo
+			// ! this return shop with const LOGO already getted -> must renew name logo
 			$SHOP = shop::get_shop();
 			$SHOP['img'] = 'logo-shop-'.$NEW_logo[0];
 

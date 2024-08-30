@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - FRONT
- * Copyright © Raphaël Castello  2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - FRONT
+ * Copyright © Raphaël Castello, 2019-2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * script name: tools.php
  *
@@ -13,7 +12,6 @@
  *
  * tools::get_templates();
  * tools::minify_html( $html );
- * tools::get_static_page();
  * tools::cut_string( $nb_chars, $str );
  * tools::suppr_accents($str, $encoding='utf-8');
  * tools::parse_line_breaks( $text );
@@ -65,7 +63,7 @@ class tools {
 
 					$html = file_get_contents( $path_file );
 
-          // REMPLACE COMMENTS IN THE HTML CODE
+          // REPLACE COMMENTS IN THE HTML CODE
           // $ARR_return[$k]['html'] = preg_replace('/<!--(.|\s)*?-->/', '', $html);
 					$ARR_return[$k]['html'] = tools::minify_html( $html );
 
@@ -114,58 +112,6 @@ class tools {
 	/**
 	 * tools::minify_html( $html );
 	 */
-
-
-
-  /**
-   * tools::get_static_page();
-   *
-   * @return {json}  return a static page
-   */
-  public static function get_static_page(){
-
-
-			// data recived
-			$template_asked = (string) trim(htmlspecialchars($_POST['page_url']));
-
-			// too long request
-			if( iconv_strlen($template_asked) > 100 ){
-
-					$tab = array( 'error' => tr::$TR['error_gen'] );
-		      echo json_encode( $tab, JSON_FORCE_OBJECT );
-		      exit;
-			}
-
-			// path to html static page code
-			$path = ROOT.'/templates/STATIC_PAGES/'.$template_asked.'.html';
-
-			// test if page exits
-			if( file_exists($path) ){
-
-					$raw_html = file_get_contents($path);
-			}
-			else{
-
-					// error file not exist
-					$tab = array( 'error' => tr::$TR['page_not_found'] );
-					echo json_encode( $tab, JSON_FORCE_OBJECT );
-					exit;
-			}
-
-			// minify
-			$html = tools::minify_html( $raw_html );
-
-			// return inlined template
-      $tab = array( 'success' => true,
-										'template' => $html );
-
-      echo json_encode( $tab );
-      exit;
-
-  }
-  /**
-   * tools::get_static_page();
-   */
 
 
 
@@ -260,8 +206,8 @@ class tools {
 
 
 	/**
-	 * tools::inline_string( $str ); // used ?
-	 * remove all line breaks and +2 spaces
+	 * tools::inline_string( $str );
+	 * inline a text
 	 *
 	 * @param  {string} $str 	string to inline
 	 * @return {string}      	return string without any line break

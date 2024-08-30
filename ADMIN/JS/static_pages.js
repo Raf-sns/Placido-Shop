@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * script name: static_pages.js
  *
@@ -14,6 +13,8 @@
  * $.modify_static_page( page_id );
  * $.show_infos_static_page();
  * $.show_form_static_page();
+ * $.edit_static_page( event, page_id );
+ * $.save_edit_static_page();
  *
  */
 
@@ -345,6 +346,140 @@ $.extend({
 	 * $.show_form_static_page();
 	 */
 
+
+
+  /**
+   * $.edit_static_page( event, page_id );
+   *
+   * @param  {event} event
+   * @param  {int}  page_id  id of page to edit
+   * @return {html} trumbowyg page editor
+   */
+  edit_static_page : function( event, page_id ){
+
+
+      $(event.currentTarget)
+      .append(`<span class="spinner">
+			&nbsp;<i class="fas fa-circle-notch fa-spin fa-fw"></i></span>`);
+
+      let STATIC_page = $.o.static_pages.find( item => item.page_id === page_id);
+
+      // construct obj to post
+      let Obj = {
+        set: 'edit_static_page',
+        token: $.o.user.token,
+        page_url: STATIC_page.page_url,
+        lang: $.o.api_settings.LANG_BACK
+      };
+
+      $.post('index.php', Obj, function(data){
+
+          // success
+          if( data.success ){
+
+              // get CSS and JS scripts for trumbowyg
+              // put CSS on <head> and append scritps to <body>
+              $.getScript( 'JS/trumbowyg_loader.js', function(){
+
+                  let Copy_object_placido = {
+                    tr: {...$.o.tr},
+                    STATIC_page: {...STATIC_page},
+                    host: $.o.api_settings.HOST
+                  };
+
+                  $('#page_gen').empty()
+                  .mustache('page_editor', Copy_object_placido );
+
+                  // add lang
+                  if( data.lang != 'default' ){
+
+                      $('body').append(`
+          							<script type="text/javascript"
+                        src="JS/apps/trumbowyg/dist/langs/`+data.lang+`.min.js"></script>
+          						`);
+                  }
+
+                  // init. object of trumbowyg options
+                  $.getScript( 'JS/trumbowyg_init.js', function(){
+
+                      // launch editor -> launch_trumbowyg() see trumbowyg_init.js
+                      launch_trumbowyg('#page_editor', data.lang);
+
+                      // empty trumbowyg editor with html page content
+                      $('#page_editor').trumbowyg('html', data.html);
+
+                  });
+              });
+          }
+          // end success
+
+          // error
+          if( data.error ){
+
+              $.show_alert('warning', data.error, false);
+          }
+
+          // remove spinner
+          $('.spinner').remove();
+
+      }, 'json');
+      // end post
+  },
+  /**
+   * $.edit_static_page( event, page_id );
+   */
+
+
+
+  /**
+   * $.save_edit_static_page( event, page_id );
+   *
+   * @param  {event} event
+   * @param  {int}  page_id  id of page to record
+   * @return {json}  record HTML static page
+   */
+  save_edit_static_page : function( event, page_id ){
+
+
+      $(event.currentTarget)
+      .append(`<span class="spinner">
+			&nbsp;<i class="fas fa-circle-notch fa-spin fa-fw"></i></span>`);
+
+      let STATIC_page = $.o.static_pages.find( item => item.page_id === page_id);
+
+      // construct obj to post
+      let Obj = {
+        set: 'record_edit_static_page',
+        token: $.o.user.token,
+        page_url: STATIC_page.page_url,
+        html: $('#page_editor').trumbowyg('html')
+      };
+
+      $.post('index.php', Obj, function(data){
+
+          // success
+          if( data.success ){
+
+              // success message
+              $.show_alert('success', $.o.tr.success_edit_page, false);
+          }
+
+          // error
+          if( data.error ){
+
+              $.show_alert('success', data.error, true);
+          }
+
+          // remove spinner
+          $('.spinner').remove();
+
+
+      }, 'json');
+      // end post
+  },
+  /**
+   * $.save_edit_static_page( page_id );
+   */
 
 
 

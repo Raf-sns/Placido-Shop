@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello - 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	ip_rejected.php
  *
@@ -27,10 +26,8 @@ class ip_rejected {
   public static function get_ip_rejected(){
 
 
-			// VERIFY USER
-			$token = trim(htmlspecialchars( $_POST['token'] ));
-			// verify token
-			program::verify_token($token);
+			// VERIFY token
+			token::verify_token();
 
 			// GET ALL REJECTED
 			// @return : last_check -> date locale  formatted
@@ -125,10 +122,8 @@ class ip_rejected {
   public static function admin_unban_ip(){
 
 
-			// VERIFY USER
-			$token = trim(htmlspecialchars( $_POST['token'] ));
-			// verify token
-			program::verify_token($token);
+			// VERIFY token
+			token::verify_token();
 
 			// ip - able to suppr empty IPs -> IP must be == ''
 			$ip = ( empty($_POST['ip']) )

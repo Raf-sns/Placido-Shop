@@ -1,13 +1,3 @@
-<!--
-* Program name : Placido Shop - Online sales software.
-* Version 0.3.0
-*  Copyleft  Raphaël Castello 2020-2022
-* Organisation: SNS - Web et Informatique
-* Web site: https://sns.pm
-* @link <contact@sns.pm>
-* Script name: order.html
-* This template was found on the net - Thanks! To prime author ...
--->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -59,7 +49,7 @@ style="margin: 0; padding: 0;">
 
 
 <!-- DéBUT DU DOC -->
-<table width="600" border="0" bgcolor="#d4d4d4" cellspacing="0" cellpadding="10" class="100p">
+<table width="600" border="0" bgcolor="#d4d4d4" cellspacing="0" cellpadding="5" class="100p">
   <tr>
     <td align="center" valign="top">
 
@@ -71,15 +61,23 @@ style="margin: 0; padding: 0;">
        <table width="600" border="0" cellspacing="10" cellpadding="0" bgcolor="#ffffff"
        class="bkg_section_mail">
          <tr>
-           <td align="left">
-             <img class="logo" src="https://{{host}}/img/Logos/{{logo}}"
-              alt="{{{shop_title}}}" border="0" />
+           <td align="right" valign="middle" width="100" style="width: 100px;">
 
-            <h1 class="shop_title"
-            style="display: inline-block;
-						     font-family: Arial, sans-serif;
-						     vertical-align: top;
-						     margin: 30px 0 0 4%;">{{{shop_title}}}</h1>
+             <img class="logo" src="https://{{host}}/img/Logos/{{logo}}"
+              alt="{{{shop_title}}}" border="0"
+              style="max-width: 100px;width: 100px;margin-bottom: -5px;"/>
+
+           </td>
+
+            <td align="left" valign="middle">
+
+              <h1 class="shop_title"
+              style="display: inline-block;
+  						     font-family: Arial, sans-serif;
+  						     vertical-align: top;
+  						     margin: 0 0 0 2%;
+                   font-size: 32px;
+                   color: #545454;">{{{shop_title}}}</h1>
            </td>
          </tr>
        </table>
@@ -92,7 +90,7 @@ style="margin: 0; padding: 0;">
 <!-- hauteur de 10px vide  -->
 <table width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p">
    <tr>
-      <td height="10"></td>
+      <td height="5"></td>
    </tr>
 </table>
 <!-- FIN hauteur de 10px vide -->
@@ -100,9 +98,9 @@ style="margin: 0; padding: 0;">
 <!-- TITLE BILL CONTENT -->
 <table width="600" border="0" cellspacing="0" cellpadding="10" bgcolor="#ffffff" class="100p">
    <tr>
-     <td align="center" valign="top">
+     <td align="center" valign="middle">
        <span class="subject_mail"
-       style="font-family: Arial,sans-serif;">{{title}}</span>
+       style="font-family: Arial,sans-serif;font-size: 24px;color:#545454;">{{title}}</span>
      </td>
    </tr>
 </table>
@@ -112,7 +110,7 @@ style="margin: 0; padding: 0;">
 <!-- hauteur de 10px vide  -->
 <table width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p">
    <tr>
-     <td height="10"></td>
+     <td height="5"></td>
    </tr>
 </table>
 <!-- FIN hauteur de 10px vide -->
@@ -126,7 +124,7 @@ style="margin: 0; padding: 0;">
           <!-- TIME FACTURE + NUMBER -->
           <td align="left"
           class="color_text size_text"
-          style="font-family: Arial,sans-serif;">
+          style="font-family: Arial,sans-serif;color: #3c3c3c;font-size: 18px;">
             {{tr.order_number}}&nbsp;{{sale_id}}
             <br />
             {{tr.order_executed_date}}&nbsp;: {{date_now}}
@@ -148,7 +146,7 @@ style="margin: 0; padding: 0;">
 <!-- hauteur de 10px vide  -->
 <table width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p">
  <tr>
-  <td height="10"></td>
+  <td height="5"></td>
  </tr>
 </table>
 <!-- FIN hauteur de 10px vide -->
@@ -171,7 +169,7 @@ style="margin: 0; padding: 0;">
           class="color_text size_text">
             <div style="padding:10px 10px 10px 10px;">
             <span class="color_text size_text"
-            style="font-family: Arial,sans-serif;">
+            style="font-family: Arial,sans-serif;color: #3c3c3c;font-size: 18px;">
             {{^for_admin}}
               {{tr.your_customer_informations}}&nbsp;:
             {{/for_admin}}
@@ -204,7 +202,7 @@ style="margin: 0; padding: 0;">
           class="color_text size_text">
             <div style="padding:10px 10px 10px 10px;">
             <span class="color_text size_text"
-            style="font-family: Arial,sans-serif;">
+            style="font-family: Arial,sans-serif;color: #3c3c3c;font-size: 18px;">
               {{tr.delivery_address}}&nbsp;:
             <br />
             <br />
@@ -236,9 +234,9 @@ style="margin: 0; padding: 0;">
 <table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
   <tr>
     <td align="left">
-      <div style="padding: 10px 10px 20px 10px">
+      <div style="padding: 10px 10px 14px 10px">
         <span class="color_text size_text"
-        style="font-family: Arial,sans-serif">
+        style="font-family: Arial,sans-serif;color: #3c3c3c;font-size: 18px;">
           {{^for_admin}}
             {{tr.your_order}}&nbsp;:
           {{/for_admin}}
@@ -255,43 +253,44 @@ style="margin: 0; padding: 0;">
 <table width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
    <tr>
       <td align="center">
-        <table width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
+        <table width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff"
+        class="100p" style="padding: 0 10px 0 0;">
 
           <!-- titles tables cells -->
-           <tr style="border-bottom: 1px solid #a9a9a9;">
+           <tr>
 
-              <th align="center"
+              <th align="center" valign="middle"
               class="border_bottom table_order_titles color_text size_text"
-              style="width: 40%;padding:10px 10px 10px 10px;" >
+              style="width: 40%;padding: 10px;" >
                 <span class="table_order_titles size_text"
-                style="font-family: Arial,sans-serif;">
+                style="font-family: Arial,sans-serif;font-size: 18px;color: #638b9e;">
                   {{tr.product}}
                 </span>
               </th>
 
-              <th align="center"
+              <th align="center" valign="middle"
               class="border_bottom table_order_titles"
-              style="width: 20%;padding:10px 10px 10px 10px;">
+              style="width: 25%;padding: 10px;">
                 <span class="table_order_titles size_text"
-                style="font-family: Arial,sans-serif;">
+                style="font-family: Arial,sans-serif;font-size: 18px;color: #638b9e;">
                   {{tr.price_by_unit}}
                 </span>
               </th>
 
-              <th align="center"
+              <th align="center" valign="middle"
               class="border_bottom table_order_titles"
-              style="width: 20%; padding:10px 10px 10px 10px;">
+              style="width: 10%; padding: 10px;">
                 <span class="table_order_titles size_text"
-                style="font-family: Arial,sans-serif;">
+                style="font-family: Arial,sans-serif;font-size: 18px;color: #638b9e;">
                   {{tr.quantity}}
                 </span>
               </th>
 
-              <th align="center"
+              <th align="center" valign="middle"
               class="border_bottom table_order_titles"
-              style="width: 20%;padding:10px 10px 10px 10px;">
+              style="width: 25%;padding: 10px;">
                 <span class="table_order_titles size_text"
-                style="font-family: Arial,sans-serif;">
+                style="font-family: Arial,sans-serif;font-size: 18px;color: #638b9e;">
                   {{tr.total_amount_product}}
                 </span>
               </th>
@@ -300,38 +299,38 @@ style="margin: 0; padding: 0;">
 
             {{#sold_products}}
 
-            <tr style="border-bottom: 1px solid #a9a9a9;">
+            <tr>
 
-              <td  align="center"
+              <td align="center" valign="middle"
               class="border_bottom"
-              style="width: 40%;padding:10px 10px 10px 10px;">
+              style="width: 40%;padding: 10px;">
                 <span class="color_text small_text"
-                style="font-family: Arial,sans-serif;">{{{title}}}</span>
+                style="font-family: Arial,sans-serif;color: #3c3c3c;font-size: 17px;">{{{title}}}</span>
               </td>
 
-              <td align="center"
+              <td align="center" valign="middle"
               class="border_bottom"
-              style="padding:10px 10px 10px 10px;width: 20%;">
+              style="width: 25%;padding: 10px;">
                 <span class="color_text small_text"
-                style="font-family: Arial,sans-serif;">{{PU_TT}}</span>
+                style="font-family: Arial,sans-serif;color: #3c3c3c;font-size: 17px;">{{PU_TT}}</span>
               </td>
 
-              <td align="center"
+              <td align="center" valign="middle"
               class="border_bottom"
-              style="padding:10px 10px 10px 10px;width: 20%;">
+              style="width: 10%;padding: 10px;">
                 <span class="color_text small_text"
-                style="font-family: Arial,sans-serif;">{{quant}}</span>
+                style="font-family: Arial,sans-serif;color: #3c3c3c;font-size: 17px;">{{quant}}</span>
               </td>
 
-              <td align="center"
+              <td align="center" valign="middle"
               class="border_bottom"
-              style="padding:10px 10px 10px 10px;width: 20%;">
+              style="width: 25%;padding: 10px;">
                 <span class="color_text small_text"
-                style="font-family: Arial,sans-serif;">
+                style="font-family: Arial,sans-serif;color: #3c3c3c;font-size: 17px;">
                   {{total_old_row_text}}
                   {{#tax}}
                   <br />
-                  <span class="color_text_note">
+                  <span class="color_text_note" style="color: #9b2aa8; font-size: 14px;">
                     {{{tr.total_tax_row}}}&nbsp;({{tax_text}}%)&nbsp;:
                     <br />
                     {{total_tax_row}}
@@ -348,53 +347,53 @@ style="margin: 0; padding: 0;">
             <tr style="border-bottom: none;">
 
               <td align="center"
-              style="padding:10px 10px 10px 10px;width: 20%;"></td>
+              style="padding: 10px;width: 20%;"></td>
 
               <td align="center"
-              style="padding:10px 10px 10px 10px;width: 20%;"></td>
+              style="padding: 10px;width: 20%;"></td>
 
               <td align="center"
               class="border_bottom table_order_titles"
-              style="padding:10px 10px 10px 10px;width: 40%;border-bottom: 1px solid #a9a9a9;">
+              style="padding: 10px;width: 40%;border-bottom: 1px solid #a9a9a9;">
                 <span class="table_order_titles color_text size_text"
-                style="font-family: Arial,sans-serif;">
+                style="font-family: Arial,sans-serif;font-size: 18px;color: #638b9e;">
                   {{tr.total_amount_sale}}
                 </span>
               </td>
 
               <td align="center"
               class="border_bottom"
-              style="padding:10px 10px 10px 10px;width: 20%;border-bottom: 1px solid #a9a9a9;">
+              style="padding: 10px;width: 20%;border-bottom: 1px solid #a9a9a9;">
                 <span class="color_text size_text"
-                style="font-family: Arial,sans-serif;">
+                style="font-family: Arial,sans-serif;color: #3c3c3c;font-size: 18px;">
                   {{total_amount_sale_text}}
                 </span>
               </td>
             </tr>
 
             {{#total_tax_sale}}
-            <tr style="border-bottom: none;">
+            <tr>
 
               <td align="center"
-              style="padding:10px 10px 10px 10px;width: 20%;"></td>
+              style="padding: 10px;width: 20%;"></td>
 
               <td align="center"
-              style="padding:10px 10px 10px 10px;width: 20%;"></td>
+              style="padding: 10px;width: 20%;"></td>
 
               <td align="center"
               class="border_bottom table_order_titles"
-              style="padding:10px 10px 10px 10px;width: 40%;border-bottom: 1px solid #a9a9a9;">
+              style="padding: 10px;width: 40%;border-bottom: 1px solid #a9a9a9;">
                 <span class="table_order_titles color_text small_text"
-                style="font-family: Arial,sans-serif;">
+                style="font-family: Arial,sans-serif;font-size: 17px;color: #638b9e;">
                   {{tr.total_tax_sale}}
                 </span>
               </td>
 
               <td align="center"
               class="border_bottom"
-              style="padding:10px 10px 10px 10px;width: 20%;border-bottom: 1px solid #a9a9a9;">
+              style="padding: 10px;width: 20%;border-bottom: 1px solid #a9a9a9;">
                 <span class="color_text small_text"
-                style="font-family: Arial,sans-serif;">
+                style="font-family: Arial,sans-serif;font-size: 17px;color: #3c3c3c;">
                   {{total_tax_sale}}
                 </span>
               </td>
@@ -410,19 +409,19 @@ style="margin: 0; padding: 0;">
 
 <table style="background: #ffffff;" width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
   <tr>
-    <td height="30"></td>
+    <td height="20"></td>
+  </tr>
+</table>
+
+<!-- hauteur vide  -->
+<table style="background: #d4d4d4;" width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p">
+  <tr>
+    <td height="5"></td>
   </tr>
 </table>
 
 {{^for_admin}}
 <!-- LINK RENDER SALE -->
-<!-- hauteur vide  -->
-<table style="background: #d4d4d4;" width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p">
-  <tr>
-    <td height="10"></td>
-  </tr>
-</table>
-
 <table style="background: #ffffff;" width="600" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" class="100p">
   <tr>
     <td height="20"></td>
@@ -433,7 +432,7 @@ style="margin: 0; padding: 0;">
   <tr>
     <td align="center">
       <span class="size_text color_text"
-      style="font-family: Arial,sans-serif;">
+      style="font-family: Arial,sans-serif;color: #3c3c3c;font-size: 18px;">
           {{{tr.sale_render_url_title}}}&nbsp;:
 					<br />
 					{{{tr.sale_render_url_compl}}}
@@ -443,11 +442,12 @@ style="margin: 0; padding: 0;">
       <br />
 
       <span class="size_text color_text"
-      style="font-family: Arial, sans-serif;">
+      style="font-family: Arial, sans-serif;font-size: 18px;color: #638b9e;">
         <a href="{{sale_render_url}}"
         target="_blank"
         title="{{sale_render_url_title}}"
-        class="color_link size_text">{{{sale_render_see}}}</a>
+        class="color_link size_text"
+        style="font-family: Arial, sans-serif;font-size: 18px;color: #638b9e;">{{{sale_render_see}}}</a>
       </span>
     </td>
   </tr>
@@ -468,7 +468,7 @@ style="margin: 0; padding: 0;">
   <tr>
     <td align="center">
         <span class="size_text color_text"
-        style="font-family: Arial,sans-serif;">
+        style="font-family: Arial,sans-serif;color: #3c3c3c;font-size: 18px;">
           {{^for_admin}}
             {{{tr.vendor_message}}}
           {{/for_admin}}
@@ -491,7 +491,7 @@ style="margin: 0; padding: 0;">
 
 <table style="background: #d4d4d4;" width="600" bgcolor="#d4d4d4" border="0" cellspacing="0" cellpadding="0" class="100p">
   <tr>
-    <td height="10"></td>
+    <td height="5"></td>
   </tr>
 </table>
 
@@ -507,7 +507,7 @@ style="margin: 0; padding: 0;">
   <tr>
     <td align="center">
       <span class="small_text color_text"
-      style="font-family: Arial, sans-serif;">
+      style="font-family: Arial, sans-serif;color: #3c3c3c;font-size: 17px;">
         {{tr.no_reply_message}}
       </span>
     </td>
@@ -526,10 +526,11 @@ style="margin: 0; padding: 0;">
   <tr>
     <td align="center">
       <span class="small_text color_text"
-      style="font-family: Arial, sans-serif;">
+      style="font-family: Arial, sans-serif;color: #3c3c3c;font-size: 17px;">
         <a class="color_link"
         href="https://{{host}}"
         title="{{tr.see_our_website}}"
+        style="font-family: Arial, sans-serif;color: #3c3c3c;font-size: 17px;"
         target="_blank">{{host}}</a>&nbsp;&copy;&nbsp;{{year}}
       </span>
     </td>

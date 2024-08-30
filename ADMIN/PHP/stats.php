@@ -1,10 +1,9 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	stats.php
  *
@@ -63,9 +62,8 @@ class stats {
   public static function record_stats_token(){
 
 
-			//  VERIFY TOKEN
-	    $token = (string) trim(htmlspecialchars($_POST['token']));
-	    program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 			$token_api = (string) trim(htmlspecialchars($_POST['token_api']));
 
@@ -641,9 +639,8 @@ class stats {
   public static function get_stats_by_interval(){
 
 
-			//  VERIFY TOKEN
-	    $token = (string) trim(htmlspecialchars($_POST['token']));
-	    program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 			// datas recived
 			$year = (string) trim(htmlspecialchars($_POST['year']));

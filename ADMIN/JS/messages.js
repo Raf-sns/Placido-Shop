@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2021-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2021-2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * script name: messages.js
  *
@@ -33,6 +32,9 @@ $.extend({
   get_new_messages : function(){
 
 
+      // animate spinner
+      $('.spinner_messages').addClass('fa-spin');
+
 			var Obj = {
 				set : 'get_fresh_messages',
 				token : $.o.user.token,
@@ -49,6 +51,9 @@ $.extend({
 									// info no new messages
 									$.show_alert('info', $.o.tr.empty_messages, false);
 
+                  // stop spinner
+                  $('.spinner_messages').removeClass('fa-spin');
+                  
 									return; // stop here
 							}
 
@@ -86,6 +91,9 @@ $.extend({
               // error
               $.show_alert('warning', data.error, false);
           }
+
+          // stop spinner
+          $('.spinner_messages').removeClass('fa-spin');
 
 			}, 'json');
 

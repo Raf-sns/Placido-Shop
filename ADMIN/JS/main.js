@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2019-2023
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * script name: main.js
  *
@@ -37,28 +36,18 @@ $.extend({
 
   /**
    * $.open_menu();
+   * open / close navbar for viewport < 993px
    */
   open_menu : function(){
 
-      if( $('#navbar').css('display') == 'none'
-			&& window.innerWidth < 993 ){
+      if( $('#navbar').css('left') == '0px' ){
 
-          $('#navbar').css('display', 'block');
-
-          $.animateCss('#navbar', 'slideInLeft', function(){
-
-              $('#navbar').removeClass('animated slideInLeft');
-          });
-
+          // close
+          $('#navbar').css({'left':'-100vw'});
       }
-      else if( window.innerWidth < 993 ){
-
-          $.animateCss('#navbar', 'slideOutLeft', function(){
-
-              $('#navbar').removeClass('animated slideOutLeft')
-              .css('display', 'none');
-          });
-
+      else {
+          // open
+          $('#navbar').css({'left':'0'});
       }
 
   },
@@ -568,7 +557,7 @@ $.extend({
 	/**
 	 * $.log_out();
 	 *
-	 * @return {type}  description
+	 * @return {json}  log out of the website
 	 */
 	log_out : function(){
 
@@ -584,6 +573,9 @@ $.extend({
 
 							// redirect to connection page
 							window.location.href = '/'+$.o.api_settings.ADMIN_FOLDER;
+
+              // delete object
+              delete $.o;
 					}
 
 			},'json');
@@ -597,11 +589,14 @@ $.extend({
 // END EXTEND
 
 
-/////////////////////////////////////////////////////////
-////////////     C L A S S I C A L   JS      ////////////
-/////////////////////////////////////////////////////////
 
-	//  WEB  CONNECTED / NOT CONNECTED
+//////////////////////////////////////
+////  WINDOW AND DOCUMENT EVENTS  ////
+//////////////////////////////////////
+
+
+
+	////  WEB  CONNECTED / NOT CONNECTED
   function online_status( event ){
 
       if( navigator.onLine == false ){
@@ -617,31 +612,26 @@ $.extend({
 
   window.addEventListener('offline', online_status);
   window.addEventListener('online', online_status);
+  //// end WEB  CONNECTED / NOT CONNECTED
 
 
-	// ON RESIZE
-	$(window).on('resize', function(){
 
-	    // hide navbar on mobile
-	    if( window.innerWidth > 993 && $('#navbar').css('display') == 'none' ){
+  //// ON RESIZE
+  window.onresize = function(){
 
-	        // show navbar on large screen
-	        $('#navbar').css('display', 'block');
-	    }
-	    if( window.innerWidth < 993 && $('#navbar').css('display') == 'block' ){
+      // show navbar on large screen
+      if( window.innerWidth >= 993 ){
 
-	        // hide navbar on mobiles
-	        $('#navbar').css('display', 'none');
-	    }
-
-	});
-	// END ON RESIZE
+          // remove style css left from navbar
+          $('#navbar').removeAttr('style');
+      }
+  }
+  //// end ON RESIZE
 
 
 
 	////  HISTORY
-
-  // first insert home in history
+  // first insert home in history - ! use 'pushstate' here
   history.pushState({template : 'home'}, '','');
 
 	// open good view on popstate
@@ -652,7 +642,9 @@ $.extend({
   }
 	//// end  HISTORY
 
-  // ONCLICK DOCUMENT
+
+
+  //// ONCLICK DOCUMENT
   $(document).on('click', function(event){
 
       // hide menu mobile on click on document
@@ -663,7 +655,7 @@ $.extend({
       && container.has(event.target).length === 0  ){
 
           // hide navbar on mobile
-          if( $('#navbar').css('display') == 'block'
+          if( $('#navbar').css('left') == '0px'
 					&& window.innerWidth < 993 ){
 
               $.open_menu();
@@ -691,11 +683,11 @@ $.extend({
       }
 
   });
-  // END ONCLICK DOCUMENT
+  //// end ONCLICK DOCUMENT
 
 
 
-  // DOCUMENT ON SCROLL
+  //// DOCUMENT ON SCROLL
   var isScrolling;
   $(document).on('scroll', function(){
 
@@ -726,7 +718,7 @@ $.extend({
       // end set tie out
 
   });
-  // END DOCUMENT ON SCROLL
+  //// end DOCUMENT ON SCROLL
 
 
 });

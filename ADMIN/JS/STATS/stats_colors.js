@@ -1,3 +1,15 @@
+/**
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2022
+ * Organisation: SNS - Web et informatique
+ * Website / contact : https://sns.pm
+ *
+ * script name: stats_colors.js
+ *
+ * COLORS FOR BEATIFULL STATISTICS
+ * 
+ */
+
 const ARR_color =
  [
   "#ab46ed",

@@ -1,19 +1,22 @@
 <?php
 /**
- * PlACIDO-SHOP FRAMEWORK - BACK OFFICE
- * Copyright © Raphaël Castello , 2021-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - BACKEND
+ * Copyright © Raphaël Castello, 2021-2024
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	admin.php
  *
+ * settings::fetch_mail_admin( $mail );
+ * settings::get_admins_list( $mail_current_admin );
+ * settings::get_admin_by_id( $id );
+ * settings::add_new_admin();
+ * settings::delete_admin();
  * settings::update_access_admin();
  * settings::update_stripe_keys_user();
  * settings::update_shop_for_money_pays();
  * settings::set_settings( array() );
  * settings::record_api_settings();
- * settings::update_mailbox();
  * settings::update_mailbox();
  * settings::init_production_mode();
  * settings::record_Token_Placido_User();
@@ -24,6 +27,299 @@ class settings {
 
 
   /**
+   * settings::fetch_mail_admin($mail);
+   *
+   * @param  {string}  $mail
+   * @return {mixed}   {bool} false if mail don't exist
+   *                   || {string} mail if exist
+   */
+  public static function fetch_mail_admin($mail){
+
+
+      $ARR_pdo = array( 'mail' => $mail );
+      $sql = 'SELECT mail FROM admins WHERE mail=:mail';
+      $response = 'one';
+      $last_id = false;
+
+      //  ->  fetch
+      $FETCH_MAIL_ADMIN = db::server($ARR_pdo, $sql, $response, $last_id);
+
+      // TEST RETURNED VALUE
+      if( boolval($FETCH_MAIL_ADMIN) == true AND $FETCH_MAIL_ADMIN['mail'] == $mail ){
+
+          return $FETCH_MAIL_ADMIN['mail'];
+      }
+      else{
+
+          return false;
+      }
+
+  }
+  /**
+   * settings::fetch_mail_admin($mail);
+   */
+
+
+
+  /**
+   * settings::get_admins_list( $mail_current_admin );
+   *
+   * @return {array}  get all administrators of the website
+   */
+  public static function get_admins_list( $mail_current_admin ){
+
+      $ARR_pdo = array( 'mail_current_admin' => $mail_current_admin );
+      $sql = 'SELECT id, name, mail FROM admins WHERE NOT mail=:mail_current_admin';
+      $response = 'all';
+      $last_id = false;
+      $ADMINS_LIST = db::server($ARR_pdo, $sql, $response, $last_id);
+
+      return $ADMINS_LIST;
+  }
+  /**
+   * settings::get_admins_list( $mail_current_admin );
+   */
+
+
+
+  /**
+   * settings::get_admin_by_id( $id );
+   *
+   * @return {mixed} {bool} false OR {int} one administrator id
+   */
+  public static function get_admin_by_id( $id ){
+
+
+      $ARR_pdo = array( 'id' => $id );
+      $sql = 'SELECT id, mail FROM admins WHERE id=:id';
+      $response = 'one';
+      $last_id = false;
+      $ADMIN = db::server($ARR_pdo, $sql, $response, $last_id);
+
+      // TEST RETURNED VALUE
+      if( boolval($ADMIN) == false ){
+
+          // error
+          return false;
+      }
+      else if( boolval($ADMIN['id']) == false ){
+
+          // admin with id=0 -> false ! Not update sup admin
+          return false;
+      }
+      else{
+
+          return array(
+            'id' => (int) $ADMIN['id'],
+            'mail' => (string) $ADMIN['mail']
+          );
+      }
+
+  }
+  /**
+   * settings::get_admin_by_id( $id );
+   */
+
+
+
+  /**
+   * settings::add_new_admin();
+   *
+   * @return {json}  add new admin
+   */
+  public static function add_new_admin(){
+
+
+      // VERIFY token
+      $user_id = token::verify_token();
+
+      // action
+      $action = (string) trim(htmlspecialchars($_POST['action']));
+
+      // verify action
+      if( !in_array($action, array('add','modify'), true) ){
+
+          $tab = array('error' => tr::$TR['error_gen'] );
+          echo json_encode($tab);
+          exit;
+      }
+
+      // include verification fields for admins forms
+      include 'verify_admin_fields.php';
+
+
+      // include mail_current_admin for renew list without admin
+      $mail_current_admin = (string) trim(htmlspecialchars($_POST['mail_current_admin']));
+
+      // admin can't add same email admin
+      if( ( $action == 'add'
+            && settings::fetch_mail_admin($mail) == $mail )
+          || ( $action == 'modify'
+               && $mail_current_admin == $mail ) ){
+
+          $tab = array('error' => tr::$TR['unable_renew_password'] );
+          echo json_encode($tab);
+          exit;
+      }
+
+      // Make a password hash for a new admin
+      $new_pass = password_hash($mail.$passw, PASSWORD_DEFAULT);
+
+      // RECORD NEW ADMIN
+      $ARR_pdo = array(
+        'id' => 0,
+        'mail' => $mail,
+        'passw' => $new_pass,
+        'name' => $name,
+      );
+
+      // MODIFY ACTION
+      if( $action == 'modify' ){
+
+          // verify good id
+          $id = (int) trim(htmlspecialchars($_POST['id']));
+
+          // update PDO array
+          $ARR_admin = settings::get_admin_by_id( $id );
+
+          $ARR_pdo['id'] = $ARR_admin['id'];
+
+          // error fetch admin ID or id == 0 -> sup admin can't be updated
+          if( boolval($ARR_pdo['id']) == false ){
+
+              $tab = array('error' => tr::$TR['error_gen'] );
+              echo json_encode($tab);
+              exit;
+          }
+
+          // watch for duplicates
+          $mail_asked = $mail;
+
+          // if the requested email is different from the original email
+          // and an email is found in the database -> error
+          if( $mail_asked != $ARR_admin['mail']
+          && settings::fetch_mail_admin( $mail_asked ) == $mail_asked ){
+
+              $tab = array('error' => tr::$TR['unable_renew_password'] );
+              echo json_encode($tab);
+              exit;
+          }
+
+          // UPDATE SQL COMMAND
+          $sql = 'UPDATE admins SET
+          mail=:mail, passw=:passw, name=:name
+          WHERE id=:id';
+      }
+      else{
+
+          // ADD NEW ADMIN COMMAND
+          $sql = 'INSERT INTO admins (id, mail, passw, name)
+          VALUES (:id, :mail, :passw, :name)';
+      }
+
+      $response = false;
+      $last_id = false;
+
+      $RECORD_NEW_ADMIN = db::server($ARR_pdo, $sql, $response, $last_id);
+
+      // error
+      if( boolval($RECORD_NEW_ADMIN) == false ){
+
+          unset($_POST);
+
+          $tab = array('error' => tr::$TR['unable_renew_password'] );
+          echo json_encode($tab);
+          exit;
+      }
+
+      // success response
+      $tab = array(
+        'success' => tr::$TR['update_success'],
+        'admins_list' => settings::get_admins_list($mail_current_admin)
+      );
+
+      echo json_encode($tab, JSON_NUMERIC_CHECK);
+      exit;
+  }
+  /**
+   * settings::add_new_admin();
+   */
+
+
+
+  /**
+   * settings::delete_admin();
+   *
+   * @return {json}  admin delete an other admin
+   */
+  public static function delete_admin(){
+
+
+      // VERIFY token
+      token::verify_token();
+
+      // mail with readonly
+      $mail = (string) trim(htmlspecialchars($_POST['mail']));
+
+      // include mail_current_admin for renew list without admin
+      $mail_current_admin = (string) trim(htmlspecialchars($_POST['mail_current_admin']));
+
+      // id of admin to delete
+      $id = (int) trim(htmlspecialchars($_POST['id']));
+
+      // verify good id if admin id = 0 -> false
+      $admin_id = settings::get_admin_by_id( $id )['id'];
+
+      if( boolval($admin_id) == false ){
+
+          unset($_POST);
+
+          $tab = array('error' => tr::$TR['error_gen'] );
+          echo json_encode($tab);
+          exit;
+      }
+
+
+      // prepa. ARR. PDO
+      $ARR_pdo = array(
+        'id' => $admin_id,
+        'mail' => $mail
+      );
+
+      // DELETE FORM admins with id and mail
+      $sql = 'DELETE FROM admins WHERE id=:id AND mail=:mail';
+
+      $response = false;
+      $last_id = false;
+
+      $DELETE_ADMIN = db::server($ARR_pdo, $sql, $response, $last_id);
+
+      // error
+      if( boolval($DELETE_ADMIN) == false ){
+
+          unset($_POST);
+
+          $tab = array('error' => tr::$TR['error_gen'] );
+          echo json_encode($tab);
+          exit;
+      }
+
+      // success response
+      $tab = array(
+        'success' => tr::$TR['update_success'],
+        'admins_list' => settings::get_admins_list($mail_current_admin)
+      );
+
+      echo json_encode($tab, JSON_NUMERIC_CHECK);
+      exit;
+  }
+  /**
+   * settings::delete_admin();
+   */
+
+
+
+  /**
    * settings::update_access_admin();
    *
    * @return {array}  new js user object
@@ -31,66 +327,11 @@ class settings {
   public static function update_access_admin(){
 
 
-      // VERIFY TOKEN
-      $token = trim(htmlspecialchars($_POST['token']));
-      // NOW IS THE TRUE ID
-      $user_id = program::verify_token($token);
+      // VERIFY token
+      $user_id = token::verify_token();
 
-
-      // EMPTY NAME
-      if( empty($_POST['name']) ){
-
-          $tab = array('error' => tr::$TR['empty_name'] );
-          echo json_encode($tab);
-          exit;
-      }
-      // VERIFY  NAME
-      if( !empty($_POST['name']) ){
-
-          $name = trim(htmlspecialchars($_POST['name']));
-
-          // IF MAX LENGTH
-          if( iconv_strlen($name) > 100 ){
-
-              $tab = array('error' => tr::$TR['too_large_name'] );
-              echo json_encode($tab);
-              exit;
-          }
-
-      }
-      // END NAME
-
-
-      // EMPTY E-MAIL
-      if( empty($_POST['mail']) ){
-
-          $tab = array('error' => tr::$TR['empty_mail'] );
-          echo json_encode($tab);
-          exit;
-      }
-      // VERIFY  E-MAIL
-      if( !empty($_POST['mail']) ){
-
-          $mail = trim(htmlspecialchars($_POST['mail']));
-
-          // IF MAX LENGTH
-          if( iconv_strlen($mail) > 100 ){
-
-              $tab = array('error' => tr::$TR['too_large_mail'] );
-              echo json_encode($tab);
-              exit;
-          }
-
-          // IF BAD FORMAT
-          if( filter_var($mail, FILTER_VALIDATE_EMAIL ) == false ){
-
-              $tab = array('error' => tr::$TR['bad_mail'] );
-              echo json_encode($tab);
-              exit;
-          }
-
-      }
-      // END E-MAIL
+      // include verification fields for admins forms
+      include 'verify_admin_fields.php';
 
 
       // VERIFY MAIL !!! -> for not set an another user by his e-mail
@@ -102,7 +343,7 @@ class settings {
       $OLD_MAIL_USER = db::server($ARR_pdo, $sql, $response, $last_id);
 
       // VERIFY MAIL ASKED
-      $mail_asked = tools::fetch_mail_admin($mail);
+      $mail_asked = settings::fetch_mail_admin($mail);
 
       // IF MAIL != OLD_MAIL AND if $mail_asked == true (still exist) -> error
       if( $mail != $OLD_MAIL_USER['mail'] && boolval($mail_asked) == true ){
@@ -114,22 +355,8 @@ class settings {
       // END VERIFY MAIL !!!
 
 
-      // VERIFY PASSWORD
-      // EMPTY PASS
-      if( trim($_POST['passw']) == "" || empty($_POST['passw']) ){
-
-          $tab = array('error' => tr::$TR['password_required'] );
-          echo json_encode($tab);
-          exit;
-      }
-      else {
-
-          $passw = trim(htmlspecialchars($_POST['passw']));
-
-      }
-      // END PASS
-
-      $new_pass =  password_hash($mail.$passw, PASSWORD_DEFAULT);
+      // Make a new password hash
+      $new_pass = password_hash($mail.$passw, PASSWORD_DEFAULT);
 
       // RECORD NEW PASS IN DB
       $ARR_pdo = array(
@@ -162,14 +389,13 @@ class settings {
       // unset post
       unset($_POST);
 
-      // RE-INIT COOCKIES
-      /* expire in 150 days */
+      // RE-INIT COOCKIE
       setcookie(
 				"PL-GEST-mail", // name
 				api::api_crypt( $mail, 'encr' ), // value
-				time()+60*60*24*150, // expires
-				'/'.ADMIN_FOLDER.'/', // path auth
-				'/', // domain ?
+				time()+TOKEN_TIME, // expires + TOKEN_TIME
+				'/'.ADMIN_FOLDER.'/', // allowed folder path
+				HOST, // domain
 				true, // secure
 				true // http only
 		 );
@@ -181,7 +407,7 @@ class settings {
         'mail' => $mail, // keep mail for rendering value in setings
         'token_max_time' => TOKEN_TIME,
         'token' =>
-          program::set_token( $user_id, $mail, $passw )
+          token::set_token( $user_id, $mail, $passw )
       );
 
 			// success response
@@ -206,9 +432,8 @@ class settings {
   public static function update_stripe_keys_user(){
 
 
-      // verify token
-      $token = trim(htmlspecialchars($_POST['token']));
-      $user_id = program::verify_token($token);
+      // VERIFY token
+      $user_id = token::verify_token();
 
 			// $context : 'test' / 'prod'
       $context = (string) trim(htmlspecialchars($_POST['context']));
@@ -414,10 +639,8 @@ class settings {
   public static function update_shop_for_money_pays(){
 
 
-      // verify token
-      $token = trim(htmlspecialchars($_POST['token']));
-      program::verify_token($token);
-
+      // VERIFY token
+      token::verify_token();
 
       // CHOICE OF PAYMENT BY MONEY AND CARD
       $choice = trim(htmlspecialchars($_POST['by_money']));
@@ -470,47 +693,75 @@ class settings {
 	 * SET API JSON FOR ONE OR MORE KEYS
 	 * ex. settings::set_settings_api( array('VERSION' => '1.0.2', 'HOST' => 'website') );
 	 *
-	 * @param  {array} $API array()
-	 * @return {array}     api setting array
+	 * @param  {array} $ARR_API array()
+	 * @return {array} api settings array c.f.: API/constants.php
 	 */
-	public static function set_settings_api( $API ){
+	public static function set_settings_api( $ARR_API ){
 
 
-		// fetch settings
-		$get_json_settings = file_get_contents(ROOT.'/API/api.json');
+      // path of the constants file
+      $file_path = ROOT.'/API/constants.php';
 
-		$SETTINGS = json_decode($get_json_settings, true);
+      // fetch constants file
+      $consts = file_get_contents( $file_path );
 
-		// SORT ALPHABETICAL
-		ksort( $SETTINGS , SORT_STRING );
-		// echo '<pre>';
-		// var_export( $SETTINGS );
-		// echo '<pre>';
+      // prepare patterns array
+      $Patterns = array();
 
-		// loop on datas recived $k -> string key as 'MY_KEY' => 'my value'
-		foreach( $API as $k => $v ) {
+      // prepare the substitution array
+      $Replacements = array();
 
-				// var_dump( $k ); // get the key
-				// var_dump( $SETTINGS[$k] ); // get the value
+      // loop over API DATA array
+      foreach ( $ARR_API as $k => $v ) {
 
-				// verify if key exist, then change value
-				if( array_key_exists( $k, $SETTINGS) ){
+          // push pattern dynamically
+          $Patterns[] = '/const '.$k.' = (.*);/';
 
-						// set new value to settings ITEM
-						$SETTINGS[$k] = $v;
-				}
-		}
-		// end loop
+          // special behaviour for DEF_ARR_SIZES
+          if( $k == 'DEF_ARR_SIZES' ){
 
-		// encode in json
-		$json_settings = json_encode( $SETTINGS,
-		JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION
-		| JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
+              $Replacements[] =
+              'const '.$k.' = array("min" => '.(int)$v['min'].', "max" => '.(int)$v['max'].');';
+              continue;
+          }
 
-		// rewrite settings
-		file_put_contents(ROOT.'/API/api.json', $json_settings );
+          // special behaviour for SLIDER
+          if( $k == 'SLIDER' ){
 
-		return $SETTINGS;
+              $Replacements[] =
+              'const '.$k.' = array("display" => '.(int)$v['display'].', "play" => '.(int)$v['play'].', "delay" => '.$v['delay'].', "speed" => '.$v['speed'].');';
+              continue;
+          }
+
+          // push replacements dynamically - watch for integer or string
+          $Replacements[] =
+          ( is_string($v) )
+          ? 'const '.$k.' = "'.$v.'";'
+          : 'const '.$k.' = '.(int)$v.';';
+
+      }
+      // end loop over API DATA array
+
+      // replace all constants with their correct values
+      $consts = preg_replace( $Patterns, $Replacements, $consts );
+
+      try{
+
+          // record the constants file
+          file_put_contents( $file_path, $consts, LOCK_EX );
+      }
+      catch( Exception $e ){
+
+          // error case
+          $tab = array( 'error' => "Error : ".$e->getMessage()."
+                                    <br>
+                                    Set settings api failed" );
+          echo json_encode($tab);
+          exit;
+      }
+
+      // in some cases need to return ARRAY API SETTINGS
+      return $ARR_API;
 
 	}
 	/**
@@ -527,9 +778,8 @@ class settings {
 	public static function record_api_settings(){
 
 
-			//  VERIFY TOKEN
-			$token = trim(htmlspecialchars($_POST['token']));
-			program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 			// MAKE AN ARRAY TO PASS AT THE FUNCTION
 			$ARR_API = array();
@@ -639,7 +889,7 @@ class settings {
 
 
 			// META_DESCR
-			$META_DESCR = (string) trim(htmlspecialchars($_POST['META_DESCR']));
+			$META_DESCR = (string) trim(htmlspecialchars($_POST['META_DESCR'], ENT_NOQUOTES));
 			// bad META_DESCR
 			if( empty($META_DESCR)
 			|| iconv_strlen($META_DESCR) > 600 ){
@@ -653,8 +903,31 @@ class settings {
 
 			}
 			// include META_DESCR
+      // remove too much spaces and line breaks
 			$ARR_API['META_DESCR'] = $META_DESCR;
+      $ARR_API['META_DESCR'] = preg_replace('/\s\s+/', ' ', $ARR_API['META_DESCR']);
 
+
+      // ALLOW_SEARCH_ENGINES
+      $ALLOW_SEARCH_ENGINES = (int) trim(htmlspecialchars($_POST['ALLOW_SEARCH_ENGINES']));
+      // bad datas
+      if( $ALLOW_SEARCH_ENGINES != 1 && $ALLOW_SEARCH_ENGINES != 0 ){
+
+          // error
+          $tab = array(
+            'error' => tr::$TR['allow_search_engines'].' : '.tr::$TR['bad_context']
+          );
+          echo json_encode($tab, JSON_FORCE_OBJECT);
+          exit;
+      }
+      // include ALLOW_SEARCH_ENGINES
+      $ARR_API['ALLOW_SEARCH_ENGINES'] = $ALLOW_SEARCH_ENGINES;
+
+      // record robots.txt in context
+      $context = ( $ARR_API['ALLOW_SEARCH_ENGINES'] == 0 ) ? null : 'allow';
+
+      // record robots.txt with the good host for Sitemap url
+      tools::record_robots_txt( $ARR_API['HOST'], $context );
 
 
 			// SIZE IMAGE SOCIALS NETWORKS
@@ -672,7 +945,6 @@ class settings {
 			$ARR_API['LOGO_SN_SIZE'] = $LOGO_SN_SIZE;
 
 
-
 			// IMAGE SOCIALS NETWORKS
 			if( empty($_FILES['img']['name']) ){
 
@@ -680,7 +952,6 @@ class settings {
 					$ARR_API['LOGO_SN'] = LOGO;
 			}
 			else{
-
 
 					// delete old img logo SN
 					array_map('unlink', glob(ROOT.'/img/Logos/logo-sn*'));
@@ -807,7 +1078,7 @@ class settings {
 			){
 
 					// set mozaic by default
-        	$DISPLAY_PRODUCTS != 'mozaic';
+        	$DISPLAY_PRODUCTS = 'mozaic';
 			}
 			// include SHORT_TEXT
 			$ARR_API['DISPLAY_PRODUCTS'] = $DISPLAY_PRODUCTS;
@@ -978,14 +1249,13 @@ class settings {
 			ksort($ARR_API, SORT_STRING);
 
 			// set api settings
-			$SETTINGS = settings::set_settings_api( $ARR_API );
+			settings::set_settings_api( $ARR_API );
 
 			// success
 			$tab = array( 'success' => tr::$TR['update_success'],
-										'api_settings' => $SETTINGS );
+										'api_settings' => $ARR_API );
 			echo json_encode($tab, JSON_FORCE_OBJECT);
 			exit;
-
 
 	}
 	/**
@@ -1002,9 +1272,8 @@ class settings {
 	public static function update_mailbox(){
 
 
-			//  VERIFY TOKEN
-			$token = trim(htmlspecialchars($_POST['token']));
-			program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 			$MAILBOX_HOST = (string) trim(htmlspecialchars($_POST['MAILBOX_HOST']));
 			$MAILBOX_PORT = (string) trim(htmlspecialchars($_POST['MAILBOX_PORT']));
@@ -1112,15 +1381,15 @@ class settings {
 	 * - Delete new_sales + customers + sold_products
 	 * - Delete archived_sales
 	 * - Delete all statistics
+   * - empty the sitemap.xml file
 	 *
 	 * @return {json}  success/error
 	 */
 	public static function init_production_mode(){
 
 
-			//  VERIFY TOKEN
-			$token = trim(htmlspecialchars($_POST['token']));
-			program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 		  // prepa. db::server()
 			$ARR_pdo = false;
@@ -1133,11 +1402,9 @@ class settings {
 				'DELETE FROM customers; ALTER TABLE customers AUTO_INCREMENT = 1',
 				'DELETE FROM new_sales; ALTER TABLE new_sales AUTO_INCREMENT = 1',
 				'DELETE FROM sold_products; ALTER TABLE sold_products AUTO_INCREMENT = 1',
-
 				'DELETE FROM stats_cart',
 				'DELETE FROM stats_loca',
-				'DELETE FROM stats_prods',
-
+				'DELETE FROM stats_prods'
 			);
 
 			// delete all on a loop
@@ -1159,6 +1426,8 @@ class settings {
 			}
 			// end loop delete all
 
+      // empty the sitemap.xml file
+      sitemap::empty_the_sitemap();
 
 			// success
 			$ARR = array( 'success' => tr::$TR['update_shop_success'] );
@@ -1182,9 +1451,8 @@ class settings {
 	public static function record_Token_Placido_User(){
 
 
-			//  VERIFY TOKEN
-			$token = trim(htmlspecialchars($_POST['token']));
-			program::verify_token($token);
+			// VERIFY token
+      token::verify_token();
 
 			$token_placido = (string) trim(htmlspecialchars($_POST['token_placido']));
 

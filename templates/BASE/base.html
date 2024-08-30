@@ -2,13 +2,24 @@
 <html lang="{{website.lang}}">
 <head>
   <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport"
+  content="width=device-width,initial-scale=1, minimum-scale=1.0, maximum-scale=5.0">
   <title>{{website.title}}</title>
   <meta name="description" content="{{website.description}}">
   <base href="/">
+  <meta name="author" content="Placido-Shop Software - www.placido-shop.com">
 
 	<!-- Content-Security-Policy -->
 	{{>CSP}}
+
+  {{#website.robots}}
+    <!-- robots index, follow -->
+    <meta name="robots" content="index, follow">
+  {{/website.robots}}
+  {{^website.robots}}
+    <!-- robots no index -->
+    <meta name="robots" content="noindex, nofollow">
+  {{/website.robots}}
 
 	<!-- FAV icons: Use https://realfavicongenerator.net/ for generate your favicons -->
 	<link rel="apple-touch-icon" sizes="180x180" href="FAV/apple-touch-icon.png">
@@ -27,7 +38,6 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="{{og.image}}">
   <meta property="og:description" content="{{og.description}}">
-  <meta name="author" content="Placido-Shop Software - www.placido-shop.com">
 
 	<!-- Progressive Web Application -->
 	<link rel="manifest" href="manifest.webmanifest">
@@ -81,7 +91,7 @@
 		alt="{{view.title}}"
 		class="animated fadeInDown"
 		style="animation-duration: 1s;">
-		<div class="animated fadeInUp title_splash xxlarge"
+		<div class="animated fadeInUp title_splash"
 		style="animation-duration: 1.4s;">{{view.title}}</div>
 	</div>
 
@@ -99,14 +109,14 @@
   <!-- SORT BLOCK -->
 
 
-  <!-- CAT RENDER if need -->
+  <!-- CATEGORIES TITLE if need -->
   <div id="title_cat_block" class="card" style="{{view.cat_block_display}}">
     <h2 id="cat_title" class="center" aria-labelledby="cat_title_text">
       <i class="color_theme title_icon fa-hashtag fas fa-fw"></i>
       <span id="cat_title_text">{{{view.cat_name}}}</span>
     </h2>
   </div>
-  <!-- CAT RENDER -->
+  <!-- CATEGORIES TITLE -->
 
 
   <!-- MAIN CONTAINER -->
@@ -144,7 +154,7 @@
   </div>
 
   <!-- MODAL if you want a modal for something  -->
-  <!-- <div class="modal" id="modal_contact"
+  <!-- <div class="modal" id="modal"
         style="z-index: 28;
         height: -webkit-fill-available;
         display: none;">
