@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - JS FRONT
+ * PLACIDO-SHOP FRAMEWORK - JS FRONT
  * Copyright © Raphaël Castello , 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * Organisation: SNS - Web et informatique
+ * Website / contact: https://sns.pm
  *
  * Script name:	cart.js
  *
@@ -138,8 +137,6 @@ $.extend({
       // calcul totals
       $.calcul_total_cart();
 
-      // console.log( $.o.cart );
-
       // Save data to sessionStorage
       sessionStorage.setItem('cart', JSON.stringify($.o.cart));
 
@@ -198,9 +195,6 @@ $.extend({
       // end loop to suppr
 
 
-      // adjust nb articles in cart button
-      // $('#nb_articles').html( $.o.cart.nb_articles+` `+$.o.tr.articles_button );
-
       // remove article form view
       $('#purchase_id-'+id+'').remove();
 
@@ -230,10 +224,8 @@ $.extend({
           $.scroll_top();
 
 					// push home by default
-					history.pushState({page : 'home'}, '','');
-
+					history.pushState({page : 'home'}, '',' ');
       }
-
 
   },
   /**
@@ -398,6 +390,7 @@ $.extend({
    */
   calcul_total_cart : function(){
 
+
       // render text nb_articles
       var format = ( $.o.cart.nb_articles == 1 )
 			? $.o.tr.one_article : $.o.cart.nb_articles+' '+$.o.tr.articles;
@@ -422,20 +415,17 @@ $.extend({
               // add tax value to price
               calcul_price =
               ( item.price + ( item.price * ( item.tax / 100 ) ) ).toFixed(0); // cent
-              // console.log('calcul_price_w_tax '+calcul_price );
 
               total_tax_row =
               ( item.price * ( item.tax / 100 ) ) * item.quant_wanted;
           }
           else{
 
-            calcul_price = item.price; // cent
-            // console.log('calcul_price '+calcul_price );
+              calcul_price = item.price; // cent
           }
 
           // ADD quantity - calut amount_tt_item
           amount_tt_item = calcul_price * item.quant_wanted; // cent
-          // console.log('amount_tt_item '+amount_tt_item );
 
           // ADD to $.o.cart.total_tax_sale if exist
           $.o.cart.total_tax_sale +=
@@ -453,18 +443,13 @@ $.extend({
           // attr amount_tt_item in obj in float string
           $.o.cart.items[k].amount_tt_item =
 						$.Intl_currency( (amount_tt_item/100) );
-					// (amount_tt_item/100).toFixed(2); // str float
 
       });
       // end loop over products selected
 
-      // console.log('total_tax_sale '+$.o.cart.total_tax_sale );
-
       // pass total cart in string
       $.o.cart.total_cart =
 				$.Intl_currency( ($.o.cart.total_cart/100) );
-			// ($.o.cart.total_cart/100).toFixed(2);
-      // console.log('total_cart '+$.o.cart.total_cart );
 
       // pass total cart in string
       $.o.cart.total_tax_sale = ( $.o.cart.total_tax_sale == 0 )
@@ -483,9 +468,9 @@ $.extend({
    */
 
 
-////////////////////////////////////////////////////////////////////////
-/////       O P E N   P A Y M E N T   F O R M       ////////////////////
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
+/////   O P E N   P A Y M E N T   F O R M    /////
+//////////////////////////////////////////////////
 
 
   /**
@@ -514,8 +499,6 @@ $.extend({
 
     // calcul total cart
     $.calcul_total_cart();
-
-    // console.log( $.o.cart );
 
     // show page function
     $.show_page( event, 'cart' );
@@ -778,8 +761,6 @@ $.extend({
 
     }
 
-    // console.log( $('input[name="pay_with"]').val() );
-
   },
   /**
    * $.check_this( for_label );
@@ -837,9 +818,9 @@ $.extend({
    */
 
 
-/////////////////////////////////////////////////
-//////////   VALIDATE FORM CUSTOMER    //////////
-/////////////////////////////////////////////////
+///////////////////////////////////////
+/////   VALIDATE FORM CUSTOMER    /////
+///////////////////////////////////////
 
 
   /**
@@ -867,8 +848,6 @@ $.extend({
 
     // Save data to sessionStorage
     sessionStorage.setItem('cart', JSON.stringify($.o.cart));
-    // console.log( $.o.cart );
-    // return;
 
     // delete customer to cart before treatment
     // -> send data from the form to the server
@@ -1123,6 +1102,7 @@ $.extend({
 
     // block onclick card
     $('#submit_card').removeAttr('onclick');
+
     // block abort card
     $('#destroy_card').removeAttr('onclick');
 
@@ -1336,8 +1316,8 @@ $.extend({
   /**
    * $.get_sale_user( event );
    *
-   * @param  {type} event description
-   * @return {type}       description
+   * @param  {event} event
+   * @return {html}  render sale to user after login
    */
   get_sale_user : function( event ){
 
@@ -1503,4 +1483,3 @@ $.extend({
 
 });
 // END JQUERY
-
