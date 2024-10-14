@@ -1,7 +1,7 @@
 /**
  * PLACIDO-SHOP FRAMEWORK - JS FRONT
  * Copyright © Raphaël Castello , 2021-2024
- * Organisation: SNS - Web et 1nformatique
+ * Organisation: SNS - Web et informatique
  * Website / contact: https://sns.pm
  *
  * Script name:	api_loader.js
@@ -19,8 +19,8 @@
  *
  */
 
-	// set dev mode true / false
-	const DEV_MODE = false;
+// set dev mode true / false
+const DEV_MODE = false;
 
 // start jQuery
 $(function(){
@@ -44,7 +44,7 @@ $(function(){
 
           });
 
-			},'json');
+       },'json');
 
   }
   /**
