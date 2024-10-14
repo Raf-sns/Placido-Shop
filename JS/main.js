@@ -78,6 +78,7 @@ $(function() {
      */
     show_page: function(event, about) {
 
+	    
       // template to call
       var template;
 
