@@ -7,7 +7,8 @@
  * Script name:	api_loader.js
  *
  * const DEV_MODE = false; // show object api
- *
+ * const STICKY_HEADER = false; // enable / disable sticky header on scroll
+
  * function get_templates();
  * function get_object_api();
  *
@@ -22,6 +23,10 @@
 // set dev mode true / false
 const DEV_MODE = false;
 
+// enable sticky header when scrolling page - set : true / false
+const STICKY_HEADER = false;
+
+
 // start jQuery
 $(function(){
 
@@ -29,15 +34,15 @@ $(function(){
   /**
    * function get_templates();
    *
-   * @return {json}  get tempates and add them to Mustache
+   * @return {json}  get templates and add them to Mustache
    */
   function get_templates(){
 
       // 1 - LOAD ALL TEMPLATES
-      $.post('/', {set: 'get_templates'}, function(datas){
+      $.post('/', {set: 'get_templates'}, function( datas ){
 
           // server return array[ templates['name']/['html'] ]
-          datas.templates.forEach((item, i) => {
+          datas.templates.forEach( (item, i) => {
 
               // create template mustache by html source
               $.Mustache.add(item.name, item.html);
@@ -62,7 +67,7 @@ $(function(){
 
 
 	    // 2 - GET OBJECT API PLACIDO !
-	    $.post('/', {set: 'get_obj', req: 'ajax'}, function(api){
+	    $.post('/', {set: 'get_obj', req: 'ajax'}, function( api ){
 
 				// EXTEND
 		    $.extend({
@@ -90,8 +95,8 @@ $(function(){
 				}, 800 );
 				// end splash screen
 
-				// enable sticky header when scrolling page - set : true / false
-				$.sticky_header_init = false;
+				// enable sticky header when scrolling page
+        $.sticky_header_init = STICKY_HEADER;
 
 				// check cart in memory
 				$.check_cart_in_memory();
