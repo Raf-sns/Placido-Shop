@@ -1,6 +1,6 @@
 /**
  * PLACIDO-SHOP FRAMEWORK - JS FRONT
- * Copyright © Raphaël Castello , 2019-2022
+ * Copyright © Raphaël Castello , 2019-2024
  * Organisation: SNS - Web et informatique
  * Website / contact: https://sns.pm
  *
@@ -89,7 +89,7 @@ $.extend({
       };
 
       // loop over products
-      for (var i = 0; i < $.o.products.length; i++) {
+      for( var i = 0; i < $.o.products.length; i++ ){
 
           // if item was found
           if( $.o.products[i].id == id ){
@@ -243,7 +243,7 @@ $.extend({
 
 
     // loop over all item form cart for renew prices
-    $.o.cart.items.forEach((item, i) => {
+    $.o.cart.items.forEach( (item, i) => {
 
         // render quantity
         $('#render_quant_'+item.id+'').text( item.quant_wanted );
@@ -548,7 +548,7 @@ $.extend({
 					.append(`<option value=" ">`+$.o.tr.choose_your_country+`</option>`);
 
 
-					Countries.forEach((item, i) => {
+					Countries.forEach( (item, i) => {
 
 							if( typeof $.o.cart.customer != 'undefined' ){
 
@@ -609,17 +609,17 @@ $.extend({
 	 */
 	get_storage_cart_datas : function(){
 
-	  // get the session storage if exist
-		if( !sessionStorage.getItem('cart') ){
+  	  // get the session storage if exist
+  		if( !sessionStorage.getItem('cart') ){
 
-				return;
-		}
+  				return;
+  		}
 
-		// get object from session storage
-		var retrievedObject_cart = sessionStorage.getItem('cart');
+  		// get object from session storage
+  		var retrievedObject_cart = sessionStorage.getItem('cart');
 
-		// assign storage to cart
-		$.o.cart = JSON.parse(retrievedObject_cart);
+  		// assign storage to cart
+  		$.o.cart = JSON.parse(retrievedObject_cart);
 
 	},
 	/**
@@ -660,30 +660,30 @@ $.extend({
    */
   toggle_address_sup : function(){
 
-    // IF ADRESS SUP IS HIDE
-    if( $('#address_sup').hasClass('hide') ){
+      // IF ADRESS SUP IS HIDE
+      if( $('#address_sup').hasClass('hide') ){
 
-        // show adress sup
-        $('#address_sup')
-        .removeClass('hide')
-        .addClass('show');
+          // show adress sup
+          $('#address_sup')
+          .removeClass('hide')
+          .addClass('show');
 
-        // pass aria-expanded to true
-        $('.toggle_address_sup')
-        .attr('aria-expanded', 'true' );
+          // pass aria-expanded to true
+          $('.toggle_address_sup')
+          .attr('aria-expanded', 'true' );
 
-    }
-    else{
+      }
+      else{
 
-        // hide adress sup
-        $('#address_sup')
-        .removeClass('show')
-        .addClass('hide');
+          // hide adress sup
+          $('#address_sup')
+          .removeClass('show')
+          .addClass('hide');
 
-        // pass aria-expanded to false
-        $('.toggle_address_sup')
-        .attr('aria-expanded', 'false' );
-    }
+          // pass aria-expanded to false
+          $('.toggle_address_sup')
+          .attr('aria-expanded', 'false' );
+      }
 
   },
   /**
@@ -702,64 +702,64 @@ $.extend({
   check_this : function( for_label ){
 
 
-    // remove ICON checked for all
-    $('label[for="CARD"] i, label[for="OTHER"] i')
-    .removeClass('fa-check-square')
-    .addClass('fa-square');
+      // remove ICON checked for all
+      $('label[for="CARD"] i, label[for="OTHER"] i')
+      .removeClass('fa-check-square')
+      .addClass('fa-square');
 
-    // pass ARIA false for all
-    $('label[for="CARD"], label[for="OTHER"]')
-    .attr('aria-checked', 'false');
+      // pass ARIA false for all
+      $('label[for="CARD"], label[for="OTHER"]')
+      .attr('aria-checked', 'false');
 
-		// remove checked for all
-    $('#CARD, #OTHER')
-    .removeAttr('checked', 'false');
+  		// remove checked for all
+      $('#CARD, #OTHER')
+      .removeAttr('checked', 'false');
 
-		// pass datas checked in obj to false for all
-		$.o.cart.CARD_checked = false;
-		$.o.cart.OTHER_checked = false;
+  		// pass datas checked in obj to false for all
+  		$.o.cart.CARD_checked = false;
+  		$.o.cart.OTHER_checked = false;
 
 
-    if( for_label == 'CARD' ){
+      if( for_label == 'CARD' ){
 
-        // set checkbox for item
-        $('label[for="CARD"] i')
-        .addClass('fa-check-square')
-        .removeClass('fa-square');
+          // set checkbox for item
+          $('label[for="CARD"] i')
+          .addClass('fa-check-square')
+          .removeClass('fa-square');
 
-        // need to change value - this really change value of radio
-        $('input[name="pay_with"]').val('CARD');
+          // need to change value - this really change value of radio
+          $('input[name="pay_with"]').val('CARD');
 
-        // manage ARIA attributes
-        $('label[for="CARD"]').attr('aria-checked', 'true');
+          // manage ARIA attributes
+          $('label[for="CARD"]').attr('aria-checked', 'true');
 
-        // need to attr checked="checked"
-        $('#CARD')
-        .attr('checked','checked');
+          // need to attr checked="checked"
+          $('#CARD')
+          .attr('checked','checked');
 
-				// pass checked to true for view in template
-				$.o.cart.CARD_checked = true;
+  				// pass checked to true for view in template
+  				$.o.cart.CARD_checked = true;
 
-    }
-    else{
+      }
+      else{
 
-        $('label[for="OTHER"] i')
-        .addClass('fa-check-square')
-        .removeClass('fa-square');
+          $('label[for="OTHER"] i')
+          .addClass('fa-check-square')
+          .removeClass('fa-square');
 
-        $('input[name="pay_with"]').val('OTHER');
+          $('input[name="pay_with"]').val('OTHER');
 
-        // manage ARIA attributes
-        $('label[for="OTHER"]').attr('aria-checked', 'true');
+          // manage ARIA attributes
+          $('label[for="OTHER"]').attr('aria-checked', 'true');
 
-        // need to attr checked="checked"
-        $('#OTHER')
-        .attr('checked','checked');
+          // need to attr checked="checked"
+          $('#OTHER')
+          .attr('checked','checked');
 
-				// pass checked to true for view in template
-				$.o.cart.OTHER_checked = true;
+  				// pass checked to true for view in template
+  				$.o.cart.OTHER_checked = true;
 
-    }
+      }
 
   },
   /**
@@ -776,41 +776,41 @@ $.extend({
   check_sale_conditions : function(){
 
 
-    // if is checked - uncheck
-    if( $('#sale_conditions').val() == 'signed' ){
+      // if is checked - uncheck
+      if( $('#sale_conditions').val() == 'signed' ){
 
-        // remove checked for all
-        $('label[for="sale_conditions"] i')
-        .addClass('fa-square')
-        .removeClass('fa-check-square');
+          // remove checked for all
+          $('label[for="sale_conditions"] i')
+          .addClass('fa-square')
+          .removeClass('fa-check-square');
 
-        $('#sale_conditions').val('no');
+          $('#sale_conditions').val('no');
 
-        // manage ARIA labels - no checked
-        $('label[for="sale_conditions"]')
-        .attr('aria-checked', 'false');
+          // manage ARIA labels - no checked
+          $('label[for="sale_conditions"]')
+          .attr('aria-checked', 'false');
 
-				$.o.cart.CONDS_checked = false;
+  				$.o.cart.CONDS_checked = false;
 
-				return;
-    }
+  				return;
+      }
 
-    if( $('#sale_conditions').val() == 'no' ){
+      if( $('#sale_conditions').val() == 'no' ){
 
-        $('label[for="sale_conditions"] i')
-        .addClass('fa-check-square')
-        .removeClass('fa-square');
+          $('label[for="sale_conditions"] i')
+          .addClass('fa-check-square')
+          .removeClass('fa-square');
 
-        $('#sale_conditions').val('signed');
+          $('#sale_conditions').val('signed');
 
-        // manage ARIA labels - checked
-        $('label[for="sale_conditions"]')
-        .attr('aria-checked', 'true');
+          // manage ARIA labels - checked
+          $('label[for="sale_conditions"]')
+          .attr('aria-checked', 'true');
 
-				$.o.cart.CONDS_checked = true;
+  				$.o.cart.CONDS_checked = true;
 
-        return;
-    }
+          return;
+      }
 
   },
   /**
@@ -826,7 +826,7 @@ $.extend({
   /**
    * $.valid_form_payment();
    *
-   * @return {success/error}
+   * @return {json} success/error
    */
   valid_form_payment : function(){
 
@@ -872,7 +872,7 @@ $.extend({
 
 
         // IF process_form CALL TOKEN
-        if(data.process_form === true){
+        if( data.process_form === true ){
 
             // console.log( data.key );
 
@@ -898,7 +898,7 @@ $.extend({
         // END IF process_form
 
         // IF success -> PAY with MONEY or OTHER
-        if(data.direct_sale){
+        if( data.direct_sale ){
 
             // pass total amount caluled by server TO CART
             $.o.cart.total_amount_sale_text = data.total_amount_sale_text;
@@ -964,27 +964,27 @@ $.extend({
 
 
     // open_form_card - get stripe API js
-    var prom = new Promise(function(resolve, reject) {
+    var prom = new Promise( function(resolve, reject){
 
-      $.getScript( 'https://js.stripe.com/v3/', function( data, textStatus, jqxhr ){
+        $.getScript( 'https://js.stripe.com/v3/', function( data, textStatus, jqxhr ){
 
-          // error fetch Stripe JS
-          if( jqxhr.status != 200 ){
+            // error fetch Stripe JS
+            if( jqxhr.status != 200 ){
 
-              $.show_alert('warning', $.o.tr.error_payment_not_init, true);
+                $.show_alert('warning', $.o.tr.error_payment_not_init, true);
 
-              return;
-          }
-          // END error
+                return;
+            }
+            // END error
 
-          // success fetch Stripe JS
-          if( jqxhr.status == 200 && textStatus == 'success' ){
+            // success fetch Stripe JS
+            if( jqxhr.status == 200 && textStatus == 'success' ){
 
-              resolve(data);
-          }
+                resolve(data);
+            }
 
-      });
-      // end getScript
+        });
+        // end getScript
 
     });
     // END PROMISE
@@ -1078,10 +1078,10 @@ $.extend({
    */
   clear_error_card : function(){
 
-    if( $('#card-errors').css('display') == 'block' ){
+      if( $('#card-errors').css('display') == 'block' ){
 
-        $('#card-errors').hide().empty();
-    }
+          $('#card-errors').hide().empty();
+      }
 
   },
   /**
@@ -1150,57 +1150,57 @@ $.extend({
       // success payment // result.paymentIntent.status
       if( result.paymentIntent.status === 'succeeded' ){
 
-        // console.log( result.paymentIntent );
+          // console.log( result.paymentIntent );
 
-        // confirm user payment to server
-        $.post('/',
-        { set: 'confirm_user_payment',
-          payment_id: result.paymentIntent.id,
-          sale_id: $.sale_id
-        }, function(data){
+          // confirm user payment to server
+          $.post('/',
+          { set: 'confirm_user_payment',
+            payment_id: result.paymentIntent.id,
+            sale_id: $.sale_id
+          }, function(data){
 
-              // get page render SALE - this re-init API obj.
-              $.get_sale( $.sale_id, $.hash_customer );
+                // get page render SALE - this re-init API obj.
+                $.get_sale( $.sale_id, $.hash_customer );
 
-        });
+          });
 
-				// render personnal message success
-				$.o.pay_success = {
-						title: $.o.tr.payment_successful,
-						kind_order : $.o.tr.your_payment_of,
-						firstname : $('#firstname').val(),
-						total_amount : $.o.cart.total_amount_sale_text,
-						sale_id : $.sale_id,
-						mail : $('#mail').val()
-				};
+  				// render personnal message success
+  				$.o.pay_success = {
+  						title: $.o.tr.payment_successful,
+  						kind_order : $.o.tr.your_payment_of,
+  						firstname : $('#firstname').val(),
+  						total_amount : $.o.cart.total_amount_sale_text,
+  						sale_id : $.sale_id,
+  						mail : $('#mail').val()
+  				};
 
-        var html_success = $.Mustache.render('payment_success', $.o );
+          var html_success = $.Mustache.render('payment_success', $.o );
 
-        // SHOW SUCCESS
-        $.show_alert('success', html_success, true);
+          // SHOW SUCCESS
+          $.show_alert('success', html_success, true);
 
-				// delete $.o.obj_pay_success -> no need anymore
-				delete $.o.pay_success;
+  				// delete $.o.obj_pay_success -> no need anymore
+  				delete $.o.pay_success;
 
-        // this close modal card payment
-        $.close_modal_card_payment();
+          // this close modal card payment
+          $.close_modal_card_payment();
 
-        // empty cart infos
-        $('#nb_articles').text( $.o.tr.empty_basket );
+          // empty cart infos
+          $('#nb_articles').text( $.o.tr.empty_basket );
 
-        // delete cart in sessionStorage
-        sessionStorage.removeItem('cart');
+          // delete cart in sessionStorage
+          sessionStorage.removeItem('cart');
 
-        // re-init cart
-        delete $.o.cart;
+          // re-init cart
+          delete $.o.cart;
 
-        $.o.cart = {
-            items: [],
-            nb_articles: 0
-        };
+          $.o.cart = {
+              items: [],
+              nb_articles: 0
+          };
 
-        // scroll top
-        $.scroll_top();
+          // scroll top
+          $.scroll_top();
 
       }
       // end success payment
@@ -1274,11 +1274,10 @@ $.extend({
   get_sale : function( sale_id, hash_customer ){
 
 
-    // get ajax infos + new SALE - renew object API with good quantities products
-    $.get( '/sale/'+sale_id+'/'+hash_customer+'',
-    { req : 'ajax' }, function(data){
+      // get ajax infos + new SALE - renew object API with good quantities products
+      $.get( '/sale/'+sale_id+'/'+hash_customer+'',
+      { req : 'ajax' }, function(data){
 
-          // console.log(data);
 
           // renew Object API
           $.o = data;
@@ -1423,21 +1422,21 @@ $.extend({
       payment_id : $.payment_id
     }, function(data){
 
-      // success
-      if( data.success ){
+        // success
+        if( data.success ){
 
-          $.show_alert('success', $.o.tr.payment_well_aborted, false);
+            $.show_alert('success', $.o.tr.payment_well_aborted, false);
 
-          $.close_modal_card_payment();
-      }
+            $.close_modal_card_payment();
+        }
 
-      // error
-      if( data.error ){
+        // error
+        if( data.error ){
 
-          $.show_alert('error', data.message, true);
+            $.show_alert('error', data.message, true);
 
-          $.close_modal_card_payment();
-      }
+            $.close_modal_card_payment();
+        }
 
     }, 'json');
     // end $.post
@@ -1455,6 +1454,7 @@ $.extend({
    * @return {void}  close card payment form and destroy Stripe Elements
    */
   close_modal_card_payment : function(){
+
 
       $.cardNumberElement.destroy();
       $.cardExpiryElement.destroy();
