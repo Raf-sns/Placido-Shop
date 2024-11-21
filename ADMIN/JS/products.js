@@ -14,9 +14,9 @@
  * $.open_modif_product( id );
  * $.product_on_off_line( val, event );
  * $.check_on_off_line( event );
- * $.open_cats_selector_modif();
- * $.set_cat_product( prod_id, cat_id );
- * $.select_this_cat( cat_id );
+ * $.open_cats_selector( for_what );
+ * $.set_cat_product( event, cat_id );
+ * $.select_this_cat( event, cat_id );
  * $.check_mode( for_input,  event );
  * $.calcul_price_ttc();
  * $.add_img_prod();
@@ -25,14 +25,16 @@
  * SORTING :
  *
  * $.sort_stock_ad();
+ * $.timer_search_str;
  * $.search_str_in_products();
+ * $.search_with_string();
  * $.empty_search_user_products();
- * $.search_products_by_cat();
- * $.open_cats_selector_all();
+ * $.search_products_by_cat( event, cat_id );
  * $.search_by_quant();
  * $.search_by_on_line( state, event );
  *
  * SLIDER :
+ *
  * $.init_featured_prods();
  * $.select_for_featured_prods( id );
  * $.move_prod( id,  dir );
@@ -54,7 +56,7 @@ $.extend({
    * $.add_product( event, modif, id );
    *
    * @param  {event} event     description
-   * @param  {str}   modif     'modif'
+   * @param  {str}   modif     'modif' for modification case
    * @param  {int}   id        product id in modification case
    * renew $.o.products
    *
@@ -105,7 +107,7 @@ $.extend({
         <span id="percent"></span>
       </p>
       <div id="charger"
-      style="width:0px; height: 4px; position: absolute; bottom: 5px; background: #327a8f;"></div>`;
+      style="width:0px; height: 4px; position: absolute; bottom: 8px; background: #327a8f;"></div>`;
 
       // SHOW LOADER
       $.show_alert('info', html, true);
@@ -123,11 +125,14 @@ $.extend({
                 // if in progress
                 if( render.lengthComputable ){
                 	  // calcul percent
-                	  var divis = Math.floor(render.loaded / render.total *100);
+                	  var divis = Math.floor(render.loaded / render.total*100);
                 		var percent = divis+'%';
-                		//Do something with upload progress
+                    // render upload progress in %
                 		$('#percent').text(percent);
-                    $('#charger').css('width', divis+'px');
+                    // show minimum of 12% progressed
+                    percent = ( divis < 12 ) ? '12%' : percent;
+                    // completed bar
+                    $('#charger').css('width', 'calc('+percent+' - 52px)' );
                 }
 
             }, false); // end xhr.upload.addEventListener
@@ -259,9 +264,9 @@ $.extend({
   /**
    * $.suppr_product( event, id );
    *
-   * @param  {type} event description
-   * @param  {type} id    description
-   * @return {type}       description
+   * @param  {event} event
+   * @param  {int}   id    product id
+   * @return {void}  delete a product
    */
   suppr_product : function( e, id ){
 
@@ -312,9 +317,12 @@ $.extend({
                 	  // calcul percent
                 	  var divis = Math.floor(render.loaded / render.total *100);
                 		var percent = divis+'%';
-                		//Do something with upload progress
+                    // render upload progress in %
                 		$('#percent').text(percent);
-                    $('#charger').css('width', divis+'px');
+                    // show minimum of 12% progressed
+                    percent = ( divis < 12 ) ? '12%' : percent;
+                    // completed bar
+                    $('#charger').css('width', 'calc('+percent+' - 52px)' );
                 }
 
             }, false); // end xhr.upload.addEventListener
@@ -363,10 +371,8 @@ $.extend({
 
           }
 
-
       });
       // end AJAX
-
 
   },
   /**
@@ -383,8 +389,8 @@ $.extend({
   /**
    * $.open_modif_product( id );
    *
-   * @param  {int} id  product id
-   * @return {modal}
+   * @param  {int}    id  product id
+   * @return {modal}  show a modal for modify a poduct
    */
   open_modif_product : function( id ){
 
@@ -446,7 +452,7 @@ $.extend({
 
   },
   /**
-   * $.open_modif_product( id, event );
+   * $.open_modif_product( id );
    */
 
 
@@ -489,7 +495,6 @@ $.extend({
 					$('label[for="ooff_line"] i')
 					.removeClass(checked_context)
 					.addClass(un_checked_context);
-
 			}
 
 	},
@@ -582,38 +587,201 @@ $.extend({
 
 
   /**
-   * $.open_cats_selector_modif();
+   * $.open_cats_selector( for_what );
    *
-   * @return {type}  description
+   * @param  {string} for_what 	'add_prod' / 'modif' / 'search'
+   * @return {html}  open a pop-up for select a category
    */
-  open_cats_selector_modif : function(){
+  open_cats_selector : function( for_what ){
 
-      $('#cat_selector_modif').toggleClass('show','hide');
+      let categories_div;
+
+      switch ( for_what ) {
+
+          case 'add_prod':
+            categories_div = 'cat_selector_modif';
+          break;
+
+          case 'modif':
+            categories_div = 'cat_selector_modif';
+          break;
+
+          case 'search':
+            categories_div = 'cat_selector_all';
+          break;
+      }
+
+      // empty div #cat_selector_modif
+      $('#'+categories_div).empty();
+
+      // manage open/close categories dropdown
+      if( $('#'+categories_div).hasClass('hide') == true ){
+
+          // open
+          $('#'+categories_div).removeClass('hide');
+          $('#'+categories_div).addClass('show');
+      }
+      else{
+
+          // close
+          $('#'+categories_div).addClass('hide');
+          $('#'+categories_div).removeClass('show');
+          // stop here
+          return;
+      }
+
+      // functions for create ul, li, text
+      function create_ul(){
+          return document.createElement('ul');
+      }
+      function create_li(){
+          return  document.createElement('li');
+      }
+      function create_text(text){
+          return document.createTextNode(text);
+      }
+
+      // prepa. vars
+      let level = 0;
+      let li, ul, text;
+
+      // no categories !
+      if( $.o.cats.length == 0 ){
+
+          // sibling hidden block #cat_selector_modif
+          let div =
+            document.getElementById(categories_div);
+          // create first parent ul
+          let ul = create_ul();
+          // add css class
+          ul.classList.add('ul');
+          // create empty li
+          let li = create_li();
+          // apend text no category
+          let text = create_text($.o.tr.no_cat);
+          li.appendChild(text);
+          ul.appendChild(li);
+          // append to hidden div
+          div.appendChild(ul);
+
+          // stop here
+          return;
+      }
+
+
+      // copy object
+      let Cats = [...$.o.cats];
+
+      // sort categories by bl ASC
+      Cats.sort((a,b) => a.bl - b.bl);
+
+
+      // sibling hidden block # ~ categories_div
+      let div =
+        document.getElementById(categories_div);
+      // create first parent ul
+      ul = create_ul();
+      ul.classList.add('ul');
+
+      // search case : append first li -> search all categories for search case
+      if( for_what == 'search' ){
+
+          // create a li
+          li = create_li();
+          // append text 'search all categories'
+          text = create_text($.o.tr.all_categories);
+          li.appendChild(text);
+          // set onclick with no-argument in the function
+          li.setAttribute('onclick', '$.search_products_by_cat(event, null)' );
+          // append li to first parent ul
+          ul.appendChild(li);
+      }
+
+      // append to hidden div
+      div.appendChild(ul);
+
+
+      // loop and construct nested lists
+      for (let i = 0; i < Cats.length; i++) {
+
+
+          // if level decrease -> sibling new ul parent
+          if( level > Cats[i].level ){
+
+              let sibling_li =
+                div.querySelector('li[data-level="'+Cats[i].level+'"]');
+
+              ul = sibling_li.parentElement;
+          }
+
+          // create leaf for each
+          li = create_li();
+
+          text = create_text(Cats[i].title);
+          li.appendChild(text);
+
+          // set data-level for retrieve the parent
+          li.setAttribute('data-level', Cats[i].level);
+
+          // function to add in context : add product | modify product | search
+          if( for_what == 'modif' ){
+
+              li.setAttribute('onclick', '$.set_cat_product(event, '+Cats[i].cat_id+')' );
+          }
+          else if( for_what == 'add_prod' ){
+
+              li.setAttribute('onclick', '$.select_this_cat(event, '+Cats[i].cat_id+')' );
+          }
+          else if( for_what == 'search' ){
+
+              li.setAttribute('onclick', '$.search_products_by_cat(event, '+Cats[i].cat_id+')' );
+          }
+
+          // append new li
+          ul.appendChild(li);
+
+          // contain nodes
+          if( Cats[i].br - Cats[i].bl > 1 ){
+
+              // set level value
+              level = Cats[i].level;
+
+              // create new ul parent
+              ul = create_ul();
+
+              // append li
+              li.appendChild(ul);
+          }
+          // end if contain nodes
+
+      }
+      // end for
 
   },
   /**
-   * $.open_cats_selector_modif();
+   * $.open_cats_selector( for_what );
    */
 
 
 
   /**
-   * $.set_cat_product( prod_id, cat_id );
+   * $.set_cat_product( event, cat_id );
    *
-   * @param  {int} prod_id 	product id
-   * @param  {int} cat_id  	category id
-   * @return {json}        	success / error : modify directly a category
-	 * 												of a product
+   * @param  {event}  event
+   * @param  {int}    cat_id  category id
+   * @return {json}   success / error : modify directly a category of a product
    */
-  set_cat_product : function( prod_id, cat_id ){
+  set_cat_product : function( event, cat_id ){
 
+
+      event.stopImmediatePropagation();
 
 			// post modif
 			$.post('index.php',
 			{
 				set: 'set_cat_product',
 				token: $.o.user.token,
-				prod_id: prod_id,
+        prod_id: $.o.one_prod.id,
 				cat_id: cat_id
 			}, function(data){
 
@@ -623,13 +791,13 @@ $.extend({
 
 							$.show_alert('success', data.success, false);
 
-							// set cat in view
+              // set cat in pop-up
 							$('#cat_name').text(data.cat_name);
 
 							// manage obj
 							for (var i = 0; i < $.o.products.length; i++) {
 
-									if( $.o.products[i].id == prod_id ){
+									if( $.o.products[i].id == $.o.one_prod.id ){
 
 											// set cat refs in product
 											$.o.products[i].cat_name = data.cat_name;
@@ -639,7 +807,7 @@ $.extend({
 							}
 							// end loop
 
-							// re-open products for apply modif
+              // re-open products for apply modification
 							$.open_vue('products', event);
 
 					}
@@ -648,41 +816,36 @@ $.extend({
 					// error
 					if( data.error ){
 
-							// close hidden cat selector
-							$.open_cats_selector_modif();
-
 							$.show_alert('warning', data.error, false);
 					}
 					// end error
+
+          // close category selector
+          $.open_cats_selector('modif');
 
 			}, 'json');
 			// end post
 
   },
   /**
-   * $.set_cat_product( prod_id, cat_id );
+   * $.set_cat_product( event, cat_id );
    */
 
 
 
   /**
-   * $.select_this_cat( cat_id );
+   * $.select_this_cat( event, cat_id );
    *
-   * @param  {type}     cat_id
-   * @return {type}     description
+   * @param  {event}   event
+   * @param  {int}     cat_id
+   * @return {html}    select a category for a new product
    */
-  select_this_cat : function( cat_id ){
+  select_this_cat : function( event,  cat_id ){
 
 
-		  if( typeof $.o.one_prod == 'undefined' ){
+      event.stopImmediatePropagation();
 
-          $.o.one_prod = {
-            cat_id: 0,
-            cat_name: '',
-          };
-      }
-
-      // attr new cat to object
+      // find the category - get his title
       for (var i = 0; i < $.o.cats.length; i++) {
 
           if( $.o.cats[i].cat_id == cat_id ){
@@ -690,21 +853,18 @@ $.extend({
           }
       }
 
-      $.o.one_prod.cat_id = $.o.cats[i].cat_id;
-      $.o.one_prod.cat_name = $.o.cats[i].title;
-
       // modify title cat in view
       $('#cat_name').text( $.o.cats[i].title );
 
-      // prop. select good item
-      $('#cat option[value="'+cat_id+'"]').prop('selected', true);
+      // prop. select good item for category
+      $('#cat option[value="'+$.o.cats[i].cat_id+'"]').prop('selected', true);
 
-      // close cat selector
-      $.open_cats_selector_modif();
+      // close categories selector
+      $.open_cats_selector('add_prod');
 
   },
   /**
-   * $.select_this_cat( cat_id );
+   * $.select_this_cat( event, cat_id );
    */
 
 
@@ -712,8 +872,8 @@ $.extend({
   /**
    * $.check_mode( for_input,  event );
    *
-   * @param  {str} for_input 'no_tax' / 'w_tax'
-   * @return {type}       description
+   * @param  {string}   for_input 'no_tax' / 'w_tax'
+   * @return {html}     show hide tax input for a product
    */
   check_mode : function( for_input,  event ){
 
@@ -763,9 +923,10 @@ $.extend({
   /**
    * $.calcul_price_ttc();
    *
-   * @return {type}  description
+   * @return {html}  calcul price product with a tax
    */
   calcul_price_ttc : function(){
+
 
 			$('#price_less_tax, #tax').on('input', function(){
 
@@ -798,7 +959,7 @@ $.extend({
   /**
    * $.add_img_prod();
    *
-   * @return {type}  description
+   * @return {html}  add images product for modif or add new product
    */
   add_img_prod : function(){
 
@@ -814,7 +975,7 @@ $.extend({
   /**
    * $.clear_add_product();
    *
-   * @return {type}  description
+   * @return {html}  clear all fileds in add product form
    */
   clear_add_product : function(){
 
@@ -841,18 +1002,19 @@ $.extend({
    */
 
 
-/////////////////////////////////
-/////////////////////////////////
-    //  SORT STOCK
-/////////////////////////////////
-/////////////////////////////////
+////////////////////////
+/////  SORT STOCK  /////
+////////////////////////
 
 
   /**
-   *  $.sort_stock_ad();
+   * $.sort_stock_ad();
+   *
+   * @return {html} sort products by date added
    */
   rep_sort : false,
   sort_stock_ad : function(){
+
 
       //  IF SEARCH IS OPEN -> HIDE IT -> SORT BY DATE ONLY IN PRODUCTS, NOT IN SEARCH
       if( $('#render_search_user_products').css('display') == 'block' ){
@@ -871,14 +1033,18 @@ $.extend({
 
 
       if( $.rep_sort == false ){
-        $('#sort_a_d').removeClass('fa-arrow-down')
-        .addClass('fa-arrow-up');
-        $.rep_sort = true;
+
+          $('#sort_a_d').removeClass('fa-arrow-down')
+          .addClass('fa-arrow-up');
+
+          $.rep_sort = true;
       }
       else{
-        $('#sort_a_d').removeClass('fa-arrow-up')
-        .addClass('fa-arrow-down');
-        $.rep_sort = false;
+
+          $('#sort_a_d').removeClass('fa-arrow-up')
+          .addClass('fa-arrow-down');
+
+          $.rep_sort = false;
       }
 
       // reverse object
@@ -892,16 +1058,17 @@ $.extend({
 
   },
   /**
-   *  $.sort_stock_ad();
+   * $.sort_stock_ad();
    */
 
 
 
 	/**
 	 * $.search_str_in_products();
-	 * -> with "onkeyup"
-	 * @return {html}  results of a string researched in products titles
+   * -> with "onkeyup" event
+   * @return {void}  delay the search and launch function $.search_with_string();
 	 */
+  timer_search_str : null, // setTimeout OR null for delay the search on keyup
 	search_str_in_products : function(){
 
 
@@ -912,11 +1079,45 @@ $.extend({
       $('.on_line_state').removeClass('fa-check-square')
       .addClass('fa-square');
 
-			// empty $.o.search_user_products
-			$.o.search_user_products = [];
+      // timer in action -> do nothing
+      if( $.timer_search_str != null ){
+
+          return;
+      }
+
+      // delay the search  - 1.5 seconds
+      $.timer_search_str = window.setTimeout(function() {
+
+          // launch search
+          $.search_with_string();
+
+          // clear timeout
+          window.clearTimeout($.timer_search_str);
+
+          $.timer_search_str = null;
+
+      }, 1500);
+
+	},
+	/**
+	 * $.search_str_in_products();
+	 */
+
+
+
+  /**
+   * $.search_with_string();
+   *
+   * @return {html}  results of a string researched in products titles
+   */
+  search_with_string : function(){
+
+
+      // empty $.o.search_user_products
+      $.o.search_user_products = [];
 
       // VALUE IN LOWER CASE
-		  var value = $('#search_user_products').val().toLowerCase();
+      var value = $('#search_user_products').val().toLowerCase();
 
       // if multiples spaces only don't fire research
       while ( value.length > 0 && value.trim() == '') {
@@ -924,25 +1125,27 @@ $.extend({
       }
 
       // KEEP length FOR STATE and substr word to search
-			var len = value.trim().length;
+      var len = value.trim().length;
 
-			// re-init if no entries
-			if( len == 0 ){
+      // re-init if no entries
+      if( len == 0 ){
 
           // re-init view paginated by defaut on products
           $.empty_search_user_products();
 
-      	  return;
+          return;
       }
       // end len == 0
 
-			// regex - check only first chars of a word
-			var reg = new RegExp('^('+value.trim()+')', 'gi');
+      // regex - check only first chars of a word
+      var reg = new RegExp('^('+value.trim()+')', 'gi');
 
-			// LOOP 1
-			$.o.products.forEach(function(item, k){
+      var found;
 
-				    var all_title = item.title.toLowerCase();
+      // LOOP 1
+      $.o.products.forEach(function(item, k){
+
+            var all_title = item.title.toLowerCase();
 
             // REMOVE FRENCH ARTICLES
             var reg_rpl = /( l')/g;
@@ -990,7 +1193,7 @@ $.extend({
 
                 var chars_title_sub = item2.substr(0, len);
 
-                var found = chars_title_sub.match(reg);
+                found = chars_title_sub.match(reg);
 
                 if( found != null && found.indexOf(value) != -1 ){
 
@@ -1002,12 +1205,38 @@ $.extend({
             });
             // END FOREACH ARR_words_title LOOP 2
 
-			});
-			// LOOP 1
+      });
+      // end LOOP 1
+
+
+      // SEARCH IN REF. of PRODUCTS
+      // remove spaces in value of the search field
+      value = value.replace(/\s{1,}/g, '');
+
+      // new regex for ref.
+      reg = new RegExp('^('+value.trim()+')', 'gi');
+
+      // LOOP 2 - search in ref.
+      $.o.products.forEach(function(item, k){
+
+          // remove spaces in ref product
+          var reference = item.ref.replace(/\s{1,}/g, '');
+
+          // match
+          found = reference.match(reg);
+
+          if( found != null && found.indexOf(value) != -1 ){
+
+              // INCLUDE PRODUCT
+              $.o.search_user_products.push(item);
+          }
+
+      });
+      // end LOOP 2
 
 
       // IF NOT FOUND
-			if( $.o.search_user_products.length == 0 ){
+      if( $.o.search_user_products.length == 0 ){
 
           // hide pages navigation buttons
           $('.block_pagina').empty();
@@ -1022,8 +1251,9 @@ $.extend({
           $('#stock_content').css('display', 'none');
 
           return;
-			}
+      }
       // end not found
+
 
       // search_nb_render items
       $.o.search_nb_render = $.o.search_user_products.length;
@@ -1031,14 +1261,13 @@ $.extend({
       // this show result
       $.pagination_init( 'search_user_products' );
 
-			// hide stock_content
-			$('#stock_content').css('display', 'none');
+      // hide stock_content
+      $('#stock_content').css('display', 'none');
 
-	},
-	/**
-	 * $.search_str_in_products();
-	 * -> with "onkeyup"
-	 */
+  },
+  /**
+   * $.search_with_string();
+   */
 
 
 
@@ -1078,18 +1307,24 @@ $.extend({
 
 
 	/**
-	 * $.search_products_by_cat( cat_id );
-	 * @Param {int}    cat_id
-	 * @return {vue}  results of a category researched in products
+	 * $.search_products_by_cat( event, cat_id );
+   *
+   * @Param  {event}  event
+	 * @Param  {int}    cat_id
+   * @return {html}   return products filtered by categories
+   * -> if a category is a parent of categories,
+   * all products in child categories are returned
 	 */
-	search_products_by_cat : function( cat_id ){
+  search_products_by_cat : function( event, cat_id ){
 
+
+      event.stopImmediatePropagation();
 
       // no value - reset
       if( !cat_id ){
 
-          // hide modal cat selector_all
-          $.open_cats_selector_all();
+          // hide modal cat selector
+          $.open_cats_selector('search');
 
           // reset view by default
         	$.empty_search_user_products();
@@ -1160,8 +1395,8 @@ $.extend({
       // IF NOT FOUND
 			if( $.o.search_user_products.length == 0 ){
 
-          // hide modal cat selector_all
-          $.open_cats_selector_all();
+          // hide modal cat selector
+          $.open_cats_selector('search');
 
           // hide pages navigation buttons
           $('.block_pagina').empty();
@@ -1180,7 +1415,7 @@ $.extend({
       $.o.search_nb_render = $.o.search_user_products.length;
 
       // hide modal cat selector_all
-      $.open_cats_selector_all();
+      $.open_cats_selector('search');
 
       // append results
       $.pagination_init( 'search_user_products' );
@@ -1190,31 +1425,15 @@ $.extend({
 
   },
 	/**
-	 * $.search_products_by_cat();
+	 * $.search_products_by_cat( event, cat_id );
 	 */
-
-
-
-  /**
-   * $.open_cats_selector_all();
-   *
-   * @return {type}  description
-   */
-  open_cats_selector_all: function(){
-
-      $('#cat_selector_all').toggleClass('show','hide');
-
-  },
-  /**
-   * $.open_cats_selector_all();
-   */
 
 
 
 	/**
 	 * $.search_by_quant();
 	 *
-	 * @return {vue}  results of a research by quantity in products
+   * @return {html}  results of a research by quantity in products
 	 */
 	search_by_quant : function(){
 
@@ -1290,9 +1509,9 @@ $.extend({
 	/**
 	 * $.search_by_on_line( state, event );
 	 *
-	 * @param  {type} state description
-	 * @param  {type} e     description
-	 * @return {type}       description
+   * @param  {string} state 'on_line' | 'off_line'
+	 * @param  {event}  e
+   * @return {html}   filter products by 'on_line' or 'off_line'
 	 */
 	search_by_on_line : function(state, e){
 
@@ -1379,7 +1598,7 @@ $.extend({
 
 			// clone products
 			$.o.featured_prods_selector =
-			JSON.parse(JSON.stringify($.o.products));
+			   JSON.parse(JSON.stringify($.o.products));
 
 			// remove products already selected
 			$.o.featured_prods.forEach((item, i) => {
@@ -1414,7 +1633,7 @@ $.extend({
 	/**
 	 * $.select_for_featured_prods( id );
 	 *
-	 * @return {html}  paste an article to featured products
+   * @return {html}  paste a product to featured products
 	 */
 	select_for_featured_prods : function( id ){
 
@@ -1449,19 +1668,21 @@ $.extend({
 
 			// clean block for first add
 			if( $.o.featured_prods.length == 1 ){
-				$('#featured_prods').empty();
+
+            $('#featured_prods').empty();
 			}
 
 			// set nb_featured_prods
 			$('#nb_featured_prods').text($.o.featured_prods.length);
-			// in obj.
+
+      // in obj.
 			$.o.template.nb_featured_prods = $.o.featured_prods.length;
 
 			// append to selected view
 			$('#featured_prods').append()
 			.mustache('one_featured_prod', $.o.featured_prods_selector[i]);
 
-			// remove Html Element from list
+      // remove html Element from list
 			$('#feat-'+id+'').detach();
 
 			// success
@@ -1477,102 +1698,101 @@ $.extend({
 	/**
 	 * $.move_prod( id,  dir );
 	 *
-	 * @param  {int}   id  id product in $.o.featured_prods
-	 * @param  {str}   dir 'prev' or 'next'
-	 * @return {type}     description
+	 * @param  {int}      id  id product in $.o.featured_prods
+   * @param  {string}   dir 'prev' or 'next'
+   * @return {html}     move product into the list of featured products
 	 */
 	move_prod : function( id, dir ){
 
 
-		// find index of item in featured_prods
-		const find_index_by_id = (item) => item.id == id;
+  		// find index of item in featured_prods
+  		const find_index_by_id = (item) => item.id == id;
 
-		var index_prod = $.o.featured_prods.findIndex(find_index_by_id)
-		// console.log( index_prod );
-
-
-		// for all cases REMOVE HTML Element
-		var element = $('#cont_prod-'+id+'').detach();
+  		var index_prod = $.o.featured_prods.findIndex(find_index_by_id)
+  		// console.log( index_prod );
 
 
-		// suppr item
-		if( dir == 'suppr' ){
+  		// for all cases REMOVE HTML Element
+  		var element = $('#cont_prod-'+id+'').detach();
 
-				// remove item to obj
-				var item = $.o.featured_prods.splice(index_prod, 1);
 
-				// re-assing to selectors list origin
-				$.o.featured_prods_selector.push(item);
+  		// suppr item
+  		if( dir == 'suppr' ){
 
-				// if no more products
-				if( $.o.featured_prods.length == 0 ){
+  				// remove item to obj
+  				var item = $.o.featured_prods.splice(index_prod, 1);
 
-						$('#featured_prods').empty()
-						.mustache('partial_featured_prods', $.o );
-				}
+  				// re-assing to selectors list origin
+  				$.o.featured_prods_selector.push(item);
 
-				// re init for have good products and good pagination
-				$.init_featured_prods();
+  				// if no more products
+  				if( $.o.featured_prods.length == 0 ){
 
-				return;
-		}
+  						$('#featured_prods').empty()
+  						.mustache('partial_featured_prods', $.o );
+  				}
 
-		// dir -> 'prev' and index item == 0
-		if( dir == 'prev' && index_prod == 0 ){
+  				// re init for have good products and good pagination
+  				$.init_featured_prods();
 
-				// remove first item
-				var item = $.o.featured_prods.shift();
-				// append it to end
-				$.o.featured_prods.push(item);
+  				return;
+  		}
 
-				// append html to the end
-				$('#featured_prods').append(element);
+  		// dir -> 'prev' and index item == 0
+  		if( dir == 'prev' && index_prod == 0 ){
 
-				return;
-		}
+  				// remove first item
+  				var item = $.o.featured_prods.shift();
+  				// append it to end
+  				$.o.featured_prods.push(item);
 
-		// dir -> 'next' and index item == length
-		if( dir == 'next' && index_prod == ($.o.featured_prods.length-1) ){
+  				// append html to the end
+  				$('#featured_prods').append(element);
 
-				// remove last item
-				var item = $.o.featured_prods.pop();
-				// append it to first index
-				$.o.featured_prods.splice(0, 0, item);
+  				return;
+  		}
 
-				// append html to the end
-				$('#featured_prods').prepend(element);
+  		// dir -> 'next' and index item == length
+  		if( dir == 'next' && index_prod == ($.o.featured_prods.length-1) ){
 
-				return;
-		}
+  				// remove last item
+  				var item = $.o.featured_prods.pop();
+  				// append it to first index
+  				$.o.featured_prods.splice(0, 0, item);
 
-		if( dir == 'prev' && index_prod != 0 ){
+  				// append html to the end
+  				$('#featured_prods').prepend(element);
 
-				// first keep id previous html element - before do the mess !
-				var id_prev_elem = $.o.featured_prods[index_prod-1].id;
-				// remove item to obj
-				var item = $.o.featured_prods.splice(index_prod, 1);
-				// append it to prev index
-				$.o.featured_prods.splice( (index_prod-1), 0, item[0] );
-				// append html to his index
-				$(element).insertBefore( $('#cont_prod-'+id_prev_elem+'') );
+  				return;
+  		}
 
-				return;
-		}
+  		if( dir == 'prev' && index_prod != 0 ){
 
-		if( dir == 'next' ){
+  				// first keep id previous html element - before do the mess !
+  				var id_prev_elem = $.o.featured_prods[index_prod-1].id;
+  				// remove item to obj
+  				var item = $.o.featured_prods.splice(index_prod, 1);
+  				// append it to prev index
+  				$.o.featured_prods.splice( (index_prod-1), 0, item[0] );
+  				// append html to his index
+  				$(element).insertBefore( $('#cont_prod-'+id_prev_elem+'') );
 
-				// first keep id next html element - before do the mess !
-				var id_next_elem = $.o.featured_prods[index_prod+1].id;
-				// remove item to obj
-				var item = $.o.featured_prods.splice(index_prod, 1);
-				// append it to prev index
-				$.o.featured_prods.splice( (index_prod+1), 0, item[0] );
-				// append html to his index
-				$(element).insertAfter( $('#cont_prod-'+id_next_elem+'') );
+  				return;
+  		}
 
-				return;
-		}
+  		if( dir == 'next' ){
 
+  				// first keep id next html element - before do the mess !
+  				var id_next_elem = $.o.featured_prods[index_prod+1].id;
+  				// remove item to obj
+  				var item = $.o.featured_prods.splice(index_prod, 1);
+  				// append it to prev index
+  				$.o.featured_prods.splice( (index_prod+1), 0, item[0] );
+  				// append html to his index
+  				$(element).insertAfter( $('#cont_prod-'+id_next_elem+'') );
+
+  				return;
+  		}
 
 	},
 	/**
@@ -1588,46 +1808,47 @@ $.extend({
 	 */
 	record_featured_prods : function(){
 
-		// disable btn
-		$('#record_featured_prods').removeAttr('onclick')
-    .append(`&nbsp; <span id="slider_settings_spinner" class="spinner">
-    <i class="fas fa-circle-notch fa-spin"></i>
-    </span>`);
+  		// disable btn
+  		$('#record_featured_prods').removeAttr('onclick')
+      .append(`&nbsp; <span id="slider_settings_spinner" class="spinner">
+      <i class="fas fa-circle-notch fa-spin"></i>
+      </span>`);
 
-		var ARR_ids = [];
+  		var ARR_ids = [];
 
-		// get featured ids
-		for (var i = 0; i < $.o.featured_prods.length; i++) {
-				ARR_ids.push( $.o.featured_prods[i].id );
-		}
+  		// get featured ids
+  		for (var i = 0; i < $.o.featured_prods.length; i++) {
 
-		// post datas
-		$.post('index.php',
-		{
-			set : 'record_featured_products',
-			token : $.o.user.token,
-			list_ids : JSON.stringify(ARR_ids),
-		 }, function(data){
+          ARR_ids.push( $.o.featured_prods[i].id );
+  		}
 
-				// succes
-			 	if( data.success ){
-						$.show_alert('success', data.success, false);
-				}
+  		// post datas
+  		$.post('index.php',
+  		{
+  			set : 'record_featured_products',
+  			token : $.o.user.token,
+  			list_ids : JSON.stringify(ARR_ids),
+  		 }, function(data){
 
-				// error
-				if( data.error ){
-						$.show_alert('warning', data.error, false);
-				}
+  				// succes
+  			 	if( data.success ){
+  						$.show_alert('success', data.success, false);
+  				}
 
-				// enable pnclick button
-				$('#record_featured_prods')
-				.attr('onclick', '$.record_featured_prods();');
+  				// error
+  				if( data.error ){
+  						$.show_alert('warning', data.error, false);
+  				}
 
-        // remove spinner
-        $('#slider_settings_spinner').remove();
+  				// enable pnclick button
+  				$('#record_featured_prods')
+  				.attr('onclick', '$.record_featured_prods();');
 
-		}, 'json');
-		// end $.post
+          // remove spinner
+          $('#slider_settings_spinner').remove();
+
+  		}, 'json');
+  		// end $.post
 
 	},
 	/**
@@ -1673,50 +1894,51 @@ $.extend({
 	 */
 	record_slider_settings : function(){
 
-		// disable btn
-		$('#record_slider_settings').removeAttr('onclick')
-    .append(`&nbsp; <span id="slider_settings_spinner" class="spinner">
-    <i class="fas fa-circle-notch fa-spin"></i>
-    </span>`);
 
-		var form = document.getElementById('slider_settings');
-		var formData = new FormData(form);
+  		// disable btn
+  		$('#record_slider_settings').removeAttr('onclick')
+      .append(`&nbsp; <span id="slider_settings_spinner" class="spinner">
+      <i class="fas fa-circle-notch fa-spin"></i>
+      </span>`);
 
-		formData.append('set', 'record_slider_settings' );
-		formData.append('token', $.o.user.token );
+  		var form = document.getElementById('slider_settings');
+  		var formData = new FormData(form);
 
-		// post datas
-		$.sender('#slider_settings', 'POST', 'index.php', formData, 'json',
-		function(data){
+  		formData.append('set', 'record_slider_settings' );
+  		formData.append('token', $.o.user.token );
 
-				// succes
-				if( data.success ){
+  		// post datas
+  		$.sender('#slider_settings', 'POST', 'index.php', formData, 'json',
+  		function(data){
 
-            $.show_alert('success', data.success, false);
+  				// succes
+  				if( data.success ){
 
-						// re-init datas object
-						$.o.api_settings.SLIDER = data.slider;
+              $.show_alert('success', data.success, false);
 
-						// re-init view slider settings form
-						$('#slider_settings_form').empty()
-						.mustache('slider_settings_form', $.o);
-				}
+  						// re-init datas object
+  						$.o.api_settings.SLIDER = data.slider;
 
-				// error
-				if( data.error ){
+  						// re-init view slider settings form
+  						$('#slider_settings_form').empty()
+  						.mustache('slider_settings_form', $.o);
+  				}
 
-            $.show_alert('warning', data.error, false);
-				}
+  				// error
+  				if( data.error ){
 
-				// enable btn
-				$('#record_slider_settings')
-				.attr('onclick', '$.record_slider_settings();');
+              $.show_alert('warning', data.error, false);
+  				}
 
-        // remove spinner
-        $('#slider_settings_spinner').remove();
+  				// enable btn
+  				$('#record_slider_settings')
+  				.attr('onclick', '$.record_slider_settings();');
 
-		}, 'json');
-		// end $.sender
+          // remove spinner
+          $('#slider_settings_spinner').remove();
+
+  		}, 'json');
+  		// end $.sender
 
 	},
 	/**

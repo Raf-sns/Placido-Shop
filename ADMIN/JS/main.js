@@ -99,6 +99,8 @@ $.extend({
           // pass product online && checked for no-taxed-price by default
           $.o.on_line = true;
           $.o.checked_ttc = 'checked';
+          // delete $.o.one_prod
+          delete $.o.one_prod;
         break;
 
         case 'categories':
@@ -665,11 +667,11 @@ $.extend({
 					if( $('#cat_selector_all').is(':visible') == true  ){
 
 							// close cat selectors
-							$.open_cats_selector_all();
+              $.open_cats_selector('search');
 					}
 					if( $('#cat_selector_modif').is(':visible') == true  ){
 
-							$.open_cats_selector_modif();
+              $.open_cats_selector('modif');
 					}
 
 					// close modal on click in document - JUST FOR IMG REMINDER  !

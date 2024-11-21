@@ -1,13 +1,12 @@
 /**
  * PLACIDO-SHOP FRAMEWORK - BACKEND
- * Copyright © Raphaël Castello, 2022
+ * Copyright © Raphaël Castello, 2022-2024
  * Organisation: SNS - Web et informatique
  * Website / contact: https://sns.pm
  *
  * script name: login.js
  *
  * $.send_login();
- * $.login_fetch(event);
  * $.prevent_links(elem);
  * $.sender();
  * $.show_process(end);
@@ -17,6 +16,8 @@
  *
  */
 
+	// show object API - true / false
+	// enter $.o into the javaScript console for render it
 	const DEV_MODE = false;
 
 // start jQuery
@@ -29,7 +30,7 @@ $(document).on('keydown', function(e){
 
 		if( e.key == 'Enter' ){
 
-				$.send_login();
+				$.send_login(e);
 		}
 });
 /* END LOGIN BY PRESS ENTER KEY */
@@ -41,9 +42,9 @@ $.extend({
 
 
   // INIT. PLACIDO OBJECT
-     //  //
-     o : {},
-    //---//
+   //  //
+   o : {},
+  //---//
 
 
   /**
@@ -63,7 +64,7 @@ $.extend({
       var data_type = 'json';
 
       // create form data for AJAX POST
-      var formElement = document.getElementById("form_login");
+			var formElement = document.getElementById('form_login');
       var datas = new FormData(formElement);
       // append command
       datas.append('set', 'login');
@@ -103,7 +104,7 @@ $.extend({
 
 								});
 
-							// LOAD API SCIPTS
+							// LOAD ALL API SCIPTS
 							$.getScript('JS/tools.js');
 
               // REMOVE LOGIN
@@ -131,77 +132,6 @@ $.extend({
    */
 
 
-
-	/**
-	 * $.login_fetch(event);
-	 *
-	 * @return {type}  description
-	 */
-	login_fetch : function(event){
-
-
-			event.preventDefault();
-
-			var formElement = document.getElementById("form_login");
-
-			let Datas = new FormData(formElement);
-
-			// append command
-      Datas.append('set', 'login');
-
-			var MyInit = {
-				method: 'POST',
-				mode: 'cors',
-				cache: 'default',
-				credentials: 'include',
-				body: Datas
-			};
-
-			// send request to server - Test USE FETCH API
-			fetch('index.php', MyInit).then(function(response){
-
-						// first we wait for a response from the server ...
-						if(response.ok) {
-
-							// then treat the response as json
-							return response.json();
-						}
-						else{
-							// error
-							alert( $.o.tr.error_server );
-						}
-
-				}).then(function(response){
-
-						// off press enter
-						$(document).off('keydown');
-
-						// PASS DATAS API TO $.o OBJECT enter -> $.o <- in a console to see object
-						$.o = response.response;
-
-						// SHOW OBJECT API
-						console.log($.o);
-
-						// APPEND SCRIPTS - tools is a charger
-						$('body').append(
-							`<script type="text/javascript" src="JS/tools.js"></script>`);
-
-						// APPEND PAGE ADMIN when template is charged
-						$('#center_page').empty().mustache('admin_page', $.o );
-
-						// REMOVE LOGIN
-						$('script[src="JS/login.js"]').remove();
-
-						return;
-
-			})
-			.catch(function(error) {
-
-					console.log(error.message);
-			});
-			// end send request
-
-	},
 
   /**
    * $.prevent_links(elem);

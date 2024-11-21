@@ -209,6 +209,10 @@ class control {
 	          shop::update_shop();
 	      break;
 
+				// set_mode_shop
+	      case 'set_mode_shop':
+	          shop::set_mode_shop();
+	      break;
 
 	      // MESSAGES
 				// get_fresh_messages

@@ -1,7 +1,7 @@
 <?php
 /**
  * PLACIDO-SHOP FRAMEWORK - BACKEND
- * Copyright © Raphaël Castello, 2019-2022
+ * Copyright © Raphaël Castello, 2019-2024
  * Organisation: SNS - Web et informatique
  * Website / contact: https://sns.pm
  *
@@ -10,6 +10,7 @@
  * shop::get_shop();
  * shop::update_shop();
  * shop::delete_img_shop();
+ * shop::set_mode_shop();
  *
  */
 
@@ -199,7 +200,7 @@ class shop {
 
       // var_dump( $NEW_logo );
 
-      // MODE if 'sale' -> sale mode | 'catalog'
+      // MODE if 'sale' -> sale mode || 'catalog'
       $mode = ( trim(htmlspecialchars($_POST['mode']))  == 'sale' ) ? 1 : 0;
 
 
@@ -270,16 +271,84 @@ class shop {
 					return false;
       }
 
-   }
+  }
   /**
    * shop::delete_img_shop();
    */
 
 
 
+  /**
+   * shop::set_mode_shop();
+   *
+   * @return {json} set directly the mode of the shop: 'online sale' | 'catalog'
+   * return json shop updated
+   */
+  public static function set_mode_shop(){
+
+
+      // VERIFY token
+      token::verify_token();
+
+      // ALL EMPTY
+      if( empty($_POST) ){
+
+          // ERROR
+          $Arr = array('error' => tr::$TR['error_gen']);
+          echo json_encode($Arr, JSON_FORCE_OBJECT);
+          exit;
+      }
+
+      // mode recived must be 1 OR 0 ( 1 : online sale | 0 : mode catalog )
+      $mode = (int) trim(htmlspecialchars($_POST['mode']));
+
+      // verify good mode recived
+      if( $mode != 0 && $mode != 1 ){
+
+          // ERROR
+          $Arr = array('error' => tr::$TR['error_gen']);
+          echo json_encode($Arr, JSON_FORCE_OBJECT);
+          exit;
+      }
+
+
+      // UPDATE DB user_shop
+      $ARR_pdo = array( 'id' => 0, 'mode' => $mode );
+
+      $sql = 'UPDATE user_shop SET mode=:mode WHERE id=:id';
+
+      $response = false;
+      $last_id = false;
+
+      //  ->  update
+      $UPDATE_MODE_SHOP = db::server($ARR_pdo, $sql, $response, $last_id);
+
+			// error
+      if( boolval($UPDATE_MODE_SHOP) == false ){
+
+					$tab = array('error' => tr::$TR['update_failed'] );
+					echo json_encode($tab, JSON_FORCE_OBJECT);
+					exit;
+      }
+
+
+      // get fresh datas of shop
+      $SHOP = shop::get_shop();
+
+      // success
+      $Arr = array( 'success' => tr::$TR['update_shop_success'],
+										'shop' => $SHOP );
+
+      echo json_encode($Arr, JSON_NUMERIC_CHECK);
+			exit;
+
+  }
+  /**
+   * shop::set_mode_shop();
+   */
+
+
 
 }
 // end class shop::
-
-
 ?>

@@ -123,7 +123,7 @@ back_up_success
 ***
 back_up_info
 ***
-	Lorsque vous cliquerez sur le bouton "Sauvegarder", 
+	Lorsque vous cliquerez sur le bouton "Sauvegarder",
 	tous les dossiers et les fichiers de votre application
 	ainsi que votre base de données seront
 	compressés dans un fichier .zip puis vous serez invité à le télécharger.
@@ -172,7 +172,7 @@ not_upload_doc
 	Pour les fichiers/dossiers situés dans votre dossier d'administration entrez&nbsp;:
 	<br>
 	Ex. <b>ADMIN</b>/CSS/api.css
-	&nbsp; <small>- Remplacez le nom de votre dossier d'administration par "<b>ADMIN</b>"</small>
+	&nbsp; <small>- Remplacez "<b>ADMIN</b>" par le nom de votre dossier d'administration.</small>
 	<br>
 	N'ajoutez pas les chemins vers vos propres fichiers, nous n'y touchons pas&nbsp;!
 ***

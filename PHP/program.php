@@ -1,7 +1,7 @@
 <?php
 /**
  * PLACIDO-SHOP FRAMEWORK - FRONT
- * Copyright © Raphaël Castello, 2019-2022
+ * Copyright © Raphaël Castello, 2019-2024
  * Organisation: SNS - Web et informatique
  * Website / contact: https://sns.pm
  *
@@ -27,7 +27,7 @@ class program {
   public static function get_home_page(){
 
 
-			if (session_status() === PHP_SESSION_NONE){
+			if( session_status() === PHP_SESSION_NONE ){
 
 					// STORE DATAS API IN SESSION FOR AJAX REQUEST
 					session_start([
@@ -52,10 +52,13 @@ class program {
 
             // RENDER JS OBJECT
 						header('Content-type: application/json');
-            echo $_SESSION['datas']; // this contain a json represention of $ARR
+
+            // this contain a json represention of $ARR
+            echo $_SESSION['datas'];
 
             // DELETING SESSION - do not deleting the session globally
             // see : https://www.php.net/manual/fr/function.session-destroy.php
+            $_SESSION['datas'] = array();
             unset($_SESSION['datas']);
             exit;
       }
@@ -73,7 +76,6 @@ class program {
 				'author' => 'Raphaël Castello',
 				'organization' => 'SNS - Web et informatique',
 				'license' => 'GNU AGPL',
-				'note' => 'Make peace in the world - Are we humans?',
 				'website' => 'www.placido-shop.com'
 			);
 
@@ -143,6 +145,8 @@ class program {
       $ARR['view']['page_context'] = 'home';
       // slider in view
       $ARR['view']['slider'] = SLIDER;
+      $ARR['view']['slider']['display'] = boolval(SLIDER['display']);
+      $ARR['view']['slider']['play'] = boolval(SLIDER['play']);
 			// add show=true to slider by default
 			$ARR['view']['slider']['show'] = true;
 
@@ -235,19 +239,21 @@ class program {
   /**
    * program::product_request( $prod_id, $ARR );
    *
-   * @param  {type} $prod_id description
-   * @param  {type} $ARR     description
-   * @return {type}          description
+   * @param  {int}   $prod_id   id of hte product
+   * @param  {array} $ARR       API array
+   * @return {array} $ARR : array of API modified for one product page
+   * in GET request
    */
   public static function product_request( $prod_id, $ARR ){
 
+
       // REQUEST less 1 million length
       if( iconv_strlen( $prod_id ) > 1000001  ){
-        exit("Too much looonnng request ...");
+
+          exit("Too much looonnng request ...");
       }
 
       $prod_id = (int) trim(htmlspecialchars($prod_id));
-      // var_dump($prod_id);
 
       // ONE PRODUCT
       $ONE_PRODUCT = array();
@@ -259,6 +265,14 @@ class program {
               $ONE_PRODUCT = $v;
               break;
           }
+      }
+
+      // product not FOUND
+      if( empty($ONE_PRODUCT) ){
+
+          // -> redirect to 404
+          header('Location: https://'.HOST.'/404.php');
+          exit;
       }
 
       // OVERRIDE WEBSITE - title and description for one product
@@ -352,7 +366,7 @@ class program {
 
               // assign $CAT
               $CAT = $v;
-              // var_dump( $v );
+              // stop loop here
               break;
           }
       }

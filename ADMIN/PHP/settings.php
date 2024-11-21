@@ -5,7 +5,7 @@
  * Organisation: SNS - Web et informatique
  * Website / contact: https://sns.pm
  *
- * Script name:	admin.php
+ * Script name:	settings.php
  *
  * settings::fetch_mail_admin( $mail );
  * settings::get_admins_list( $mail_current_admin );
@@ -15,7 +15,7 @@
  * settings::update_access_admin();
  * settings::update_stripe_keys_user();
  * settings::update_shop_for_money_pays();
- * settings::set_settings( array() );
+ * settings::set_settings_api( array() );
  * settings::record_api_settings();
  * settings::update_mailbox();
  * settings::init_production_mode();
@@ -729,7 +729,7 @@ class settings {
           if( $k == 'SLIDER' ){
 
               $Replacements[] =
-              'const '.$k.' = array("display" => '.(int)$v['display'].', "play" => '.(int)$v['play'].', "delay" => '.$v['delay'].', "speed" => '.$v['speed'].');';
+              'const '.$k.' = array("display" => '.(int)$v['display'].', "play" => '.(int)$v['play'].', "delay" => '.(int)$v['delay'].', "speed" => '.(int)$v['speed'].');';
               continue;
           }
 

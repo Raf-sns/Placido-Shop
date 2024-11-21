@@ -1,90 +1,101 @@
-<!-- Swiper -->
+<!-- featured_products -->
+<div id="featured_products"
+  style="{{view.display_top_sort}}">
 
-<div class="swiper-wrapper card">
+  <!-- keen-slider container -->
+  <div id="home_keen_slider" class="keen-slider">
 
-  <!-- swiper-slides -->
-  {{#featured_products}}
-  <div class="swiper-slide">
+    <!-- loop featured_products : keen-slider slides - FLEX imgs + title + datas product -->
+    {{#featured_products}}
+      <div class="keen-slider__slide">
 
-    <!-- FLEX img + title + datas product  -->
-    <div class="slider_container" >
+        <!-- ONE CARD CONTAINER -->
+        <div class="slider_container card"
+        itemscope itemtype="https://schema.org/Offer"
+        itemid="https://{{website.host}}/{{url}}/product/{{id}}">
 
-      <!-- img -->
-        <img
-				{{^first_in_slider}}data-{{/first_in_slider}}src="https://{{website.host}}/img/Products/max-{{img_prez}}"
-				{{^first_in_slider}}src="https://{{website.host}}/img/loader.gif"{{/first_in_slider}}
-        alt="{{title}}"
-        class="swiper-lazy">
-        <!-- swiper-lazy   -->
-      <!-- end img -->
+          <!-- img -->
+          <img
+      		{{^first_in_slider}}data-{{/first_in_slider}}src="https://{{website.host}}/img/Products/max-{{img_prez}}"
+      		{{^first_in_slider}}src="https://{{website.host}}/img/loader.gif"{{/first_in_slider}}
+          alt="{{title}}"
+          {{^first_in_slider}}class="lazyload"{{/first_in_slider}}
+          itemprop="image"
+          content="https://{{website.host}}/img/Products/max-{{img_prez}}"/>
 
-      <!-- datas product -->
-      <div class="head_text">
+          <!-- datas product -->
+          <div class="head_text">
 
-        <h2>{{title}}</h2>
+            <h2 itemprop="name">{{title}}</h2>
 
-        <p class="slider_short_text">
-          {{short_text}}&nbsp;...
-        </p>
+            <p class="slider_short_text"
+            itemprop="description">
+              {{short_text}}&nbsp;...
+            </p>
 
-				<!-- btn link to product -->
-				<a onclick="$.open_product({{id}}, event);"
-				class="btn btn_link text_small"
-				title="{{tr.see_product_details}}"
-				href="https://{{website.host}}/{{url}}/product/{{id}}">
-				<i class="far fa-hand-point-right"></i>&nbsp; {{tr.see_product_page}}</a>
+      			<!-- btn link to product -->
+      			<a onclick="$.open_product({{id}}, event);"
+      			class="btn btn_link text_small"
+      			title="{{tr.see_product_details}}"
+      			href="https://{{website.host}}/{{url}}/product/{{id}}"
+            itemprop="url"
+      			content="https://{{website.host}}/{{url}}/product/{{id}}">
+      			<i class="far fa-hand-point-right"></i>&nbsp; {{tr.see_product_page}}</a>
 
-      	<p class="margin-bottom margin-top mrg0">
+          	<p class="margin-bottom margin-top mrg0">
 
-					<!-- price product - show it in mode sale -->
-					{{#shop.mode}}
-					<span class="info_slider_prod inline-block"
-					aria-label="{{tr.price_product}}">
-					<i class="fa-tag fas fa-fw"></i>&nbsp;
-            <span class="text_large text_info bold">{{price_text}}</span>
-          </span>
+              <!-- price product - show it in mode catalog -->
+      				<span class="info_slider_prod inline-block"
+      				aria-label="{{tr.price_product}}"
+              itemprop="price" content="{{price_scheme}}">
+      				  <i class="fa-tag fas fa-fw"></i>&nbsp;
+                <span class="text_large text_info bold"
+                itemprop="priceCurrency"
+                content="{{tr.curr_iso}}"
+                {{^quant}}style="text-decoration: line-through;"{{/quant}}>{{price_text}}</span>
+                {{^quant}}&nbsp; <span class="text_warning">{{tr.out_of_stock}}</span>{{/quant}}
+              </span>
 
-          <br>
+              <br>
 
-					<!-- quantity - show it in mode sale -->
-          <span class="info_slider_prod inline-block"
-          aria-label="{{tr.quantity_product}}">
-					<i class="fas fa-fw fa-cubes"></i>&nbsp;
-            {{tr.quantity_product}}&nbsp;:&nbsp;<span class="bold">
-							{{#quant}}{{quant}}{{/quant}}{{^quant}}{{tr.out_of_stock}}{{/quant}}</span>
-          </span>
+      				<!-- quantity - show it in mode sale -->
+              <span class="info_slider_prod inline-block"
+              aria-label="{{tr.quantity_product}}">
+      				<i class="fas fa-fw fa-cubes"></i>&nbsp;
+                {{tr.quantity_product}}&nbsp;:&nbsp;
+                  <span class="bold"
+                  itemprop="availability"
+          				href="https://schema.org/InStock">{{quant}}</span>
+              </span>
 
-					<br>
-					{{/shop.mode}}
+      				<br>
 
-					<!-- cat name -->
-          {{#cat_name}}
-          <span class="info_slider_prod inline-block">
-						<i class="fa-flag fa-fw far"></i>&nbsp;
-            <a onclick="$.open_a_cat({{cat_id}}, event);"
-            href="https://{{website.host}}/{{cat_url}}/category/{{cat_id}}"
-            title="{{tr.see_articles_cat}}&nbsp;: {{cat_name}}"
-            id="cat_for_label-{{cat_id}}"
-            class="underline">{{cat_name}}</a>
-          </span>
-          {{/cat_name}}
-        </p>
+      				<!-- cat name -->
+              {{#cat_name}}
+              <span class="info_slider_prod inline-block">
+      					<i class="fa-flag fa-fw far"></i>&nbsp;
+                <a onclick="$.open_a_cat({{cat_id}}, event);"
+                href="https://{{website.host}}/{{cat_url}}/category/{{cat_id}}"
+                title="{{tr.see_articles_cat}}&nbsp;: {{cat_name}}"
+                id="cat_for_label-{{cat_id}}"
+                class="underline"
+                itemprop="category" content="{{cat_name}}">{{cat_name}}</a>
+              </span>
+              {{/cat_name}}
+            </p>
 
-			</div>
-			<!-- END head_text -->
-      <!-- end datas product -->
+      		</div>
+          <!-- end datas product -->
 
-    </div>
-    <!-- end img + title + datas product  -->
+        </div>
+        <!-- end ONE CARD CONTAINER -->
+
+      </div>
+    {{/featured_products}}
+    <!-- end keen-slider slides - FLEX imgs + title + datas product -->
 
   </div>
-  <!-- end swiper-slides -->
-  {{/featured_products}}
+  <!-- end keen-slider container -->
+
 </div>
-<!-- end swiper-wrapper -->
-
-<!-- Uncomment for see arrows slider -->
-<!-- <div class="swiper-button-next"></div>
-<div class="swiper-button-prev"></div> -->
-
-<!-- end Swiper -->
+<!-- end #featured_products -->

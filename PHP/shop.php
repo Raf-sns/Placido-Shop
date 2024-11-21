@@ -124,7 +124,7 @@ class shop {
               }
               else{
 
-                  // if don't have strpie keys and by_money is disabled
+                  // if don't have Stripe keys and by_money is disabled
                   // !! -> NOT AUTORIZE TO buy anything !! - OVERRIDE [ mode_ ]
                   if( $SHOP['by_money'] == false ){
 

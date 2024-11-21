@@ -175,19 +175,15 @@ $(function(){
 
           // Set the date we're counting down to
           var countDownDate = new Date(max_stamp).getTime();
+
           // Find the distance between now and the count down date
           var distance = countDownDate - stamp_now;
-          // console.log(distance);
 
           // Time calculations for days, hours, minutes and seconds
           var days = Math.floor(distance / (60 * 60 * 24));
           var hours = Math.floor((distance % (60 * 60 * 24)) / (60 * 60));
           var minutes = Math.floor((distance % (60 * 60)) / (60));
           var seconds = Math.floor((distance % (60)) / 1);
-
-          // console.log( days + ` jour(s) ` + hours + ` h `
-          // + minutes + ` m ` + seconds + ` s ` );
-
           var countDown = ``;
 
           countDown = ( days > 0 ) ?
@@ -262,9 +258,10 @@ $(function(){
   // start token timer
   token_timer();
 
+
+
 // EXTEND ALL METHODS -> Call them width $.myMethod()
 $.extend({
-
 
 
   /**
@@ -395,7 +392,9 @@ $.extend({
 
       if(end){
 
-					$('#render_process').css({'width': '0%'});
+					$('#render_process')
+          .stop( true, true )
+          .css({'width': '0%'});
         	return;
       }
 

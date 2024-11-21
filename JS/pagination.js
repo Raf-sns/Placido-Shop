@@ -1,10 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - JS FRONT
- * Copyright © Raphaël Castello , 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
- *
+ * PLACIDO-SHOP FRAMEWORK - JS FRONT
+ * Copyright © Raphaël Castello , 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website/contact: https://sns.pm
  *
  * Script name:	pagination.js
  *
@@ -39,7 +37,6 @@ $.extend({
 		else {
 	    	$('#select_nb_options').removeClass('show');
 				$('button.open_choice_nb_pagina').attr('aria-expanded','false');
-
 		}
 
 	},
@@ -53,7 +50,7 @@ $.extend({
  	 * $.adjust_nb_pagina( number );
  	 *
  	 * @param  {int} number number of items wanted for view
- 	 * @return {html}     	set hte number and return view
+	 * @return {html}     	set the number and return view
  	 */
  	adjust_nb_pagina : function( number ){
 
@@ -65,14 +62,13 @@ $.extend({
 
     if( $.o.view.page_context == 'cat' || $.o.view.page_context == 'home' ){
 
-      OBJ = $.o.view.temp; // TEMP ARRAY
-      div = '#center_page';
-
+	      OBJ = $.o.view.temp; // TEMP ARRAY
+	      div = '#center_page';
     }
     else{
 
-      OBJ = $.o.products; // PRODUCTS ARRAY
-      div = '#center_page';
+	      OBJ = $.o.products; // PRODUCTS ARRAY
+	      div = '#center_page';
     }
 
     // adjust obj.view
@@ -98,7 +94,7 @@ $.extend({
    * $.return_for_pagina( OBJECT );
    *
    * @param  {object} OBJ  Object arrays to be paginated
-	 *
+	 * @return {void}
    */
   return_for_pagina : function( OBJ ){
 
@@ -131,7 +127,7 @@ $.extend({
         $.o.view.nb_wanted = count_obj;
 		}
 
-		// rep. added for assign active nb_wanted
+		// rep. added for assign active nb_wanted in dropdown
     var added = false;
 
     // test if option exist / else add it to the selector
@@ -191,7 +187,6 @@ $.extend({
     $('.page_number').text(1);
     $('.pages_need').text($.o.view.pages_need);
 
-
   },
   /**
    * END $.return_for_pagina( OBJECT );
@@ -205,7 +200,7 @@ $.extend({
 	/**
 	 * $.pagina( dir );
 	 *
-	 * @param  {str} dir 	'prev' / 'next' -> direction to pagina
+	 * @param  {str} dir 	'prev' / 'next' -> direction to move
 	 * @return {html}     another page of products
 	 */
 	pagina : function( dir ){
@@ -229,10 +224,9 @@ $.extend({
 		$.o.view.page = ( $.o.view.page < 1 ) ? $.o.view.pages_need : $.o.view.page;
 		// loop at page 1 if page number is over
 		$.o.view.page = ( $.o.view.page > $.o.view.pages_need ) ? 1 : $.o.view.page;
+
 		// set page number in view
 		$('.page_number').text($.o.view.page);
-
-		// console.log('page '+ $.o.view.page );
 
 		// calcul index end
 		var index_end = ($.o.view.page * $.o.view.nb_wanted) - 1;
@@ -243,10 +237,6 @@ $.extend({
 		// lil hack to capture good indexes
 		index_start = ( index_start > 0
 		|| ( index_start == 0 && $.o.view.page != 1) ) ? index_start+=1 : index_start;
-
-		// console.log(index_start);
-		// console.log(index_end );
-
 
 		// re-init view products
 		$.o.view.products = [];
@@ -259,9 +249,6 @@ $.extend({
             $.o.view.products.push($.o.view.temp[i]);
         }
     }
-
-		// console.log( $.o.products );
-		// console.log( $.o.view.products );
 
     // on animation
     var width_center = $('#center_page').width();
@@ -318,8 +305,6 @@ $.extend({
 		move_suppr = ( dir == 'next' )
 		? ((window.innerWidth/2)+width_center)*-1 : width_center+(window.innerWidth/2);
 
-		// console.log( move_suppr );
-
 		// get out old wrapper
 		$('.to_suppr_content').animate({'left' : move_suppr+'px'},
 		{ duration : anim_time, queue : false });
@@ -345,16 +330,14 @@ $.extend({
 
 			}
 			// end done
+
 		});
 		// end  append new items
-
 
 	},
 	/**
 	 * $.pagina( dir );
 	 */
-
-
 
 
 });

@@ -1,13 +1,10 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - JS FRONT
- * Copyright © Raphaël Castello, 2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
- *
+ * PLACIDO-SHOP FRAMEWORK - JS FRONT
+ * Copyright © Raphaël Castello, 2022-2024
+ * Organisation: SNS - Web et informatique
+ * Website/contact: https://sns.pm
  *
  * Script name:	slideshow.js
- *
  *
  * Extented:
  *
@@ -72,7 +69,7 @@ $.extend({
 	/**
 	 * $.adjust_height_slideshow();
 	 *
-	 * @return {type}  description
+   * @return {void} adjust slideshow container padding
 	 */
 	adjust_height_slideshow : function(){
 
@@ -110,8 +107,8 @@ $.extend({
 	/**
 	 * $.detectTapMobile();
 	 *
-	 * @param  {type} event description
-	 * @return {type}       description
+   * @param  {event} event
+   * @return {void}  show conttrols of the slideshow for mobile devices
 	 */
 	detectTapMobile: function(event) {
 
@@ -123,7 +120,6 @@ $.extend({
 							if( $('#slideshow_controls').is(':visible') == false ){
 
 									$('#slideshow_controls').fadeIn( 800 );
-
 							}
 							else{
 
@@ -148,7 +144,6 @@ $.extend({
    * @return {html}  show / hide slider controls
    */
   slideshow_controls : function() {
-
 
 
 			// not display if window width <= 900
@@ -194,7 +189,7 @@ $.extend({
 	/**
 	 * $.enable_mousewheel_slideshow();
 	 *
-	 * @return {void}  navigation by images on the mouse wheel
+	 * @return {void}  scroll left or right on mouse wheel event
 	 */
 	enable_mousewheel_slideshow : function(){
 
@@ -204,8 +199,6 @@ $.extend({
 		function(event){
 
 			event.preventDefault();
-
-			// console.log(event.originalEvent);
 
 			// check direction
 			var dir = ( event.originalEvent.wheelDeltaY < 0 ) ? 'right' : 'left';
@@ -254,14 +247,9 @@ $.extend({
 
 
 		$('#img_cont').swipe({
-			// ! carefool swipeStatus != swipe funct.
+      // ! carefull swipeStatus != swipe funct.
 			// in swipe
 			swipeStatus : function( event, phase, currentDirection, distance ){
-
-					// console.log('direction : '+ direction);
-					// console.log('distance : '+ distance);
-					// console.log('phase : '+ phase);
-					// console.log('grabbed : '+ grabbed);
 
 					// CLOSE ON TOP
 					if( currentDirection == 'up' && distance > 20 ){
@@ -311,8 +299,6 @@ $.extend({
 							? calc_dist
 							: calc_dist*-1;
 
-							// console.log('scroll_val : '+ $.scroll_val);
-
 							// animate image on slide - class trans add smooth
 							$('#img_cont img').eq($.index_base)
 							.addClass('trans')
@@ -323,7 +309,6 @@ $.extend({
 							&& currentDirection != 'up'
 							&& currentDirection != 'down' ){
 
-									// console.log( 'go swipe');
 									// get direction
 									$.direction = currentDirection;
 
@@ -340,8 +325,6 @@ $.extend({
 
 					}
 					// end  on moving
-
-					// console.log( distance );
 
 			},
 			// options :
@@ -364,7 +347,7 @@ $.extend({
 	 *
 	 * @return {html} zoom slider on click
 	 * -> empty array $.ARR_sizes_imgs with new values
-	 * - ONLY FOR DESCKTOP
+	 * - ONLY FOR DESKTOP
 	 */
 	expand_slideshow : function(){
 
@@ -431,7 +414,6 @@ $.extend({
 	adjust_size_img : function( width_img, height_img, i, reduction_factor ){
 
 
-
 			// diminued window on desktop
 			if( window.innerWidth <= 900 ){
 
@@ -459,8 +441,7 @@ $.extend({
 					: window.innerWidth - (window.innerWidth*factor);
 			}
 			else{
-			// if portrait
-
+			    // if portrait
 					var size_window = window.innerWidth - (window.innerWidth*factor);
 			}
 
@@ -483,8 +464,6 @@ $.extend({
 			// push on array for adjust container + translations
 			// on navigation slider
 			$.ARR_sizes_imgs.push({ 'height': new_height, 'width' : new_width });
-
-			// console.log( $.ARR_sizes_imgs );
 
 	},
 	/**
@@ -660,12 +639,10 @@ $.extend({
 
 
 		// now the container of imgs is well empty
-		// - Work on it with jquery
 
 		// replace all urls imgs by MAX src + record indexes
 		// + PUT on ARRAY of Promises + set translate css values
     $('#img_cont img').each(function( i, img ){
-
 
 				// Push to array Promises $.Arr_prom_sl -> ON LOAD event
 				// empty array $.ARR_imgs_sl -> { 'W': .. , 'H': .. }
@@ -741,7 +718,7 @@ $.extend({
 	/**
 	 * $.apply_style_imgs();
 	 *
-	 * @return {void}  apply JUST z-index + transform css styles
+	 * @return {void}  apply JUST z-index + css transform styles
 	 */
 	apply_style_imgs : function(){
 
@@ -826,7 +803,7 @@ $.extend({
 			// calcul max index img
 			var max_index  = $.length_imgs_sl-1;
 
-
+      // move right
 			if( $.direction == 'right' ){
 
 					$.index_base--;
@@ -847,6 +824,7 @@ $.extend({
 
 			}
 
+      // move left
 			if( $.direction == 'left' ){
 
 					$.index_base++;
@@ -990,7 +968,7 @@ $.extend({
 				// if slider is visible
 				if( $('#render_diapo').length != 0  ){
 
-						// if desktops
+						// if desktop
 						if( window.screen.width > 1200 ){
 
 								window.scrollTo(0, 0);
@@ -1014,7 +992,7 @@ $.extend({
 	/**
 	 * $.remove_window_events();
 	 *
-	 * @return {type}  description
+   * @return {void}  remove some events
 	 */
 	remove_window_events : function(){
 
@@ -1039,7 +1017,7 @@ $.extend({
 
 
 		// close slideshow with animation
-    $.animateCss('.modal_container', 'zoomOutLeft', 50, function(){
+    $.animateCss('.modal_container', 'zoomOutLeft', function(){
 
 				// re-init horizontal scroll value
 				$.scroll_val = 0;
@@ -1079,7 +1057,6 @@ $.extend({
 
 });
 // end extend
-
 
 });
 // end jQuery

@@ -12,6 +12,10 @@
  *
  */
 
-  self.addEventListener('fetch', (e) => {
+  self.addEventListener('fetch', (event) => {
 
+      if( event.request.mode === 'navigate' ){
+          // stop here
+          return;
+      }
   });

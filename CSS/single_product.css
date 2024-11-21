@@ -84,7 +84,7 @@ img.other_imgs {
 #title_related_prod {
   background: var(--bkg-content);
   padding: 6px 16px 8px;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   border-radius: 4px;
   text-align: center;
   display: flex;
@@ -117,22 +117,25 @@ img.other_imgs {
   width: 100%;
   cursor: pointer;
 }
+#related_prods .keen-slider__slide {
+  cursor: grabbing;
+}
 .related_item_price {
   font-weight: 600;
   color: var(--text-info);
   font-size: var(--text);
 }
-.swiper-related_products-prev,
-.swiper-related_products-next {
+.related_prods_prev,
+.related_prods_next {
   position: absolute;
   top: 50%;
   z-index: 100;
 }
-.swiper-related_products-next {
+.related_prods_next {
   right: 0;
 }
-.swiper-related_products-prev i,
-.swiper-related_products-next i {
+.related_prods_prev i,
+.related_prods_next i {
   font-size: 36px;
 }
 /* END RELATED PRODUCTS  */

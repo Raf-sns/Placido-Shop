@@ -15,6 +15,7 @@
   // E_ALL -> Report all PHP errors | 0 -> Turn off error reporting
   error_reporting(0);
 
+
   // include MUSTACHE
   require 'Mustache/Autoloader.php';
   Mustache_Autoloader::register();
@@ -44,7 +45,6 @@
 
 	// init modules after translation -> this override tr::$TR[...]
 	api::init_modules( $context='front' );
-
 
   // START CONTROLLER
   control::start();

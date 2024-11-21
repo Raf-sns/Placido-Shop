@@ -1,10 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - JS FRONT
- * Copyright © Raphaël Castello , 2019-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
- *
+ * PLACIDO-SHOP FRAMEWORK - JS FRONT
+ * Copyright © Raphaël Castello , 2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website/contact: https://sns.pm
  *
  * Script name:	stats.js
  *
@@ -12,7 +10,6 @@
  * $(document).on('mouseenter.stats touchstart.stats', function(){ ... } );
  *
  * Extended :
- *
  * $.record_stat_for_one_product( prod_id );
  * $.record_stats_from_cart( prod_id, title, command );
  *
@@ -24,7 +21,7 @@ $(function(){
 	/**
 	 * set_stat();
 	 *
-	 * @return {void}  send a request to server for produce statistics
+	 * @return {void}  send a request to server for users statistics
 	 */
 	function set_stat(){
 
@@ -34,8 +31,6 @@ $(function(){
 	 * set_stat();
 	 */
 
-	// test - send always a stat
-	// set_stat()
 
 
 	/**
@@ -50,9 +45,10 @@ $(function(){
 
 
 			// 30 sec. for demo 30*1000 and comment $this.off line  / 4*60*60*1000
-			var time_to_watch = 4*60*60*1000; // 4 hours in prod
+			// if > 4 hours -> set a new visit
+			var time_to_watch = 4*60*60*1000;
 			var d = new Date();
-			var stamp = d.getTime(); // stamp in millisec.
+			var stamp = d.getTime(); // stamp in milliseconds
 
 			// console.log('Human authentified !');
 
@@ -64,15 +60,12 @@ $(function(){
 
 					set_stat(); // LANCH STAT
 
-					// console.log('First storage :'+localStorage.getItem('stamp'));
-
 			}
 			else{
 
 					// IF STORAGE STAMP EXIST
 					var old_stamp_in_storage = sessionStorage.getItem('stamp');
 					stamp_in_storage = parseInt(old_stamp_in_storage, 10);
-
 
 					// IF TIME TO WATCH IS PASSED CONSIDER USER NEW USER
 					if( (stamp - stamp_in_storage)  >  time_to_watch ){
@@ -81,15 +74,14 @@ $(function(){
 							// store his new stamp in Storage
 							sessionStorage.setItem('stamp', stamp);
 
-							set_stat(); // LANCH STAT
-
-							// console.log('New storage :'+sessionStorage.getItem('stamp'));
-
+							// record new stat
+							set_stat();
 					}
 
 			}
 			// END IF LOCAL STORAGE
 
+			// remove event listener
 			// COMMENT TO SHOW HARD DETECT FUNCTION DEMO
 			$(document).off('mouseenter.stats touchstart.stats');
 
@@ -99,12 +91,16 @@ $(function(){
 	 */
 
 
+
+	// jQuery extended
 	$.extend({
+
+
 
 		/**
 		* $.record_stat_for_one_product( prod_id );
 		*
-		* @return {void}
+		* @return {void} record statistic for a product
 		*/
 		record_stat_for_one_product : function( prod_id ){
 
@@ -139,7 +135,6 @@ $(function(){
 				},function(data){
 
 						$.token_stats = data.token_stats;
-						// console.log($.token_stats);
 
 				},'json');
 
@@ -150,7 +145,7 @@ $(function(){
 
 
 	});
-	// end extend
+	// end EXTEND
 
 });
 // END jQuery

@@ -1,17 +1,14 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - JS FRONT
- * Copyright © Raphaël Castello , 2021-2022
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - JS FRONT
+ * Copyright © Raphaël Castello , 2021-2024
+ * Organisation: SNS - Web et informatique
+ * Website/contact: https://sns.pm
  *
  * Script name:	pwa.js
  *
  * Progessive Web App (PWA) - FRONT
  * see https://developer.mozilla.org/fr/docs/Web/Progressive_web_apps/
- *
  */
-
 
   // Register service worker to control making site work offline
   // AND permited to Install the web site like native APP
@@ -21,13 +18,9 @@
 	      .then(() => {
 
 	          // console.log('Service Worker Registered');
-
 	      });
   }
-  // else{ ... }
 
-
-  // INSTALL APPLICATION
   // INSTALL APPLICATION - MANUAL INSTALLATION BY EVENT
   // Code to handle install prompt()
   let deferredPrompt;
@@ -49,7 +42,7 @@
    * function install_app();
    *
    * install website as an application on the device of the user
-   * this a Progressive Web Application (PWA) installer
+   * this is a Progressive Web Application (PWA) installer
    * Fire on event
    * @return {application}
    * Note: Lots of parts of this code is from the Mozilla Javascipt documention
@@ -71,7 +64,6 @@
         if( choiceResult.outcome === 'accepted' ){
 
             // console.log('User accepted the A2HS prompt');
-
         }
         else{
 
@@ -83,7 +75,7 @@
         deferredPrompt = null;
 
         // remove event listener
-        // window.removeEventListener('beforeinstallprompt', false);
+        window.removeEventListener('beforeinstallprompt', false);
 
       });
       // end USER CHOICE -> INSTALL / DECLINE
@@ -92,5 +84,3 @@
   /**
    * function install_app();
    */
-
-   // END INSTALL APPLICATION

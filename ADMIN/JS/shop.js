@@ -1,6 +1,6 @@
 /**
  * PLACIDO-SHOP FRAMEWORK - BACKEND
- * Copyright © Raphaël Castello, 2019-2021
+ * Copyright © Raphaël Castello, 2019-2024
  * Organisation: SNS - Web et informatique
  * Website / contact: https://sns.pm
  *
@@ -23,8 +23,9 @@ $.extend({
   /**
    * $.check_mode_shop( event );
    *
-   * @Param {event}
-   * @return {type}  description
+   * @param  {event} event
+   * @return {void}  check the checkbox AND
+   * set directly the mode of the shop: 'online sale' OR 'catalog'
    */
   check_mode_shop : function( event ){
 
@@ -40,10 +41,49 @@ $.extend({
       .removeClass('fa-check-square')
       .addClass('fa-square');
 
-      var icon = $(event.target).children('i');
+      let icon = $(event.target).children('i');
 
       $(icon).removeClass('fa-square').addClass('fa-check-square');
 
+      // UPDATE directly the shop mode : 'online sale' OR 'catalog'
+      // get attr for of the label
+      let input = $(event.target).attr('for');
+
+      // get the value of hidden input
+      let value_input = $('#'+input).val();
+
+      // mode shop in integer
+      let mode_shop = (value_input == 'sale' ) ? 1 : 0;
+
+      // create an object to send
+      let Datas = {
+        set: 'set_mode_shop',
+        mode: mode_shop,
+        token: $.o.user.token
+      };
+
+      // show progress bar of process
+      $.show_process();
+
+      // send datas
+      $.post('index.php', Datas, function(data){
+
+          // success
+          if( data.success ){
+
+              $.show_alert('success', data.success, false);
+
+              // renew object shop
+              $.o.shop = data.shop;
+          }
+
+          // error
+          if( data.error ){
+
+              $.show_alert('warning', data.error, false);
+          }
+
+      }, 'json');
   },
   /**
    * $.check_mode_shop( event );

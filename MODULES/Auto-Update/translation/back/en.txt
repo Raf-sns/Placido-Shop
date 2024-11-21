@@ -171,7 +171,7 @@ not_upload_doc
 	For files/folders located in your administration folder enter&nbsp;:
 	<br>
 	E.g.: <b>ADMIN</b>/CSS/api.css
-	&nbsp; <small>- Change the name of your admin folder to "<b>ADMIN</b>"</small>
+	&nbsp; <small>- Change "<b>ADMIN</b>" by the name of your admin folder.</small>
 	<br>
 	Don't add paths to your own files, we don't touch them&nbsp;!
 ***

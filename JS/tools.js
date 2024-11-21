@@ -1,9 +1,8 @@
 /**
- * PlACIDO-SHOP FRAMEWORK - JS FRONT
- * Copyright © Raphaël Castello  2019-2021
- * Organisation: SNS - Web et Informatique
- * Web site: https://sns.pm
- * @link: contact@sns.pm
+ * PLACIDO-SHOP FRAMEWORK - JS FRONT
+ * Copyright © Raphaël Castello  2019-2024
+ * Organisation: SNS - Web et informatique
+ * Website/contact: https://sns.pm
  *
  * Script name:	tools.js
  *
@@ -28,11 +27,10 @@ $(function(){
 $.extend({
 
 
-
   /**
    * $.clean_sort_block();
    *
-   * @return {void}  remove slider breadcrumb sorting elements
+   * @return {void}  remove the slideshow and breadcrumbs as well as the block for sorting items
    */
   clean_sort_block : function(){
 
@@ -57,8 +55,8 @@ $.extend({
   /**
    *  $.prevent_links( elem );
    *
-   * @param  {element} elem html element
-   * @return {void}      Prevent default link
+   * @param  {element}  elem html element
+   * @return {void}     Prevent default link behavior
    */
   prevent_links : function( elem ){
 
@@ -100,8 +98,6 @@ $.extend({
         dataType : data_type,
         success: function(data, textStatus, xhr) {
 
-            // console.log(xhr.status);
-
             if( xhr.status == 200 ){
 
                 if(typeof callback === 'function'){
@@ -112,20 +108,18 @@ $.extend({
 
             if( xhr.status != 200 ){
 
-                console.log( textStatus );
                 $.show_alert('error', xhr.textStatus, false);
             }
 
         },
         error: function(data) {
-        	// called when there is an error
-        	$.show_alert('error', data.error, false);
+
+            // called when there is an error
+          	$.show_alert('error', data.error, false);
         }
 
       });
       // END AJAX
-
-
   },
   /**
    * $.sender( el_to_prevent, method, url, datas, data_type, callback );
@@ -137,20 +131,23 @@ $.extend({
    * $.show_alert( type, html, still_open );
    *
    * Alerts where managed by toastr.js
-   * @param  {str} type :
-   * 'info'
-   * 'success'
-   * 'warning'
-   * 'error'
-   * @param  {str} html         html alert content
-   * @param  {bool} still_open  true/false -> alert should rest open
+   * @param  {string} type :
+   * 'info'     -> blue background
+   * 'success'  -> green background
+   * 'warning'  -> orange background
+   * 'error'    -> red background
+   * @param  {string} html         pop-up message content
+   * @param  {bool}   still_open   true/false -> pop-up should rest open or not
    *
    */
   show_alert : function( type, html, still_open ){
 
+      // close pop-up
       if( type == false ){
 
           toastr.clear();
+
+          // end here
           return;
       }
 
@@ -173,13 +170,14 @@ $.extend({
       };
 
       if( still_open == true ){
-        // get alert still opened
-        toastr.options.timeOut = 0;
-        toastr.options.extendedTimeOut = 0;
+
+          // pop-up should rest open
+          toastr.options.timeOut = 0;
+          toastr.options.extendedTimeOut = 0;
       }
 
+      // launch toastr function
       toastr[type]( html );
-
   },
   /**
    * $.show_alert( type, html, still_open );
@@ -188,17 +186,17 @@ $.extend({
 
 
   /**
-   *  $.show_center_page( dir, div, template );
+   *  $.show_center_page( direction, div, template );
    *
-   * @param  {str}         dir      dir -> 'next', 'prev', 'fade'
-   * @param  {HTMLelement} div      description
-   * @param  {str}         template description
-   * @return {html}        show a page with diferent animation
+   * @param  {string}       direction  dir -> 'next', 'prev', 'fade'
+   * @param  {HTMLelement}  div        div to move
+   * @param  {string}       template   template to show
+   * @return {html}         display a page with diferent animation
    */
-  show_center_page : function(dir, div, template){
+  show_center_page : function( direction, div, template ){
 
 
-    // TO DECIDE TO SCROLL OR NOT TO TOP PAGE
+    // DECIDE WHETHER OR NOT TO SCROLL THE PAGE TO TOP
     var scroll_to_top = false;
 
     // HIDE SORT BTNs IN PAGE TEXT TEMPLATE
@@ -210,7 +208,6 @@ $.extend({
         $('#sort_block, #featured_products').css('display', 'none');
 
         scroll_to_top = true;
-
     }
     else{
 
@@ -223,26 +220,24 @@ $.extend({
         // IF SORT BLOCK WAS HIDDEN - SHOW IT
         $('#sort_block').css('display', 'flex');
 
-        // TO MEDIT ......
+        // TO MEDIT ...
         // if( template == 'products_view' ){
         //
         //    scroll_to_top = true;
         // }
     }
 
-
     var class_anim_1;
     var class_anim_2;
-    var duration;
 
     // slide animation
-    if( dir == 'next' || dir == 'prev' ){
+    if( direction == 'next' || direction == 'prev' ){
 
         class_anim_1 = 'slideOutLeft';
         class_anim_2 = 'slideInRight';
 
         // override for next
-        if( dir == 'next' ){
+        if( direction == 'next' ){
 
             class_anim_1 = 'slideOutRight';
             class_anim_2 = 'slideInLeft';
@@ -250,39 +245,32 @@ $.extend({
 
         $(div).css('animation-duration', '0.3s');
 
-        duration = 300;
-
     }
+    // end slide animation
 
-    if( dir == 'fade' ){
+    // fade animation
+    if( direction == 'fade' ){
 
         class_anim_1 = 'fadeOut';
         class_anim_2 = 'fadeIn';
 
         $(div).css('animation-duration', '.3s'); // .3s
-
-        duration = 300;
-
     }
-
+    // end fade animation
 
     // animation start
-    $.animateCss(div, class_anim_1, duration, function(){
-
+    $.animateCss(div, class_anim_1, function(){
 
         // fill the view
         $(div).empty().mustache(template, $.o );
 
-
         // anim 2
-        $.animateCss(div, class_anim_2, duration, function(){
-
+        $.animateCss(div, class_anim_2, function(){
 
 						// here lazy load
             $.lazy_load_imgs();
 
 						$.put_aria_hiddens();
-
 
         });
         // end anim 2
@@ -292,7 +280,7 @@ $.extend({
 
   },
   /**
-   *  $.show_center_page( dir, div, template );
+   *  $.show_center_page( direction, div, template );
    */
 
 
@@ -304,15 +292,16 @@ $.extend({
   /**
    * $.scroll_to_elem( elem, event );
    *
-   * @param  {HTMLelement}  elem  description
-   * @param  {event}        event description
-   * @return {void}         srcoll to an alement
+   * @param  {HTMLelement}  elem
+   * @param  {event}        event
+   * @return {void}         srcoll to an element
    */
   scroll_to_elem : function(elem, event){
 
     event.preventDefault();
 
-    var speed = 700; // Durée de l'animation (en ms)
+    // Animation duration (in ms)
+    var speed = 700;
 
 		// animate the scroll
     $('html, body')
@@ -332,8 +321,9 @@ $.extend({
    */
   scroll_top : function(){
 
-    var speed = 300;
-    $('html, body').animate( { scrollTop: 0 }, speed );
+      var speed = 300;
+
+      $('html, body').animate( { scrollTop: 0 }, speed );
 
   },
   /**
@@ -374,43 +364,43 @@ $.extend({
    * $.loadXHR( url );
    */
 
-//////////////////////////////////////////////////////////////
-///////    A N I M A T E   C S S   F U N C °    //////////////
-//////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////
+///////   ANIMATE   CSS   FUNCTION    ///////
+/////////////////////////////////////////////
 
 
   /**
    * $.animateCss( element, animationName, callback );
    *
-   * @param  {type} element       description
-   * @param  {type} animationName description
-   * @param  {type} duration      description
-   * @param  {type} callback      description
-   * @return {type}               description
+   * @param  {HTMLelement}  element  element to animate
+   * @param  {string}   animationName animate CSS animation name
+   * @param  {function/null}   callback  function to fire after animation end
+   * @return {void}   animate an element and call a function at the end of animation
    */
-  animateCss : function(element, animationName, duration, callback) {
+  animateCss : function(element, animationName, callback){
 
 
     function whichTransitionEvent(){
 
-      var el = document.createElement('fake');
+        var el = document.createElement('fake');
 
-      var transEndEventNames = {
-          'WebkitAnimation' : 'webkitAnimationEnd',// Saf 6, Android Browser
-          'MozAnimation'    : 'animationend',      // only for FF < 15
-          'animation'       : 'animationend'       // IE10, Opera, Chrome, FF 15+, Saf 7+
-      };
+        var transEndEventNames = {
+            'WebkitAnimation' : 'webkitAnimationEnd',// Saf 6, Android Browser
+            'MozAnimation'    : 'animationend',      // only for FF < 15
+            'animation'       : 'animationend'       // IE10, Opera, Chrome, FF 15+, Saf 7+
+        };
 
-      for( var t in transEndEventNames ){
+        for( var t in transEndEventNames ){
 
-          if( el.style[t] !== undefined ){
+            if( el.style[t] !== undefined ){
 
-              return transEndEventNames[t];
-          }
-      }
+                return transEndEventNames[t];
+            }
+        }
 
     }
-    // end funct.
+    // end function
 
 
     var transEndEventName = whichTransitionEvent();
@@ -418,14 +408,13 @@ $.extend({
     // 'webkitAnimationEnd oanimationend msAnimationEnd animationend'
     $(element).addClass("animated "+animationName+"");
 
-    $(element).one(transEndEventName, function(e) {
+    $(element).one(transEndEventName, function(e){
 
         if (typeof callback === 'function') {
 
             callback();
 
             $(element).removeClass("animated "+animationName+"");
-
         }
 
     });
@@ -461,7 +450,6 @@ $.extend({
       node.addEventListener('animationend', handleAnimationEnd, {once: true});
   });
   // animateCSS in pure js
-
 
 
 });

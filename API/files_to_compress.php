@@ -24,7 +24,7 @@
 	const CSS_RESSOURCES_TO_COMPRESS = [
 
 			// APPS CSS TO COMPRESS
-			ROOT.'/CSS/apps/swiper-bundle.min.css',
+			ROOT.'/CSS/apps/keen-slider.min.css',
 			ROOT.'/CSS/apps/toastr.min.css',
 			// API CSS TO COMPRESS
 			ROOT.'/CSS/custom.css',
@@ -43,7 +43,7 @@
 			ROOT.'/JS/apps/mustache.min.js',
 			ROOT.'/JS/apps/jquery.mustache.js',
 			ROOT.'/JS/apps/touchSwipe.min.js',
-			ROOT.'/JS/apps/swiper-bundle.min.js',
+			ROOT.'/JS/apps/keen-slider.min.js',
 			ROOT.'/JS/apps/toastr.min.js',
 
 			// JS CURRENT TO COMPRESS

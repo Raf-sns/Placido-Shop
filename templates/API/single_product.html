@@ -123,6 +123,7 @@ itemid="https://{{website.host}}/{{url}}/product/{{id}}">
 							content="https://{{website.host}}/{{one_prod.url}}/product/{{one_prod.id}}">{{tr.share_this_article}}</a>
           </span>
         </li>
+        {{#mode_sale}}
         <li>
           <i class="fas fa-fw fa-shipping-fast"></i>&nbsp;
           {{tr.shipping_included}}
@@ -131,6 +132,7 @@ itemid="https://{{website.host}}/{{url}}/product/{{id}}">
           <i class="fas fa-fw fa-user-check"></i>&nbsp;
           {{tr.direct_purchase_text}}
         </li>
+        {{/mode_sale}}
       </ul>
       <!-- END INFOS PRODUCTS -->
     </div>

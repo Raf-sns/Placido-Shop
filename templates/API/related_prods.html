@@ -1,18 +1,21 @@
 
 
-<section id="related_prods" class="swiper">
+<section id="related_prods">
 
   <div id="title_related_prod" class="card">
     <i class="fa-share-alt fas"></i>
     <h2 class="inline-block">{{tr.related_products}}</h2>
   </div>
 
-  <div class="swiper-wrapper">
-    <!-- swiper-slides -->
-    {{#related_prods}}
-    <div class="swiper-slide">
+  <!-- old class: .swiper-wrapper / .swiper-slide -->
+  <!-- keen-slider container : #related_prods_wrapper -->
+  <div id="related_prods_wrapper" class="keen-slider">
 
-      <div class="related_item" class="card">
+    <!-- keen-slider slides -->
+    {{#related_prods}}
+    <div class="keen-slider__slide">
+
+      <div class="related_item card" style="margin: 6px;">
 
         <div class="show_info_product">
           <img onclick="$.open_product({{id}}, event);"
@@ -29,15 +32,29 @@
 
         <h3>{{title}}</h3>
 
-				{{#shop.mode}}
-        <span class="related_item_price">
+        <span class="related_item_price"
+        itemprop="price" content="{{price_scheme}}"
+        itemprop="priceCurrency"
+        content="{{tr.curr_iso}}">
           <i class="fa-tag fas fa-fw"></i>&nbsp;
-          {{price_text}}
+          {{#quant}}
+            <span>{{price_text}}</span>
+          {{/quant}}
+          {{^quant}}
+            <span style="text-decoration: line-through;">{{price_text}}</span>
+            <br>
+            <span class="text-deep-orange">{{tr.out_of_stock}}.</span>
+          {{/quant}}
         </span>
+        {{#tax}}
+          <br>
+          <span class="text_info text_small"
+          aria-label="{{tr.tax}}">({{tr.tax_included}}&nbsp:&nbsp;{{tax_text}}%)</span>
+        {{/tax}}
 
         <br>
-				{{/shop.mode}}
 
+        <!-- BTN open product -->
 				<a onclick="$.open_product({{id}}, event);"
         class="btn btn_link text_small"
         title="{{tr.see_product_details}}"
@@ -53,24 +70,27 @@
 		      title="{{tr.see_articles_cat}} : {{cat_name}}"
 					class="underline">{{cat_name}}</a>
 				</p>
+
       </div>
       <!-- end related_item -->
 
     </div>
     {{/related_prods}}
-    <!-- swiper-slides -->
-  </div>
-  <!-- END swiper-wrapper -->
+    <!-- keen-slider slides -->
 
-  <!-- If we need navigation buttons -->
-  <div class="swiper-related_products-prev pointer">
+  </div>
+  <!-- end keen-slider container : #related_prods_wrapper -->
+
+  <!-- navigation buttons : must be commented -->
+  <div class="related_prods_prev pointer">
     <i class="fa-chevron-circle-left fa-fw fas"
     aria-label="{{tr.see_prev_products}}"></i>
   </div>
 
-  <div class="swiper-related_products-next pointer">
+  <div class="related_prods_next pointer">
     <i class="fa-chevron-circle-right fa-fw fas"
     aria-label="{{tr.see_next_products}}"></i>
   </div>
+  <!-- navigation buttons : must be commented -->
 
 </section>

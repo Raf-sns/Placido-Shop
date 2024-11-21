@@ -51,7 +51,7 @@
 	    <!-- btn show categories list -->
 			<p class="">
 		    <button id="search_product_by_cat"
-		    onclick="$.open_cats_selector_all();"
+		    onclick="$.open_cats_selector('search');"
 		    class="unbind_click blue btn card round small_btn v-top">
 		      <i class="fas fa-stream"></i>&nbsp; {{tr.by_category}}
 		    </button>
@@ -60,24 +60,6 @@
 			<!-- hidden list of categories -->
 			<div id="cat_selector_all"
 			class="card-4 dropdown-content round hide">
-
-				<ul class="ul">
-					<li onclick="$.search_products_by_cat();"
-						class="blue hover-shadow li medium pointer round">
-						{{tr.all_categories}}
-					</li>
-				{{#cats}}
-					<li onclick="$.search_products_by_cat({{cat_id}});"
-						class="dark-gray hover-shadow li medium pointer round">
-						{{title}}
-					</li>
-				{{/cats}}
-				{{^cats}}
-					<li class="li blue large round pad">
-						{{tr.no_cat}}
-					</li>
-				{{/cats}}
-				</ul>
 			</div>
 
 			<!-- search by on line / off line  -->
@@ -312,16 +294,18 @@
       <div class="col s12 m6">
 
 				<!-- dropdown cats -->
-        <p class="">
+        <p class="margin-bottom mrg0">
           {{tr.category}}&nbsp;:&nbsp;
-					<br>
+				</p>
+
+				<p class="mrg0">
 					<span id="cat_name"
-					class="fw600 wide">{{cat_name}}</span>
+					class="fw600">{{cat_name}}</span>
         </p>
 
 
 				<!-- btn show categories list -->
-        <button onclick="$.open_cats_selector_modif();"
+        <button onclick="$.open_cats_selector({{#modif}}'modif'{{/modif}}{{^modif}}'add_prod'{{/modif}});"
         class="unbind_click blue btn card round" role="button" type="button">
           <i class="fa-hand-point-right far"></i>&nbsp;
           {{#modif}}
@@ -335,29 +319,6 @@
 				<!-- hidden cat selector -->
 				<div id="cat_selector_modif"
 				class="card-4 dropdown-content round hide">
-
-					<ul class="ul">
-            {{#cats}}
-							{{#modif}}
-								<li onclick="$.set_cat_product({{id}}, {{cat_id}});"
-								class="dark-gray hover-shadow li medium pointer round">
-									{{title}}
-								</li>
-							{{/modif}}
-							{{^modif}}
-								<li onclick="$.select_this_cat({{cat_id}});"
-								class="dark-gray hover-shadow li medium pointer round">
-									{{title}}
-								</li>
-							{{/modif}}
-            {{/cats}}
-            {{^cats}}
-            <li class="li large round">
-              {{tr.empty_cats}}
-            </li>
-            {{/cats}}
-          </ul>
-
       	</div>
 				<!-- end hidden cat selector -->
 
@@ -380,7 +341,7 @@
       <div class="col s12 m6">
 
         <!-- CHOOSE ON LINE / OFF LINE -->
-        <p class="inline-block v-top">
+        <p class="margin-bottom mrg0">
           {{tr.state}}&nbsp;:
         </p>
 

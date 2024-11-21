@@ -1117,7 +1117,7 @@
 			$ARR_SET = array(
 				'SLIDER' =>
 						array(
-							'display' => $display,
+              'display' => $display,
 							'play' => $play,
 							'delay' => $delay,
 							'speed' => $speed,

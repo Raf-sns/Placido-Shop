@@ -27,7 +27,8 @@
 	      <!-- BLOCK BTNS RIGHT ALIGNED  -->
 	      <div id="cart_container">
 
-	        <!-- cart_block -->
+          <!-- CART BTN -->
+          {{#shop.mode}}
 	        <button id="cart_block"
 	        onclick="$.open_payment_form();"
 	        class="btn margin-right"
@@ -43,7 +44,8 @@
 	          </span>
 
 	        </button>
-	        <!-- CART -->
+          {{/shop.mode}}
+          <!-- CART BTN -->
 
 	        <!-- BTN MENU -->
 	        <button id="menu"
@@ -97,11 +99,7 @@
 
 			<!-- featured_products -->
 			{{#view.slider.display}}
-	      <div id="featured_products"
-				class="swiper"
-	      style="{{view.display_top_sort}}">
-	        	{{>../API/featured_products}}
-	      </div>
+	      {{>../API/featured_products}}
 			{{/view.slider.display}}
 
     </div>

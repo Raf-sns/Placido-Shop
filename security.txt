@@ -13,5 +13,5 @@ Thanks for your help, best regards.
 Raphaël Castello - Developer of Placido-Shop.
 
 Contact: mailto:contact@sns.pm
-Expires: 2025-12-31T22:59:00.000Z
+Expires: 2025-12-31T23:59:00.000Z
 Preferred-Languages: en, fr

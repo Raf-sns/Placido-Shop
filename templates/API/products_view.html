@@ -35,37 +35,35 @@
 		<p class="prod_infos"
 		itemprop="description" content="{{short_text}} ...">
 
-		{{#shop.mode}}
-		<i class="fa-tag fas fa-fw"></i>&nbsp;
-		<span class="bold"
-		aria-label="{{tr.price}}"
-		itemprop="price" content="{{price_scheme}}">{{tr.price}}&nbsp;:&nbsp;</span>
-
-		<span itemprop="priceCurrency" content="{{tr.curr_iso}}"
-		{{^quant}} style="text-decoration: line-through;"{{/quant}}>{{price_text}}</span>
-
-		{{#tax}}
-		<span class="text_small text_info"
-		aria-label="{{tr.tax}}"
-		style="white-space: nowrap;">
-		{{{tr.total_tax_row}}} ({{{tax_text}}}%)&nbsp;:&nbsp;{{tax_value}}</span>
-		{{/tax}}
-		{{^quant}}
-		<br>
-		<span class="text_warning">{{tr.out_of_stock}}</span>
-		{{/quant}}
-		{{#quant}}
-		<span>
-			<br>
-			<i class="fas fa-fw fa-cubes"></i>&nbsp;
+			<i class="fa-tag fas fa-fw"></i>&nbsp;
 			<span class="bold"
-			aria-label="{{tr.quantity}}"
-			itemprop="availability"
-			href="https://schema.org/InStock">{{tr.quantity}}&nbsp;:&nbsp;{{quant}}</span>
+			aria-label="{{tr.price}}"
+			itemprop="price" content="{{price_scheme}}">{{tr.price}}&nbsp;:&nbsp;</span>
+
+			<span itemprop="priceCurrency" content="{{tr.curr_iso}}"
+			{{^quant}} style="text-decoration: line-through;"{{/quant}}>{{price_text}}</span>
+
+			{{#tax}}
+				<span class="text_small text_info"
+				aria-label="{{tr.tax}}"
+				style="white-space: nowrap;">
+				{{{tr.total_tax_row}}} ({{{tax_text}}}%)&nbsp;:&nbsp;{{tax_value}}</span>
+			{{/tax}}
+			{{^quant}}
+				<br>
+				<span class="text_warning">{{tr.out_of_stock}}</span>
+			{{/quant}}
+			{{#quant}}
+				<span>
+				<br>
+				<i class="fas fa-fw fa-cubes"></i>&nbsp;
+				<span class="bold"
+				aria-label="{{tr.quantity}}"
+				itemprop="availability"
+				href="https://schema.org/InStock">{{tr.quantity}}&nbsp;:&nbsp;{{quant}}</span>
 			{{/quant}}
 
 			<br>
-			{{/shop.mode}}
 
 			<i class="fa-flag fa-fw far"></i>&nbsp;
 			<a onclick="$.open_a_cat({{cat_id}}, event);"
@@ -89,23 +87,23 @@
 
 		<!-- BTN FOR BUY && ADD TO CART -->
 		{{#mode_sale}}
-		{{#quant}}
-		<button onclick="$.add_to_cart({{id}},'buy_now');"
-		class="btn card"
-		role="button"
-		aria-label="{{tr.direct_purchase}}">
-		<i class="fas fa-shopping-basket fa-fw"></i>&nbsp; {{tr.direct_purchase}}
-	</button>
-	<br>
-	<button onclick="$.add_to_cart({{id}}, null);"
-	class="btn card"
-	role="button"
-	aria-label="{{tr.add_to_cart}}">
-	<i class="fas fa-shopping-cart fa-fw"></i>&nbsp; {{tr.add_to_cart}}
-	</button>
-	{{/quant}}
-	{{/mode_sale}}
-	<!-- BTN FOR BUY && ADD TO CART -->
+			{{#quant}}
+				<button onclick="$.add_to_cart({{id}},'buy_now');"
+				class="btn card"
+				role="button"
+				aria-label="{{tr.direct_purchase}}">
+				<i class="fas fa-shopping-basket fa-fw"></i>&nbsp; {{tr.direct_purchase}}
+				</button>
+				<br>
+				<button onclick="$.add_to_cart({{id}}, null);"
+				class="btn card"
+				role="button"
+				aria-label="{{tr.add_to_cart}}">
+				<i class="fas fa-shopping-cart fa-fw"></i>&nbsp; {{tr.add_to_cart}}
+				</button>
+			{{/quant}}
+		{{/mode_sale}}
+		<!-- BTN FOR BUY && ADD TO CART -->
 
 	</article>
 	{{/view.products}}

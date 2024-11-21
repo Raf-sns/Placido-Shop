@@ -61,7 +61,7 @@
 	// duration of security token validity in seconds - USE INTEGERS
 	const TOKEN_TIME = 3600;
 	// current software version
-	const VERSION = "3.0.0";
+	const VERSION = "3.1.0";
 	// website title
 	const WEBSITE_TITLE = "Placido-Shop";
 
