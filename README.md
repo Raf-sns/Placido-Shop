@@ -8,7 +8,7 @@
 
 ![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade/dev.placido-shop.com?publish&style=flat-square)
 ![GitHub branch checks state](https://img.shields.io/github/checks-status/Raf-sns/Placido-Shop/master?color=brightgreen&style=flat-square)
-![GitHub](https://img.shields.io/github/license/Raf-sns/Placido-Shop?logo=GNU&color=lightgrey&style=flat-square)
+![License](https://img.shields.io/badge/License-AGPL%20v3-lightgrey.svg?logo=gnu&style=flat-square)
 
 ![Placido-Shop presentation](https://placido-shop.com/img/prez_GITHUB.jpg)
 
